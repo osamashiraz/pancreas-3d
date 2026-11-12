@@ -10,7 +10,6 @@
 7. Report the HRA crosswalk error (male superior mesenteric vein mapped to UBERON:0001182, the artery).
 
 ## Next steps (agreed or proposed)
-- Integrate the zoom viewer into MouseBio_3D's React app (it is standalone now; the repo already has loaders and data).
 - Marker genes on click from the ASCT+B table (CPA1, PRSS1 for acinar; KRT19, CFTR for duct; INS, GCG, SST, PPY).
 - Disease states: type 1 diabetes (beta-cell loss), type 2 (reduced beta cells, head preferentially; Wang 2013), PanIN in ducts, pancreatitis, fibrosis.
 - Overlay user data (single-cell, spatial, CODEX) onto cell types.

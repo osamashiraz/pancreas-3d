@@ -7,7 +7,7 @@ A source-grounded, explorable 3D model of the human pancreas for teaching and re
 ## 2. Architecture
 
 - **Repo module** (`repo/`, installed into MouseBio_3D): TypeScript domain data (inventory, circuits, tissue levels, generators), a loader using MouseBio_3D's checksum-bounded fetch, tests, Python builders, and model data under `public/atlas-human/`.
-- **Standalone viewer** (`viewer/`, built to `dist/pancreas-organ-to-cell.html`): one self-contained HTML page (about 8 MB, under the 16 MB publishing limit) with three.js r147 from jsDelivr, the region model, islet distribution and three tested tissue blocks embedded, and the TypeScript generator compiled to `window.HPGen` so further sites are generated in the browser. The viewer is not yet integrated into MouseBio_3D's React app (see the backlog).
+- **Standalone viewer** (`viewer/`, built to `dist/pancreas-organ-to-cell.html`): one self-contained HTML page (about 8 MB, under the 16 MB publishing limit) with three.js r147 from jsDelivr, the region model, islet distribution and three tested tissue blocks embedded, and the TypeScript generator compiled to `window.HPGen` so further sites are generated in the browser.
 - **World**: one coordinate system in micrometres. The chosen tissue site in the organ is the origin; the tissue block is centred there; finer levels sit inside coarser ones at true scale.
 
 ## 3. Organ level (`src/domain/human-pancreas-structures.ts`)
