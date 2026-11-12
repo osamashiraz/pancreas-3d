@@ -8,6 +8,14 @@ An explorable 3D model of the human pancreas that you can zoom through continuou
 
 ## The idea
 
+### Why I built this
+
+This project grew out of personal curiosity: I wanted to understand the pancreas better. It is a single organ that holds two very different units: an **exocrine** part that makes digestive enzymes, and an **endocrine** part, the islets, that controls blood sugar. When either one goes wrong, the result can be a debilitating disease: **diabetes** from the endocrine side, and **pancreatitis** and **pancreatic ductal adenocarcinoma** from the exocrine side.
+
+As a bioinformatician, I am always curious about the biology behind the diseases I study in data. This project gathers some of what I have learned while working on pancreatic cancer research, and I built it to see that biology in three dimensions and to share it with others.
+
+### Seeing the scales together
+
 The pancreas is usually taught in pieces: a gross-anatomy drawing in one lecture, an H&E slide in another, a cartoon of an acinar cell in a third. It is hard to hold in one's head how those scales connect — where an islet sits relative to the main duct, how many acini drain into one intercalated duct, what a beta cell looks like next to its capillary.
 
 This project puts those scales into one continuous space so a learner can move between them. It is built as a **learning tool** for students, trainees and researchers, and as a **scaffold** for showing where disease begins (see [Next steps](#next-steps)).
