@@ -81,8 +81,8 @@ ol{font-size:12.5px;color:var(--muted);padding-left:18px}ol li{margin-bottom:5px
   <div class="status" id="status">Loading the organ…</div>
   <nav class="ladder" aria-label="Zoom level">
    <button type="button" data-go="organ">Organ<span>15 cm</span></button>
-   <button type="button" data-go="gross">Lobules<span>4 mm piece</span></button>
-   <button type="button" data-go="tissue">Tissue<span>300 µm block</span></button>
+   <button type="button" data-go="gross">Lobules<span>opened in place</span></button>
+   <button type="button" data-go="tissue">Tissue<span>core of a lobule</span></button>
    <div class="branch"><button type="button" data-go="detail:acinus">Acinus</button><button type="button" data-go="cells:acinus">Its cells</button><button type="button" data-go="cell:acinus">One cell</button></div>
    <div class="branch"><button type="button" data-go="detail:islet">Islet</button><button type="button" data-go="cells:islet">Its cells</button><button type="button" data-go="cell:islet">Beta cell</button></div>
    <div class="branch"><button type="button" data-go="detail:duct">Duct</button><button type="button" data-go="cells:duct">Its cells</button><button type="button" data-go="cell:duct">One cell</button></div>
@@ -117,21 +117,19 @@ ol{font-size:12.5px;color:var(--muted);padding-left:18px}ol li{margin-bottom:5px
   <div class="picker" data-for="organ gross tissue"><button type="button" id="siteprev" aria-label="Previous tissue site">◀</button><span id="sitelabel"></span><button type="button" id="sitenext" aria-label="Next tissue site">▶</button></div>
   <label class="toggle" data-for="organ"><input type="checkbox" id="showsites" checked> Show the 60 tissue sites (dots: head, body, tail)</label>
   <p class="target" id="grossstats" data-for="gross compare"></p>
-  <label class="toggle" data-for="gross compare"><input type="checkbox" id="grosssolid"> Show lobules as solid tissue (like a section)</label>
   <ul class="legend" data-for="gross compare">
    <li><span class="sw" style="background:var(--grossduct)"></span><span>Duct tree: a large interlobular duct in the septa, interlobular ducts to each lobule, intralobular ducts inside, terminal (intercalated) ducts ending in acini</span></li>
    <li><span class="sw" style="background:var(--parenchyma)"></span><span>Acini, in grape-like clusters at the ends of the terminal ducts (drawn sparser than real, so the ducts show)</span></li>
-   <li><span class="sw" style="background:var(--parenchyma)"></span><span>Lobules of acinar tissue, purple as in H&amp;E, separated by pale pink septa of connective tissue</span></li>
-   <li><span class="sw" style="background:var(--isletgross)"></span><span>Islets: pale islands among the acini, sizes about the mean of 110 µm, at the region’s density; shown where the cut passes through them, like a section</span></li>
+   <li><span class="sw" style="background:var(--parenchyma)"></span><span>Lobules cut across, purple as in H&amp;E, with pale pink septa of connective tissue between them: the ring round the opening</span></li>
+   <li><span class="sw" style="background:var(--isletgross)"></span><span>Islets: pale islands among the acini, sizes about the mean of 110 µm, at the region’s density</span></li>
    <li><span class="sw" style="background:var(--intralobular)"></span><span>Interlobular ducts, with an artery (red) and vein (blue), in the septa</span></li>
   </ul>
   <label class="toggle" data-for="organ"><input type="checkbox" id="islets"> Show the islets (one point per 100)</label>
   <div data-for="tissue detail cells cell"><span style="font-size:14px">Zoom into</span><br>
    <div class="seg" role="group" aria-label="What to zoom into"><button type="button" data-branch="acinus" aria-pressed="true">An acinus</button><button type="button" data-branch="islet" aria-pressed="false">The islet</button><button type="button" data-branch="duct" aria-pressed="false">A duct</button></div></div>
   <span class="badge" data-for="tissue detail cells cell">Simulated: built from published descriptions and measurements</span>
-  <label class="slider" data-for="tissue">Cut the block<input type="range" id="cut" min="-150" max="150" step="2" value="150"></label>
   <div class="picker" data-for="detail cells cell"><button type="button" id="pickprev" aria-label="Previous model">◀</button><span id="picklabel"></span><button type="button" id="picknext" aria-label="Next model">▶</button></div>
-  <label class="toggle" data-for="detail gross compare"><input type="checkbox" id="cutopen"> Cut open</label>
+  <label class="toggle" data-for="detail"><input type="checkbox" id="cutopen"> Cut open</label>
   <label class="toggle" data-for="detail cells cell"><input type="checkbox" id="surround"> Show the surrounding tissue, faintly</label>
   <p class="target" data-for="detail cells cell">Each stage holds as you zoom out, so you can step back and look; zoom much further out, or press Esc, to return a stage.</p>
   <p class="target" data-for="tissue detail cells">Click any cell or structure to name it, then isolate it or fade it.</p>

@@ -2,7 +2,7 @@
 
 **[Open the interactive viewer →](https://osamashiraz.github.io/pancreas-3d/)** (runs in the browser; Chrome or Edge recommended)
 
-An explorable 3D model of the human pancreas that you can zoom through continuously: from the whole organ (about 15 cm) to a 4 mm piece of lobules, a 300 µm block of tissue, a single acinus, islet or duct, its separated cells, and finally one cell with its organelles — all at true scale, in H&E or cell-type colours, with an optional narrated tour.
+An explorable 3D model of the human pancreas that you can zoom through continuously: from the whole organ (about 15 cm) opened in place layer by layer through its lobules and duct tree to a core of tissue, then a single acinus, islet or duct, its separated cells, and finally one cell with its organelles — all at true scale, in H&E or cell-type colours, with an optional narrated tour.
 
 ![The HRA reference pancreas with its ducts and vessels](docs/images/organ.jpg)
 
@@ -30,13 +30,19 @@ Every number either names its source or is marked *not yet sourced* in the code,
 
 ## What you can see
 
-### The organ and its lobules
+### The organ, opened layer by layer
 
-The reference pancreas (head, neck, body, tail, uncinate process) with the main and accessory pancreatic ducts, bile duct and ampulla, and the coeliac, splenic, hepatic and superior mesenteric vessels. Sixty tissue sites (dots in head, body and tail) are the places you can zoom into. Zooming in reaches a 4 mm piece: lobules separated by connective-tissue septa, a tree of ducts running from large interlobular ducts down to terminal ducts, grape-like clusters of acini, and islets scattered among them (twice as dense in the tail as in the head).
+The reference pancreas (head, neck, body, tail, uncinate process) with the main and accessory pancreatic ducts, bile duct and ampulla, and the coeliac, splenic, hepatic and superior mesenteric vessels. Sixty tissue sites (dots in head, body and tail) are the places you can zoom into.
 
-| Organ | Lobules (4 mm) | Tissue block (300 µm) |
-|---|---|---|
-| ![Organ](docs/images/organ.jpg) | ![Lobules](docs/images/gross.jpg) | ![Tissue block](docs/images/tissue-block.jpg) |
+Zooming into a site opens the gland **in place, layer by layer**, the way [MouseBio_3D](https://github.com/Qasim-Hussain-Code/MouseBio_3D) opens the mouse: a line goes into the gland at the site, and as you zoom the organ's surface opens round it. Inside, the **lobules** stand cut across, with pale septa of connective tissue between them. Round the line, the lobules near the site open in turn to show what fills them: the **duct tree** (large interlobular duct with its artery and vein, interlobular, intralobular and terminal ducts ending in grape-like clusters of acini) and the **islets**, twice as dense in the tail as in the head. At the bottom of the opening lies a **core of tissue**, cut flat through its islet. Each outer layer stays as a ring round the next, and zooming out closes them again.
+
+| Organ | The surface opens | Lobules and their ducts | Tissue core |
+|---|---|---|---|
+| ![Organ](docs/images/organ.jpg) | ![The organ opens round the site](docs/images/opening.jpg) | ![Lobules opened onto their duct tree](docs/images/gross.jpg) | ![Tissue core inside the opening](docs/images/tissue-block.jpg) |
+
+**Compare head, body and tail** puts the three regions' lobule columns side by side, each opened to its duct tree and islets:
+
+![Head, body and tail compared](docs/images/compare.jpg)
 
 ### Inside the tissue: how the pancreas works
 
@@ -52,9 +58,10 @@ The pancreas is two organs in one, and the model shows both:
 ### Viewer features
 
 - Continuous zoom from organ to organelle, with a scale bar; **Esc** steps back a level.
+- **Layers opened in place**: organ surface → lobules → duct tree → tissue core, each a ring round the next; the view turns to look down the opening until you turn it yourself.
 - Three branches to follow: **acinus → acinar cells → one acinar cell**, **islet → islet cells → beta cell**, **duct → duct cells → one duct cell**.
 - **Stain**: H&E (purple nuclei, pink cytoplasm, red granules, pale islets) or **Cell types** (immunofluorescence-like colours).
-- **Cut open**, **slice apart** (organ into transverse slices, block into serial sections), **split screen** to compare two views, **compare head, body and tail**.
+- **Cut open** a structure, **slice apart** (organ into transverse slices, tissue into serial sections), **split screen** to compare two views, **compare head, body and tail**.
 - **Play the journey**: a 13-step narrated tour (browser speech; best in Chrome).
 - Click any cell or structure to name it, isolate it or fade it.
 
@@ -79,7 +86,7 @@ Full references with DOIs: [`docs/SOURCES.md`](docs/SOURCES.md). Values still aw
 
 - **Organ**: meshes extracted unchanged from the HRA united body models; small arteries (gastroduodenal, pancreaticoduodenal arcades, dorsal/great/caudal pancreatic) routed by shortest path around drawn structures; lymph nodes placed at the Japan Pancreas Society stations (that citation, and Gray's Anatomy for vessel anatomy, are still to be checked against the books).
 - **Tissue**: deterministic builders (Python, and a TypeScript generator that also runs in the browser) grow a duct tree, bud acini on their own intercalated ducts, route capillaries so every acinus is within reach, add stroma and one islet, then let cells grow until they meet a neighbour. Tests check the rules: no overlapping acini, one duct per acinus, packing above 45%, islet composition and size.
-- **Viewer**: a single self-contained HTML page (three.js) with the models embedded, so it can be hosted anywhere static.
+- **Viewer**: a single self-contained HTML page (three.js) with the models embedded, so it can be hosted anywhere static. The layered openings follow MouseBio_3D's zoom-unfold: each opening grows with the zoom to nearly half the height of the view, outer layers stay as rings, and vessels and ducts of the organ are left uncut.
 
 ## Repository layout
 

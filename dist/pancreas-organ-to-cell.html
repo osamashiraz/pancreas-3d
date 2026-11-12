@@ -81,8 +81,8 @@ ol{font-size:12.5px;color:var(--muted);padding-left:18px}ol li{margin-bottom:5px
   <div class="status" id="status">Loading the organ…</div>
   <nav class="ladder" aria-label="Zoom level">
    <button type="button" data-go="organ">Organ<span>15 cm</span></button>
-   <button type="button" data-go="gross">Lobules<span>4 mm piece</span></button>
-   <button type="button" data-go="tissue">Tissue<span>300 µm block</span></button>
+   <button type="button" data-go="gross">Lobules<span>opened in place</span></button>
+   <button type="button" data-go="tissue">Tissue<span>core of a lobule</span></button>
    <div class="branch"><button type="button" data-go="detail:acinus">Acinus</button><button type="button" data-go="cells:acinus">Its cells</button><button type="button" data-go="cell:acinus">One cell</button></div>
    <div class="branch"><button type="button" data-go="detail:islet">Islet</button><button type="button" data-go="cells:islet">Its cells</button><button type="button" data-go="cell:islet">Beta cell</button></div>
    <div class="branch"><button type="button" data-go="detail:duct">Duct</button><button type="button" data-go="cells:duct">Its cells</button><button type="button" data-go="cell:duct">One cell</button></div>
@@ -117,21 +117,19 @@ ol{font-size:12.5px;color:var(--muted);padding-left:18px}ol li{margin-bottom:5px
   <div class="picker" data-for="organ gross tissue"><button type="button" id="siteprev" aria-label="Previous tissue site">◀</button><span id="sitelabel"></span><button type="button" id="sitenext" aria-label="Next tissue site">▶</button></div>
   <label class="toggle" data-for="organ"><input type="checkbox" id="showsites" checked> Show the 60 tissue sites (dots: head, body, tail)</label>
   <p class="target" id="grossstats" data-for="gross compare"></p>
-  <label class="toggle" data-for="gross compare"><input type="checkbox" id="grosssolid"> Show lobules as solid tissue (like a section)</label>
   <ul class="legend" data-for="gross compare">
    <li><span class="sw" style="background:var(--grossduct)"></span><span>Duct tree: a large interlobular duct in the septa, interlobular ducts to each lobule, intralobular ducts inside, terminal (intercalated) ducts ending in acini</span></li>
    <li><span class="sw" style="background:var(--parenchyma)"></span><span>Acini, in grape-like clusters at the ends of the terminal ducts (drawn sparser than real, so the ducts show)</span></li>
-   <li><span class="sw" style="background:var(--parenchyma)"></span><span>Lobules of acinar tissue, purple as in H&amp;E, separated by pale pink septa of connective tissue</span></li>
-   <li><span class="sw" style="background:var(--isletgross)"></span><span>Islets: pale islands among the acini, sizes about the mean of 110 µm, at the region’s density; shown where the cut passes through them, like a section</span></li>
+   <li><span class="sw" style="background:var(--parenchyma)"></span><span>Lobules cut across, purple as in H&amp;E, with pale pink septa of connective tissue between them: the ring round the opening</span></li>
+   <li><span class="sw" style="background:var(--isletgross)"></span><span>Islets: pale islands among the acini, sizes about the mean of 110 µm, at the region’s density</span></li>
    <li><span class="sw" style="background:var(--intralobular)"></span><span>Interlobular ducts, with an artery (red) and vein (blue), in the septa</span></li>
   </ul>
   <label class="toggle" data-for="organ"><input type="checkbox" id="islets"> Show the islets (one point per 100)</label>
   <div data-for="tissue detail cells cell"><span style="font-size:14px">Zoom into</span><br>
    <div class="seg" role="group" aria-label="What to zoom into"><button type="button" data-branch="acinus" aria-pressed="true">An acinus</button><button type="button" data-branch="islet" aria-pressed="false">The islet</button><button type="button" data-branch="duct" aria-pressed="false">A duct</button></div></div>
   <span class="badge" data-for="tissue detail cells cell">Simulated: built from published descriptions and measurements</span>
-  <label class="slider" data-for="tissue">Cut the block<input type="range" id="cut" min="-150" max="150" step="2" value="150"></label>
   <div class="picker" data-for="detail cells cell"><button type="button" id="pickprev" aria-label="Previous model">◀</button><span id="picklabel"></span><button type="button" id="picknext" aria-label="Next model">▶</button></div>
-  <label class="toggle" data-for="detail gross compare"><input type="checkbox" id="cutopen"> Cut open</label>
+  <label class="toggle" data-for="detail"><input type="checkbox" id="cutopen"> Cut open</label>
   <label class="toggle" data-for="detail cells cell"><input type="checkbox" id="surround"> Show the surrounding tissue, faintly</label>
   <p class="target" data-for="detail cells cell">Each stage holds as you zoom out, so you can step back and look; zoom much further out, or press Esc, to return a stage.</p>
   <p class="target" data-for="tissue detail cells">Click any cell or structure to name it, then isolate it or fade it.</p>
@@ -784,10 +782,11 @@ return { generateBlock, generateIslet, fibDirs, PARAMS };
   }
   function M(group, color, planes, extra = {}) {
     extra = Object.assign({}, extra); const Ctor = extra.physical ? THREE.MeshPhysicalMaterial : THREE.MeshStandardMaterial; delete extra.physical;
-    const he = extra.he === undefined ? [0.9, 0.16] : extra.he; delete extra.he;
+    const he = extra.he === undefined ? [0.9, 0.16] : extra.he, layer = extra.layer; delete extra.he; delete extra.layer;
     const m = new Ctor(Object.assign({ color: color.startsWith('--') ? col(color) : new THREE.Color(color), roughness: 0.55, clippingPlanes: planes || [] }, extra));
     m.envMapIntensity = 0.22;   // a matte, evenly lit look, like light through a slide
     if (he && !m.transparent) heify(m, he[0], he[1]);
+    if (layer) layered(m, layer[0], layer[1]);
     m.userData.base = m.transparent ? m.opacity : 1; m.userData.baseDepth = m.depthWrite;
     (group.userData.mats = group.userData.mats || []).push(m); return m;
   }
@@ -805,6 +804,45 @@ return { generateBlock, generateIslet, fibDirs, PARAMS };
     if (JITTER.has(name)) { const c = new THREE.Color(); list.forEach((_, i) => { const k = 0.92 + 0.16 * (((i * 2654435761) >>> 0) % 1000) / 1000; m.setColorAt(i, c.setRGB(k, k * (0.98 + 0.04 * ((i * 97) % 7) / 7), k)); }); m.instanceColor.needsUpdate = true; }
     group.add(m); return m; }
   const MP = (group, color, planes, extra = {}) => M(group, color, planes, Object.assign({ physical: true, sheen: 0.12, sheenRoughness: 0.55, sheenColor: new THREE.Color('#ffd9e6'), roughness: 0.55 }, extra));
+
+  // ---------- layers opened in place, after MouseBio_3D's zoom-unfold. At the chosen site a line goes into the gland. As
+  // you zoom, the organ's surface opens a round hole on that line; inside it the lobules stand cut across, with their own,
+  // smaller opening onto the duct tree of the lobules near the site; that opens in turn onto a core of the tissue. Each
+  // outer layer stays as a ring round the next, and closes again as you zoom out. Ducts and vessels of the organ are not cut.
+  // Layer coordinates: z along the line, outwards, from the site; r, the distance from the line.
+  //   0 organ surface: a hole of radius R.x
+  //   1 solid lobules: inside R.x; a hole of radius R.y above the floor F.x, flaring out above the duct tree (top S.x,
+  //     slope S.y) like a crater, so its wall does not close the view; nothing above C (comparison only)
+  //   2 duct tree: inside R.y; a hole of radius R.z above F.y, flaring out above the core's top (slope S.z)
+  //   3 tissue core: inside R.z, within a sphere of radius F.z, below the flat top F.w
+  const LAYER = { R: { value: new THREE.Vector4() }, F: { value: new THREE.Vector4(-2000, -145, 145, 40) }, S: { value: new THREE.Vector4(2000, 0, 0, 0) }, C: { value: 1e9 } }, ORG_TOL = { value: new THREE.Matrix4() };
+  function layered(m, layer, toL) {
+    const prev = m.onBeforeCompile, prevKey = m.customProgramCacheKey;
+    m.onBeforeCompile = (sh, r) => { prev.call(m, sh, r);
+      Object.assign(sh.uniforms, { uToL: toL, uLR: LAYER.R, uLF: LAYER.F, uLS: LAYER.S, uLC: LAYER.C });
+      sh.vertexShader = 'varying vec3 vLW;\n' + sh.vertexShader.replace('#include <project_vertex>', `#include <project_vertex>
+        vec4 lwP = vec4(transformed, 1.0);
+        #ifdef USE_INSTANCING
+          lwP = instanceMatrix * lwP;
+        #endif
+        vLW = (modelMatrix * lwP).xyz;`);
+      sh.fragmentShader = `#define LAYER ${layer}\nvarying vec3 vLW; uniform mat4 uToL; uniform vec4 uLR; uniform vec4 uLF; uniform vec4 uLS; uniform float uLC;\n` + sh.fragmentShader.replace('#include <clipping_planes_fragment>', `#include <clipping_planes_fragment>
+        vec3 lq = (uToL * vec4(vLW, 1.0)).xyz; float lr = length(lq.xy);
+        #if LAYER == 0
+          if (lr < uLR.x) discard;
+        #elif LAYER == 1
+          if (lr > uLR.x || (lr < uLR.y + max(0.0, lq.z - uLS.x) * uLS.y && lq.z > uLF.x) || lq.z > uLC) discard;
+        #elif LAYER == 2
+          if (lr > uLR.y || (lr < uLR.z + max(0.0, lq.z - uLF.w) * uLS.z && lq.z > uLF.y)) discard;
+        #else
+          if (lr > uLR.z || length(lq) > uLF.z || lq.z > uLF.w) discard;
+        #endif`);
+    };
+    m.customProgramCacheKey = () => prevKey.call(m) + '|layer' + layer;
+    m.side = THREE.DoubleSide;   // cut surfaces show their inside
+  }
+  /** Whether a point of the tissue lies in the core as now opened (for names and picking). */
+  function inCore(p) { const q = p.clone().applyMatrix4(ORG_TOL.value); return Math.hypot(q.x, q.y) < LAYER.R.value.z + 2 && q.length() < LAYER.F.value.z + 2 && q.z < LAYER.F.value.w + 2; }
 
   // ---------- tissue pieces
   const lumen = V.acinarLumenRadiusUm, cac = V.centroacinarSizeUm;
@@ -852,7 +890,7 @@ return { generateBlock, generateIslet, fibDirs, PARAMS };
       out.flow.push({ a: a.clone(), u: ax.clone().normalize(), L, s, q, scale: new THREE.Vector3(d / 2 * 0.8, t / 2, d / 2 * 0.8) }); }
   }
   const ISLET_TYPES = ['beta', 'alpha', 'delta', 'pp'];
-  function buildTissue(planes, keep, focal, skip) {
+  function buildTissue(planes, keep, focal, skip, layer) {
     const out = { isletNucleus: [], flow: [], acinar: [], nucleus: [], granule: [], cac: [], cacNucleus: [], intercalated: [], intralobular: [], ductNucleus: [], capillary: [], node: [], redcell: [], fibre: [], stellate: [], stellateNucleus: [], beta: [], alpha: [], delta: [], pp: [] };
     B.acini.forEach((ac, i) => { if (keep(new THREE.Vector3(...ac.centre), ac.r)) acinusParts(ac, out, i === focal.acinus, i === focal.acinus ? focal.skipCell : undefined); });
     B.ducts.forEach((d, di) => { const m = new THREE.Vector3(...d.a).add(new THREE.Vector3(...d.b)).multiplyScalar(0.5); if (!keep(m, d.r + 10)) return;
@@ -866,7 +904,7 @@ return { generateBlock, generateIslet, fibDirs, PARAMS };
     B.stroma.stellateCells.forEach((s) => { const c = new THREE.Vector3(...s.c); if (!keep(c, 12)) return; const q = new THREE.Quaternion(...s.q);
       out.stellate.push(new THREE.Matrix4().compose(c, q, new THREE.Vector3(S[1] / 2, S[2] / 2, S[0] / 2))); out.stellateNucleus.push(new THREE.Matrix4().compose(c, q, new THREE.Vector3(1.4, 1, 4))); });
     B.islet.cells.forEach(([t, x, y, z], i) => { if (i === focal.skipIsletCell) return; const p = new THREE.Vector3(x, y, z); if (keep(p, 6)) { out[t].push(new THREE.Matrix4().makeScale(5, 5, 5).setPosition(p)); out.isletNucleus.push(new THREE.Matrix4().makeScale(2.3, 2.3, 2.3).setPosition(p)); } });
-    const g = new THREE.Group(), add = (name, geo, color, extra) => { if (out[name].length) inst(g, geo, M(g, color, planes, extra), out[name], name); };
+    const g = new THREE.Group(), add = (name, geo, color, extra) => { if (out[name].length) inst(g, geo, M(g, color, planes, layer ? Object.assign({}, extra, { layer }) : extra), out[name], name); };
     add('acinar', wedge, '#ffffff', { vertexColors: true, roughness: 0.75, he: [1.1, 0.2] });
     add('nucleus', lowball, '--nucleus'); add('granule', lowball, '--granule', { roughness: 0.35 });
     add('cac', ball, '--cac'); add('cacNucleus', ball, '--cacnucleus');
@@ -945,7 +983,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
 
   // ---------- names: invisible markers placed in the scene, shown as labels when names are on
   const LABELS = {};
-  function tag(set, parent, text, pos) { const o = new THREE.Object3D(); o.position.copy(pos); o.userData.label = text; parent.add(o); (LABELS[set] = LABELS[set] || []).push(o); return o; }
+  function tag(set, parent, text, pos) { const o = new THREE.Object3D(); o.position.copy(pos); o.userData.label = text; parent.add(o); if (set === 'tissue') o.userData.check = inCore; (LABELS[set] = LABELS[set] || []).push(o); return o; }
 
   // ---------- the enlarged cells, at their true places
   function buildAcinarCell(group) {
@@ -1075,11 +1113,12 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
     if (i === site) return; site = i; blockRegion = SITE_LIST[i].region; B = blockOf(i);
     const drop = (g) => { if (g) scene.remove(g); };
     drop(groups.block); groups.block = null; if (SLICE.block) { drop(SLICE.block); SLICE.block = null; }
-    refocus();
+    refocus(); orientLayers();
   }
-  // The block is drawn single-sided (it is mostly seen whole); its cut faces are filled only while it is being cut.
-  function blockSides() { if (!groups.block) return; const cut = planes.block.constant < 1e5; groups.block.traverse((o) => { if (o.isMesh && !o.material.transparent) { const sd = cut ? THREE.DoubleSide : THREE.FrontSide; if (o.material.side !== sd) { o.material.side = sd; o.material.needsUpdate = true; } } }); }
-  function ensureBlock() { if (!groups.block) { groups.block = buildTissue([planes.block], () => true, {}); scene.add(groups.block); blockSides(); } return groups.block; }
+  // The line going in at the site sets the frame of the openings; the flat top of the core passes through the islet.
+  function orientLayers() { const S0 = siteAxis(SITE_LIST[site]); ORG_TOL.value.makeRotationFromQuaternion(quatFromTo(S0.axis, Z)); LAYER.F.value.w = THREE.MathUtils.clamp(I.dot(S0.axis), -60, 60); }
+  // The block is shown as a core cut from it, so its cut faces are always filled.
+  function ensureBlock() { if (!groups.block) { groups.block = buildTissue([planes.block], () => true, {}, undefined, [3, ORG_TOL]); scene.add(groups.block); } return groups.block; }
   function ensureBranch(k) { const b = BRANCHES[k];
     if (!b.detail) { b.detail = buildStructure(k); scene.add(b.detail); }
     if (!b.cellGroup) { b.cellGroup = new THREE.Group(); b.build(b.cellGroup); scene.add(b.cellGroup); } return b; }
@@ -1125,7 +1164,21 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
   function weights(d) {
     const sm = (x) => x * x * (3 - 2 * x), det = sm(STAGE.detail), ex = sm(STAGE.explode), ce = sm(STAGE.cell);
     if (COMPARE.on) return { organ: 0, gross: 1, block: 0, detail: 0, cell: 0, explode: 0 };
-    return { organ: ramp(d, 14000, 40000), gross: ramp(d, 50000, 20000) * (1 - ramp(d, 2700, 1300)), block: ramp(d, 3400, 1500) * Math.max(1 - det, surroundings ? 0.12 * det : 0), detail: det * (1 - 0.95 * ce), cell: ce, explode: ex };
+    // The organ stays as a ring round its opening until the ring leaves the view; the lobules are there once the organ opens,
+    // and the core once its own opening has begun. Below the tissue the chosen structure takes over, as before.
+    return { organ: ramp(d, 4500, 6500), gross: ramp(d, 52000, 44000) * (1 - det), block: (LAYER.R.value.z > 1 ? 1 : 0) * Math.max(1 - det, surroundings ? 0.12 * det : 0), detail: det * (1 - 0.95 * ce), cell: ce, explode: ex };
+  }
+  // How far each layer has opened at a distance: from nothing to nearly half the height of the view at the end of its opening
+  // (MouseBio_3D's share, 0.46), growing by equal steps of zoom, and no wider than the layer beneath can fill.
+  const Hv = (d) => 2 * d * Math.tan(camera.fov * Math.PI / 360);
+  const opening = (d, [a, b]) => { const t = THREE.MathUtils.clamp(Math.log(a / d) / Math.log(a / b), 0, 1); return t * t * (3 - 2 * t); };
+  const OPEN = { organ: [45000, 14000], lobules: [12000, 3200], core: [2600, 1000] }, SHARE = 0.46, FLARE = 0.36;   // a slope a little steeper than the view's half-angle
+  function setLayers(d) {
+    const R = LAYER.R.value, face = Math.sqrt(LAYER.F.value.z ** 2 - LAYER.F.value.w ** 2);
+    if (COMPARE.on) { R.set(COL - 100, TREE.xy - 100, 0, 0); LAYER.S.value.set(TREE.z, 0, 0, 0); LAYER.C.value = TREE.z; return; }
+    LAYER.C.value = 1e9; LAYER.S.value.set(TREE.z, FLARE * opening(d, OPEN.lobules), FLARE * opening(d, OPEN.core), 0);
+    R.set(Math.min(COL - 100, SHARE * Hv(OPEN.organ[1])) * opening(d, OPEN.organ), Math.min(TREE.xy - 300, SHARE * Hv(OPEN.lobules[1])) * opening(d, OPEN.lobules),
+      Math.min(face, SHARE * Hv(OPEN.core[1])) * opening(d, OPEN.core), 0);
   }
   function weightsOld(d) {
     // The tissue gives way to the chosen structure alone; its cells separate as you go on; then one cell stands alone.
@@ -1138,7 +1191,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
     const b = BRANCHES[branch], t1 = ramp(d, branch === 'islet' ? 800 : 700, branch === 'islet' ? 420 : 280), t2 = ramp(d, 62, 30), e = ramp(d, SIZE[branch].ex[0], SIZE[branch].ex[1]);
     return new THREE.Vector3().lerpVectors(new THREE.Vector3(), b.anchor, t1).lerp(b.cell.clone().addScaledVector(OFF[branch], e), t2);
   }
-  function levelAt(d) { const m = STAGE.mode; if (COMPARE.on) return 'compare'; return m === 'tissue' ? (d > 40000 ? 'organ' : d > 2000 ? 'gross' : 'tissue') : m === 'structure' ? 'detail' : m; }
+  function levelAt(d) { const m = STAGE.mode; if (COMPARE.on) return 'compare'; return m === 'tissue' ? (d > 16000 ? 'organ' : d > 1800 ? 'gross' : 'tissue') : m === 'structure' ? 'detail' : m; }
   function levelAtOld(d) { const S = SIZE[branch]; return d > 6000 ? 'organ' : d > (branch === 'islet' ? 450 : 320) ? 'tissue' : d > S.cut ? 'detail' : d > 32 ? 'cells' : 'cell'; }
 
   // ---------- the organ, in micrometres, moved so the zoom point sits at the origin
@@ -1152,7 +1205,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
     g.scene.traverse((o) => { if (!o.isMesh) return; const n = o.name.slice(5);
       const kind = REGION_NAMES[n] ? 'pancreas' : /duodenal_ampulla|duodenum|spleen/.test(n) ? 'other' : /duct|ampulla|sphincter|bile/.test(n) ? 'duct' : /artery|celiac/.test(n) ? 'artery' : /vein/.test(n) ? 'vein' : 'other';
       const geo = o.geometry.clone().applyMatrix4(o.matrixWorld).scale(1e6, 1e6, 1e6), op = kind === 'other' ? 0.22 : kind === 'pancreas' ? 0.92 : 1;
-      const m = new THREE.Mesh(geo, M(grp, { pancreas: '--organ', duct: '--organduct', artery: '--artery', vein: '--vein', other: '--neighbour' }[kind], null, { transparent: op < 1, opacity: op, depthWrite: op === 1, side: THREE.DoubleSide, roughness: 0.65, he: false }));
+      const m = new THREE.Mesh(geo, M(grp, { pancreas: '--organ', duct: '--organduct', artery: '--artery', vein: '--vein', other: '--neighbour' }[kind], null, { transparent: op < 1, opacity: op, depthWrite: op === 1, side: THREE.DoubleSide, roughness: 0.65, he: false, layer: kind === 'pancreas' || kind === 'other' ? [0, ORG_TOL] : undefined }));
       m.userData = { kind, region: REGION_NAMES[n] }; m.name = n; inner.add(m); if (kind === 'pancreas') pancreasMeshes.push(m);
       if (kind === 'pancreas') { const p = geo.getAttribute('position'), c = new THREE.Vector3(); for (let i = 0; i < p.count; i++) c.add(new THREE.Vector3().fromBufferAttribute(p, i)); SITES[REGION_NAMES[n]] = c.divideScalar(p.count); }
       const ORGAN_NAMES = { head_of_pancreas: 'Head', uncinate_process_of_the_pancreas: 'Uncinate process', ucinate_process1: 'Uncinate process', neck_of_pancreas: 'Neck', body_of_pancreas: 'Body', tail_of_pancreas: 'Tail',
@@ -1181,15 +1234,26 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
     scene.add(grp);
   }
   function setSite(i, now) {
-    const S0 = SITE_LIST[i]; if (SLICE.organ) { scene.remove(SLICE.organ); SLICE.organ = null; } organLocal.copy(S0.local); region = S0.region;
+    const S0 = SITE_LIST[i]; VIEWS[focus].turned = false; if (SLICE.organ) { scene.remove(SLICE.organ); SLICE.organ = null; } organLocal.copy(S0.local); region = S0.region;
     document.querySelectorAll('[data-region]').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.region === S0.region)));
     const finish = () => { switchSite(i); $('status').style.display = 'none'; updatePickers(); };
     if (now || S0.verified || GEN.has(i)) finish();
     else { $('status').style.display = 'grid'; $('status').textContent = `Building the tissue of site ${i + 1} (${S0.region}) from seed ${S0.seed}…`; setTimeout(finish, 40); }
     $('target').innerHTML = `Tissue site <strong>${i + 1} of ${SITE_LIST.length}</strong>, in the <strong>${S0.region}</strong>, where the model places about ${Math.round(ORG.densities[KEY_OF[S0.region]])} islets per mm³. ${S0.verified ? 'Its block is the one built and tested in the repo.' : `Its block is generated in your browser from seed ${S0.seed}, by the same rules.`} Click a dot, or use the arrows, to choose another site.`;
   }
+  // The line going in at a site: of 160 directions, the shortest way out of the gland, leaning towards the front of the
+  // body; and how deep the site lies along it.
+  function siteAxis(S0) {
+    if (S0.axis) return S0;
+    const inner = groups.organ.userData.inner; inner.updateMatrixWorld(true);
+    const from = S0.local.clone().applyMatrix4(inner.matrixWorld), rc = new THREE.Raycaster(), front = new THREE.Vector3(0, 0.25, 1).normalize(); let best = null;
+    fib(160).forEach((dir) => { rc.set(from, dir); const hit = rc.intersectObjects(pancreasMeshes, false)[0]; if (!hit) return;
+      const score = hit.distance * (1.35 - 0.35 * dir.dot(front)); if (!best || score < best.score) best = { score, dir, depth: hit.distance }; });
+    S0.axis = best ? best.dir : front; S0.depth = best ? best.depth : 3000; return S0;
+  }
   const ray = new THREE.Raycaster(), ptr = new THREE.Vector2(); let down = null;
   onViews('pointerdown', (e) => { down = [e.clientX, e.clientY]; });
+  onViews('pointermove', (e) => { if (e.buttons && down && Math.hypot(e.clientX - down[0], e.clientY - down[1]) > 5) VIEWS[focus].turned = true; });   // turned by hand
   onViews('pointerup', (e) => {
     if (!down || Math.hypot(e.clientX - down[0], e.clientY - down[1]) > 5 || camera.position.distanceTo(controls.target) < 15000) { down = null; return; } down = null;
     const r = VIEWS[focus].el.getBoundingClientRect(); ptr.set((e.clientX - r.left) / r.width * 2 - 1, -(e.clientY - r.top) / r.height * 2 + 1);
@@ -1199,35 +1263,42 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
     if (hit) { const local = hit.point.clone().sub(groups.organ.userData.inner.position); let bi = 0, bd = Infinity; SITE_LIST.forEach((S0, k) => { const d = S0.local.distanceTo(local); if (d < bd) { bd = d; bi = k; } }); setSite(bi); }
   });
 
-  // ---------- gross view: a 4 mm piece of a region, at low magnification
-  const GROSS = {}, CUBE = 4000, LOBULE = 1250, SEPTUM = 50;
+  // ---------- lobules in place: a column of tissue along the line going in at the site, from below the site up to the
+  // surface of the gland. Solid lobules fill it. Round the line, inside their opening, the lobules near the site are drawn
+  // as their duct tree, and at the bottom of that opening lies the tissue core.
+  const GROSS = {}, LOBULE = 1250, SEPTUM = 50, COL = 2500, BELOW = 2500, TREE = { xy: 1400, z: 2000 };
   const KEY_OF = { head: 'pancreas-head', body: 'pancreas-body', tail: 'pancreas-tail' };
   function rng(seed) { let a = seed >>> 0; return () => { a |= 0; a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
   function buildGross(key) {   // key: a site index
     if (GROSS[key]) return GROSS[key];
-    const SITE = SITE_LIST[key], g = new THREE.Group(), R = rng(SITE.seed * 3 + 1), h = CUBE / 2, plane = new THREE.Plane(new THREE.Vector3(1, 0, 0), 1e6);
-    g.userData.plane = plane; g.userData.key = key;
-    // Lobules: the Voronoi cells of jittered seeds, each shrunk by half a septum, clipped to the cube.
-    const seeds = [], n = Math.ceil(CUBE / LOBULE) + 2;
-    for (let i = -1; i < n - 1; i++) for (let j = -1; j < n - 1; j++) for (let k = -1; k < n - 1; k++)
-      seeds.push(new THREE.Vector3(-h + (i + 0.5 + (R() - 0.5) * 0.7) * LOBULE, -h + (j + 0.5 + (R() - 0.5) * 0.7) * LOBULE, -h + (k + 0.5 + (R() - 0.5) * 0.7) * LOBULE));
-    const inside = seeds.filter((p) => Math.max(Math.abs(p.x), Math.abs(p.y), Math.abs(p.z)) < h), base = new THREE.IcosahedronGeometry(1, 3), bp = base.getAttribute('position');
-    const back = new THREE.Plane(new THREE.Vector3(-1, 0, 0), 1e6); g.userData.back = back;
-    const solid = new THREE.Group(), tree = new THREE.Group(); g.add(solid, tree); g.userData.solid = solid; g.userData.tree = tree; const lobGeo = [];
-    const hullMat = M(g, '--parenchyma', [plane], { transparent: true, opacity: 0.13, depthWrite: false, side: THREE.DoubleSide, he: false });
-    const parMat = M(g, '--parenchyma', [plane], { roughness: 0.85, he: [1 / 26, 0.32] }), faces = [X, Y, Z, X.clone().negate(), Y.clone().negate(), Z.clone().negate()];
+    const SITE = siteAxis(SITE_LIST[key]), g = new THREE.Group(), R = rng(SITE.seed * 3 + 1), top = Math.max(SITE.depth, TREE.z + 300), set = 'gross:' + key;
+    g.userData.q = quatFromTo(Z, SITE.axis); g.quaternion.copy(g.userData.q); g.userData.key = key; g.userData.top = top;
+    const toL = g.userData.toL = { value: new THREE.Matrix4() };   // the group's own frame is the layer frame: z along the line
+    const LIM = [[X, COL], [X.clone().negate(), COL], [Y, COL], [Y.clone().negate(), COL], [Z, top], [Z.clone().negate(), BELOW]];
+    const inZone = (p, m = 0) => Math.abs(p.x) < TREE.xy - m && Math.abs(p.y) < TREE.xy - m && Math.abs(p.z) < TREE.z - m;
+    // Lobules: the Voronoi cells of jittered seeds, each shrunk by half a septum, clipped to the column.
+    const seeds = [], J = () => (R() - 0.5) * 0.7 * LOBULE;
+    for (let x = -COL - LOBULE / 2; x < COL + LOBULE; x += LOBULE) for (let y = -COL - LOBULE / 2; y < COL + LOBULE; y += LOBULE)
+      for (let z = -BELOW - LOBULE / 2; z < top + LOBULE; z += LOBULE) seeds.push(new THREE.Vector3(x + J(), y + J(), z + J()));
+    const inside = seeds.filter((p) => LIM.every(([f, l]) => p.dot(f) < l)), lobules = [];
+    const solid = new THREE.Group(), tree = new THREE.Group(); g.add(solid, tree); g.userData.solid = solid; g.userData.tree = tree;
+    const coarse = new THREE.IcosahedronGeometry(1, 2), fine = new THREE.IcosahedronGeometry(1, 3);
+    const parMat = M(g, '--parenchyma', [], { roughness: 0.85, he: [1 / 26, 0.32], layer: [1, toL] });
+    const hullMat = M(g, '--parenchyma', [], { transparent: true, opacity: 0.13, depthWrite: false, he: false, layer: [2, toL] });
     inside.forEach((s0) => {
-      const geo = base.clone(), p = geo.getAttribute('position'), near = seeds.filter((q) => q !== s0 && q.distanceTo(s0) < LOBULE * 2.2);
+      const near = seeds.filter((q) => q !== s0 && q.distanceTo(s0) < LOBULE * 2.2), base = inZone(s0, -LOBULE) ? fine : coarse, bp = base.getAttribute('position'), geo = base.clone(), p = geo.getAttribute('position');
       for (let v = 0; v < p.count; v++) { const dir = new THREE.Vector3().fromBufferAttribute(bp, v).normalize(); let t = LOBULE * 1.6;
         near.forEach((q) => { const dq = q.clone().sub(s0), c = dq.dot(dir); if (c > 1e-6) t = Math.min(t, (dq.lengthSq() / 2 - SEPTUM / 2 * dq.length()) / c); });
-        faces.forEach((f) => { const c = dir.dot(f); if (c > 1e-6) t = Math.min(t, (h - s0.dot(f)) / c); });
+        LIM.forEach(([f, l]) => { const c = dir.dot(f); if (c > 1e-6) t = Math.min(t, (l - s0.dot(f)) / c); });
         p.setXYZ(v, s0.x + dir.x * t, s0.y + dir.y * t, s0.z + dir.z * t); }
       geo.computeVertexNormals(); const m = new THREE.Mesh(geo, parMat); m.name = 'lobule'; solid.add(m);
-      const hull = new THREE.Mesh(geo, hullMat); hull.name = 'lobuleHull'; tree.add(hull); lobGeo.push(geo); });
-    // Interlobular ducts and vessels run in the septa: joined septal points (between neighbouring lobules) by a minimum spanning tree.
-    // Connective tissue fills the septa: the inside walls of the piece, seen between the lobules.
-    const fill = new THREE.Mesh(new THREE.BoxGeometry(CUBE * 0.999, CUBE * 0.999, CUBE * 0.999), M(g, '--collagen', [plane], { roughness: 0.9, he: [1 / 18, 0.22] })); fill.material.side = THREE.BackSide; fill.name = 'septa'; solid.add(fill);
-    const sept = []; inside.forEach((a, i) => inside.forEach((b, j) => { if (j > i && a.distanceTo(b) < LOBULE * 1.45) sept.push(a.clone().add(b).multiplyScalar(0.5)); }));
+      if (inZone(s0)) { const hull = new THREE.Mesh(geo, hullMat); hull.name = 'lobuleHull'; tree.add(hull); lobules.push(s0); } });
+    // Connective tissue fills the septa: seen on the floor of the column and on the wall of the opening, which is sized each frame.
+    const septMat = M(g, '--collagen', [], { roughness: 0.9, he: [1 / 18, 0.22], layer: [1, toL] }); septMat.side = THREE.BackSide;
+    const floor = new THREE.Mesh(new THREE.BoxGeometry(2 * COL, 2 * COL, top + BELOW), septMat); floor.position.z = (top - BELOW) / 2; floor.name = 'septa'; solid.add(floor);
+    const wall = new THREE.Mesh(new THREE.CylinderGeometry(1, 1, 1, 72, 1, true).rotateX(Math.PI / 2), septMat); wall.position.z = (top - BELOW) / 2; wall.name = 'septa'; solid.add(wall); g.userData.wall = wall;
+    // Interlobular ducts and vessels run in the septa: joined septal points (between neighbouring lobules near the site) by a minimum spanning tree.
+    const sept = []; lobules.forEach((a, i) => lobules.forEach((b, j) => { if (j > i && a.distanceTo(b) < LOBULE * 1.45) sept.push(a.clone().add(b).multiplyScalar(0.5)); }));
     const inTree = [0], edges = [];
     while (inTree.length < sept.length) { let best = [1e12, -1, -1]; inTree.forEach((i) => sept.forEach((q, j) => { if (inTree.includes(j)) return; const d = sept[i].distanceTo(q); if (d < best[0]) best = [d, i, j]; })); if (best[1] < 0) break; edges.push([best[1], best[2]]); inTree.push(best[2]); }
     // The duct hierarchy. The interlobular ducts follow the minimum spanning tree of septal points, each segment bent onto
@@ -1251,9 +1322,9 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
       if (!big) return;   // the artery and vein are drawn beside the large duct only, to keep the tree readable
       const u = pts[pts.length - 1].clone().sub(pts[0]).normalize(), side = new THREE.Vector3().crossVectors(u, Math.abs(u.y) < 0.9 ? Y : X).normalize().multiplyScalar(r + 60);
       tube(pts.map((p) => p.clone().add(side)), 50, L.vein); tube(pts.map((p) => p.clone().sub(side)), 32, L.artery); });
-    const inLobule = (p, s0) => { const d0 = p.distanceTo(s0); return Math.max(Math.abs(p.x), Math.abs(p.y), Math.abs(p.z)) < h - 30 && seeds.every((q) => q === s0 || p.distanceTo(q) > d0 + SEPTUM); };
+    const inLobule = (p, s0) => { const d0 = p.distanceTo(s0); return inZone(p, 30) && seeds.every((q) => q === s0 || p.distanceTo(q) > d0 + SEPTUM); };
     const toward = (from, to, s0) => { let t = 1; while (t > 0.15 && !inLobule(from.clone().lerp(to, t), s0)) t *= 0.8; return from.clone().lerp(to, t); };
-    inside.forEach((s0) => {
+    lobules.forEach((s0) => {
       const entry = net.reduce((b, p) => (p.distanceTo(s0) < b.distanceTo(s0) ? p : b), net[0]);
       tube([entry, s0], 14, L.intralobularDuct);
       const nPrim = 6 + Math.floor(R() * 3);
@@ -1268,42 +1339,36 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
         }
       }
     });
-    const T = (k, geo, color, extra) => inst(tree, geo, M(g, color, [plane, back], extra || {}), L[k], k);
+    const T = (k, geo, color, extra) => inst(tree, geo, M(g, color, [], Object.assign({ layer: [2, toL] }, extra || {})), L[k], k);
     T('mainDuct', rod, '--grossduct', { he: [1 / 20, 0.15] }); T('interlobularDuct', rod, '--grossduct', { he: [1 / 20, 0.15] }); T('joint', ball, '--grossduct', { he: false });
     T('intralobularDuct', rod, '--grossduct', { he: false }); T('terminalDuct', rod, '--grossduct', { he: false });
     T('vein', rod, '--grossvein'); T('artery', rod, '--grossartery');
     T('grossAcinus', ballHi, '--parenchyma', { he: [1 / 12, 0.25] });
     g.userData.ductCounts = { main: L.mainDuct.length, interlobular: L.interlobularDuct.length, intralobular: L.intralobularDuct.length, terminal: L.terminalDuct.length, acini: L.grossAcinus.length };
-    // The old septal ducts and vessels, for the solid view.
-    const lists = { duct: [], artery: [], vein: [] };
-    edges.forEach(([i, j]) => { const a = sept[i], b = sept[j], u = b.clone().sub(a).normalize(), side = new THREE.Vector3().crossVectors(u, Math.abs(u.y) < 0.9 ? Y : X).normalize().multiplyScalar(70);
-      lists.duct.push(rodMatrix(a, b, 30)); lists.vein.push(rodMatrix(a.clone().add(side), b.clone().add(side), 32)); lists.artery.push(rodMatrix(a.clone().sub(side), b.clone().sub(side), 20)); });
-    inst(solid, rod, M(g, '--grossduct', [plane, back]), lists.duct, 'interlobularDuct'); inst(solid, rod, M(g, '--grossvein', [plane, back]), lists.vein, 'interlobularVein'); inst(solid, rod, M(g, '--grossartery', [plane, back]), lists.artery, 'interlobularArtery');
-    const mainMid = sept[[...main][Math.floor(main.size / 2)]] || sept[0];
-    tag('gross:' + key, tree, 'Large (interlobular) duct', mainMid); tag('gross:' + key, tree, 'Intralobular duct', inside[Math.floor(inside.length / 2)]);
-    const tipM = L.terminalDuct[Math.floor(L.terminalDuct.length / 3)]; if (tipM) tag('gross:' + key, tree, 'Terminal (intercalated) duct', new THREE.Vector3().setFromMatrixPosition(tipM));
-    const acM = L.grossAcinus[Math.floor(L.grossAcinus.length / 5)]; if (acM) tag('gross:' + key, tree, 'Acini', new THREE.Vector3().setFromMatrixPosition(acM));
     // Islets at the region's density in this model, inside lobules, sizes lognormal about the mean of 110 um (Hahn 2021).
-    const dens = ORG.densities[KEY_OF[SITE.region]], count = Math.round(dens * (CUBE / 1000) ** 3), isl = [];
+    const dens = ORG.densities[KEY_OF[SITE.region]], vol = (2 * TREE.xy / 1000) ** 2 * (2 * TREE.z / 1000), count = Math.round(dens * vol), isl = [];
     const inSeptum = (p) => { const ds = seeds.map((q) => q.distanceTo(p)).sort((a, b) => a - b); return ds[1] - ds[0] < SEPTUM * 1.5; };
     for (let tries = 0; isl.length < count && tries < count * 20; tries++) {
-      const p = new THREE.Vector3((R() - 0.5) * CUBE * 0.98, (R() - 0.5) * CUBE * 0.98, (R() - 0.5) * CUBE * 0.98); if (inSeptum(p)) continue;
+      const p = new THREE.Vector3((R() - 0.5) * 2 * TREE.xy, (R() - 0.5) * 2 * TREE.xy, (R() - 0.5) * 2 * TREE.z); if (inSeptum(p)) continue;
       const u1 = Math.max(R(), 1e-9), z = Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * R()), r = 52.5 * Math.exp(0.3 * z);
       isl.push(new THREE.Matrix4().makeScale(r, r, r).setPosition(p)); }
-    inst(g, ball, M(g, '--isletgross', [plane, back], { roughness: 0.85, he: [1 / 9, 0.18] }), isl, 'grossIslet');
-    g.userData.stats = { key: SITE.region, density: dens, count: isl.length, lobules: inside.length };
-    const near0 = (pts, p) => pts.reduce((b, q) => (q.distanceTo(p) < b.distanceTo(p) ? q : b));
-    tag('gross:' + key, g, 'Lobule', near0(inside, new THREE.Vector3(h * 0.4, h * 0.3, h * 0.6))); tag('gross:' + key, g, 'Septum', near0(sept, new THREE.Vector3(-h * 0.3, h * 0.5, h * 0.5)));
-    tag('gross:' + key, tree, 'Interlobular duct', sept[edges[Math.floor(edges.length / 4)][1]]); tag('gross:' + key, g, 'Islet', new THREE.Vector3().setFromMatrixPosition(isl[0] || new THREE.Matrix4()));
+    inst(tree, ball, M(g, '--isletgross', [], { roughness: 0.85, he: [1 / 9, 0.18], layer: [2, toL] }), isl, 'grossIslet');
+    g.userData.stats = { key: SITE.region, density: dens, count: isl.length, lobules: lobules.length, volume: vol };
+    // Names, on what lies nearest the line going in, where the opening shows it.
+    const byLine = (pts) => pts.reduce((b, q) => (Math.hypot(q.x, q.y) + 0.3 * Math.abs(q.z - 1000) < Math.hypot(b.x, b.y) + 0.3 * Math.abs(b.z - 1000) ? q : b));
+    const at = (list) => list.map((m) => new THREE.Vector3().setFromMatrixPosition(m));
+    if (main.size) tag(set, tree, 'Large (interlobular) duct', byLine([...main].map((k) => sept[k])));
+    [['interlobularDuct', 'Interlobular duct'], ['intralobularDuct', 'Intralobular duct'], ['terminalDuct', 'Terminal (intercalated) duct'], ['grossAcinus', 'Acini']].forEach(([k, text]) => { if (L[k].length) tag(set, tree, text, byLine(at(L[k]))); });
+    if (isl.length) tag(set, tree, 'Islet', byLine(at(isl))); if (sept.length) tag(set, tree, 'Septum', byLine(sept));
+    LABELS[set].forEach((o) => { o.userData.check = (q) => { const l = q.clone().applyMatrix4(toL.value); return Math.hypot(l.x, l.y) < LAYER.R.value.y; }; });
+    g.userData.ring = tag(set, solid, 'Lobules, cut across', new THREE.Vector3(1000, 0, top));
     scene.add(g); GROSS[key] = g; return g;
   }
-  function grossCut(g) { const pl = g.userData.plane, c = new THREE.Vector3().setFromMatrixPosition(g.matrixWorld), view = c.clone().sub(camera.position).normalize();
-    pl.normal.copy(view); pl.constant = cutOpen ? -view.dot(c) : 1e6;
-    // Islets, ducts and vessels only within 150 um behind the cut (more than an islet's width), like a thick section.
-    const bk = g.userData.back; if (bk) { bk.normal.copy(view).negate(); bk.constant = cutOpen ? view.dot(c) + 150 : 1e6; } }
-  const COMPARE = { on: false };
+  const COMPARE = { on: false, q: new THREE.Quaternion(), right: X.clone(), up: Y.clone(), names: [] };
   $('compare').addEventListener('click', () => { COMPARE.on = !COMPARE.on; $('compare').textContent = COMPARE.on ? 'Leave the comparison' : 'Compare head, body and tail';
-    if (COMPARE.on) { STAGE.mode = 'tissue'; controls.target.set(0, 0, 0); flyTo(28000 / Math.min(1, camera.aspect * 1.2), undefined, 'tissue'); } else flyTo(STOPS.gross, undefined, 'tissue'); });
+    if (COMPARE.on) {   // the three columns face the viewer, side by side across the view
+      COMPARE.q = quatFromTo(Z, camera.position.clone().sub(controls.target)); COMPARE.right = X.clone().applyQuaternion(camera.quaternion); COMPARE.up = Y.clone().applyQuaternion(camera.quaternion);
+      COMPARE.names.forEach((o, i) => o.position.copy(COMPARE.right).multiplyScalar((i - 1) * 5600).addScaledVector(COMPARE.up, 2700)); STAGE.mode = 'tissue'; controls.target.set(0, 0, 0); flyTo(28000 / Math.min(1, camera.aspect * 1.2), undefined, 'tissue'); } else flyTo(STOPS.gross, undefined, 'tissue'); });
   document.querySelectorAll('[data-region]').forEach((b) => b.addEventListener('click', () => {
     const r = b.dataset.region, d = camera.position.distanceTo(controls.target), back = d < 2500 ? STOPS.tissue : d < 40000 ? STOPS.gross : null;
     if (COMPARE.on) { COMPARE.on = false; $('compare').textContent = 'Compare head, body and tail'; }
@@ -1311,11 +1376,10 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
   function goSite(to, back) { if (back === null || back === undefined) { setSite(to); return; }
     flight = { legs: [{ d: 90000, mode: 'tissue', then: () => setSite(to) }, { d: 90000 }, { d: back, mode: 'tissue' }], start: null }; }
 
-  { const root = new THREE.Group(); scene.add(root); ['Head', 'Body', 'Tail'].forEach((t, i) => tag('compare', root, t, new THREE.Vector3((i - 1) * 5600, 2700, 0))); }
+  { const root = new THREE.Group(); scene.add(root); ['Head', 'Body', 'Tail'].forEach((t, i) => COMPARE.names.push(tag('compare', root, t, new THREE.Vector3((i - 1) * 5600, 2700, 0)))); }
 
   // ---------- pickers: step through sites, and through the acini, ducts and islets
-  let showSites = true, grossSolid = false;
-  $('grosssolid').addEventListener('change', (e) => { grossSolid = e.target.checked; });
+  let showSites = true;
   function updatePickers() {
     if (!SITE_LIST.length || site < 0) return; const S0 = SITE_LIST[site];
     $('sitelabel').textContent = `Site ${site + 1} of ${SITE_LIST.length} · ${S0.region} · ${S0.verified ? 'tested block' : 'seed ' + S0.seed}`;
@@ -1351,12 +1415,12 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
     setFocus(was); }));
 
   // ---------- flying between levels
-  const STOPS = { organ: 2.6e5, gross: 7000, tissue: 1100, detail: 200, cells: 100, cell: 24 };
+  const STOPS = { organ: 2.6e5, gross: 4200, tissue: 800, detail: 200, cells: 100, cell: 24 };
   const MODE_OF = { organ: 'tissue', gross: 'tissue', tissue: 'tissue', detail: 'structure', cells: 'cells', cell: 'cell' };
   const stopFor = (lvl, br) => (lvl === 'detail' || lvl === 'cells') ? SIZE[br || branch][lvl === 'detail' ? 'whole' : 'cells'] : STOPS[lvl];
   let flight = null;
   function flyTo(dGoal, newBranch, mode) {
-    const legs = [];
+    VIEWS[focus].turned = false; const legs = [];
     if (newBranch && newBranch !== branch && STAGE.mode !== 'tissue') legs.push({ d: 1100, mode: 'tissue', then: () => { branch = newBranch; } }); else if (newBranch) branch = newBranch;
     legs.push({ d: dGoal, mode });
     flight = { legs, start: null };
@@ -1379,7 +1443,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
   $('reset').addEventListener('click', () => { const lv = levelAt(camera.position.distanceTo(controls.target)); flyTo(stopFor(lv) || STOPS.organ, undefined, MODE_OF[lv]); });
   // Escape steps back one stage.
   window.addEventListener('keydown', (e) => { if (e.key !== 'Escape') return; const lv = levelAt(camera.position.distanceTo(controls.target));
-    const up = { cell: 'cells', cells: 'detail', detail: 'tissue', tissue: 'organ' }[lv]; if (up) flyTo(stopFor(up), undefined, MODE_OF[up]); });
+    const up = { cell: 'cells', cells: 'detail', detail: 'tissue', tissue: 'gross', gross: 'organ' }[lv]; if (up) flyTo(stopFor(up), undefined, MODE_OF[up]); });
   $('surround').addEventListener('change', (e) => { surroundings = e.target.checked; });
   document.querySelectorAll('[data-stain]').forEach((b) => b.addEventListener('click', () => { stain = b.dataset.stain;
     document.querySelectorAll('[data-stain]').forEach((x) => x.setAttribute('aria-pressed', String(x === b))); document.body.dataset.stain = stain; }));
@@ -1390,7 +1454,6 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
   function applyToggles(g) { if (!g) return; g.traverse((o) => { if (!o.isInstancedMesh) return; for (const [k, list] of Object.entries(TOGGLES)) if (list.includes(o.name)) o.visible = shown[k]; }); }
   document.querySelectorAll('[data-toggle]').forEach((el) => el.addEventListener('change', () => { shown[el.dataset.toggle] = el.checked; applyToggles(groups.block); Object.values(BRANCHES).forEach((b) => applyToggles(b.detail)); }));
   $('islets').addEventListener('change', (e) => { if (islets) islets.visible = e.target.checked; pancreasMeshes.forEach((m) => { m.material.userData.base = e.target.checked ? 0.3 : 0.92; }); });
-  $('cut').addEventListener('input', (e) => { const v = +e.target.value; planes.block.constant = v >= 150 ? 1e6 : v; blockSides(); });
   let cutOpen = false;   // whole structures by default; tick Cut open to see inside
   $('cutopen').addEventListener('change', (e) => { cutOpen = e.target.checked; });
   // The cutaway always faces the viewer: it passes through the point being zoomed into and removes what lies in front.
@@ -1429,8 +1492,8 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
   // ---------- play the journey
   const TOUR = [
     { d: 2.6e5, br: 'acinus', m: 'tissue', say: 'The pancreas lies across the back of the abdomen, behind the stomach. Its head sits in the C-shaped curve of the duodenum, and its neck, body and tail run to the left, the tail reaching towards the spleen. It is two glands in one: an exocrine gland that makes digestive juice, and scattered endocrine islets that release hormones into the blood.' },
-    { d: 7000, m: 'tissue', say: 'At low magnification, thin septa of connective tissue divide the gland into lobules, and carry its larger ducts and vessels. Most of each lobule is densely stained exocrine tissue. The islets of Langerhans stand out among it as paler, rounded islands.' },
-    { d: 1100, m: 'tissue', say: 'Inside a lobule, grape-like acini bud from a branching tree of small ducts, with capillaries and a little connective tissue between them. The islet sits among the acini without a duct of its own. Its hormones leave through its capillaries.' },
+    { d: 4200, m: 'tissue', say: 'At low magnification, thin septa of connective tissue divide the gland into lobules, and carry its larger ducts and vessels. Most of each lobule is densely stained exocrine tissue. The islets of Langerhans stand out among it as paler, rounded islands.' },
+    { d: 800, m: 'tissue', say: 'Inside a lobule, grape-like acini bud from a branching tree of small ducts, with capillaries and a little connective tissue between them. The islet sits among the acini without a duct of its own. Its hormones leave through its capillaries.' },
     { d: 210, m: 'structure', say: 'Each acinus is a cluster of pyramidal cells around a tiny central lumen. In an H and E stain, the base of each cell is purple, because it is packed with rough endoplasmic reticulum, and its apex is pink with zymogen granules: the stored digestive enzymes.' },
     { d: 100, m: 'cells', say: 'Pulled apart, the cells show their shape: broad at the base, narrow at the lumen, with a round nucleus near the base. The pale cells left at the centre are centroacinar cells. They are the first cells of the duct, and are found only in the pancreas.' },
     { d: 26, m: 'cell', say: 'Inside one acinar cell, enzymes are made on the rough endoplasmic reticulum, packaged in the Golgi apparatus, and stored as zymogen granules at the apex, until a meal signals their release into the lumen.' },
@@ -1484,7 +1547,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
   function drawLabels(set, w) {
     let used = 0; const W = UI.w, H = UI.h, placed = [];
     if (namesOn && set && w > 0.5) for (const o of LABELS[set] || []) {
-      const p = o.getWorldPosition(new THREE.Vector3());
+      const p = o.getWorldPosition(new THREE.Vector3()); if (o.userData.check && !o.userData.check(p)) continue;
       const sl = set === 'organ' ? SLICE.organ : set === 'tissue' ? SLICE.block : null;
       if (sl && sl.visible) { const { n, axis, th } = sl.userData, c = p.dot(axis), s0 = sl.userData.slabs[0];
         const k = Math.max(0, Math.min(n - 1, Math.floor((c - s0.lo) / th))); p.addScaledVector(axis, sl.userData.slabs[k].slab.position.dot(axis)); }
@@ -1520,7 +1583,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
     const d = camera.position.distanceTo(controls.target); if (d > 9000 || !down2 || Math.hypot(e.clientX - down2[0], e.clientY - down2[1]) > 5) return;
     const r = VIEWS[focus].el.getBoundingClientRect(); ptr.set((e.clientX - r.left) / r.width * 2 - 1, -(e.clientY - r.top) / r.height * 2 + 1); ray.setFromCamera(ptr, camera);
     const targets = []; activeGroups().forEach((g) => { if (g.visible) g.traverse((o) => { if (o.isInstancedMesh && o.visible && KINDS[o.name]) targets.push(o); }); });
-    const hit = ray.intersectObjects(targets, false).find((h) => { const m = h.object.material; return !m.clippingPlanes.length || m.clippingPlanes.every((p) => p.distanceToPoint(h.point) >= 0); });
+    const hit = ray.intersectObjects(targets, false).find((h) => { const m = h.object.material; return (!m.clippingPlanes.length || m.clippingPlanes.every((p) => p.distanceToPoint(h.point) >= 0)) && (h.object.parent !== groups.block || inCore(h.point)); });
     if (hit) { selected = hit.object.name; isolated = false; applyIsolate(); showSelection(); } });
   let down2 = null; onViews('pointerdown', (e) => { down2 = [e.clientX, e.clientY]; });
   $('isolate').addEventListener('click', () => { isolated = !isolated; applyIsolate(); showSelection(); });
@@ -1537,9 +1600,9 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
   // ---------- each frame
   const INFO = {
     organ: 'The HRA reference pancreas (Visible Human Male), about 15 cm long, with its ducts and vessels. Click it to choose where to zoom in, then scroll or pinch toward it.',
-    gross: 'A 4 mm piece of the chosen region, at low magnification. Exocrine lobules (faint outlines) are drained by a tree of ducts: a large interlobular duct running between the lobules in the connective-tissue septa, with an artery and vein beside it (drawn beside the large duct only); interlobular ducts branching from it to each lobule; intralobular ducts inside the lobules; and terminal (intercalated) ducts ending in grape-like clusters of acini. Islets are scattered among the acini at the region’s density in the model (twice as dense in the tail; Wang 2013). Real lobules are packed solid with acini: the clusters are drawn sparser so the ducts can be seen. Tick “Show lobules as solid tissue” for the section-like view. Duct calibres, lobule size and septum thickness are typical values not yet sourced.',
-    compare: 'Three 4 mm pieces side by side, from the head, body and tail, cut open. The tail holds twice as many islets per mm³ as the head and body (Wang 2013; Hahn 2021). Lobules, septa and islet sizes are drawn the same way in each.',
-    tissue: 'A 300 µm block from inside a lobule: an intralobular duct tree; intercalated ducts each ending in a rounded acinus whose cells reach out until they meet a neighbour or a vessel; capillaries with red cells; collagen and stellate cells; an islet. The same representative block appears wherever you zoom in. Choose below what to zoom into next.',
+    gross: 'The gland opened in place at the chosen site, along a line going in from its surface (the shortest, leaning towards the front). As you zoom, the surface of the organ opens and stays as a ring round the opening. Inside lie the lobules, cut across, with pale septa of connective tissue between them. Round the line, the lobules near the site open in turn to show what fills them: a tree of ducts (a large interlobular duct in the septa with an artery and vein beside it, interlobular ducts to each lobule, intralobular ducts inside, and terminal ducts ending in grape-like clusters of acini, drawn sparser than real so the ducts show) and islets at the region’s density in the model (twice as dense in the tail; Wang 2013). Zoom on to the tissue at the bottom of the opening. The openings are a way of showing the model, not a dissection. Duct calibres, lobule size and septum thickness are typical values not yet sourced.',
+    compare: 'Three columns of lobules side by side, from the head, body and tail, each opened round its centre to show its duct tree and islets. The tail holds twice as many islets per mm³ as the head and body (Wang 2013; Hahn 2021). Lobules, septa and islet sizes are drawn the same way in each.',
+    tissue: 'At the bottom of the opening, a core of tissue from inside a lobule, about 290 µm across, cut flat through its islet, with the duct tree of the lobule left as a ring round it. In it: an intralobular duct tree; intercalated ducts each ending in a rounded acinus whose cells reach out until they meet a neighbour or a vessel; capillaries with red cells; collagen and stellate cells; the islet. The core is cut from the 300 µm block built and tested for this region, or generated from the site’s seed. Choose below what to zoom into next.',
     acinus: 'One acinus on its own, cut open: wedge-shaped acinar cells converge on the lumen like orange segments, zymogen granules at their apices, centroacinar cells lining the duct where it enters, and its intercalated duct leading back to the larger duct it drains into. Zoom on and its cells separate.',
     acinusOld: 'One acinus cut open among its neighbours: wedge-shaped acinar cells converge on the lumen like orange segments, zymogen granules at their apices, centroacinar cells lining the duct where it enters.',
     islet: 'The islet on its own, cut open: beta (green), alpha (magenta), delta (cyan) and PP (amber) cells intermixed along its own dense capillary bed, with no core or mantle, as in human islets (Cabrera 2006; Brissova 2005). Zoom on and its cells separate.',
@@ -1563,13 +1626,19 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
     const d = camera.position.distanceTo(controls.target);
     // Move the target toward the structure being zoomed into, carrying the camera with it.
     const a = anchorAt(d), delta = a.clone().sub(controls.target); controls.target.add(delta); camera.position.add(delta);
-    camera.near = Math.max(0.05, d / 60); camera.far = Math.max(d * 300, 2e3); camera.updateProjectionMatrix();
-    const w = weights(d);
+    // Until the view is turned by hand, it turns to look straight down the line going in as the layers open.
+    if (!COMPARE.on && STAGE.mode === 'tissue' && !v.turned && site >= 0 && SITE_LIST[site].axis) { const k = 0.06 * ramp(d, 60000, 14000);
+      if (k > 1e-3) { const dir = camera.position.clone().sub(controls.target).normalize().lerp(SITE_LIST[site].axis, k).normalize(); camera.position.copy(controls.target).addScaledVector(dir, d); } }
+    // Anything much nearer than the point zoomed into is not drawn while the layers are open, so the view looks down the opening.
+    camera.near = !COMPARE.on && STAGE.mode === 'tissue' && d < 30000 ? d * 0.5 : Math.max(0.05, d / 60); camera.far = Math.max(d * 300, 2e3); camera.updateProjectionMatrix();
+    setLayers(d); const w = weights(d);
     fade(groups.organ, w.organ);
     const firsts = ['head', 'body', 'tail'].map((rk) => SITE_LIST.findIndex((S0) => S0.region === rk && S0.verified));
     Object.keys(GROSS).map(Number).concat(firsts, [site]).filter((k, n, a) => a.indexOf(k) === n).forEach((k) => { const ci = firsts.indexOf(k), show = COMPARE.on ? ci >= 0 : (k === site && w.gross > 0.01); if (show) buildGross(k); const g = GROSS[k]; if (!g) return;
-      g.position.set(COMPARE.on ? (ci - 1) * 5600 : 0, 0, 0); g.updateMatrixWorld(true); if (show) stainGroup(g);
-      if (g.userData.solid) { g.userData.solid.visible = grossSolid; g.userData.tree.visible = !grossSolid; } fade(g, show ? (COMPARE.on ? 1 : w.gross) : 0); if (show) grossCut(g); });
+      if (COMPARE.on) g.position.copy(COMPARE.right).multiplyScalar((ci - 1) * 5600); else g.position.set(0, 0, 0); g.quaternion.copy(COMPARE.on ? COMPARE.q : g.userData.q); g.updateMatrixWorld(true); g.userData.toL.value.copy(g.matrixWorld).invert();
+      if (show) { stainGroup(g); const R0 = LAYER.R.value.x, rr = (LAYER.R.value.y + Math.min(R0, Hv(d) / 2)) / 2; g.userData.wall.scale.set(R0 * 0.995 + 1, R0 * 0.995 + 1, g.userData.top + BELOW);
+        g.userData.ring.position.set(rr * 0.83, rr * 0.56, Math.min(g.userData.top, 0.7 * d)); }
+      fade(g, show ? w.gross : 0); });
     if (w.block > 0.01) { ensureBlock(); stainGroup(groups.block); if (SLICE.block) stainGroup(SLICE.block); } fade(groups.block, w.block);
     // Slice apart: the organ while it is in view, otherwise the block.
     const slicing = SLICE.value > 0.001, inner = groups.organ.userData.inner;
@@ -1589,12 +1658,12 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
     }
     if (motionOn) { const t = now / 1000; flow(groups.block, t); flow(BRANCHES[branch].detail, t); }
     if (marker) marker.visible = false;
-    { const dots = groups.organ.userData.dots; if (dots) { dots.visible = showSites && w.organ > 0.3; if (dots.visible) { const s = Math.max(250, d * 0.006), m4 = new THREE.Matrix4();
+    { const dots = groups.organ.userData.dots; if (dots) { dots.visible = showSites && w.organ > 0.3 && LAYER.R.value.x < 1; if (dots.visible) { const s = Math.max(250, d * 0.006), m4 = new THREE.Matrix4();
         SITE_LIST.forEach((S0, k) => { const sc = k === site ? s * 1.8 : s; m4.makeScale(sc, sc, sc).setPosition(S0.local); dots.setMatrixAt(k, m4); }); dots.instanceMatrix.needsUpdate = true; } } }   // no focus marker on the organ; clicking still chooses where to zoom in
     const lv = levelAt(d), key = lv === 'detail' ? branch : lv === 'cells' ? branch + 'Cells' : lv === 'cell' ? branch + 'Cell' : lv;
     if (v.i === focus && (lv === 'gross' || lv === 'compare')) { const st = (k) => GROSS[k] && GROSS[k].userData.stats, firsts = ['head', 'body', 'tail'].map((rk) => SITE_LIST.findIndex((S0) => S0.region === rk && S0.verified));
-      const txt = lv === 'compare' ? firsts.filter(st).map((k) => `${st(k).key[0].toUpperCase() + st(k).key.slice(1)}: ${st(k).count.toLocaleString('en')} islets in 64 mm³ (${Math.round(st(k).density)} per mm³)`).join('; ') + '.'
-        : st(site) ? `This 4 mm piece from site ${site + 1}, in the ${blockRegion}: ${st(site).lobules} lobules and ${st(site).count.toLocaleString('en')} islets (${Math.round(st(site).density)} per mm³).` : '';
+      const txt = lv === 'compare' ? firsts.filter(st).map((k) => `${st(k).key[0].toUpperCase() + st(k).key.slice(1)}: ${st(k).count.toLocaleString('en')} islets in ${Math.round(st(k).volume)} mm³ (${Math.round(st(k).density)} per mm³)`).join('; ') + '.'
+        : st(site) ? `Site ${site + 1}, in the ${blockRegion}: round the line going in, ${st(site).lobules} lobules are opened to their ducts, with ${st(site).count.toLocaleString('en')} islets in ${Math.round(st(site).volume)} mm³ (${Math.round(st(site).density)} per mm³).` : '';
       $('grossstats').textContent = txt; }
     if (key !== lastLevel) { lastLevel = key; UI.levelname.textContent = LEVEL_NAMES(key);
      if (v.i === focus) { $('info').textContent = INFO[key];

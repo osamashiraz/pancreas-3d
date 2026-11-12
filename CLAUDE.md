@@ -47,5 +47,6 @@ After any builder run, copy the new byte counts and SHA-256 values into the regi
 - The standalone viewer uses three.js r147 UMD builds from jsDelivr (r148 removed `examples/js`). The repo itself uses ES modules (three 0.184).
 - `Box3.setFromObject` on an InstancedMesh only covers the prototype in r147: frame instanced content by known size.
 - HRA region meshes are open surfaces: no volumes from them. The whole organ (union of regions) closes and is voxelized for volumes.
+- The layered openings are discards in the fragment shader (`layered()` in `viewer/src/app.js`). Raycasts and labels do not see them, so picking and names test `inCore()` or the group's layer frame; keep them in step with the shader.
 - `pkill -f <name>` kills your own shell if the name appears in the command line.
 - Headless Chromium renders WebGL in software: viewer tests take minutes; drive UI through `window.__zoom` and `element.click()` from `evaluate`, not Playwright clicks.
