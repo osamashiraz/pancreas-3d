@@ -1,0 +1,750 @@
+{
+  "schemaVersion": "humanbio.region-extract.v1",
+  "license": "CC-BY-4.0",
+  "attribution": "Human Reference Atlas 3D Reference Object Library (HuBMAP), from the Visible Human Project of the U.S. National Library of Medicine.",
+  "method": "Accessor bytes copied unchanged from named nodes with identity world transforms; tangents, texture coordinates and materials dropped.",
+  "references": [
+    {
+      "sex": "male",
+      "source": {
+        "repository": "https://github.com/hubmapconsortium/ccf-releases",
+        "version": "v2.0",
+        "commit": "b036a91aaf7234f462b1249d4a5f4fb0e982f412",
+        "license": "CC-BY-4.0",
+        "archive": "3d-vh-m-united.glb.zip",
+        "archiveSha256": "8e7e941afaf685b13b614586ae078444fdbbdd1ca4ded8cf62b7d766e3fd41d5",
+        "file": "3d-vh-m-united.glb",
+        "sha256": "34c45c90aa4acd36be19edf8b878a8e7137db9e8cb90e8e6332c2abd49d7cf9d"
+      },
+      "output": {
+        "file": "pancreas-region-male.glb",
+        "bytes": 3451104,
+        "sha256": "36bba84f7ad333b756813bc3b9394ee4bfb617e474dc7852134b273f69da0883",
+        "units": "metres",
+        "frame": "HRA, unchanged"
+      },
+      "nodes": [
+        {
+          "node": "VH_M_head_of_pancreas",
+          "triangles": 4617,
+          "positionSha256": [
+            "ddb7fb03300a347b8c04e91d6e3688968aa0bb84e70d19fb17783827a5ca5b29"
+          ],
+          "extentMm": [
+            42.5,
+            47.6,
+            42.7
+          ]
+        },
+        {
+          "node": "VH_M_uncinate_process_of_the_pancreas",
+          "triangles": 1202,
+          "positionSha256": [
+            "ecb14fa6034b2ca33bc640e405e1cbd932f2bede7fb415c941a89b2ce1ddc93f"
+          ],
+          "extentMm": [
+            31.3,
+            17.9,
+            33.7
+          ]
+        },
+        {
+          "node": "VH_M_neck_of_pancreas",
+          "triangles": 765,
+          "positionSha256": [
+            "c4425033c6ec0cfbea2b611229bacd44966eae22a10e23806a44228ae7f97e9b"
+          ],
+          "extentMm": [
+            19.6,
+            28.4,
+            26.7
+          ]
+        },
+        {
+          "node": "VH_M_body_of_pancreas",
+          "triangles": 12807,
+          "positionSha256": [
+            "fcfc646cc5990ff2bb3167f2ad31633ac6a01d6bce76a0ebcaade8387e4bf345"
+          ],
+          "extentMm": [
+            50.4,
+            38.1,
+            45.5
+          ]
+        },
+        {
+          "node": "VH_M_tail_of_pancreas",
+          "triangles": 19539,
+          "positionSha256": [
+            "395f91108f80de610cc52c61354e36443cf61a6db991eb2b0a069204e747216b"
+          ],
+          "extentMm": [
+            52.6,
+            35.0,
+            49.7
+          ]
+        },
+        {
+          "node": "VH_M_ventral_pancreatic_duct",
+          "triangles": 12828,
+          "positionSha256": [
+            "bb8149edb194579c48a04206d4cc0246a9ada9b027c1e3483bcbc8868eaaead0"
+          ],
+          "extentMm": [
+            104.7,
+            55.9,
+            59.4
+          ]
+        },
+        {
+          "node": "VH_M_dorsal_pancreatic_duct",
+          "triangles": 1352,
+          "positionSha256": [
+            "67ae96cec0e324b72ed035465192ac99f71926cdc3b67b4bf81cc14191d0f6c2"
+          ],
+          "extentMm": [
+            9.3,
+            5.6,
+            11.3
+          ]
+        },
+        {
+          "node": "VH_M_common_bile_duct",
+          "triangles": 5428,
+          "positionSha256": [
+            "cc876bd92ad680e0ed4026133b58d0a64d5ed3e84e028aca4cd5ff8eeabc0f76"
+          ],
+          "extentMm": [
+            25.9,
+            49.8,
+            9.5
+          ]
+        },
+        {
+          "node": "VH_M_hepatopancreatic_ampulla",
+          "triangles": 1136,
+          "positionSha256": [
+            "a85608900edeb5a6e7d816ec3fdf3345c12c311bad0926c1b69da2f3f7c2db82"
+          ],
+          "extentMm": [
+            8.9,
+            7.2,
+            7.5
+          ]
+        },
+        {
+          "node": "VH_M_sphincter_of_hepatopancreatic_ampulla",
+          "triangles": 646,
+          "positionSha256": [
+            "dd00d90121a04f3f318224312674e61bddfd5763cea5c7ccebded57c32f39582"
+          ],
+          "extentMm": [
+            6.9,
+            9.8,
+            9.8
+          ]
+        },
+        {
+          "node": "VH_M_celiac_trunk",
+          "triangles": 617,
+          "positionSha256": [
+            "c9f294bf65d91206901dc5176ddf82cce4112467c83da3a8dc7ce8591e216a5c"
+          ],
+          "extentMm": [
+            16.6,
+            27.0,
+            18.8
+          ]
+        },
+        {
+          "node": "VH_M_common_hepatic_artery",
+          "triangles": 546,
+          "positionSha256": [
+            "cd0cd10f7b485c54af93f7c313af0f1d0a11d699020a5fdbbb43444fc63b0b17"
+          ],
+          "extentMm": [
+            22.6,
+            17.5,
+            12.7
+          ]
+        },
+        {
+          "node": "VH_M_proper_hepatic_artery",
+          "triangles": 598,
+          "positionSha256": [
+            "20f1217949cf6b9743418e6d5838092f2ab6603d762673a47ff05f57a561e4a3"
+          ],
+          "extentMm": [
+            20.7,
+            12.9,
+            7.7
+          ]
+        },
+        {
+          "node": "VH_M_splenic_artery",
+          "triangles": 5487,
+          "positionSha256": [
+            "bf39d4f2054f08d9d776d81d5ec1bbbbec67cbc28460e0159ef10c93c78cc83b"
+          ],
+          "extentMm": [
+            90.2,
+            47.7,
+            74.5
+          ]
+        },
+        {
+          "node": "VH_M_superior_mesenteric_artery",
+          "triangles": 3250,
+          "positionSha256": [
+            "bc38553302a1817f065201b45ae40c6b873442f4c6c5ab106d6676826c1f16f9"
+          ],
+          "extentMm": [
+            21.5,
+            52.8,
+            44.1
+          ]
+        },
+        {
+          "node": "VH_M_splenic_vein",
+          "triangles": 10593,
+          "positionSha256": [
+            "417c67bed8fe401d30898a4f74ad6e741ecfd677a8ae665e11fe011f118a90f6"
+          ],
+          "extentMm": [
+            124.5,
+            90.8,
+            92.4
+          ]
+        },
+        {
+          "node": "VH_M_superior_mesenteric_vein",
+          "triangles": 6877,
+          "positionSha256": [
+            "9764a181263b26546afcf6ee799d1b90342489ad565040b1e947c05e1534057a"
+          ],
+          "extentMm": [
+            34.7,
+            203.0,
+            38.9
+          ]
+        },
+        {
+          "node": "VH_M_hepatic_portal_vein",
+          "triangles": 1447,
+          "positionSha256": [
+            "883d42bb207c56aa17ca1e45a2b3075f997cc2e090512479e08f60f6c1638367"
+          ],
+          "extentMm": [
+            42.7,
+            42.8,
+            29.1
+          ]
+        },
+        {
+          "node": "VH_M_inferior_pancreaticoduodenal_vein",
+          "triangles": 964,
+          "positionSha256": [
+            "68bbe6f944b4c04a6a89c2357c4e1495a68a6b7378ca8f866f501593180926e0"
+          ],
+          "extentMm": [
+            26.8,
+            13.5,
+            11.9
+          ]
+        },
+        {
+          "node": "VH_M_duodenum_superior",
+          "triangles": 482,
+          "positionSha256": [
+            "0f575cd643c8f4b2803defeb45ade3d77cf5bd3c96b3a090c93258ffc64d4e36"
+          ],
+          "extentMm": [
+            44.9,
+            22.9,
+            47.5
+          ]
+        },
+        {
+          "node": "VH_M_duodenum_descending",
+          "triangles": 654,
+          "positionSha256": [
+            "57d94453ccfa58ff287277fb1039fe5d87b24f3047447c60c8425e51e6c9083c"
+          ],
+          "extentMm": [
+            27.0,
+            66.9,
+            24.3
+          ]
+        },
+        {
+          "node": "VH_M_duodenum_horizonal",
+          "triangles": 808,
+          "positionSha256": [
+            "f940749f5749f1c6f9d9bf22b0ff472fc6b99856ebb9a1b376cc49437d1f7870"
+          ],
+          "extentMm": [
+            64.1,
+            31.0,
+            30.8
+          ]
+        },
+        {
+          "node": "VH_M_duodenum_ascending",
+          "triangles": 982,
+          "positionSha256": [
+            "e08d0dde3e2919e3479eed8bb6e88a421c9b1a2500d736d3d529f777c3407144"
+          ],
+          "extentMm": [
+            49.4,
+            59.9,
+            25.0
+          ]
+        },
+        {
+          "node": "VH_M_duodenal_ampulla",
+          "triangles": 324,
+          "positionSha256": [
+            "4df2bc34e5869ecdb73572506fefbc3086d92891461478882e3e8826aad87fbe"
+          ],
+          "extentMm": [
+            22.6,
+            21.9,
+            23.2
+          ]
+        },
+        {
+          "node": "VH_M_hilum_of_spleen",
+          "triangles": 5339,
+          "positionSha256": [
+            "c2051a0fbe6e88701af480a0c1d02f5024464a519191adcced4826207c6ee473"
+          ],
+          "extentMm": [
+            95.7,
+            62.2,
+            53.8
+          ]
+        },
+        {
+          "node": "VH_M_gastric_surface_of_spleen",
+          "triangles": 2384,
+          "positionSha256": [
+            "5bd7ad2ed1b2703e09ab9c26ac5de787de8966ae41c2efcd5cfa671f51c11c0c"
+          ],
+          "extentMm": [
+            101.4,
+            73.5,
+            62.7
+          ]
+        },
+        {
+          "node": "VH_M_renal_surface_of_spleen",
+          "triangles": 1789,
+          "positionSha256": [
+            "46dc4f01f9590318e4ae3aa474a22802315fa1f9c4880500f689fa601020f253"
+          ],
+          "extentMm": [
+            85.4,
+            67.6,
+            61.1
+          ]
+        },
+        {
+          "node": "VH_M_colic_surface_of_spleen",
+          "triangles": 1040,
+          "positionSha256": [
+            "51572430109e60dbacc9b37d969cf8541b7f36ff4acd16d71ad268e17aad62b5"
+          ],
+          "extentMm": [
+            21.5,
+            51.7,
+            26.4
+          ]
+        },
+        {
+          "node": "VH_M_diaphragmatic_surface_of_spleen",
+          "triangles": 6320,
+          "positionSha256": [
+            "ce6287c1134f9c2e257dbd6f08059b3eed500846df5f810b1d1ebf1f65ca84bc"
+          ],
+          "extentMm": [
+            110.4,
+            118.6,
+            87.7
+          ]
+        }
+      ],
+      "missing": []
+    },
+    {
+      "sex": "female",
+      "source": {
+        "repository": "https://github.com/hubmapconsortium/ccf-releases",
+        "version": "v2.0",
+        "commit": "b036a91aaf7234f462b1249d4a5f4fb0e982f412",
+        "license": "CC-BY-4.0",
+        "archive": "3d-vh-f-united.glb.7z",
+        "archiveSha256": "b84f820009075c154edcf1491539516ef475e788528cdc0cd670c04ee151b99d",
+        "file": "3d-vh-f-united.glb",
+        "sha256": "472567a56896b9b7890508da6501fbf858e56aaa30745365f7a71ade782b529c"
+      },
+      "output": {
+        "file": "pancreas-region-female.glb",
+        "bytes": 1715844,
+        "sha256": "48cc2fee6eae2c659ff1b8fbeb34a5c9bcdedac1c1adbbd1974e21db97ed6f3a",
+        "units": "metres",
+        "frame": "HRA, unchanged"
+      },
+      "nodes": [
+        {
+          "node": "VH_F_head_of_pancreas",
+          "triangles": 3733,
+          "positionSha256": [
+            "21a9f9adb127c5bacb7797e7be3b2a95c4e3c6da6090a3e711f43d9af553a7b4"
+          ],
+          "extentMm": [
+            53.9,
+            44.0,
+            40.4
+          ]
+        },
+        {
+          "node": "VH_F_ucinate_process1",
+          "triangles": 831,
+          "positionSha256": [
+            "9b385f7b6fe88cbe960313fc08cecfd460c46dce9489c02121892615f9525810"
+          ],
+          "extentMm": [
+            39.4,
+            21.8,
+            22.6
+          ]
+        },
+        {
+          "node": "VH_F_neck_of_pancreas",
+          "triangles": 738,
+          "positionSha256": [
+            "cfdc461fca2d983dfa0538dae30a60370133935a6efea40079f7e60f1859dd41"
+          ],
+          "extentMm": [
+            21.5,
+            24.0,
+            18.6
+          ]
+        },
+        {
+          "node": "VH_F_body_of_pancreas",
+          "triangles": 3595,
+          "positionSha256": [
+            "8d41a35ac46e2bb4729b5513fe1f133f4ae859fd936596e1971c8aa9f08337f9"
+          ],
+          "extentMm": [
+            64.3,
+            42.2,
+            48.3
+          ]
+        },
+        {
+          "node": "VH_F_tail_of_pancreas",
+          "triangles": 3997,
+          "positionSha256": [
+            "599576bd3959a00098d71c59654106b04e7a5a5e31e95d20227926fd88d099b1"
+          ],
+          "extentMm": [
+            76.1,
+            39.4,
+            62.2
+          ]
+        },
+        {
+          "node": "VH_F_ventral_pancreatic_duct",
+          "triangles": 5124,
+          "positionSha256": [
+            "a91873c92f7005b6de3c920ae67819b46de75c022e18db6a7bb6d1fdebb88558"
+          ],
+          "extentMm": [
+            150.9,
+            34.0,
+            63.5
+          ]
+        },
+        {
+          "node": "VH_F_dorsal_pancreatic_duct",
+          "triangles": 920,
+          "positionSha256": [
+            "38ae011b40052c3eb5512cd3b9e8295bcacea317a20ac1fe0b1a44869657b376"
+          ],
+          "extentMm": [
+            18.9,
+            13.8,
+            11.3
+          ]
+        },
+        {
+          "node": "VH_F_common_bile_duct",
+          "triangles": 1472,
+          "positionSha256": [
+            "646fa26d66db1e1c1e2aedd29021f5425bd037cc5702038b6dd3f499a820ceef"
+          ],
+          "extentMm": [
+            21.3,
+            68.8,
+            5.8
+          ]
+        },
+        {
+          "node": "VH_F_hepatopancreatic_ampulla",
+          "triangles": 688,
+          "positionSha256": [
+            "c11c2ddfd8b02fdacec23041bd11586c506dfa988ca2c289657d0b56f0af37da"
+          ],
+          "extentMm": [
+            8.1,
+            7.2,
+            4.0
+          ]
+        },
+        {
+          "node": "VH_F_sphincter_of_heptopancreatic_ampulla",
+          "triangles": 4096,
+          "positionSha256": [
+            "91e28676f69dd12b43f0ef23bd8220ba61ddaaecc20537de5ac8f84ae8e58d82"
+          ],
+          "extentMm": [
+            5.0,
+            5.2,
+            5.0
+          ]
+        },
+        {
+          "node": "VH_F_celiac_trunk",
+          "triangles": 384,
+          "positionSha256": [
+            "33599921833dec4e75b21943f4f30ad705ac9200669825c25edae0e199ea372e"
+          ],
+          "extentMm": [
+            10.4,
+            9.7,
+            18.3
+          ]
+        },
+        {
+          "node": "VH_F_common_hepatic_artery",
+          "triangles": 582,
+          "positionSha256": [
+            "9991b0985cf19752f4e3cffe199dea0cc15ec4d702590d2a40195485772e9a21"
+          ],
+          "extentMm": [
+            22.5,
+            8.8,
+            17.9
+          ]
+        },
+        {
+          "node": "VH_F_proper_hepatic_artery",
+          "triangles": 620,
+          "positionSha256": [
+            "95435c6f6b00e2e3855f95ff1641f987fef3025a0d349465df780cdcbf645317"
+          ],
+          "extentMm": [
+            18.8,
+            22.7,
+            8.0
+          ]
+        },
+        {
+          "node": "VH_F_splenic_artery",
+          "triangles": 5894,
+          "positionSha256": [
+            "79e7518ca01925ad0b9a6c1d68014fbeb671932af4bd4d2ba4e70567a15fcbe1"
+          ],
+          "extentMm": [
+            97.7,
+            74.1,
+            74.1
+          ]
+        },
+        {
+          "node": "VH_F_superior_mesenteric_artery",
+          "triangles": 2833,
+          "positionSha256": [
+            "02dbfa7a1b472dc263cbb34aeaa49816aeca3de4aca2f7bffa042e5a48fc9101"
+          ],
+          "extentMm": [
+            34.2,
+            112.8,
+            34.4
+          ]
+        },
+        {
+          "node": "VH_F_splenic_vein",
+          "triangles": 9254,
+          "positionSha256": [
+            "f030668475c229d2b1b6371db8f548e6c91158bd5060b3f75fd4e573becb3704"
+          ],
+          "extentMm": [
+            108.7,
+            100.7,
+            80.4
+          ]
+        },
+        {
+          "node": "VH_F_superior_mesenteric_vein",
+          "triangles": 4060,
+          "positionSha256": [
+            "dd8888f0aadcd9990f875eedbb3ca08964e618b8c0ec5ad9e325f4cc069b6af9"
+          ],
+          "extentMm": [
+            21.5,
+            101.4,
+            18.7
+          ]
+        },
+        {
+          "node": "VH_F_hepatic_portal_vein",
+          "triangles": 2262,
+          "positionSha256": [
+            "405045165378858020d4cf3737e063311e15f812ebf58a2bce329a9b1bd18176"
+          ],
+          "extentMm": [
+            34.6,
+            63.1,
+            16.8
+          ]
+        },
+        {
+          "node": "VH_F_inferior_pancreaticoduodenal_vein",
+          "triangles": 1856,
+          "positionSha256": [
+            "41b1a8104294555272e86cbdb2490b737e2980d75558b789691fb710fd760357"
+          ],
+          "extentMm": [
+            27.7,
+            23.8,
+            5.2
+          ]
+        },
+        {
+          "node": "VH_F_duodenum_superior",
+          "triangles": 1224,
+          "positionSha256": [
+            "443de8a860566f9eed60c451458d4c88540921996d88589ceef8630a1f522798"
+          ],
+          "extentMm": [
+            38.5,
+            51.0,
+            69.0
+          ]
+        },
+        {
+          "node": "VH_F_duodenum_descending",
+          "triangles": 936,
+          "positionSha256": [
+            "e3716e922dbe591f09faa94aa7eb05be515c4b667117362a7c66dc2b2a636eb8"
+          ],
+          "extentMm": [
+            35.2,
+            60.1,
+            26.7
+          ]
+        },
+        {
+          "node": "VH_F_duodenum_horizontal",
+          "triangles": 1080,
+          "positionSha256": [
+            "ce1ec6eb3efd91fba0fc971e4613aca2bb6fae829506eb1fd8b5243b38bcf462"
+          ],
+          "extentMm": [
+            64.9,
+            27.5,
+            27.7
+          ]
+        },
+        {
+          "node": "VH_F_duodenum_ascending",
+          "triangles": 504,
+          "positionSha256": [
+            "62abcdc43661e46b63f83a6bd67279e5bc8b0190c37ec3dc8b18cfca18c64f4f"
+          ],
+          "extentMm": [
+            26.8,
+            25.6,
+            41.4
+          ]
+        },
+        {
+          "node": "VH_F_duodenal_ampulla",
+          "triangles": 1116,
+          "positionSha256": [
+            "ced850712438eb8f297fae6964e0b753efc2f1fbafee68f2db42b601b75c6dcb"
+          ],
+          "extentMm": [
+            28.8,
+            29.2,
+            29.9
+          ]
+        },
+        {
+          "node": "VH_F_hilum_of_spleen",
+          "triangles": 1506,
+          "positionSha256": [
+            "a5cecf054c68c9a5ceee25640fc6d7fe6f98e0b0e3a9ab11b203d876e6696daa"
+          ],
+          "extentMm": [
+            52.5,
+            62.4,
+            37.8
+          ]
+        },
+        {
+          "node": "VH_F_gastric_surface_of_spleen",
+          "triangles": 1778,
+          "positionSha256": [
+            "f801c7bcaf37cda890736c65962eb34448bab1a16794b7e1400eb677d91ccbc0"
+          ],
+          "extentMm": [
+            82.4,
+            80.8,
+            46.7
+          ]
+        },
+        {
+          "node": "VH_F_renal_surface_of_spleen",
+          "triangles": 792,
+          "positionSha256": [
+            "4efbddc0508cec393a55e8b44b5dbeb44e2d233e9b245124f8b68c846f6c0f3f"
+          ],
+          "extentMm": [
+            70.8,
+            53.6,
+            44.8
+          ]
+        },
+        {
+          "node": "VH_F_colic_surface_of_spleen",
+          "triangles": 130,
+          "positionSha256": [
+            "b466dc1a2ead6c6a3fa8f6105e36e670eef2807aaad0f417e88709385cfa4c4c"
+          ],
+          "extentMm": [
+            16.6,
+            17.9,
+            9.4
+          ]
+        },
+        {
+          "node": "VH_F_diaphragmatic_surface_of_spleen",
+          "triangles": 4338,
+          "positionSha256": [
+            "444735452faac03e3bbb7cd9fcd1543c028c4241e32be2b9150eff1c07c3c2d4"
+          ],
+          "extentMm": [
+            89.6,
+            102.3,
+            70.1
+          ]
+        }
+      ],
+      "missing": []
+    }
+  ]
+}

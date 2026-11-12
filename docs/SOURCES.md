@@ -1,0 +1,21 @@
+# Sources
+
+- HRA 3D Reference Object Library and ASCT+B tables (HuBMAP), ccf-releases v2.0, CC BY 4.0. Börner K, et al. Nat Methods 2025;22:845-860. doi:10.1038/s41592-024-02563-5
+- Visible Human Project: Spitzer V, et al. J Am Med Inform Assoc 1996;3:118-30. doi:10.1136/jamia.1996.96236280; Ackerman MJ. Proc IEEE 1998;86:504-11. doi:10.1109/5.662875
+- Hahn M, et al. Commun Biol 2021;4:1063. doi:10.1038/s42003-021-02589-x (islet number, size, distribution, clusters)
+- Wang X, et al. PLoS One 2013;8:e67454. doi:10.1371/journal.pone.0067454 (regional islet density)
+- Cabrera O, et al. PNAS 2006;103:2334-9. doi:10.1073/pnas.0510790103 (human islet architecture)
+- Brissova M, et al. J Histochem Cytochem 2005;53:1087-97. doi:10.1369/jhc.5C6684.2005
+- Poudel A, et al. Sci Rep 2016;6:34049. doi:10.1038/srep34049
+- Reers C, et al. Eur J Endocrinol 2009. doi:10.1530/EJE-08-0596 (beta-cell volume 2.3%)
+- Kiemen AL, et al. Nat Methods 2022;19:1490-9. doi:10.1038/s41592-022-01650-9 (CODA)
+- Endo H, et al. Histol Histopathol 2002;17:107-12. doi:10.14670/HH-17.107 (ductular system, rat)
+- Beer RL, et al. Dev Biol 2016;413:8-15. doi:10.1016/j.ydbio.2016.02.027 (centroacinar cells)
+- Messenger SW, et al. Cell Calcium 2014;55:369-75. doi:10.1016/j.ceca.2014.03.003; Nadelhaft I. Biophys J 1973. doi:10.1016/S0006-3495(73)86042-4; Ermak TH, Rothman SS. Cell Tissue Res 1981. doi:10.1007/BF00235144 (zymogen granules)
+- Berclaz C, et al. Diabetologia 2016. doi:10.1007/s00125-015-3819-x (insulin-zinc crystals)
+- Palade G. Science 1975. doi:10.1126/science.1096303 (secretory pathway)
+- Steward MC, Ishiguro H. Curr Opin Gastroenterol 2009. doi:10.1097/MOG.0b013e32832e06ce; Ishiguro H, et al. Nagoya J Med Sci 2012, PMC4831246; Hegyi P, Rakonczay Z. Pancreatology 2015. doi:10.1016/j.pan.2015.03.010 (duct secretion)
+- diIorio P, et al. Birth Defects Res C 2014. doi:10.1002/bdrc.21064 (primary cilia)
+- StatPearls (NCBI Bookshelf, CC BY 4.0): Anatomy, Abdomen and Pelvis, Pancreas (NBK532912); endocrine pancreas (NBK459261); gastrointestinal physiology (NBK542322)
+- Columbia University histology laboratory notes, exocrine and endocrine pancreas; University of Basel histology collection, exocrine pancreas; Human Protein Atlas, normal pancreas
+- Unverified (to check): Standring S, ed. Gray's Anatomy, 42nd ed., 2021; Japan Pancreas Society, Classification of Pancreatic Carcinoma, 4th English ed., 2017

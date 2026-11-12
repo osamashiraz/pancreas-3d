@@ -1,0 +1,2114 @@
+{
+ "schemaVersion": "humanbio.simulated.v1",
+ "license": "CC-BY-4.0",
+ "evidence": "simulated: placed by the rules below on HRA meshes; not measured from any person",
+ "axes": {
+  "left": [
+   1,
+   0,
+   0
+  ],
+  "superior": [
+   0,
+   1,
+   0
+  ],
+  "anterior": [
+   0,
+   0,
+   1
+  ],
+  "status": "inferred from the meshes, not stated by the source"
+ },
+ "method": {
+  "gdaDropMm": 25.0,
+  "voxelMm": 0.75,
+  "marginMm": 14.0,
+  "followWeight": 3.0,
+  "farCost": 4.0,
+  "exemptMm": 5.0,
+  "smoothRounds": 8,
+  "sides": 12,
+  "sampleMm": 0.5,
+  "clearanceMm": 0.6,
+  "routing": "Each leg between two landmarks is the cheapest path through a grid of 0.75 mm cells. A cell is forbidden if it lies inside the followed organ, inside another drawn structure, or nearer to one than radius plus clearance; near a parent vessel the first 5 mm are exempt. A cell costs more the farther it lies from radius plus clearance off the followed surface. Inside and outside are judged from vertex normals turned away from the organ centre, or from the local middle of a tube. The grid path is smoothed, then drawn as a centripetal Catmull-Rom curve and a tube with parallel-transport frames and linear taper. Contacts are measured to mesh vertices and ignore the first 5 mm after a parent vessel."
+ },
+ "references": [
+  {
+   "sex": "male",
+   "derivedFrom": {
+    "file": "pancreas-region-male.glb",
+    "sha256": "36bba84f7ad333b756813bc3b9394ee4bfb617e474dc7852134b273f69da0883"
+   },
+   "output": {
+    "file": "pancreas-simulated-male.glb",
+    "bytes": 745968,
+    "sha256": "49d45df8937a222f1e2784b0a73e56530446ba2891a94e6fa0e512b6e746224b",
+    "units": "metres",
+    "frame": "HRA"
+   },
+   "landmarks": [
+    {
+     "name": "common-hepatic-artery:gastroduodenal-origin",
+     "lies": "vessel",
+     "rule": "Centre of the vertices of the common hepatic artery that lie within 3 mm of the proper hepatic artery: where the gastroduodenal artery leaves.",
+     "pointMm": [
+      -11.25,
+      356.73,
+      24.36
+     ],
+     "placedMm": [
+      -11.25,
+      356.73,
+      24.36
+     ]
+    },
+    {
+     "name": "pancreas-head:gastroduodenal-division",
+     "lies": "surface",
+     "rule": "The most anterior vertex of the head or neck 25 mm (within 2 mm) below the gastroduodenal origin and within 15 mm of it from side to side, widening to 30 mm if none. The artery is typically 2 to 3 cm long and divides on the front of the head.",
+     "pointMm": [
+      -5.51,
+      333.41,
+      50.93
+     ],
+     "placedMm": [
+      -7.01,
+      332.91,
+      52.43
+     ]
+    },
+    {
+     "name": "pancreas-head:anterior-groove-middle",
+     "lies": "surface",
+     "rule": "Head vertices 3 to 12 mm from the descending and horizontal duodenum, within 2.5 mm of the 50th percentile of their height; the most anterior of them. The arcades run about 1 cm inside the curve of the duodenum.",
+     "pointMm": [
+      -28.4,
+      326.86,
+      39.22
+     ],
+     "placedMm": [
+      -28.9,
+      326.86,
+      40.72
+     ]
+    },
+    {
+     "name": "gastroduodenal-artery:upper-third",
+     "lies": "route",
+     "rule": "One third of the way along the built gastroduodenal artery, from its origin.",
+     "pointMm": [
+      -10.01,
+      353.03,
+      36.47
+     ],
+     "placedMm": [
+      -10.01,
+      353.03,
+      36.47
+     ]
+    },
+    {
+     "name": "pancreas-head:posterior-groove-upper",
+     "lies": "surface",
+     "rule": "Head vertices 3 to 12 mm from the descending and horizontal duodenum, within 2.5 mm of the 85th percentile of their height; the most posterior of them. The arcades run about 1 cm inside the curve of the duodenum.",
+     "pointMm": [
+      -17.95,
+      340.02,
+      14.28
+     ],
+     "placedMm": [
+      -18.45,
+      340.02,
+      12.78
+     ]
+    },
+    {
+     "name": "pancreas-head:posterior-groove-middle",
+     "lies": "surface",
+     "rule": "Head vertices 3 to 12 mm from the descending and horizontal duodenum, within 2.5 mm of the 50th percentile of their height; the most posterior of them. The arcades run about 1 cm inside the curve of the duodenum.",
+     "pointMm": [
+      -21.44,
+      326.18,
+      8.57
+     ],
+     "placedMm": [
+      -21.44,
+      325.68,
+      7.07
+     ]
+    },
+    {
+     "name": "superior-mesenteric-artery:inferior-pancreaticoduodenal-origin",
+     "lies": "vessel",
+     "rule": "Centre of the largest cluster of superior mesenteric artery vertices within 1.5 mm of the height 5 mm above the lowest point of the uncinate process.",
+     "pointMm": [
+      11.06,
+      308.5,
+      41.74
+     ],
+     "placedMm": [
+      11.06,
+      308.5,
+      41.74
+     ]
+    },
+    {
+     "name": "pancreas-uncinate:inferior",
+     "lies": "surface",
+     "rule": "The lowest vertex of the uncinate process.",
+     "pointMm": [
+      -19.84,
+      303.59,
+      26.67
+     ],
+     "placedMm": [
+      -20.84,
+      302.09,
+      29.17
+     ]
+    },
+    {
+     "name": "pancreas-head:anterior-groove-lower",
+     "lies": "surface",
+     "rule": "Head vertices 3 to 12 mm from the descending and horizontal duodenum, within 2.5 mm of the 15th percentile of their height; the most anterior of them. The arcades run about 1 cm inside the curve of the duodenum.",
+     "pointMm": [
+      -28.6,
+      317.75,
+      39.12
+     ],
+     "placedMm": [
+      -28.6,
+      314.25,
+      39.62
+     ]
+    },
+    {
+     "name": "pancreas-head:posterior-groove-lower",
+     "lies": "surface",
+     "rule": "Head vertices 3 to 12 mm from the descending and horizontal duodenum, within 2.5 mm of the 15th percentile of their height; the most posterior of them. The arcades run about 1 cm inside the curve of the duodenum.",
+     "pointMm": [
+      -22.82,
+      317.88,
+      8.82
+     ],
+     "placedMm": [
+      -23.32,
+      317.88,
+      7.32
+     ]
+    },
+    {
+     "name": "splenic-artery:dorsal-pancreatic-origin",
+     "lies": "vessel",
+     "rule": "Centre of the splenic artery where it crosses a sphere of 12 mm radius round its junction with the coeliac trunk (splenic artery vertices within 3 mm of the trunk). The dorsal pancreatic artery usually leaves the first part of the splenic artery.",
+     "pointMm": [
+      27.54,
+      353.86,
+      12.01
+     ],
+     "placedMm": [
+      27.54,
+      353.86,
+      12.01
+     ]
+    },
+    {
+     "name": "pancreas-neck:posterior-inferior",
+     "lies": "surface",
+     "rule": "Of the lowest third of the neck, the most posterior vertex. The dorsal pancreatic artery descends behind the neck.",
+     "pointMm": [
+      -5.22,
+      338.09,
+      32.23
+     ],
+     "placedMm": [
+      -5.22,
+      334.59,
+      26.23
+     ]
+    },
+    {
+     "name": "pancreas-body:inferior-border-middle",
+     "lies": "surface",
+     "rule": "At the middle of the body from right to left (within 2 mm), the most posterior vertex in the lowest quarter of its height: the lower border at the back, where the transverse pancreatic artery runs.",
+     "pointMm": [
+      21.7,
+      342.02,
+      18.88
+     ],
+     "placedMm": [
+      20.2,
+      342.02,
+      18.38
+     ]
+    },
+    {
+     "name": "pancreas-tail:inferior-border-start",
+     "lies": "surface",
+     "rule": "At a quarter of the tail from right to left (within 2 mm), the most posterior vertex in the lowest quarter of its height.",
+     "pointMm": [
+      39.6,
+      348.49,
+      -13.3
+     ],
+     "placedMm": [
+      39.1,
+      347.99,
+      -14.8
+     ]
+    },
+    {
+     "name": "splenic-artery:great-pancreatic-origin",
+     "lies": "vessel",
+     "rule": "Near the axis of the splenic artery beside its point nearest the landmark \"pancreas-body:posterior-middle\": the centre of its vertices within 6 mm of that point.",
+     "pointMm": [
+      24.99,
+      351.85,
+      14.87
+     ],
+     "placedMm": [
+      24.99,
+      351.85,
+      14.87
+     ]
+    },
+    {
+     "name": "pancreas-body:posterior-middle",
+     "lies": "surface",
+     "rule": "At the middle of the body from right to left, the most posterior vertex within 2 mm of the middle of its height. The great pancreatic artery enters the back of the body.",
+     "pointMm": [
+      21.63,
+      354.27,
+      14.01
+     ],
+     "placedMm": [
+      21.13,
+      353.27,
+      13.01
+     ]
+    },
+    {
+     "name": "splenic-artery:caudal-origin-1",
+     "lies": "vessel",
+     "rule": "Near the axis of the splenic artery beside its point nearest the landmark \"pancreas-tail:posterior-1\": the centre of its vertices within 6 mm of that point.",
+     "pointMm": [
+      46.31,
+      356.03,
+      -24.7
+     ],
+     "placedMm": [
+      46.31,
+      356.03,
+      -24.7
+     ]
+    },
+    {
+     "name": "pancreas-tail:posterior-1",
+     "lies": "surface",
+     "rule": "At 35% of the tail from right to left, the most posterior vertex within 2 mm of the middle of its height.",
+     "pointMm": [
+      44.86,
+      360.99,
+      -30.93
+     ],
+     "placedMm": [
+      44.36,
+      360.49,
+      -31.93
+     ]
+    },
+    {
+     "name": "splenic-artery:caudal-origin-2",
+     "lies": "vessel",
+     "rule": "Near the axis of the splenic artery beside its point nearest the landmark \"pancreas-tail:posterior-2\": the centre of its vertices within 6 mm of that point.",
+     "pointMm": [
+      61.63,
+      353.59,
+      -29.05
+     ],
+     "placedMm": [
+      61.63,
+      353.59,
+      -29.05
+     ]
+    },
+    {
+     "name": "pancreas-tail:posterior-2",
+     "lies": "surface",
+     "rule": "At 70% of the tail from right to left, the most posterior vertex within 2 mm of the middle of its height.",
+     "pointMm": [
+      60.13,
+      361.18,
+      -32.25
+     ],
+     "placedMm": [
+      59.63,
+      360.68,
+      -33.25
+     ]
+    }
+   ],
+   "routes": [
+    {
+     "structure": "human-male:gastroduodenal-artery",
+     "branch": "trunk",
+     "node": "sim--human-male--gastroduodenal-artery--trunk",
+     "via": [
+      "common-hepatic-artery:gastroduodenal-origin",
+      "pancreas-head:gastroduodenal-division"
+     ],
+     "lengthMm": 40.6,
+     "radiusMm": [
+      1.6,
+      1.3
+     ],
+     "medianDistanceToFollowedSurfaceMm": 2.18,
+     "targetDistanceMm": 2.2,
+     "contacts": [],
+     "maxStepMm": 0.49,
+     "maxTurnDeg": 6.9,
+     "vertices": 1070,
+     "triangles": 2136
+    },
+    {
+     "structure": "human-male:superior-pancreaticoduodenal-arteries",
+     "branch": "anterior",
+     "node": "sim--human-male--superior-pancreaticoduodenal-arteries--anterior",
+     "via": [
+      "pancreas-head:gastroduodenal-division",
+      "pancreas-head:anterior-groove-middle"
+     ],
+     "lengthMm": 26.6,
+     "radiusMm": [
+      1,
+      0.7
+     ],
+     "medianDistanceToFollowedSurfaceMm": 1.6,
+     "targetDistanceMm": 1.6,
+     "contacts": [],
+     "maxStepMm": 0.51,
+     "maxTurnDeg": 5.9,
+     "vertices": 686,
+     "triangles": 1368
+    },
+    {
+     "structure": "human-male:superior-pancreaticoduodenal-arteries",
+     "branch": "posterior",
+     "node": "sim--human-male--superior-pancreaticoduodenal-arteries--posterior",
+     "via": [
+      "gastroduodenal-artery:upper-third",
+      "pancreas-head:posterior-groove-upper",
+      "pancreas-head:posterior-groove-middle"
+     ],
+     "lengthMm": 57.0,
+     "radiusMm": [
+      1,
+      0.7
+     ],
+     "medianDistanceToFollowedSurfaceMm": 1.6,
+     "targetDistanceMm": 1.6,
+     "contacts": [],
+     "maxStepMm": 0.51,
+     "maxTurnDeg": 9.6,
+     "vertices": 1490,
+     "triangles": 2976
+    },
+    {
+     "structure": "human-male:inferior-pancreaticoduodenal-arteries",
+     "branch": "anterior",
+     "node": "sim--human-male--inferior-pancreaticoduodenal-arteries--anterior",
+     "via": [
+      "superior-mesenteric-artery:inferior-pancreaticoduodenal-origin",
+      "pancreas-uncinate:inferior",
+      "pancreas-head:anterior-groove-lower",
+      "pancreas-head:anterior-groove-middle"
+     ],
+     "lengthMm": 71.5,
+     "radiusMm": [
+      1,
+      0.7
+     ],
+     "medianDistanceToFollowedSurfaceMm": 1.61,
+     "targetDistanceMm": 1.6,
+     "contacts": [],
+     "maxStepMm": 0.51,
+     "maxTurnDeg": 11.7,
+     "vertices": 1886,
+     "triangles": 3768
+    },
+    {
+     "structure": "human-male:inferior-pancreaticoduodenal-arteries",
+     "branch": "posterior",
+     "node": "sim--human-male--inferior-pancreaticoduodenal-arteries--posterior",
+     "via": [
+      "superior-mesenteric-artery:inferior-pancreaticoduodenal-origin",
+      "pancreas-uncinate:inferior",
+      "pancreas-head:posterior-groove-lower",
+      "pancreas-head:posterior-groove-middle"
+     ],
+     "lengthMm": 77.8,
+     "radiusMm": [
+      1,
+      0.7
+     ],
+     "medianDistanceToFollowedSurfaceMm": 1.57,
+     "targetDistanceMm": 1.6,
+     "contacts": [],
+     "maxStepMm": 0.54,
+     "maxTurnDeg": 58.7,
+     "vertices": 2030,
+     "triangles": 4056
+    },
+    {
+     "structure": "human-male:dorsal-pancreatic-artery",
+     "branch": "dorsal",
+     "node": "sim--human-male--dorsal-pancreatic-artery--dorsal",
+     "via": [
+      "splenic-artery:dorsal-pancreatic-origin",
+      "pancreas-neck:posterior-inferior"
+     ],
+     "lengthMm": 49.6,
+     "radiusMm": [
+      1,
+      0.6
+     ],
+     "medianDistanceToFollowedSurfaceMm": 5.18,
+     "targetDistanceMm": 1.6,
+     "contacts": [],
+     "maxStepMm": 0.51,
+     "maxTurnDeg": 10.6,
+     "vertices": 1310,
+     "triangles": 2616
+    },
+    {
+     "structure": "human-male:dorsal-pancreatic-artery",
+     "branch": "transverse",
+     "node": "sim--human-male--dorsal-pancreatic-artery--transverse",
+     "via": [
+      "pancreas-neck:posterior-inferior",
+      "pancreas-body:inferior-border-middle",
+      "pancreas-tail:inferior-border-start"
+     ],
+     "lengthMm": 88.4,
+     "radiusMm": [
+      1,
+      0.6
+     ],
+     "medianDistanceToFollowedSurfaceMm": 1.61,
+     "targetDistanceMm": 1.6,
+     "contacts": [],
+     "maxStepMm": 0.51,
+     "maxTurnDeg": 12.2,
+     "vertices": 2354,
+     "triangles": 4704
+    },
+    {
+     "structure": "human-male:great-pancreatic-artery",
+     "branch": "main",
+     "node": "sim--human-male--great-pancreatic-artery--main",
+     "via": [
+      "splenic-artery:great-pancreatic-origin",
+      "pancreas-body:posterior-middle"
+     ],
+     "lengthMm": 4.7,
+     "radiusMm": [
+      0.9,
+      0.6
+     ],
+     "medianDistanceToFollowedSurfaceMm": 0.57,
+     "targetDistanceMm": 1.5,
+     "contacts": [],
+     "maxStepMm": 0.49,
+     "maxTurnDeg": 12.0,
+     "vertices": 134,
+     "triangles": 264
+    },
+    {
+     "structure": "human-male:caudal-pancreatic-arteries",
+     "branch": "first",
+     "node": "sim--human-male--caudal-pancreatic-arteries--first",
+     "via": [
+      "splenic-artery:caudal-origin-1",
+      "pancreas-tail:posterior-1"
+     ],
+     "lengthMm": 9.6,
+     "radiusMm": [
+      0.6,
+      0.4
+     ],
+     "medianDistanceToFollowedSurfaceMm": 0.96,
+     "targetDistanceMm": 1.2,
+     "contacts": [],
+     "maxStepMm": 0.5,
+     "maxTurnDeg": 9.7,
+     "vertices": 254,
+     "triangles": 504
+    },
+    {
+     "structure": "human-male:caudal-pancreatic-arteries",
+     "branch": "second",
+     "node": "sim--human-male--caudal-pancreatic-arteries--second",
+     "via": [
+      "splenic-artery:caudal-origin-2",
+      "pancreas-tail:posterior-2"
+     ],
+     "lengthMm": 8.8,
+     "radiusMm": [
+      0.6,
+      0.4
+     ],
+     "medianDistanceToFollowedSurfaceMm": 0.72,
+     "targetDistanceMm": 1.2,
+     "contacts": [],
+     "maxStepMm": 0.49,
+     "maxTurnDeg": 7.1,
+     "vertices": 254,
+     "triangles": 504
+    }
+   ],
+   "nodes": [
+    {
+     "structure": "human-male:nodes-pancreaticoduodenal",
+     "station": "13a",
+     "node": "node--human-male--nodes-pancreaticoduodenal--13a-1",
+     "rule": "On the posterior superior pancreaticoduodenal artery, on the side away from the head, at the points nearest half and four fifths of its length where a node fits.",
+     "anchorMm": [
+      -20.14,
+      347.54,
+      18.29
+     ],
+     "centreMm": [
+      -19.62,
+      349.35,
+      12.77
+     ],
+     "turnedDeg": 0.0,
+     "movedOutMm": 1.0,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ],
+     "anchorAt": 0.5
+    },
+    {
+     "structure": "human-male:nodes-pancreaticoduodenal",
+     "station": "13a",
+     "node": "node--human-male--nodes-pancreaticoduodenal--13a-2",
+     "rule": "On the posterior superior pancreaticoduodenal artery, on the side away from the head, at the points nearest half and four fifths of its length where a node fits.",
+     "anchorMm": [
+      -15.78,
+      334.64,
+      8.8
+     ],
+     "centreMm": [
+      -14.76,
+      337.76,
+      5.04
+     ],
+     "turnedDeg": 0.0,
+     "movedOutMm": 1.0,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ],
+     "anchorAt": 0.8
+    },
+    {
+     "structure": "human-male:nodes-pancreaticoduodenal",
+     "station": "13b",
+     "node": "node--human-male--nodes-pancreaticoduodenal--13b-1",
+     "rule": "On the posterior inferior pancreaticoduodenal artery, on the side away from the head, at the points nearest 60% and 85% of its length where a node fits.",
+     "anchorMm": [
+      -19.35,
+      302.87,
+      21.81
+     ],
+     "centreMm": [
+      -18.07,
+      294.67,
+      14.0
+     ],
+     "turnedDeg": 25.0,
+     "movedOutMm": 7.0,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ],
+     "anchorAt": 0.6
+    },
+    {
+     "structure": "human-male:nodes-pancreaticoduodenal",
+     "station": "13b",
+     "node": "node--human-male--nodes-pancreaticoduodenal--13b-2",
+     "rule": "On the posterior inferior pancreaticoduodenal artery, on the side away from the head, at the points nearest 60% and 85% of its length where a node fits.",
+     "anchorMm": [
+      -22.42,
+      314.63,
+      8.25
+     ],
+     "centreMm": [
+      -19.46,
+      313.71,
+      4.33
+     ],
+     "turnedDeg": 0.0,
+     "movedOutMm": 1.0,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ],
+     "anchorAt": 0.85
+    },
+    {
+     "structure": "human-male:nodes-pancreaticoduodenal",
+     "station": "17a",
+     "node": "node--human-male--nodes-pancreaticoduodenal--17a-1",
+     "rule": "On the anterior superior pancreaticoduodenal artery, on the side away from the head, at the points nearest half and four fifths of its length where a node fits.",
+     "anchorMm": [
+      -18.05,
+      330.87,
+      45.59
+     ],
+     "centreMm": [
+      -23.3,
+      333.39,
+      45.58
+     ],
+     "turnedDeg": 25.0,
+     "movedOutMm": 1.0,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ],
+     "anchorAt": 0.5
+    },
+    {
+     "structure": "human-male:nodes-pancreaticoduodenal",
+     "station": "17a",
+     "node": "node--human-male--nodes-pancreaticoduodenal--17a-2",
+     "rule": "On the anterior superior pancreaticoduodenal artery, on the side away from the head, at the points nearest half and four fifths of its length where a node fits.",
+     "anchorMm": [
+      -24.61,
+      329.12,
+      41.24
+     ],
+     "centreMm": [
+      -28.59,
+      327.72,
+      46.45
+     ],
+     "turnedDeg": -25.0,
+     "movedOutMm": 2.0,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ],
+     "anchorAt": 0.8
+    },
+    {
+     "structure": "human-male:nodes-pancreaticoduodenal",
+     "station": "17b",
+     "node": "node--human-male--nodes-pancreaticoduodenal--17b-1",
+     "rule": "On the anterior inferior pancreaticoduodenal artery, on the side away from the head, at the points nearest 60% and 85% of its length where a node fits.",
+     "anchorMm": [
+      -23.02,
+      303.29,
+      30.93
+     ],
+     "centreMm": [
+      -24.68,
+      301.08,
+      36.07
+     ],
+     "turnedDeg": -25.0,
+     "movedOutMm": 1.0,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ],
+     "anchorAt": 0.6
+    },
+    {
+     "structure": "human-male:nodes-pancreaticoduodenal",
+     "station": "17b",
+     "node": "node--human-male--nodes-pancreaticoduodenal--17b-2",
+     "rule": "On the anterior inferior pancreaticoduodenal artery, on the side away from the head, at the points nearest 60% and 85% of its length where a node fits.",
+     "anchorMm": [
+      -29.26,
+      316.41,
+      40.09
+     ],
+     "centreMm": [
+      -32.38,
+      312.22,
+      42.68
+     ],
+     "turnedDeg": 0.0,
+     "movedOutMm": 1.0,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ],
+     "anchorAt": 0.85
+    },
+    {
+     "structure": "human-male:nodes-hepatic-artery",
+     "station": "8a",
+     "node": "node--human-male--nodes-hepatic-artery--8a-1",
+     "rule": "Beside the common hepatic artery on its anterosuperior side, at the points nearest a quarter, a half and three quarters of the way from the coeliac trunk to the gastroduodenal origin where a node fits.",
+     "anchorMm": [
+      2.45,
+      349.14,
+      20.69
+     ],
+     "centreMm": [
+      4.46,
+      358.79,
+      20.54
+     ],
+     "turnedDeg": 50.0,
+     "movedOutMm": 3.5,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ],
+     "anchorAt": 0.25
+    },
+    {
+     "structure": "human-male:nodes-hepatic-artery",
+     "station": "8a",
+     "node": "node--human-male--nodes-hepatic-artery--8a-2",
+     "rule": "Beside the common hepatic artery on its anterosuperior side, at the points nearest a quarter, a half and three quarters of the way from the coeliac trunk to the gastroduodenal origin where a node fits.",
+     "anchorMm": [
+      -2.33,
+      352.39,
+      22.3
+     ],
+     "centreMm": [
+      -1.93,
+      356.01,
+      16.56
+     ],
+     "turnedDeg": 105.0,
+     "movedOutMm": 1.0,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ],
+     "anchorAt": 0.5
+    },
+    {
+     "structure": "human-male:nodes-hepatic-artery",
+     "station": "8a",
+     "node": "node--human-male--nodes-hepatic-artery--8a-3",
+     "rule": "Beside the common hepatic artery on its anterosuperior side, at the points nearest a quarter, a half and three quarters of the way from the coeliac trunk to the gastroduodenal origin where a node fits.",
+     "anchorMm": [
+      -6.56,
+      354.26,
+      23.38
+     ],
+     "centreMm": [
+      -5.51,
+      362.18,
+      23.42
+     ],
+     "turnedDeg": 50.0,
+     "movedOutMm": 1.0,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ],
+     "anchorAt": 0.75
+    },
+    {
+     "structure": "human-male:nodes-hepatic-artery",
+     "station": "8p",
+     "node": "node--human-male--nodes-hepatic-artery--8p-1",
+     "rule": "Behind the common hepatic artery, at the point nearest halfway from the coeliac trunk to the gastroduodenal origin where a node fits.",
+     "anchorMm": [
+      -2.33,
+      352.39,
+      22.3
+     ],
+     "centreMm": [
+      -6.13,
+      350.06,
+      14.14
+     ],
+     "turnedDeg": 25.0,
+     "movedOutMm": 3.5,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ],
+     "anchorAt": 0.5
+    },
+    {
+     "structure": "human-male:nodes-sma",
+     "station": "14",
+     "node": "node--human-male--nodes-sma--14-1",
+     "rule": "Beside the superior mesenteric artery, on its right side first, at the heights nearest 15%, 50% and 85% of the way from 4 mm below its highest point to the inferior pancreaticoduodenal origin where a node fits.",
+     "anchorMm": [
+      8.91,
+      319.4,
+      28.59
+     ],
+     "centreMm": [
+      11.4,
+      322.86,
+      37.02
+     ],
+     "turnedDeg": 75.0,
+     "movedOutMm": 2.0,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ],
+     "anchorAt": 0.15
+    },
+    {
+     "structure": "human-male:nodes-sma",
+     "station": "14",
+     "node": "node--human-male--nodes-sma--14-2",
+     "rule": "Beside the superior mesenteric artery, on its right side first, at the heights nearest 15%, 50% and 85% of the way from 4 mm below its highest point to the inferior pancreaticoduodenal origin where a node fits.",
+     "anchorMm": [
+      12.86,
+      315.11,
+      28.67
+     ],
+     "centreMm": [
+      13.13,
+      310.35,
+      22.59
+     ],
+     "turnedDeg": -140.0,
+     "movedOutMm": 0.0,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ],
+     "anchorAt": 0.5
+    },
+    {
+     "structure": "human-male:nodes-sma",
+     "station": "14",
+     "node": "node--human-male--nodes-sma--14-3",
+     "rule": "Beside the superior mesenteric artery, on its right side first, at the heights nearest 15%, 50% and 85% of the way from 4 mm below its highest point to the inferior pancreaticoduodenal origin where a node fits.",
+     "anchorMm": [
+      9.72,
+      310.56,
+      38.07
+     ],
+     "centreMm": [
+      2.39,
+      310.11,
+      41.1
+     ],
+     "turnedDeg": 0.0,
+     "movedOutMm": 1.0,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ],
+     "anchorAt": 0.85
+    },
+    {
+     "structure": "human-male:nodes-splenic",
+     "station": "11p",
+     "node": "node--human-male--nodes-splenic--11p-1",
+     "rule": "Above the splenic artery, where it crosses the spheres nearest 20 and 32 mm radius round its junction with the coeliac trunk at which a node fits.",
+     "anchorMm": [
+      30.83,
+      356.14,
+      4.06
+     ],
+     "centreMm": [
+      21.95,
+      364.26,
+      -0.15
+     ],
+     "turnedDeg": -50.0,
+     "movedOutMm": 7.0,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ],
+     "anchorAt": 20.0
+    },
+    {
+     "structure": "human-male:nodes-splenic",
+     "station": "11p",
+     "node": "node--human-male--nodes-splenic--11p-2",
+     "rule": "Above the splenic artery, where it crosses the spheres nearest 20 and 32 mm radius round its junction with the coeliac trunk at which a node fits.",
+     "anchorMm": [
+      32.81,
+      356.23,
+      -10.08
+     ],
+     "centreMm": [
+      28.54,
+      354.86,
+      -14.37
+     ],
+     "turnedDeg": -105.0,
+     "movedOutMm": 0.0,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ],
+     "anchorAt": 32.0
+    },
+    {
+     "structure": "human-male:nodes-splenic",
+     "station": "11d",
+     "node": "node--human-male--nodes-splenic--11d-1",
+     "rule": "Above the splenic artery, beside the top of the tail at the points nearest 30% and 60% of its length from right to left where a node fits.",
+     "anchorMm": [
+      32.15,
+      356.39,
+      -4.77
+     ],
+     "centreMm": [
+      29.15,
+      345.59,
+      -13.83
+     ],
+     "turnedDeg": -140.0,
+     "movedOutMm": 9.0,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ],
+     "anchorAt": 0.3
+    },
+    {
+     "structure": "human-male:nodes-splenic",
+     "station": "11d",
+     "node": "node--human-male--nodes-splenic--11d-2",
+     "rule": "Above the splenic artery, beside the top of the tail at the points nearest 30% and 60% of its length from right to left where a node fits.",
+     "anchorMm": [
+      44.88,
+      356.28,
+      -24.17
+     ],
+     "centreMm": [
+      40.41,
+      352.99,
+      -26.18
+     ],
+     "turnedDeg": -140.0,
+     "movedOutMm": 0.0,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ],
+     "anchorAt": 0.6
+    },
+    {
+     "structure": "human-male:nodes-splenic",
+     "station": "10",
+     "node": "node--human-male--nodes-splenic--10-1",
+     "rule": "Beside the splenic artery and the splenic vein, at their points nearest the middle of the hilum of the spleen, on the side away from the spleen.",
+     "anchorMm": [
+      89.39,
+      359.81,
+      -33.7
+     ],
+     "centreMm": [
+      94.35,
+      355.95,
+      -23.09
+     ],
+     "turnedDeg": 105.0,
+     "movedOutMm": 7.0,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ]
+    },
+    {
+     "structure": "human-male:nodes-splenic",
+     "station": "10",
+     "node": "node--human-male--nodes-splenic--10-2",
+     "rule": "Beside the splenic artery and the splenic vein, at their points nearest the middle of the hilum of the spleen, on the side away from the spleen.",
+     "anchorMm": [
+      91.78,
+      364.85,
+      -33.91
+     ],
+     "centreMm": [
+      93.85,
+      368.21,
+      -27.28
+     ],
+     "turnedDeg": -25.0,
+     "movedOutMm": 1.0,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ]
+    }
+   ]
+  },
+  {
+   "sex": "female",
+   "derivedFrom": {
+    "file": "pancreas-region-female.glb",
+    "sha256": "48cc2fee6eae2c659ff1b8fbeb34a5c9bcdedac1c1adbbd1974e21db97ed6f3a"
+   },
+   "output": {
+    "file": "pancreas-simulated-female.glb",
+    "bytes": 840048,
+    "sha256": "3d7b7c5abedb47bbb934a0e2545325a96b99684c27e7dfa93b9606159fecc8b1",
+    "units": "metres",
+    "frame": "HRA"
+   },
+   "landmarks": [
+    {
+     "name": "common-hepatic-artery:gastroduodenal-origin",
+     "lies": "vessel",
+     "rule": "Centre of the vertices of the common hepatic artery that lie within 3 mm of the proper hepatic artery: where the gastroduodenal artery leaves.",
+     "pointMm": [
+      -14.79,
+      310.14,
+      -56.61
+     ],
+     "placedMm": [
+      -14.79,
+      310.14,
+      -56.61
+     ]
+    },
+    {
+     "name": "pancreas-head:gastroduodenal-division",
+     "lies": "surface",
+     "rule": "The most anterior vertex of the head or neck 25 mm (within 2 mm) below the gastroduodenal origin and within 15 mm of it from side to side, widening to 30 mm if none. The artery is typically 2 to 3 cm long and divides on the front of the head.",
+     "pointMm": [
+      -18.95,
+      283.75,
+      -59.87
+     ],
+     "placedMm": [
+      -17.95,
+      284.75,
+      -63.37
+     ]
+    },
+    {
+     "name": "pancreas-head:anterior-groove-middle",
+     "lies": "surface",
+     "rule": "Head vertices 3 to 12 mm from the descending and horizontal duodenum, within 2.5 mm of the 50th percentile of their height; the most anterior of them. The arcades run about 1 cm inside the curve of the duodenum.",
+     "pointMm": [
+      -44.87,
+      268.73,
+      -47.88
+     ],
+     "placedMm": [
+      -45.37,
+      268.73,
+      -46.38
+     ]
+    },
+    {
+     "name": "gastroduodenal-artery:upper-third",
+     "lies": "route",
+     "rule": "One third of the way along the built gastroduodenal artery, from its origin.",
+     "pointMm": [
+      -14.7,
+      300.45,
+      -55.86
+     ],
+     "placedMm": [
+      -14.7,
+      300.45,
+      -55.86
+     ]
+    },
+    {
+     "name": "pancreas-head:posterior-groove-upper",
+     "lies": "surface",
+     "rule": "Head vertices 3 to 12 mm from the descending and horizontal duodenum, within 2.5 mm of the 85th percentile of their height; the most posterior of them. The arcades run about 1 cm inside the curve of the duodenum.",
+     "pointMm": [
+      -32.97,
+      274.63,
+      -75.71
+     ],
+     "placedMm": [
+      -34.47,
+      274.63,
+      -76.21
+     ]
+    },
+    {
+     "name": "pancreas-head:posterior-groove-middle",
+     "lies": "surface",
+     "rule": "Head vertices 3 to 12 mm from the descending and horizontal duodenum, within 2.5 mm of the 50th percentile of their height; the most posterior of them. The arcades run about 1 cm inside the curve of the duodenum.",
+     "pointMm": [
+      -34.36,
+      264.34,
+      -78.8
+     ],
+     "placedMm": [
+      -34.86,
+      264.34,
+      -80.3
+     ]
+    },
+    {
+     "name": "superior-mesenteric-artery:inferior-pancreaticoduodenal-origin",
+     "lies": "vessel",
+     "rule": "Centre of the largest cluster of superior mesenteric artery vertices within 1.5 mm of the height 5 mm above the lowest point of the uncinate process.",
+     "pointMm": [
+      -9.62,
+      242.75,
+      -49.89
+     ],
+     "placedMm": [
+      -9.62,
+      242.75,
+      -49.89
+     ]
+    },
+    {
+     "name": "pancreas-uncinate:inferior",
+     "lies": "surface",
+     "rule": "The lowest vertex of the uncinate process.",
+     "pointMm": [
+      -27.43,
+      237.54,
+      -56.32
+     ],
+     "placedMm": [
+      -27.93,
+      236.54,
+      -55.32
+     ]
+    },
+    {
+     "name": "pancreas-head:anterior-groove-lower",
+     "lies": "surface",
+     "rule": "Head vertices 3 to 12 mm from the descending and horizontal duodenum, within 2.5 mm of the 15th percentile of their height; the most anterior of them. The arcades run about 1 cm inside the curve of the duodenum.",
+     "pointMm": [
+      -49.26,
+      256.92,
+      -52.51
+     ],
+     "placedMm": [
+      -49.76,
+      256.92,
+      -51.01
+     ]
+    },
+    {
+     "name": "pancreas-head:posterior-groove-lower",
+     "lies": "surface",
+     "rule": "Head vertices 3 to 12 mm from the descending and horizontal duodenum, within 2.5 mm of the 15th percentile of their height; the most posterior of them. The arcades run about 1 cm inside the curve of the duodenum.",
+     "pointMm": [
+      -36.96,
+      256.38,
+      -70.97
+     ],
+     "placedMm": [
+      -38.46,
+      255.88,
+      -70.97
+     ]
+    },
+    {
+     "name": "splenic-artery:dorsal-pancreatic-origin",
+     "lies": "vessel",
+     "rule": "Centre of the splenic artery where it crosses a sphere of 12 mm radius round its junction with the coeliac trunk (splenic artery vertices within 3 mm of the trunk). The dorsal pancreatic artery usually leaves the first part of the splenic artery.",
+     "pointMm": [
+      9.69,
+      298.69,
+      -57.63
+     ],
+     "placedMm": [
+      9.69,
+      298.69,
+      -57.63
+     ]
+    },
+    {
+     "name": "pancreas-neck:posterior-inferior",
+     "lies": "surface",
+     "rule": "Of the lowest third of the neck, the most posterior vertex. The dorsal pancreatic artery descends behind the neck.",
+     "pointMm": [
+      -9.6,
+      265.67,
+      -47.17
+     ],
+     "placedMm": [
+      -11.1,
+      263.17,
+      -52.67
+     ]
+    },
+    {
+     "name": "pancreas-body:inferior-border-middle",
+     "lies": "surface",
+     "rule": "At the middle of the body from right to left (within 2 mm), the most posterior vertex in the lowest quarter of its height: the lower border at the back, where the transverse pancreatic artery runs.",
+     "pointMm": [
+      23.44,
+      269.4,
+      -54.15
+     ],
+     "placedMm": [
+      21.94,
+      271.9,
+      -55.65
+     ]
+    },
+    {
+     "name": "pancreas-tail:inferior-border-start",
+     "lies": "surface",
+     "rule": "At a quarter of the tail from right to left (within 2 mm), the most posterior vertex in the lowest quarter of its height.",
+     "pointMm": [
+      61.34,
+      257.05,
+      -76.4
+     ],
+     "placedMm": [
+      59.84,
+      257.55,
+      -76.9
+     ]
+    },
+    {
+     "name": "splenic-artery:great-pancreatic-origin",
+     "lies": "vessel",
+     "rule": "Near the axis of the splenic artery beside its point nearest the landmark \"pancreas-body:posterior-middle\": the centre of its vertices within 6 mm of that point.",
+     "pointMm": [
+      39.82,
+      286.58,
+      -66.89
+     ],
+     "placedMm": [
+      39.82,
+      286.58,
+      -66.89
+     ]
+    },
+    {
+     "name": "pancreas-body:posterior-middle",
+     "lies": "surface",
+     "rule": "At the middle of the body from right to left, the most posterior vertex within 2 mm of the middle of its height. The great pancreatic artery enters the back of the body.",
+     "pointMm": [
+      23.2,
+      279.45,
+      -64.61
+     ],
+     "placedMm": [
+      22.2,
+      278.45,
+      -65.11
+     ]
+    },
+    {
+     "name": "splenic-artery:caudal-origin-1",
+     "lies": "vessel",
+     "rule": "Near the axis of the splenic artery beside its point nearest the landmark \"pancreas-tail:posterior-1\": the centre of its vertices within 6 mm of that point.",
+     "pointMm": [
+      69.76,
+      293.11,
+      -93.64
+     ],
+     "placedMm": [
+      69.76,
+      293.11,
+      -93.64
+     ]
+    },
+    {
+     "name": "pancreas-tail:posterior-1",
+     "lies": "surface",
+     "rule": "At 35% of the tail from right to left, the most posterior vertex within 2 mm of the middle of its height.",
+     "pointMm": [
+      70.47,
+      266.87,
+      -84.22
+     ],
+     "placedMm": [
+      70.97,
+      267.37,
+      -85.22
+     ]
+    },
+    {
+     "name": "splenic-artery:caudal-origin-2",
+     "lies": "vessel",
+     "rule": "Near the axis of the splenic artery beside its point nearest the landmark \"pancreas-tail:posterior-2\": the centre of its vertices within 6 mm of that point.",
+     "pointMm": [
+      101.66,
+      289.99,
+      -83.68
+     ],
+     "placedMm": [
+      101.66,
+      289.99,
+      -83.68
+     ]
+    },
+    {
+     "name": "pancreas-tail:posterior-2",
+     "lies": "surface",
+     "rule": "At 70% of the tail from right to left, the most posterior vertex within 2 mm of the middle of its height.",
+     "pointMm": [
+      96.16,
+      276.03,
+      -98.88
+     ],
+     "placedMm": [
+      95.16,
+      275.53,
+      -99.38
+     ]
+    }
+   ],
+   "routes": [
+    {
+     "structure": "human-female:gastroduodenal-artery",
+     "branch": "trunk",
+     "node": "sim--human-female--gastroduodenal-artery--trunk",
+     "via": [
+      "common-hepatic-artery:gastroduodenal-origin",
+      "pancreas-head:gastroduodenal-division"
+     ],
+     "lengthMm": 28.6,
+     "radiusMm": [
+      1.6,
+      1.3
+     ],
+     "medianDistanceToFollowedSurfaceMm": 9.32,
+     "targetDistanceMm": 2.2,
+     "contacts": [],
+     "maxStepMm": 0.5,
+     "maxTurnDeg": 5.9,
+     "vertices": 782,
+     "triangles": 1560
+    },
+    {
+     "structure": "human-female:superior-pancreaticoduodenal-arteries",
+     "branch": "anterior",
+     "node": "sim--human-female--superior-pancreaticoduodenal-arteries--anterior",
+     "via": [
+      "pancreas-head:gastroduodenal-division",
+      "pancreas-head:anterior-groove-middle"
+     ],
+     "lengthMm": 52.2,
+     "radiusMm": [
+      1,
+      0.7
+     ],
+     "medianDistanceToFollowedSurfaceMm": 1.4,
+     "targetDistanceMm": 1.6,
+     "contacts": [],
+     "maxStepMm": 0.52,
+     "maxTurnDeg": 23.0,
+     "vertices": 1370,
+     "triangles": 2736
+    },
+    {
+     "structure": "human-female:superior-pancreaticoduodenal-arteries",
+     "branch": "posterior",
+     "node": "sim--human-female--superior-pancreaticoduodenal-arteries--posterior",
+     "via": [
+      "gastroduodenal-artery:upper-third",
+      "pancreas-head:posterior-groove-upper",
+      "pancreas-head:posterior-groove-middle"
+     ],
+     "lengthMm": 54.4,
+     "radiusMm": [
+      1,
+      0.7
+     ],
+     "medianDistanceToFollowedSurfaceMm": 1.61,
+     "targetDistanceMm": 1.6,
+     "contacts": [],
+     "maxStepMm": 0.51,
+     "maxTurnDeg": 10.2,
+     "vertices": 1418,
+     "triangles": 2832
+    },
+    {
+     "structure": "human-female:inferior-pancreaticoduodenal-arteries",
+     "branch": "anterior",
+     "node": "sim--human-female--inferior-pancreaticoduodenal-arteries--anterior",
+     "via": [
+      "superior-mesenteric-artery:inferior-pancreaticoduodenal-origin",
+      "pancreas-uncinate:inferior",
+      "pancreas-head:anterior-groove-lower",
+      "pancreas-head:anterior-groove-middle"
+     ],
+     "lengthMm": 70.7,
+     "radiusMm": [
+      1,
+      0.7
+     ],
+     "medianDistanceToFollowedSurfaceMm": 1.47,
+     "targetDistanceMm": 1.6,
+     "contacts": [],
+     "maxStepMm": 0.51,
+     "maxTurnDeg": 18.3,
+     "vertices": 1886,
+     "triangles": 3768
+    },
+    {
+     "structure": "human-female:inferior-pancreaticoduodenal-arteries",
+     "branch": "posterior",
+     "node": "sim--human-female--inferior-pancreaticoduodenal-arteries--posterior",
+     "via": [
+      "superior-mesenteric-artery:inferior-pancreaticoduodenal-origin",
+      "pancreas-uncinate:inferior",
+      "pancreas-head:posterior-groove-lower",
+      "pancreas-head:posterior-groove-middle"
+     ],
+     "lengthMm": 66.1,
+     "radiusMm": [
+      1,
+      0.7
+     ],
+     "medianDistanceToFollowedSurfaceMm": 1.38,
+     "targetDistanceMm": 1.6,
+     "contacts": [],
+     "maxStepMm": 0.51,
+     "maxTurnDeg": 16.5,
+     "vertices": 1778,
+     "triangles": 3552
+    },
+    {
+     "structure": "human-female:dorsal-pancreatic-artery",
+     "branch": "dorsal",
+     "node": "sim--human-female--dorsal-pancreatic-artery--dorsal",
+     "via": [
+      "splenic-artery:dorsal-pancreatic-origin",
+      "pancreas-neck:posterior-inferior"
+     ],
+     "lengthMm": 50.4,
+     "radiusMm": [
+      1,
+      0.6
+     ],
+     "medianDistanceToFollowedSurfaceMm": 5.6,
+     "targetDistanceMm": 1.6,
+     "contacts": [],
+     "maxStepMm": 0.51,
+     "maxTurnDeg": 11.8,
+     "vertices": 1334,
+     "triangles": 2664
+    },
+    {
+     "structure": "human-female:dorsal-pancreatic-artery",
+     "branch": "transverse",
+     "node": "sim--human-female--dorsal-pancreatic-artery--transverse",
+     "via": [
+      "pancreas-neck:posterior-inferior",
+      "pancreas-body:inferior-border-middle",
+      "pancreas-tail:inferior-border-start"
+     ],
+     "lengthMm": 94.6,
+     "radiusMm": [
+      1,
+      0.6
+     ],
+     "medianDistanceToFollowedSurfaceMm": 1.74,
+     "targetDistanceMm": 1.6,
+     "contacts": [],
+     "maxStepMm": 0.52,
+     "maxTurnDeg": 10.8,
+     "vertices": 2510,
+     "triangles": 5016
+    },
+    {
+     "structure": "human-female:great-pancreatic-artery",
+     "branch": "main",
+     "node": "sim--human-female--great-pancreatic-artery--main",
+     "via": [
+      "splenic-artery:great-pancreatic-origin",
+      "pancreas-body:posterior-middle"
+     ],
+     "lengthMm": 23.2,
+     "radiusMm": [
+      0.9,
+      0.6
+     ],
+     "medianDistanceToFollowedSurfaceMm": 1.27,
+     "targetDistanceMm": 1.5,
+     "contacts": [],
+     "maxStepMm": 0.5,
+     "maxTurnDeg": 10.4,
+     "vertices": 614,
+     "triangles": 1224
+    },
+    {
+     "structure": "human-female:caudal-pancreatic-arteries",
+     "branch": "first",
+     "node": "sim--human-female--caudal-pancreatic-arteries--first",
+     "via": [
+      "splenic-artery:caudal-origin-1",
+      "pancreas-tail:posterior-1"
+     ],
+     "lengthMm": 28.5,
+     "radiusMm": [
+      0.6,
+      0.4
+     ],
+     "medianDistanceToFollowedSurfaceMm": 1.23,
+     "targetDistanceMm": 1.2,
+     "contacts": [],
+     "maxStepMm": 0.52,
+     "maxTurnDeg": 8.4,
+     "vertices": 758,
+     "triangles": 1512
+    },
+    {
+     "structure": "human-female:caudal-pancreatic-arteries",
+     "branch": "second",
+     "node": "sim--human-female--caudal-pancreatic-arteries--second",
+     "via": [
+      "splenic-artery:caudal-origin-2",
+      "pancreas-tail:posterior-2"
+     ],
+     "lengthMm": 36.6,
+     "radiusMm": [
+      0.6,
+      0.4
+     ],
+     "medianDistanceToFollowedSurfaceMm": 1.16,
+     "targetDistanceMm": 1.2,
+     "contacts": [],
+     "maxStepMm": 0.52,
+     "maxTurnDeg": 12.2,
+     "vertices": 974,
+     "triangles": 1944
+    }
+   ],
+   "nodes": [
+    {
+     "structure": "human-female:nodes-pancreaticoduodenal",
+     "station": "13a",
+     "node": "node--human-female--nodes-pancreaticoduodenal--13a-1",
+     "rule": "On the posterior superior pancreaticoduodenal artery, on the side away from the head, at the points nearest half and four fifths of its length where a node fits.",
+     "anchorMm": [
+      -28.22,
+      284.86,
+      -66.75
+     ],
+     "centreMm": [
+      -22.63,
+      284.77,
+      -74.42
+     ],
+     "turnedDeg": 105.0,
+     "movedOutMm": 5.0,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ],
+     "anchorAt": 0.5
+    },
+    {
+     "structure": "human-female:nodes-pancreaticoduodenal",
+     "station": "13a",
+     "node": "node--human-female--nodes-pancreaticoduodenal--13a-2",
+     "rule": "On the posterior superior pancreaticoduodenal artery, on the side away from the head, at the points nearest half and four fifths of its length where a node fits.",
+     "anchorMm": [
+      -34.39,
+      274.22,
+      -77.03
+     ],
+     "centreMm": [
+      -34.51,
+      277.55,
+      -80.76
+     ],
+     "turnedDeg": 0.0,
+     "movedOutMm": 1.0,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ],
+     "anchorAt": 0.8
+    },
+    {
+     "structure": "human-female:nodes-pancreaticoduodenal",
+     "station": "13b",
+     "node": "node--human-female--nodes-pancreaticoduodenal--13b-1",
+     "rule": "On the posterior inferior pancreaticoduodenal artery, on the side away from the head, at the points nearest 60% and 85% of its length where a node fits.",
+     "anchorMm": [
+      -31.94,
+      246.76,
+      -68.71
+     ],
+     "centreMm": [
+      -33.01,
+      243.51,
+      -72.36
+     ],
+     "turnedDeg": 0.0,
+     "movedOutMm": 1.0,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ],
+     "anchorAt": 0.6
+    },
+    {
+     "structure": "human-female:nodes-pancreaticoduodenal",
+     "station": "13b",
+     "node": "node--human-female--nodes-pancreaticoduodenal--13b-2",
+     "rule": "On the posterior inferior pancreaticoduodenal artery, on the side away from the head, at the points nearest 60% and 85% of its length where a node fits.",
+     "anchorMm": [
+      -35.39,
+      257.48,
+      -75.41
+     ],
+     "centreMm": [
+      -34.06,
+      253.25,
+      -79.2
+     ],
+     "turnedDeg": -50.0,
+     "movedOutMm": 1.0,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ],
+     "anchorAt": 0.85
+    },
+    {
+     "structure": "human-female:nodes-pancreaticoduodenal",
+     "station": "17a",
+     "node": "node--human-female--nodes-pancreaticoduodenal--17a-1",
+     "rule": "On the anterior superior pancreaticoduodenal artery, on the side away from the head, at the points nearest half and four fifths of its length where a node fits.",
+     "anchorMm": [
+      -40.72,
+      264.17,
+      -50.0
+     ],
+     "centreMm": [
+      -38.89,
+      261.67,
+      -44.05
+     ],
+     "turnedDeg": 50.0,
+     "movedOutMm": 2.0,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ],
+     "anchorAt": 0.85
+    },
+    {
+     "structure": "human-female:nodes-pancreaticoduodenal",
+     "station": "17a",
+     "node": "node--human-female--nodes-pancreaticoduodenal--17a-2",
+     "rule": "On the anterior superior pancreaticoduodenal artery, on the side away from the head, at the points nearest half and four fifths of its length where a node fits.",
+     "anchorMm": [
+      -40.72,
+      264.17,
+      -50.0
+     ],
+     "centreMm": [
+      -44.23,
+      255.07,
+      -44.11
+     ],
+     "turnedDeg": 0.0,
+     "movedOutMm": 7.0,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ],
+     "anchorAt": 0.85
+    },
+    {
+     "structure": "human-female:nodes-pancreaticoduodenal",
+     "station": "17b",
+     "node": "node--human-female--nodes-pancreaticoduodenal--17b-1",
+     "rule": "On the anterior inferior pancreaticoduodenal artery, on the side away from the head, at the points nearest 60% and 85% of its length where a node fits.",
+     "anchorMm": [
+      -39.29,
+      250.13,
+      -57.61
+     ],
+     "centreMm": [
+      -41.82,
+      248.73,
+      -50.07
+     ],
+     "turnedDeg": 0.0,
+     "movedOutMm": 3.5,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ],
+     "anchorAt": 0.6
+    },
+    {
+     "structure": "human-female:nodes-pancreaticoduodenal",
+     "station": "17b",
+     "node": "node--human-female--nodes-pancreaticoduodenal--17b-2",
+     "rule": "On the anterior inferior pancreaticoduodenal artery, on the side away from the head, at the points nearest 60% and 85% of its length where a node fits.",
+     "anchorMm": [
+      -48.6,
+      259.78,
+      -49.91
+     ],
+     "centreMm": [
+      -49.01,
+      261.27,
+      -44.28
+     ],
+     "turnedDeg": -25.0,
+     "movedOutMm": 1.0,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ],
+     "anchorAt": 0.85
+    },
+    {
+     "structure": "human-female:nodes-hepatic-artery",
+     "station": "8a",
+     "node": "node--human-female--nodes-hepatic-artery--8a-1",
+     "rule": "Beside the common hepatic artery on its anterosuperior side, at the points nearest a quarter, a half and three quarters of the way from the coeliac trunk to the gastroduodenal origin where a node fits.",
+     "anchorMm": [
+      -1.38,
+      306.61,
+      -64.99
+     ],
+     "centreMm": [
+      1.38,
+      310.54,
+      -62.05
+     ],
+     "turnedDeg": 0.0,
+     "movedOutMm": 0.0,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ],
+     "anchorAt": 0.25
+    },
+    {
+     "structure": "human-female:nodes-hepatic-artery",
+     "station": "8a",
+     "node": "node--human-female--nodes-hepatic-artery--8a-2",
+     "rule": "Beside the common hepatic artery on its anterosuperior side, at the points nearest a quarter, a half and three quarters of the way from the coeliac trunk to the gastroduodenal origin where a node fits.",
+     "anchorMm": [
+      -5.94,
+      307.9,
+      -62.61
+     ],
+     "centreMm": [
+      -5.7,
+      312.43,
+      -58.16
+     ],
+     "turnedDeg": 0.0,
+     "movedOutMm": 0.0,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ],
+     "anchorAt": 0.5
+    },
+    {
+     "structure": "human-female:nodes-hepatic-artery",
+     "station": "8a",
+     "node": "node--human-female--nodes-hepatic-artery--8a-3",
+     "rule": "Beside the common hepatic artery on its anterosuperior side, at the points nearest a quarter, a half and three quarters of the way from the coeliac trunk to the gastroduodenal origin where a node fits.",
+     "anchorMm": [
+      -10.97,
+      309.14,
+      -59.4
+     ],
+     "centreMm": [
+      -9.65,
+      309.19,
+      -51.34
+     ],
+     "turnedDeg": -50.0,
+     "movedOutMm": 2.0,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ],
+     "anchorAt": 0.75
+    },
+    {
+     "structure": "human-female:nodes-hepatic-artery",
+     "station": "8p",
+     "node": "node--human-female--nodes-hepatic-artery--8p-1",
+     "rule": "Behind the common hepatic artery, at the point nearest halfway from the coeliac trunk to the gastroduodenal origin where a node fits.",
+     "anchorMm": [
+      -5.94,
+      307.9,
+      -62.61
+     ],
+     "centreMm": [
+      -11.6,
+      313.26,
+      -68.2
+     ],
+     "turnedDeg": -25.0,
+     "movedOutMm": 3.5,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ],
+     "anchorAt": 0.5
+    },
+    {
+     "structure": "human-female:nodes-sma",
+     "station": "14",
+     "node": "node--human-female--nodes-sma--14-1",
+     "rule": "Beside the superior mesenteric artery, on its right side first, at the heights nearest 15%, 50% and 85% of the way from 4 mm below its highest point to the inferior pancreaticoduodenal origin where a node fits.",
+     "anchorMm": [
+      6.22,
+      283.56,
+      -67.21
+     ],
+     "centreMm": [
+      1.8,
+      287.35,
+      -66.78
+     ],
+     "turnedDeg": 25.0,
+     "movedOutMm": 0.0,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ],
+     "anchorAt": 0.15
+    },
+    {
+     "structure": "human-female:nodes-sma",
+     "station": "14",
+     "node": "node--human-female--nodes-sma--14-2",
+     "rule": "Beside the superior mesenteric artery, on its right side first, at the heights nearest 15%, 50% and 85% of the way from 4 mm below its highest point to the inferior pancreaticoduodenal origin where a node fits.",
+     "anchorMm": [
+      -1.39,
+      266.83,
+      -55.91
+     ],
+     "centreMm": [
+      4.27,
+      265.87,
+      -63.7
+     ],
+     "turnedDeg": -140.0,
+     "movedOutMm": 3.5,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ],
+     "anchorAt": 0.5
+    },
+    {
+     "structure": "human-female:nodes-sma",
+     "station": "14",
+     "node": "node--human-female--nodes-sma--14-3",
+     "rule": "Beside the superior mesenteric artery, on its right side first, at the heights nearest 15%, 50% and 85% of the way from 4 mm below its highest point to the inferior pancreaticoduodenal origin where a node fits.",
+     "anchorMm": [
+      -6.78,
+      253.22,
+      -51.34
+     ],
+     "centreMm": [
+      -2.37,
+      254.1,
+      -57.23
+     ],
+     "turnedDeg": -140.0,
+     "movedOutMm": 1.0,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ],
+     "anchorAt": 0.78
+    },
+    {
+     "structure": "human-female:nodes-splenic",
+     "station": "11p",
+     "node": "node--human-female--nodes-splenic--11p-1",
+     "rule": "Above the splenic artery, where it crosses the spheres nearest 20 and 32 mm radius round its junction with the coeliac trunk at which a node fits.",
+     "anchorMm": [
+      18.19,
+      294.8,
+      -54.38
+     ],
+     "centreMm": [
+      18.72,
+      299.11,
+      -52.03
+     ],
+     "turnedDeg": 25.0,
+     "movedOutMm": 0.0,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ],
+     "anchorAt": 20.0
+    },
+    {
+     "structure": "human-female:nodes-splenic",
+     "station": "11p",
+     "node": "node--human-female--nodes-splenic--11p-2",
+     "rule": "Above the splenic artery, where it crosses the spheres nearest 20 and 32 mm radius round its junction with the coeliac trunk at which a node fits.",
+     "anchorMm": [
+      30.78,
+      291.05,
+      -50.85
+     ],
+     "centreMm": [
+      31.16,
+      296.45,
+      -51.73
+     ],
+     "turnedDeg": 0.0,
+     "movedOutMm": 0.0,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ],
+     "anchorAt": 32.0
+    },
+    {
+     "structure": "human-female:nodes-splenic",
+     "station": "11d",
+     "node": "node--human-female--nodes-splenic--11d-1",
+     "rule": "Above the splenic artery, beside the top of the tail at the points nearest 30% and 60% of its length from right to left where a node fits.",
+     "anchorMm": [
+      48.07,
+      292.39,
+      -78.06
+     ],
+     "centreMm": [
+      45.47,
+      297.53,
+      -76.2
+     ],
+     "turnedDeg": 0.0,
+     "movedOutMm": 0.0,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ],
+     "anchorAt": 0.3
+    },
+    {
+     "structure": "human-female:nodes-splenic",
+     "station": "11d",
+     "node": "node--human-female--nodes-splenic--11d-2",
+     "rule": "Above the splenic artery, beside the top of the tail at the points nearest 30% and 60% of its length from right to left where a node fits.",
+     "anchorMm": [
+      88.26,
+      300.4,
+      -92.29
+     ],
+     "centreMm": [
+      92.05,
+      304.68,
+      -90.93
+     ],
+     "turnedDeg": 0.0,
+     "movedOutMm": 0.0,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ],
+     "anchorAt": 0.6
+    },
+    {
+     "structure": "human-female:nodes-splenic",
+     "station": "10",
+     "node": "node--human-female--nodes-splenic--10-1",
+     "rule": "Beside the splenic artery and the splenic vein, at their points nearest the middle of the hilum of the spleen, on the side away from the spleen.",
+     "anchorMm": [
+      75.32,
+      327.89,
+      -110.63
+     ],
+     "centreMm": [
+      79.21,
+      328.37,
+      -106.3
+     ],
+     "turnedDeg": 75.0,
+     "movedOutMm": 0.0,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ]
+    },
+    {
+     "structure": "human-female:nodes-splenic",
+     "station": "10",
+     "node": "node--human-female--nodes-splenic--10-2",
+     "rule": "Beside the splenic artery and the splenic vein, at their points nearest the middle of the hilum of the spleen, on the side away from the spleen.",
+     "anchorMm": [
+      75.99,
+      324.05,
+      -111.89
+     ],
+     "centreMm": [
+      79.67,
+      318.81,
+      -103.39
+     ],
+     "turnedDeg": 140.0,
+     "movedOutMm": 5.0,
+     "semiAxesMm": [
+      2.5,
+      2.5,
+      3.5
+     ]
+    }
+   ]
+  }
+ ]
+}

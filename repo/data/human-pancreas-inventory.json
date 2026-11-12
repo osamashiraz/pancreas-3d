@@ -1,0 +1,1634 @@
+{
+ "schemaVersion": "humanbio.inventory.v1",
+ "note": "Generated from src/domain/human-pancreas-structures.ts by scripts/human/export_inventory.ts. Do not edit by hand.",
+ "references": {
+  "male": [
+   {
+    "id": "human-male:pancreas-head",
+    "name": "Head of pancreas",
+    "layer": "pancreas",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#c0703a",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-male.glb",
+     "nodes": [
+      "VH_M_head_of_pancreas"
+     ]
+    }
+   },
+   {
+    "id": "human-male:pancreas-uncinate",
+    "name": "Uncinate process",
+    "layer": "pancreas",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#964f2c",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-male.glb",
+     "nodes": [
+      "VH_M_uncinate_process_of_the_pancreas"
+     ]
+    }
+   },
+   {
+    "id": "human-male:pancreas-neck",
+    "name": "Neck of pancreas",
+    "layer": "pancreas",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#d29257",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-male.glb",
+     "nodes": [
+      "VH_M_neck_of_pancreas"
+     ]
+    }
+   },
+   {
+    "id": "human-male:pancreas-body",
+    "name": "Body of pancreas",
+    "layer": "pancreas",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#c77f6e",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-male.glb",
+     "nodes": [
+      "VH_M_body_of_pancreas"
+     ]
+    }
+   },
+   {
+    "id": "human-male:pancreas-tail",
+    "name": "Tail of pancreas",
+    "layer": "pancreas",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#a8687f",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-male.glb",
+     "nodes": [
+      "VH_M_tail_of_pancreas"
+     ]
+    }
+   },
+   {
+    "id": "human-male:main-pancreatic-duct",
+    "name": "Main pancreatic duct (of Wirsung)",
+    "layer": "ducts",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#f1d36b",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-male.glb",
+     "nodes": [
+      "VH_M_ventral_pancreatic_duct"
+     ]
+    }
+   },
+   {
+    "id": "human-male:accessory-pancreatic-duct",
+    "name": "Accessory pancreatic duct (of Santorini)",
+    "layer": "ducts",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#f6e2a0",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-male.glb",
+     "nodes": [
+      "VH_M_dorsal_pancreatic_duct"
+     ]
+    }
+   },
+   {
+    "id": "human-male:common-bile-duct",
+    "name": "Common bile duct",
+    "layer": "ducts",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#7da34a",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-male.glb",
+     "nodes": [
+      "VH_M_common_bile_duct"
+     ]
+    }
+   },
+   {
+    "id": "human-male:hepatopancreatic-ampulla",
+    "name": "Hepatopancreatic ampulla (of Vater)",
+    "layer": "ducts",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#c9a95a",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-male.glb",
+     "nodes": [
+      "VH_M_hepatopancreatic_ampulla"
+     ]
+    }
+   },
+   {
+    "id": "human-male:sphincter-of-oddi",
+    "name": "Sphincter of the ampulla (of Oddi)",
+    "layer": "ducts",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#b98a6a",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-male.glb",
+     "nodes": [
+      "VH_M_sphincter_of_hepatopancreatic_ampulla"
+     ]
+    }
+   },
+   {
+    "id": "human-male:minor-papilla",
+    "name": "Minor duodenal papilla",
+    "layer": "ducts",
+    "evidence": "simulated",
+    "status": "planned",
+    "color": "#d8b98c",
+    "plan": {
+     "kind": "route",
+     "asset": "pancreas-simulated-male.glb",
+     "radiusMm": [
+      1.5,
+      1.5
+     ],
+     "hug": [
+      "duodenum"
+     ],
+     "branches": [
+      {
+       "name": "main",
+       "via": [
+        "accessory-pancreatic-duct:end",
+        "duodenum:wall-nearest"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "id": "human-male:coeliac-trunk",
+    "name": "Coeliac trunk",
+    "layer": "arteries",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#c8333a",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-male.glb",
+     "nodes": [
+      "VH_M_celiac_trunk"
+     ]
+    }
+   },
+   {
+    "id": "human-male:common-hepatic-artery",
+    "name": "Common hepatic artery",
+    "layer": "arteries",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#c8333a",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-male.glb",
+     "nodes": [
+      "VH_M_common_hepatic_artery"
+     ]
+    }
+   },
+   {
+    "id": "human-male:proper-hepatic-artery",
+    "name": "Proper hepatic artery",
+    "layer": "arteries",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#c8333a",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-male.glb",
+     "nodes": [
+      "VH_M_proper_hepatic_artery"
+     ]
+    }
+   },
+   {
+    "id": "human-male:splenic-artery",
+    "name": "Splenic artery",
+    "layer": "arteries",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#c8333a",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-male.glb",
+     "nodes": [
+      "VH_M_splenic_artery"
+     ]
+    }
+   },
+   {
+    "id": "human-male:superior-mesenteric-artery",
+    "name": "Superior mesenteric artery",
+    "layer": "arteries",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#c8333a",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-male.glb",
+     "nodes": [
+      "VH_M_superior_mesenteric_artery"
+     ]
+    }
+   },
+   {
+    "id": "human-male:gastroduodenal-artery",
+    "name": "Gastroduodenal artery",
+    "layer": "arteries",
+    "evidence": "simulated",
+    "status": "ready",
+    "color": "#e0636a",
+    "plan": {
+     "kind": "route",
+     "asset": "pancreas-simulated-male.glb",
+     "radiusMm": [
+      1.6,
+      1.3
+     ],
+     "hug": [
+      "pancreas-head",
+      "pancreas-neck"
+     ],
+     "branches": [
+      {
+       "name": "trunk",
+       "via": [
+        "common-hepatic-artery:gastroduodenal-origin",
+        "pancreas-head:gastroduodenal-division"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "id": "human-male:superior-pancreaticoduodenal-arteries",
+    "name": "Anterior and posterior superior pancreaticoduodenal arteries",
+    "layer": "arteries",
+    "evidence": "simulated",
+    "status": "ready",
+    "color": "#e0636a",
+    "plan": {
+     "kind": "route",
+     "asset": "pancreas-simulated-male.glb",
+     "radiusMm": [
+      1,
+      0.7
+     ],
+     "hug": [
+      "pancreas-head",
+      "pancreas-neck"
+     ],
+     "branches": [
+      {
+       "name": "anterior",
+       "via": [
+        "pancreas-head:gastroduodenal-division",
+        "pancreas-head:anterior-groove-middle"
+       ]
+      },
+      {
+       "name": "posterior",
+       "via": [
+        "gastroduodenal-artery:upper-third",
+        "pancreas-head:posterior-groove-upper",
+        "pancreas-head:posterior-groove-middle"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "id": "human-male:inferior-pancreaticoduodenal-arteries",
+    "name": "Anterior and posterior inferior pancreaticoduodenal arteries",
+    "layer": "arteries",
+    "evidence": "simulated",
+    "status": "ready",
+    "color": "#e0636a",
+    "plan": {
+     "kind": "route",
+     "asset": "pancreas-simulated-male.glb",
+     "radiusMm": [
+      1,
+      0.7
+     ],
+     "hug": [
+      "pancreas-head",
+      "pancreas-uncinate"
+     ],
+     "branches": [
+      {
+       "name": "anterior",
+       "via": [
+        "superior-mesenteric-artery:inferior-pancreaticoduodenal-origin",
+        "pancreas-uncinate:inferior",
+        "pancreas-head:anterior-groove-lower",
+        "pancreas-head:anterior-groove-middle"
+       ]
+      },
+      {
+       "name": "posterior",
+       "via": [
+        "superior-mesenteric-artery:inferior-pancreaticoduodenal-origin",
+        "pancreas-uncinate:inferior",
+        "pancreas-head:posterior-groove-lower",
+        "pancreas-head:posterior-groove-middle"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "id": "human-male:dorsal-pancreatic-artery",
+    "name": "Dorsal and transverse pancreatic arteries",
+    "layer": "arteries",
+    "evidence": "simulated",
+    "status": "ready",
+    "color": "#e0636a",
+    "plan": {
+     "kind": "route",
+     "asset": "pancreas-simulated-male.glb",
+     "radiusMm": [
+      1,
+      0.6
+     ],
+     "hug": [
+      "pancreas-neck",
+      "pancreas-body",
+      "pancreas-tail"
+     ],
+     "branches": [
+      {
+       "name": "dorsal",
+       "via": [
+        "splenic-artery:dorsal-pancreatic-origin",
+        "pancreas-neck:posterior-inferior"
+       ]
+      },
+      {
+       "name": "transverse",
+       "via": [
+        "pancreas-neck:posterior-inferior",
+        "pancreas-body:inferior-border-middle",
+        "pancreas-tail:inferior-border-start"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "id": "human-male:great-pancreatic-artery",
+    "name": "Great pancreatic artery",
+    "layer": "arteries",
+    "evidence": "simulated",
+    "status": "ready",
+    "color": "#e0636a",
+    "plan": {
+     "kind": "route",
+     "asset": "pancreas-simulated-male.glb",
+     "radiusMm": [
+      0.9,
+      0.6
+     ],
+     "hug": [
+      "pancreas-body"
+     ],
+     "branches": [
+      {
+       "name": "main",
+       "via": [
+        "splenic-artery:great-pancreatic-origin",
+        "pancreas-body:posterior-middle"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "id": "human-male:caudal-pancreatic-arteries",
+    "name": "Caudal pancreatic arteries",
+    "layer": "arteries",
+    "evidence": "simulated",
+    "status": "ready",
+    "color": "#e0636a",
+    "plan": {
+     "kind": "route",
+     "asset": "pancreas-simulated-male.glb",
+     "radiusMm": [
+      0.6,
+      0.4
+     ],
+     "hug": [
+      "pancreas-tail"
+     ],
+     "branches": [
+      {
+       "name": "first",
+       "via": [
+        "splenic-artery:caudal-origin-1",
+        "pancreas-tail:posterior-1"
+       ]
+      },
+      {
+       "name": "second",
+       "via": [
+        "splenic-artery:caudal-origin-2",
+        "pancreas-tail:posterior-2"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "id": "human-male:splenic-vein",
+    "name": "Splenic vein",
+    "layer": "veins",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#3f5a9a",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-male.glb",
+     "nodes": [
+      "VH_M_splenic_vein"
+     ]
+    }
+   },
+   {
+    "id": "human-male:superior-mesenteric-vein",
+    "name": "Superior mesenteric vein",
+    "layer": "veins",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#3f5a9a",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-male.glb",
+     "nodes": [
+      "VH_M_superior_mesenteric_vein"
+     ]
+    }
+   },
+   {
+    "id": "human-male:hepatic-portal-vein",
+    "name": "Hepatic portal vein",
+    "layer": "veins",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#3f5a9a",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-male.glb",
+     "nodes": [
+      "VH_M_hepatic_portal_vein"
+     ]
+    }
+   },
+   {
+    "id": "human-male:inferior-pancreaticoduodenal-vein",
+    "name": "Inferior pancreaticoduodenal vein",
+    "layer": "veins",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#3f5a9a",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-male.glb",
+     "nodes": [
+      "VH_M_inferior_pancreaticoduodenal_vein"
+     ]
+    }
+   },
+   {
+    "id": "human-male:superior-pancreaticoduodenal-veins",
+    "name": "Superior pancreaticoduodenal veins",
+    "layer": "veins",
+    "evidence": "simulated",
+    "status": "planned",
+    "color": "#3f5a9a",
+    "plan": {
+     "kind": "route",
+     "asset": "pancreas-simulated-male.glb",
+     "radiusMm": [
+      1,
+      0.6
+     ],
+     "hug": [
+      "pancreas-head"
+     ],
+     "branches": [
+      {
+       "name": "main",
+       "via": [
+        "pancreas-head:anterior-groove",
+        "pancreas-head:posterior-groove",
+        "hepatic-portal-vein:origin"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "id": "human-male:duodenum",
+    "name": "Duodenum",
+    "layer": "neighbours",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#b9a49c",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-male.glb",
+     "nodes": [
+      "VH_M_duodenum_superior",
+      "VH_M_duodenum_descending",
+      "VH_M_duodenum_horizonal",
+      "VH_M_duodenum_ascending"
+     ]
+    }
+   },
+   {
+    "id": "human-male:duodenal-bulb",
+    "name": "Duodenal bulb",
+    "layer": "neighbours",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#b9a49c",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-male.glb",
+     "nodes": [
+      "VH_M_duodenal_ampulla"
+     ]
+    }
+   },
+   {
+    "id": "human-male:spleen",
+    "name": "Spleen",
+    "layer": "neighbours",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#7a3b52",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-male.glb",
+     "nodes": [
+      "VH_M_hilum_of_spleen",
+      "VH_M_gastric_surface_of_spleen",
+      "VH_M_renal_surface_of_spleen",
+      "VH_M_colic_surface_of_spleen",
+      "VH_M_diaphragmatic_surface_of_spleen"
+     ]
+    }
+   },
+   {
+    "id": "human-male:nodes-pancreaticoduodenal",
+    "name": "Pancreaticoduodenal lymph nodes (stations 13 and 17)",
+    "layer": "lymph",
+    "evidence": "simulated",
+    "status": "ready",
+    "color": "#3f9e9a",
+    "plan": {
+     "kind": "nodes",
+     "asset": "pancreas-simulated-male.glb",
+     "stations": [
+      {
+       "name": "13a",
+       "label": "Posterior, above the papilla",
+       "count": 2
+      },
+      {
+       "name": "13b",
+       "label": "Posterior, below the papilla",
+       "count": 2
+      },
+      {
+       "name": "17a",
+       "label": "Anterior, above the papilla",
+       "count": 2
+      },
+      {
+       "name": "17b",
+       "label": "Anterior, below the papilla",
+       "count": 2
+      }
+     ],
+     "radiusMm": [
+      2.5,
+      3.5
+     ]
+    }
+   },
+   {
+    "id": "human-male:nodes-hepatic-artery",
+    "name": "Nodes along the common hepatic artery (station 8)",
+    "layer": "lymph",
+    "evidence": "simulated",
+    "status": "ready",
+    "color": "#3f9e9a",
+    "plan": {
+     "kind": "nodes",
+     "asset": "pancreas-simulated-male.glb",
+     "stations": [
+      {
+       "name": "8a",
+       "label": "Anterosuperior",
+       "count": 3
+      },
+      {
+       "name": "8p",
+       "label": "Posterior",
+       "count": 1
+      }
+     ],
+     "radiusMm": [
+      2.5,
+      3.5
+     ]
+    }
+   },
+   {
+    "id": "human-male:nodes-sma",
+    "name": "Nodes along the superior mesenteric artery (station 14)",
+    "layer": "lymph",
+    "evidence": "simulated",
+    "status": "ready",
+    "color": "#3f9e9a",
+    "plan": {
+     "kind": "nodes",
+     "asset": "pancreas-simulated-male.glb",
+     "stations": [
+      {
+       "name": "14",
+       "label": "Round the root of the superior mesenteric artery",
+       "count": 3
+      }
+     ],
+     "radiusMm": [
+      2.5,
+      3.5
+     ]
+    }
+   },
+   {
+    "id": "human-male:nodes-splenic",
+    "name": "Nodes along the splenic artery and at the splenic hilum (stations 10 and 11)",
+    "layer": "lymph",
+    "evidence": "simulated",
+    "status": "ready",
+    "color": "#3f9e9a",
+    "plan": {
+     "kind": "nodes",
+     "asset": "pancreas-simulated-male.glb",
+     "stations": [
+      {
+       "name": "11p",
+       "label": "Along the proximal splenic artery",
+       "count": 2
+      },
+      {
+       "name": "11d",
+       "label": "Along the distal splenic artery",
+       "count": 2
+      },
+      {
+       "name": "10",
+       "label": "At the splenic hilum",
+       "count": 2
+      }
+     ],
+     "radiusMm": [
+      2.5,
+      3.5
+     ]
+    }
+   },
+   {
+    "id": "human-male:coeliac-ganglia",
+    "name": "Coeliac ganglia and plexus",
+    "layer": "nerves",
+    "evidence": "simulated",
+    "status": "planned",
+    "color": "#e9d98f",
+    "plan": {
+     "kind": "patches",
+     "on": [
+      "coeliac-trunk",
+      "superior-mesenteric-artery"
+     ],
+     "count": 2,
+     "radiusMm": 8
+    }
+   },
+   {
+    "id": "human-male:greater-splanchnic-nerves",
+    "name": "Greater splanchnic nerves",
+    "layer": "nerves",
+    "evidence": "simulated",
+    "status": "planned",
+    "color": "#e9d98f",
+    "plan": {
+     "kind": "route",
+     "asset": "pancreas-simulated-male.glb",
+     "radiusMm": [
+      1,
+      1
+     ],
+     "hug": [],
+     "branches": [
+      {
+       "name": "main",
+       "via": [
+        "sympathetic-trunk:T5",
+        "sympathetic-trunk:T9",
+        "diaphragm:crus",
+        "coeliac-ganglia:centroid"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "id": "human-male:vagal-coeliac-branch",
+    "name": "Coeliac branch of the posterior vagal trunk",
+    "layer": "nerves",
+    "evidence": "simulated",
+    "status": "planned",
+    "color": "#e9d98f",
+    "plan": {
+     "kind": "route",
+     "asset": "pancreas-simulated-male.glb",
+     "radiusMm": [
+      0.8,
+      0.8
+     ],
+     "hug": [],
+     "branches": [
+      {
+       "name": "main",
+       "via": [
+        "oesophagus:hiatus",
+        "coeliac-ganglia:centroid"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "id": "human-male:intrapancreatic-ganglia",
+    "name": "Intrapancreatic ganglia",
+    "layer": "nerves",
+    "evidence": "simulated",
+    "status": "planned",
+    "color": "#e9d98f",
+    "plan": {
+     "kind": "patches",
+     "on": [
+      "pancreas-head",
+      "pancreas-body",
+      "pancreas-tail"
+     ],
+     "count": 20,
+     "radiusMm": 0.5
+    }
+   }
+  ],
+  "female": [
+   {
+    "id": "human-female:pancreas-head",
+    "name": "Head of pancreas",
+    "layer": "pancreas",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#c0703a",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-female.glb",
+     "nodes": [
+      "VH_F_head_of_pancreas"
+     ]
+    }
+   },
+   {
+    "id": "human-female:pancreas-uncinate",
+    "name": "Uncinate process",
+    "layer": "pancreas",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#964f2c",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-female.glb",
+     "nodes": [
+      "VH_F_ucinate_process1"
+     ]
+    }
+   },
+   {
+    "id": "human-female:pancreas-neck",
+    "name": "Neck of pancreas",
+    "layer": "pancreas",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#d29257",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-female.glb",
+     "nodes": [
+      "VH_F_neck_of_pancreas"
+     ]
+    }
+   },
+   {
+    "id": "human-female:pancreas-body",
+    "name": "Body of pancreas",
+    "layer": "pancreas",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#c77f6e",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-female.glb",
+     "nodes": [
+      "VH_F_body_of_pancreas"
+     ]
+    }
+   },
+   {
+    "id": "human-female:pancreas-tail",
+    "name": "Tail of pancreas",
+    "layer": "pancreas",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#a8687f",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-female.glb",
+     "nodes": [
+      "VH_F_tail_of_pancreas"
+     ]
+    }
+   },
+   {
+    "id": "human-female:main-pancreatic-duct",
+    "name": "Main pancreatic duct (of Wirsung)",
+    "layer": "ducts",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#f1d36b",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-female.glb",
+     "nodes": [
+      "VH_F_ventral_pancreatic_duct"
+     ]
+    }
+   },
+   {
+    "id": "human-female:accessory-pancreatic-duct",
+    "name": "Accessory pancreatic duct (of Santorini)",
+    "layer": "ducts",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#f6e2a0",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-female.glb",
+     "nodes": [
+      "VH_F_dorsal_pancreatic_duct"
+     ]
+    }
+   },
+   {
+    "id": "human-female:common-bile-duct",
+    "name": "Common bile duct",
+    "layer": "ducts",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#7da34a",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-female.glb",
+     "nodes": [
+      "VH_F_common_bile_duct"
+     ]
+    }
+   },
+   {
+    "id": "human-female:hepatopancreatic-ampulla",
+    "name": "Hepatopancreatic ampulla (of Vater)",
+    "layer": "ducts",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#c9a95a",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-female.glb",
+     "nodes": [
+      "VH_F_hepatopancreatic_ampulla"
+     ]
+    }
+   },
+   {
+    "id": "human-female:sphincter-of-oddi",
+    "name": "Sphincter of the ampulla (of Oddi)",
+    "layer": "ducts",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#b98a6a",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-female.glb",
+     "nodes": [
+      "VH_F_sphincter_of_heptopancreatic_ampulla"
+     ]
+    }
+   },
+   {
+    "id": "human-female:minor-papilla",
+    "name": "Minor duodenal papilla",
+    "layer": "ducts",
+    "evidence": "simulated",
+    "status": "planned",
+    "color": "#d8b98c",
+    "plan": {
+     "kind": "route",
+     "asset": "pancreas-simulated-female.glb",
+     "radiusMm": [
+      1.5,
+      1.5
+     ],
+     "hug": [
+      "duodenum"
+     ],
+     "branches": [
+      {
+       "name": "main",
+       "via": [
+        "accessory-pancreatic-duct:end",
+        "duodenum:wall-nearest"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "id": "human-female:coeliac-trunk",
+    "name": "Coeliac trunk",
+    "layer": "arteries",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#c8333a",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-female.glb",
+     "nodes": [
+      "VH_F_celiac_trunk"
+     ]
+    }
+   },
+   {
+    "id": "human-female:common-hepatic-artery",
+    "name": "Common hepatic artery",
+    "layer": "arteries",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#c8333a",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-female.glb",
+     "nodes": [
+      "VH_F_common_hepatic_artery"
+     ]
+    }
+   },
+   {
+    "id": "human-female:proper-hepatic-artery",
+    "name": "Proper hepatic artery",
+    "layer": "arteries",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#c8333a",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-female.glb",
+     "nodes": [
+      "VH_F_proper_hepatic_artery"
+     ]
+    }
+   },
+   {
+    "id": "human-female:splenic-artery",
+    "name": "Splenic artery",
+    "layer": "arteries",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#c8333a",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-female.glb",
+     "nodes": [
+      "VH_F_splenic_artery"
+     ]
+    }
+   },
+   {
+    "id": "human-female:superior-mesenteric-artery",
+    "name": "Superior mesenteric artery",
+    "layer": "arteries",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#c8333a",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-female.glb",
+     "nodes": [
+      "VH_F_superior_mesenteric_artery"
+     ]
+    }
+   },
+   {
+    "id": "human-female:gastroduodenal-artery",
+    "name": "Gastroduodenal artery",
+    "layer": "arteries",
+    "evidence": "simulated",
+    "status": "ready",
+    "color": "#e0636a",
+    "plan": {
+     "kind": "route",
+     "asset": "pancreas-simulated-female.glb",
+     "radiusMm": [
+      1.6,
+      1.3
+     ],
+     "hug": [
+      "pancreas-head",
+      "pancreas-neck"
+     ],
+     "branches": [
+      {
+       "name": "trunk",
+       "via": [
+        "common-hepatic-artery:gastroduodenal-origin",
+        "pancreas-head:gastroduodenal-division"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "id": "human-female:superior-pancreaticoduodenal-arteries",
+    "name": "Anterior and posterior superior pancreaticoduodenal arteries",
+    "layer": "arteries",
+    "evidence": "simulated",
+    "status": "ready",
+    "color": "#e0636a",
+    "plan": {
+     "kind": "route",
+     "asset": "pancreas-simulated-female.glb",
+     "radiusMm": [
+      1,
+      0.7
+     ],
+     "hug": [
+      "pancreas-head",
+      "pancreas-neck"
+     ],
+     "branches": [
+      {
+       "name": "anterior",
+       "via": [
+        "pancreas-head:gastroduodenal-division",
+        "pancreas-head:anterior-groove-middle"
+       ]
+      },
+      {
+       "name": "posterior",
+       "via": [
+        "gastroduodenal-artery:upper-third",
+        "pancreas-head:posterior-groove-upper",
+        "pancreas-head:posterior-groove-middle"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "id": "human-female:inferior-pancreaticoduodenal-arteries",
+    "name": "Anterior and posterior inferior pancreaticoduodenal arteries",
+    "layer": "arteries",
+    "evidence": "simulated",
+    "status": "ready",
+    "color": "#e0636a",
+    "plan": {
+     "kind": "route",
+     "asset": "pancreas-simulated-female.glb",
+     "radiusMm": [
+      1,
+      0.7
+     ],
+     "hug": [
+      "pancreas-head",
+      "pancreas-uncinate"
+     ],
+     "branches": [
+      {
+       "name": "anterior",
+       "via": [
+        "superior-mesenteric-artery:inferior-pancreaticoduodenal-origin",
+        "pancreas-uncinate:inferior",
+        "pancreas-head:anterior-groove-lower",
+        "pancreas-head:anterior-groove-middle"
+       ]
+      },
+      {
+       "name": "posterior",
+       "via": [
+        "superior-mesenteric-artery:inferior-pancreaticoduodenal-origin",
+        "pancreas-uncinate:inferior",
+        "pancreas-head:posterior-groove-lower",
+        "pancreas-head:posterior-groove-middle"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "id": "human-female:dorsal-pancreatic-artery",
+    "name": "Dorsal and transverse pancreatic arteries",
+    "layer": "arteries",
+    "evidence": "simulated",
+    "status": "ready",
+    "color": "#e0636a",
+    "plan": {
+     "kind": "route",
+     "asset": "pancreas-simulated-female.glb",
+     "radiusMm": [
+      1,
+      0.6
+     ],
+     "hug": [
+      "pancreas-neck",
+      "pancreas-body",
+      "pancreas-tail"
+     ],
+     "branches": [
+      {
+       "name": "dorsal",
+       "via": [
+        "splenic-artery:dorsal-pancreatic-origin",
+        "pancreas-neck:posterior-inferior"
+       ]
+      },
+      {
+       "name": "transverse",
+       "via": [
+        "pancreas-neck:posterior-inferior",
+        "pancreas-body:inferior-border-middle",
+        "pancreas-tail:inferior-border-start"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "id": "human-female:great-pancreatic-artery",
+    "name": "Great pancreatic artery",
+    "layer": "arteries",
+    "evidence": "simulated",
+    "status": "ready",
+    "color": "#e0636a",
+    "plan": {
+     "kind": "route",
+     "asset": "pancreas-simulated-female.glb",
+     "radiusMm": [
+      0.9,
+      0.6
+     ],
+     "hug": [
+      "pancreas-body"
+     ],
+     "branches": [
+      {
+       "name": "main",
+       "via": [
+        "splenic-artery:great-pancreatic-origin",
+        "pancreas-body:posterior-middle"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "id": "human-female:caudal-pancreatic-arteries",
+    "name": "Caudal pancreatic arteries",
+    "layer": "arteries",
+    "evidence": "simulated",
+    "status": "ready",
+    "color": "#e0636a",
+    "plan": {
+     "kind": "route",
+     "asset": "pancreas-simulated-female.glb",
+     "radiusMm": [
+      0.6,
+      0.4
+     ],
+     "hug": [
+      "pancreas-tail"
+     ],
+     "branches": [
+      {
+       "name": "first",
+       "via": [
+        "splenic-artery:caudal-origin-1",
+        "pancreas-tail:posterior-1"
+       ]
+      },
+      {
+       "name": "second",
+       "via": [
+        "splenic-artery:caudal-origin-2",
+        "pancreas-tail:posterior-2"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "id": "human-female:splenic-vein",
+    "name": "Splenic vein",
+    "layer": "veins",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#3f5a9a",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-female.glb",
+     "nodes": [
+      "VH_F_splenic_vein"
+     ]
+    }
+   },
+   {
+    "id": "human-female:superior-mesenteric-vein",
+    "name": "Superior mesenteric vein",
+    "layer": "veins",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#3f5a9a",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-female.glb",
+     "nodes": [
+      "VH_F_superior_mesenteric_vein"
+     ]
+    }
+   },
+   {
+    "id": "human-female:hepatic-portal-vein",
+    "name": "Hepatic portal vein",
+    "layer": "veins",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#3f5a9a",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-female.glb",
+     "nodes": [
+      "VH_F_hepatic_portal_vein"
+     ]
+    }
+   },
+   {
+    "id": "human-female:inferior-pancreaticoduodenal-vein",
+    "name": "Inferior pancreaticoduodenal vein",
+    "layer": "veins",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#3f5a9a",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-female.glb",
+     "nodes": [
+      "VH_F_inferior_pancreaticoduodenal_vein"
+     ]
+    }
+   },
+   {
+    "id": "human-female:superior-pancreaticoduodenal-veins",
+    "name": "Superior pancreaticoduodenal veins",
+    "layer": "veins",
+    "evidence": "simulated",
+    "status": "planned",
+    "color": "#3f5a9a",
+    "plan": {
+     "kind": "route",
+     "asset": "pancreas-simulated-female.glb",
+     "radiusMm": [
+      1,
+      0.6
+     ],
+     "hug": [
+      "pancreas-head"
+     ],
+     "branches": [
+      {
+       "name": "main",
+       "via": [
+        "pancreas-head:anterior-groove",
+        "pancreas-head:posterior-groove",
+        "hepatic-portal-vein:origin"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "id": "human-female:duodenum",
+    "name": "Duodenum",
+    "layer": "neighbours",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#b9a49c",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-female.glb",
+     "nodes": [
+      "VH_F_duodenum_superior",
+      "VH_F_duodenum_descending",
+      "VH_F_duodenum_horizontal",
+      "VH_F_duodenum_ascending"
+     ]
+    }
+   },
+   {
+    "id": "human-female:duodenal-bulb",
+    "name": "Duodenal bulb",
+    "layer": "neighbours",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#b9a49c",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-female.glb",
+     "nodes": [
+      "VH_F_duodenal_ampulla"
+     ]
+    }
+   },
+   {
+    "id": "human-female:spleen",
+    "name": "Spleen",
+    "layer": "neighbours",
+    "evidence": "source",
+    "status": "ready",
+    "color": "#7a3b52",
+    "plan": {
+     "kind": "reference-node",
+     "asset": "pancreas-region-female.glb",
+     "nodes": [
+      "VH_F_hilum_of_spleen",
+      "VH_F_gastric_surface_of_spleen",
+      "VH_F_renal_surface_of_spleen",
+      "VH_F_colic_surface_of_spleen",
+      "VH_F_diaphragmatic_surface_of_spleen"
+     ]
+    }
+   },
+   {
+    "id": "human-female:nodes-pancreaticoduodenal",
+    "name": "Pancreaticoduodenal lymph nodes (stations 13 and 17)",
+    "layer": "lymph",
+    "evidence": "simulated",
+    "status": "ready",
+    "color": "#3f9e9a",
+    "plan": {
+     "kind": "nodes",
+     "asset": "pancreas-simulated-female.glb",
+     "stations": [
+      {
+       "name": "13a",
+       "label": "Posterior, above the papilla",
+       "count": 2
+      },
+      {
+       "name": "13b",
+       "label": "Posterior, below the papilla",
+       "count": 2
+      },
+      {
+       "name": "17a",
+       "label": "Anterior, above the papilla",
+       "count": 2
+      },
+      {
+       "name": "17b",
+       "label": "Anterior, below the papilla",
+       "count": 2
+      }
+     ],
+     "radiusMm": [
+      2.5,
+      3.5
+     ]
+    }
+   },
+   {
+    "id": "human-female:nodes-hepatic-artery",
+    "name": "Nodes along the common hepatic artery (station 8)",
+    "layer": "lymph",
+    "evidence": "simulated",
+    "status": "ready",
+    "color": "#3f9e9a",
+    "plan": {
+     "kind": "nodes",
+     "asset": "pancreas-simulated-female.glb",
+     "stations": [
+      {
+       "name": "8a",
+       "label": "Anterosuperior",
+       "count": 3
+      },
+      {
+       "name": "8p",
+       "label": "Posterior",
+       "count": 1
+      }
+     ],
+     "radiusMm": [
+      2.5,
+      3.5
+     ]
+    }
+   },
+   {
+    "id": "human-female:nodes-sma",
+    "name": "Nodes along the superior mesenteric artery (station 14)",
+    "layer": "lymph",
+    "evidence": "simulated",
+    "status": "ready",
+    "color": "#3f9e9a",
+    "plan": {
+     "kind": "nodes",
+     "asset": "pancreas-simulated-female.glb",
+     "stations": [
+      {
+       "name": "14",
+       "label": "Round the root of the superior mesenteric artery",
+       "count": 3
+      }
+     ],
+     "radiusMm": [
+      2.5,
+      3.5
+     ]
+    }
+   },
+   {
+    "id": "human-female:nodes-splenic",
+    "name": "Nodes along the splenic artery and at the splenic hilum (stations 10 and 11)",
+    "layer": "lymph",
+    "evidence": "simulated",
+    "status": "ready",
+    "color": "#3f9e9a",
+    "plan": {
+     "kind": "nodes",
+     "asset": "pancreas-simulated-female.glb",
+     "stations": [
+      {
+       "name": "11p",
+       "label": "Along the proximal splenic artery",
+       "count": 2
+      },
+      {
+       "name": "11d",
+       "label": "Along the distal splenic artery",
+       "count": 2
+      },
+      {
+       "name": "10",
+       "label": "At the splenic hilum",
+       "count": 2
+      }
+     ],
+     "radiusMm": [
+      2.5,
+      3.5
+     ]
+    }
+   },
+   {
+    "id": "human-female:coeliac-ganglia",
+    "name": "Coeliac ganglia and plexus",
+    "layer": "nerves",
+    "evidence": "simulated",
+    "status": "planned",
+    "color": "#e9d98f",
+    "plan": {
+     "kind": "patches",
+     "on": [
+      "coeliac-trunk",
+      "superior-mesenteric-artery"
+     ],
+     "count": 2,
+     "radiusMm": 8
+    }
+   },
+   {
+    "id": "human-female:greater-splanchnic-nerves",
+    "name": "Greater splanchnic nerves",
+    "layer": "nerves",
+    "evidence": "simulated",
+    "status": "planned",
+    "color": "#e9d98f",
+    "plan": {
+     "kind": "route",
+     "asset": "pancreas-simulated-female.glb",
+     "radiusMm": [
+      1,
+      1
+     ],
+     "hug": [],
+     "branches": [
+      {
+       "name": "main",
+       "via": [
+        "sympathetic-trunk:T5",
+        "sympathetic-trunk:T9",
+        "diaphragm:crus",
+        "coeliac-ganglia:centroid"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "id": "human-female:vagal-coeliac-branch",
+    "name": "Coeliac branch of the posterior vagal trunk",
+    "layer": "nerves",
+    "evidence": "simulated",
+    "status": "planned",
+    "color": "#e9d98f",
+    "plan": {
+     "kind": "route",
+     "asset": "pancreas-simulated-female.glb",
+     "radiusMm": [
+      0.8,
+      0.8
+     ],
+     "hug": [],
+     "branches": [
+      {
+       "name": "main",
+       "via": [
+        "oesophagus:hiatus",
+        "coeliac-ganglia:centroid"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "id": "human-female:intrapancreatic-ganglia",
+    "name": "Intrapancreatic ganglia",
+    "layer": "nerves",
+    "evidence": "simulated",
+    "status": "planned",
+    "color": "#e9d98f",
+    "plan": {
+     "kind": "patches",
+     "on": [
+      "pancreas-head",
+      "pancreas-body",
+      "pancreas-tail"
+     ],
+     "count": 20,
+     "radiusMm": 0.5
+    }
+   }
+  ]
+ }
+}

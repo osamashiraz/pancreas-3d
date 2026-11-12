@@ -1,0 +1,205 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The human pancreas, from organ to cell</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,560&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light;--bg:#e8e6ea;--panel:#f7f6f8;--ink:#1d1f2a;--muted:#5c6070;--rule:#d6d3db;--accent:#6a3fb0;--warn:#8a5a12;--canvas:#f7f0f4;
+--apex:#ea8aa2;--base:#5c3f93;--nucleus:#36257a;--nucleolus:#1b1047;--granule:#e0576d;--cac:#f4e8ef;--cacnucleus:#8073b6;
+--intercalated:#f2d6e3;--intralobular:#efc8da;--ductnucleus:#45358b;--capillary:#efb2c0;--redcell:#d8353f;--collagen:#f3c4d4;--stellate:#ecbcce;
+--beta:#3fae49;--alpha:#d63384;--delta:#1fa6d1;--pp:#f2b21b;--rer:#6f7fd6;--golgi:#e3b13a;--mito:#4fae78;--lumen:#9ad0e6;
+--insulincore:#20402a;--insulinhalo:#dff2df;--cilium:#ffffff;--microvilli:#5d7f99;--tightjunction:#1d2b4f;--cftr:#2f6fe0;--slc26:#ef8a1a;--basement:#e7d9c2;
+--organ:#e6c49c;--parenchyma:#8d58a0;--isletgross:#dcb7d9;--organduct:#f1d36b;--artery:#c8333a;--vein:#3f5a9a;--neighbour:#b9a49c;
+--isletnucleus:#5a4799;--grossduct:#f3d9e6;--grossartery:#c9485b;--grossvein:#ad5f7c;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#13141a;--panel:#1b1c24;--ink:#e8e7ee;--muted:#a1a2b2;--rule:#2d2e3a;--accent:#b49ae6;--warn:#e2b45f;--canvas:#101117}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#13141a;--panel:#1b1c24;--ink:#e8e7ee;--muted:#a1a2b2;--rule:#2d2e3a;--accent:#b49ae6;--warn:#e2b45f;--canvas:#101117}
+*,*::before,*::after{box-sizing:inherit}html{height:100%}
+body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:15px/1.5 "Public Sans","Segoe UI",system-ui,sans-serif}
+.app{display:grid;grid-template-columns:minmax(0,1fr) 400px;height:100%}
+body[data-stain="if"] .stage{background:radial-gradient(ellipse at 50% 38%,#2a2533 0%,#15121b 60%,#0b0a0f 100%)!important}
+.stage{position:relative;background:radial-gradient(ellipse at 50% 38%,color-mix(in srgb,var(--canvas) 70%,#ffffff) 0%,var(--canvas) 55%,color-mix(in srgb,var(--canvas) 82%,#7d7690) 100%);min-height:0;overflow:hidden}
+.stage canvas{display:block;width:100%;height:100%;touch-action:none;outline:none}
+.stage canvas:focus-visible{box-shadow:inset 0 0 0 3px var(--accent)}
+.status{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);padding:24px;text-align:center}
+.view{position:absolute;top:0;bottom:0;left:0;width:100%;z-index:1;outline:none;touch-action:none}
+.view .levelname{left:auto;right:12px;transform:none}
+.view.focused{box-shadow:inset 0 0 0 2px var(--accent)}
+.view:focus-visible{box-shadow:inset 0 0 0 3px var(--accent)}
+.ladder,.reset,.caption,.status{z-index:5}
+.ladder{position:absolute;left:14px;top:14px;display:flex;flex-direction:column;gap:5px}
+.ladder button{font:inherit;font-size:13px;text-align:left;background:color-mix(in srgb,var(--panel) 88%,transparent);color:var(--ink);border:1px solid var(--rule);border-radius:7px;padding:5px 10px;cursor:pointer;min-width:128px}
+.ladder button span{display:block;font-size:11px;color:var(--muted)}
+.ladder .branch{display:flex;gap:5px;margin-left:12px}
+.ladder .branch button{min-width:0}
+.ladder button[aria-current="true"]{border-color:var(--accent);box-shadow:inset 3px 0 0 var(--accent)}
+.levelname{position:absolute;left:50%;top:14px;transform:translateX(-50%);font:560 19px/1.2 "Newsreader",Georgia,serif;color:var(--ink);background:color-mix(in srgb,var(--panel) 80%,transparent);padding:3px 12px;border-radius:12px;pointer-events:none}
+.labels{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.lbl{position:absolute;transform:translate(-50%,-50%);font-size:12px;line-height:1.2;color:var(--ink);background:color-mix(in srgb,var(--panel) 86%,transparent);border:1px solid var(--rule);border-radius:9px;padding:2px 7px;white-space:nowrap}
+.caption{position:absolute;left:50%;bottom:52px;transform:translateX(-50%);max-width:min(560px,80%);text-align:center;font-size:14.5px;color:var(--ink);background:color-mix(in srgb,var(--panel) 90%,transparent);border-radius:10px;padding:6px 12px}
+.caption:empty{display:none}
+.tools{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:8px 0;margin:4px 0 12px}
+.tools .row{display:flex;gap:14px;align-items:center;flex-wrap:wrap;font-size:14px;margin:6px 0}
+.play{font:inherit;font-size:14px;color:var(--panel);background:var(--accent);border:0;border-radius:6px;padding:6px 14px;cursor:pointer}
+.preset{font:inherit;font-size:12.5px;color:var(--ink);background:var(--panel);border:1px solid var(--rule);border-radius:12px;padding:3px 9px;cursor:pointer}
+.picker{display:flex;align-items:center;gap:8px;margin:2px 0 12px;font-size:13.5px}
+.picker span{flex:1;text-align:center;border:1px solid var(--rule);border-radius:6px;padding:5px 8px;background:color-mix(in srgb,var(--panel) 70%,var(--bg))}
+.picker button{font:inherit;font-size:14px;color:var(--ink);background:var(--panel);border:1px solid var(--rule);border-radius:6px;padding:4px 10px;cursor:pointer}
+.selection{border:1px solid var(--accent);border-radius:8px;padding:10px 12px;margin:0 0 12px;font-size:13.5px}
+.selection h3{font:560 16px/1.2 "Newsreader",Georgia,serif;margin:0 0 4px}
+.selection p{margin:0 0 8px;color:var(--muted)}
+.selection .row{display:flex;gap:10px;align-items:center}
+.selection button{font:inherit;font-size:13px;color:var(--ink);background:var(--panel);border:1px solid var(--rule);border-radius:6px;padding:4px 10px;cursor:pointer}
+.scale{position:absolute;left:16px;bottom:16px;font-size:12.5px;color:var(--muted)}
+.scale .bar{height:4px;background:var(--ink);border-radius:2px;margin-bottom:4px}
+.reset{position:absolute;right:14px;bottom:12px;font:inherit;font-size:14px;color:var(--ink);background:var(--panel);border:1px solid var(--rule);border-radius:6px;padding:6px 12px;cursor:pointer}
+aside{background:var(--panel);border-left:1px solid var(--rule);overflow-y:auto;padding:22px 22px 32px}
+h1{font:560 25px/1.15 "Newsreader",Georgia,serif;margin:0 0 6px}
+h2{font:560 17px/1.2 "Newsreader",Georgia,serif;margin:18px 0 6px}
+.info{font-size:14px;margin:0 0 10px}
+.badge{display:inline-block;font-size:12.5px;padding:1px 8px;border-radius:10px;border:1px solid var(--warn);color:var(--warn);margin:0 0 10px}
+.target{font-size:13.5px;color:var(--muted);margin:0 0 10px}
+.seg{display:inline-flex;border:1px solid var(--rule);border-radius:6px;overflow:hidden;margin:2px 0 12px}
+.seg button{font:inherit;font-size:14px;border:0;background:var(--panel);color:var(--ink);padding:6px 12px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--panel)}
+.legend{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}
+.legend li{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;border-bottom:1px solid var(--rule);padding:7px 0;font-size:13.5px}
+.legend label{display:flex;gap:8px;align-items:flex-start;cursor:pointer}
+.legend small{display:block;color:var(--muted);font-size:12.5px}
+.sw{width:13px;height:13px;border-radius:50%;display:inline-block;flex:none;margin-top:3px;border:1px solid var(--rule)}
+.toggle{display:flex;gap:8px;align-items:center;font-size:14px;margin:6px 0}
+.slider{display:grid;gap:4px;font-size:14px;margin:8px 0}
+.slider input{width:100%}
+input{accent-color:var(--accent)}
+button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.note{font-size:12.5px;color:var(--muted);border-top:1px solid var(--rule);padding-top:10px}
+ol{font-size:12.5px;color:var(--muted);padding-left:18px}ol li{margin-bottom:5px}
+.unv{color:var(--warn)}
+@media (max-width:880px){.app{grid-template-columns:1fr;grid-template-rows:62vh auto;height:auto}body{height:auto}aside{border-left:0;border-top:1px solid var(--rule)}.ladder button{min-width:0;padding:4px 8px}.ladder button span{display:none}}
+</style></head><body>
+<div class="app">
+ <div class="stage" id="stage">
+  <div class="status" id="status">Loading the organ…</div>
+  <nav class="ladder" aria-label="Zoom level">
+   <button type="button" data-go="organ">Organ<span>15 cm</span></button>
+   <button type="button" data-go="gross">Lobules<span>4 mm piece</span></button>
+   <button type="button" data-go="tissue">Tissue<span>300 µm block</span></button>
+   <div class="branch"><button type="button" data-go="detail:acinus">Acinus</button><button type="button" data-go="cells:acinus">Its cells</button><button type="button" data-go="cell:acinus">One cell</button></div>
+   <div class="branch"><button type="button" data-go="detail:islet">Islet</button><button type="button" data-go="cells:islet">Its cells</button><button type="button" data-go="cell:islet">Beta cell</button></div>
+   <div class="branch"><button type="button" data-go="detail:duct">Duct</button><button type="button" data-go="cells:duct">Its cells</button><button type="button" data-go="cell:duct">One cell</button></div>
+  </nav>
+  <div class="caption" id="caption" aria-live="polite"></div>
+  <button class="reset" id="reset" type="button">Reset view</button>
+ </div>
+ <aside>
+  <h1>The human pancreas, from organ to cell</h1>
+  <p class="info" id="info"></p>
+  <div class="tools">
+   <div class="row"><button class="play" id="play" type="button">Play the journey</button>
+    <label><input type="checkbox" id="voice" checked> Voice</label>
+    <label><input type="checkbox" id="names" checked> Names</label><label><input type="checkbox" id="motion"> Motion <small style="color:var(--muted)">(illustrative)</small></label></div>
+   <div class="row" style="gap:8px"><label style="display:flex;gap:6px;align-items:center;font-size:13px">Voice <select id="voicepick" aria-label="Narration voice" style="font:inherit;font-size:13px;max-width:170px;color:var(--ink);background:var(--panel);border:1px solid var(--rule);border-radius:6px;padding:3px"></select></label>
+    <label style="display:flex;gap:6px;align-items:center;font-size:13px">Speed <input type="range" id="voicerate" min="0.7" max="1.15" step="0.01" value="0.88" style="width:90px" aria-label="Narration speed"><span id="ratelabel"></span></label></div>
+   <div class="row"><button type="button" id="split" aria-pressed="false" style="font:inherit;font-size:14px;color:var(--ink);background:var(--panel);border:1px solid var(--rule);border-radius:6px;padding:5px 12px;cursor:pointer">Split screen</button>
+    <span style="font-size:12.5px;color:var(--muted)">Two views side by side; the panel controls the one you last touched.</span></div>
+   <div class="row" id="presets" style="display:none;gap:6px">
+    <button type="button" data-preset="islet-acinus" class="preset">Islet | Acinus</button><button type="button" data-preset="islet-duct" class="preset">Islet | Duct</button><button type="button" data-preset="acinus-duct" class="preset">Acinus | Duct</button>
+    <button type="button" data-preset="beta-acinar" class="preset">Beta cell | Acinar cell</button><button type="button" data-preset="tissue-cell" class="preset">Tissue | Cell</button><button type="button" data-preset="organ-tissue" class="preset">Organ | Tissue</button></div>
+   <label class="slider" data-for="organ tissue"><span id="slicelabel">Slice apart</span><input type="range" id="slice" min="0" max="1" step="0.01" value="0" aria-label="Slice apart: spacing between parallel slices"></label>
+  </div>
+  <div class="selection" id="selection" hidden>
+   <h3 id="selname"></h3><p id="seltext"></p>
+   <div class="row"><button type="button" id="isolate">Isolate</button><label style="display:flex;gap:6px;align-items:center;font-size:13px">Opacity <input type="range" id="selop" min="0" max="1" step="0.01" value="1" style="width:110px"></label><button type="button" id="selclose" aria-label="Clear selection">Clear</button></div>
+  </div>
+  <p class="target" id="target" data-for="organ"></p>
+  <div data-for="organ gross tissue compare"><span style="font-size:14px">Region</span><br>
+   <div class="seg" role="group" aria-label="Region the tissue is taken from"><button type="button" data-region="head" aria-pressed="false">Head</button><button type="button" data-region="body" aria-pressed="true">Body</button><button type="button" data-region="tail" aria-pressed="false">Tail</button></div>
+   <button type="button" id="compare" class="play" style="margin:0 0 12px 8px;background:var(--panel);color:var(--ink);border:1px solid var(--rule)">Compare head, body and tail</button></div>
+  <div class="picker" data-for="organ gross tissue"><button type="button" id="siteprev" aria-label="Previous tissue site">◀</button><span id="sitelabel"></span><button type="button" id="sitenext" aria-label="Next tissue site">▶</button></div>
+  <label class="toggle" data-for="organ"><input type="checkbox" id="showsites" checked> Show the 60 tissue sites (dots: head, body, tail)</label>
+  <p class="target" id="grossstats" data-for="gross compare"></p>
+  <label class="toggle" data-for="gross compare"><input type="checkbox" id="grosssolid"> Show lobules as solid tissue (like a section)</label>
+  <ul class="legend" data-for="gross compare">
+   <li><span class="sw" style="background:var(--grossduct)"></span><span>Duct tree: a large interlobular duct in the septa, interlobular ducts to each lobule, intralobular ducts inside, terminal (intercalated) ducts ending in acini</span></li>
+   <li><span class="sw" style="background:var(--parenchyma)"></span><span>Acini, in grape-like clusters at the ends of the terminal ducts (drawn sparser than real, so the ducts show)</span></li>
+   <li><span class="sw" style="background:var(--parenchyma)"></span><span>Lobules of acinar tissue, purple as in H&amp;E, separated by pale pink septa of connective tissue</span></li>
+   <li><span class="sw" style="background:var(--isletgross)"></span><span>Islets: pale islands among the acini, sizes about the mean of 110 µm, at the region’s density; shown where the cut passes through them, like a section</span></li>
+   <li><span class="sw" style="background:var(--intralobular)"></span><span>Interlobular ducts, with an artery (red) and vein (blue), in the septa</span></li>
+  </ul>
+  <label class="toggle" data-for="organ"><input type="checkbox" id="islets"> Show the islets (one point per 100)</label>
+  <div data-for="tissue detail cells cell"><span style="font-size:14px">Zoom into</span><br>
+   <div class="seg" role="group" aria-label="What to zoom into"><button type="button" data-branch="acinus" aria-pressed="true">An acinus</button><button type="button" data-branch="islet" aria-pressed="false">The islet</button><button type="button" data-branch="duct" aria-pressed="false">A duct</button></div></div>
+  <span class="badge" data-for="tissue detail cells cell">Simulated: built from published descriptions and measurements</span>
+  <label class="slider" data-for="tissue">Cut the block<input type="range" id="cut" min="-150" max="150" step="2" value="150"></label>
+  <div class="picker" data-for="detail cells cell"><button type="button" id="pickprev" aria-label="Previous model">◀</button><span id="picklabel"></span><button type="button" id="picknext" aria-label="Next model">▶</button></div>
+  <label class="toggle" data-for="detail gross compare"><input type="checkbox" id="cutopen"> Cut open</label>
+  <label class="toggle" data-for="detail cells cell"><input type="checkbox" id="surround"> Show the surrounding tissue, faintly</label>
+  <p class="target" data-for="detail cells cell">Each stage holds as you zoom out, so you can step back and look; zoom much further out, or press Esc, to return a stage.</p>
+  <p class="target" data-for="tissue detail cells">Click any cell or structure to name it, then isolate it or fade it.</p>
+  <div data-for="tissue detail cells cell gross"><span style="font-size:14px">Stain</span><br>
+   <div class="seg" role="group" aria-label="Stain"><button type="button" data-stain="he" aria-pressed="true">H&amp;E</button><button type="button" data-stain="if" aria-pressed="false">Cell types (immunostain)</button></div>
+   <p class="target" style="margin-top:-6px">Cell types colours each kind of cell like a multiplex immunofluorescence panel: acinar orange, duct teal, beta green, alpha magenta, delta cyan, PP amber, capillaries red, stellate cells yellow, collagen lavender, nuclei blue.</p></div>
+  <ul class="legend" data-for="tissue detail cells">
+   <li><span class="sw" style="background:linear-gradient(180deg,var(--apex),var(--base))"></span><label><input type="checkbox" data-toggle="acinar" checked>Acinar cells<small>Wedges converging on the lumen like orange segments. As in H&amp;E: the base stains purple with hematoxylin (rough ER), the apex pink-red with eosin (zymogen granules); round, dark basal nuclei. Cut cells show their stained interior.</small></label></li>
+   <li><span class="sw" style="background:var(--intralobular)"></span><label><input type="checkbox" data-toggle="duct" checked>Ducts and centroacinar cells<small>Pale-staining cuboidal cells in intralobular ducts, low flat cells in intercalated ducts, pale centroacinar cells inside each acinus; round nuclei.</small></label></li>
+   <li><span class="sw" style="background:var(--capillary)"></span><label><input type="checkbox" data-toggle="capillary" checked>Capillaries<small>A looping network between acini; the islet has its own dense bed.</small></label></li>
+   <li><span class="sw" style="background:var(--redcell)"></span><label><input type="checkbox" data-toggle="redcell" checked>Red blood cells</label></li>
+   <li><span class="sw" style="background:var(--collagen)"></span><label><input type="checkbox" data-toggle="stroma" checked>Stroma<small>Collagen aligned along the ducts (CODA), loose fibres, spindle-shaped stellate cells.</small></label></li>
+   <li><span class="sw" style="background:conic-gradient(var(--beta) 0 55%,var(--alpha) 0 86%,var(--delta) 0 95%,var(--pp) 0)"></span><label><input type="checkbox" data-toggle="islet" checked>Islet<small>In H&amp;E, a pale island among the darker acini, its cells alike with round nuclei. Switch the stain to Cell types to see beta (green), alpha (magenta), delta (cyan) and PP (amber) cells.</small></label></li>
+  </ul>
+  <ul class="legend" data-for="acinusCell">
+   <li><span class="sw" style="background:var(--nucleus)"></span><span>Nucleus, basal</span></li>
+   <li><span class="sw" style="background:var(--rer)"></span><span>Rough ER round the nucleus: makes the enzymes</span></li>
+   <li><span class="sw" style="background:var(--golgi)"></span><span>Golgi above the nucleus: packages them</span></li>
+   <li><span class="sw" style="background:var(--granule)"></span><span>Zymogen granules, about 1 µm, at the apex</span></li>
+   <li><span class="sw" style="background:var(--mito)"></span><span>Mitochondria</span></li>
+  </ul>
+  <ul class="legend" data-for="isletCell">
+   <li><span class="sw" style="background:var(--insulincore)"></span><span>Insulin granules: dark crystalline cores of insulin with zinc, in pale halos</span></li>
+   <li><span class="sw" style="background:var(--nucleus)"></span><span>Nucleus</span></li>
+   <li><span class="sw" style="background:var(--golgi)"></span><span>Golgi; rough ER in blue</span></li>
+   <li><span class="sw" style="background:var(--mito)"></span><span>Mitochondria</span></li>
+   <li><span class="sw" style="background:var(--cilium)"></span><span>Primary cilium</span></li>
+  </ul>
+  <ul class="legend" data-for="ductCell">
+   <li><span class="sw" style="background:var(--ductnucleus)"></span><span>Nucleus, central</span></li>
+   <li><span class="sw" style="background:var(--mito)"></span><span>Mitochondria, many: secretion needs energy</span></li>
+   <li><span class="sw" style="background:var(--microvilli)"></span><span>Microvilli on the apical surface, facing the lumen</span></li>
+   <li><span class="sw" style="background:var(--cilium)"></span><span>Primary cilium, one per cell, into the lumen</span></li>
+   <li><span class="sw" style="background:var(--tightjunction)"></span><span>Tight junctions: a belt sealing the apical edge</span></li>
+   <li><span class="sw" style="background:var(--cftr)"></span><span>CFTR, apical anion channel</span></li>
+   <li><span class="sw" style="background:var(--slc26)"></span><span>SLC26A6, apical Cl⁻/HCO₃⁻ exchanger</span></li>
+   <li><span class="sw" style="background:var(--basement)"></span><span>Basement membrane, beneath the cell</span></li>
+  </ul>
+  <p class="note" data-for="tissue detail cells cell">Acinar cells reach out until they meet a neighbouring acinus, a vessel, a duct or the islet, so acini deform against one another; they fill 52% of the block. Sizes of acinar, centroacinar, duct and beta cells, acini, granules, capillaries and stellate cells are <span class="unv">typical values not yet sourced</span>; the duct tree and centroacinar cells are described in rat (Endo 2002). The block is generic: the same wherever you zoom in.</p>
+  <h2>Sources</h2>
+  <ol>
+   <li>HRA 3D reference organs (HuBMAP), from the Visible Human Project. CC BY 4.0.</li>
+   <li>Kiemen AL, et al. CODA. Nat Methods 2022. doi:10.1038/s41592-022-01650-9</li>
+   <li>Endo H, et al. Pancreatic ductular system. Histol Histopathol 2002. doi:10.14670/HH-17.107</li>
+   <li>Beer RL, et al. Centroacinar cells. Dev Biol 2016. doi:10.1016/j.ydbio.2016.02.027</li>
+   <li>Messenger SW, et al. Granule exocytosis in acinar cells. Cell Calcium 2014. doi:10.1016/j.ceca.2014.03.003</li>
+   <li>Palade G. Intracellular aspects of the process of protein synthesis. Science 1975. doi:10.1126/science.1096303</li>
+   <li>Hahn M, et al. 2021; Wang X, et al. 2013; Cabrera O, et al. 2006; Brissova M, et al. 2005: islets.</li>
+   <li>Berclaz C, et al. Insulin–zinc crystals in beta cell granules. Diabetologia 2016. doi:10.1007/s00125-015-3819-x</li>
+   <li>Ishiguro H, et al. Bicarbonate secretion by pancreatic duct epithelium. Nagoya J Med Sci 2012. PMC4831246</li>
+   <li>Hegyi P, Rakonczay Z. Pancreatic ducts in acute pancreatitis. Pancreatology 2015. doi:10.1016/j.pan.2015.03.010</li>
+   <li>Steward MC, Ishiguro H. Pancreatic duct cell function. Curr Opin Gastroenterol 2009. doi:10.1097/MOG.0b013e32832e06ce</li>
+   <li>diIorio P, et al. Cilia in the pancreas. Birth Defects Res C 2014. doi:10.1002/bdrc.21064</li>
+   <li>Narration written for this viewer after: StatPearls, Anatomy, Abdomen and Pelvis, Pancreas (NCBI Bookshelf NBK532912) and the StatPearls chapter on the endocrine pancreas (NBK459261), CC BY 4.0; Columbia University histology laboratory notes on the exocrine and endocrine pancreas; University of Basel histology collection, exocrine pancreas; Human Protein Atlas, normal pancreas.</li>
+  </ol>
+ </aside>
+</div>
+<script type="application/json" id="block">__BLOCK_BODY__</script>
+<script type="application/json" id="block-head">__BLOCK_HEAD__</script>
+<script type="application/json" id="block-tail">__BLOCK_TAIL__</script>
+<script type="application/json" id="organ">__ORGAN_JSON__</script>
+<script type="application/octet-stream" id="glb-region">__REGION_GLB_B64__</script>
+<script type="application/octet-stream" id="glb-islets">__ISLETS_GLB_B64__</script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/loaders/GLTFLoader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/environments/RoomEnvironment.js"></script>
+<script>
+__GENERATOR_JS__</script>
+<script>
+__APP_JS__</script></body></html>

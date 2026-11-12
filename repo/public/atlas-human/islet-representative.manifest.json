@@ -1,0 +1,2868 @@
+{
+ "schemaVersion": "humanbio.islet.v1",
+ "evidence": "simulated: a model built from published measurements, not an imaged islet",
+ "license": "MIT for the code; the numbers belong to their sources",
+ "seed": 20060206,
+ "parameters": {
+  "isletDiameterUm": {
+   "value": 110.0,
+   "source": "Hahn M, et al. 3D imaging of human organs with micrometer resolution - applied to the endocrine pancreas. Commun Biol 2021;4:1063. doi:10.1038/s42003-021-02589-x",
+   "verified": true,
+   "note": "Mean 3D diameter of 197,097 human islets."
+  },
+  "composition": {
+   "value": {
+    "beta": 117,
+    "alpha": 66,
+    "delta": 20,
+    "pp": 12
+   },
+   "source": "HRA 2D functional tissue unit, Islets of Langerhans, pancreas, v1.2 (ccf-releases v2.0), CC BY 4.0: a stylized average drawn with 117 beta, 66 alpha, 20 delta and 12 PP cells.",
+   "verified": true,
+   "note": "Used as proportions: 54% beta, 31% alpha, 9% delta, 6% PP. Brissova et al. found composition varies considerably between human islets."
+  },
+  "arrangement": {
+   "value": "interspersed along capillaries, no core or mantle",
+   "source": "Cabrera O, et al. The unique cytoarchitecture of human pancreatic islets has implications for islet cell function. Proc Natl Acad Sci U S A 2006;103(7):2334-9. doi:10.1073/pnas.0510790103",
+   "verified": true,
+   "note": "Also Brissova et al.: alpha, beta and delta cells dispersed throughout human islets."
+  },
+  "betaHeterotypicFraction": {
+   "value": 0.71,
+   "source": "Cabrera O, et al. The unique cytoarchitecture of human pancreatic islets has implications for islet cell function. Proc Natl Acad Sci U S A 2006;103(7):2334-9. doi:10.1073/pnas.0510790103",
+   "verified": true,
+   "note": "Share of beta cells in contact with other endocrine cells, measured in confocal sections; the model is tuned to it, pooled over five parallel sections of the model, with profiles counted as touching within 15% of contact."
+  },
+  "cellDiameterUm": {
+   "value": 11.0,
+   "source": null,
+   "verified": false,
+   "note": "Typical endocrine cell diameter; no source checked yet. Sets the number of cells."
+  },
+  "capillaryRadiusUm": {
+   "value": 3.0,
+   "source": null,
+   "verified": false,
+   "note": "Typical capillary radius; no source checked yet."
+  },
+  "capillaryReachCells": {
+   "value": 1.5,
+   "source": null,
+   "verified": false,
+   "note": "Capillaries are added until 95% of cells lie within this many cell diameters of one; a modelling rule that stands for Cabrera et al.'s finding that most cells align along vessels."
+  }
+ },
+ "result": {
+  "cells": 346,
+  "capillaries": 17,
+  "cellsWithinReachOfCapillary": 0.951,
+  "composition": {
+   "beta": 0.546,
+   "alpha": 0.306,
+   "delta": 0.092,
+   "pp": 0.055
+  },
+  "compositionTarget": {
+   "beta": 0.544,
+   "alpha": 0.307,
+   "delta": 0.093,
+   "pp": 0.056
+  },
+  "sectionsUm": [
+   -30.0,
+   -15.0,
+   0.0,
+   15.0,
+   30.0
+  ],
+  "betaHeterotypicFractionInSections": 0.711,
+  "betaHeterotypicFractionStandardError": 0.041,
+  "betaHeterotypicFractionTarget": 0.71,
+  "betaHeterotypicFractionIfTypesWereRandom": 0.711,
+  "betaCellsInSections": 121,
+  "betaBetaCoupling": 0.0
+ },
+ "calibration": [
+  {
+   "coupling": 0.0,
+   "betaHeterotypicFraction": 0.711,
+   "betaCellsInSection": 121
+  }
+ ],
+ "cells": [
+  {
+   "type": "beta",
+   "centreUm": [
+    18.4,
+    9.73,
+    43.88
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    8.41,
+    -1.63,
+    45.33
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -1.77,
+    -14.0,
+    45.39
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    27.29,
+    12.38,
+    37.58
+   ]
+  },
+  {
+   "type": "delta",
+   "centreUm": [
+    27.24,
+    1.05,
+    34.05
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    7.27,
+    -11.15,
+    38.29
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    16.17,
+    -19.32,
+    40.05
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -2.91,
+    -23.83,
+    41.62
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    35.91,
+    3.38,
+    27.86
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    34.41,
+    -6.3,
+    21.57
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    25.97,
+    -7.82,
+    30.17
+   ]
+  },
+  {
+   "type": "delta",
+   "centreUm": [
+    33.04,
+    -16.82,
+    29.08
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    24.93,
+    -17.92,
+    36.29
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    25.27,
+    -18.1,
+    24.09
+   ]
+  },
+  {
+   "type": "delta",
+   "centreUm": [
+    23.59,
+    -27.33,
+    30.6
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    15.97,
+    -31.06,
+    26.22
+   ]
+  },
+  {
+   "type": "pp",
+   "centreUm": [
+    44.78,
+    -4.53,
+    19.13
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    34.96,
+    -16.62,
+    18.33
+   ]
+  },
+  {
+   "type": "delta",
+   "centreUm": [
+    33.23,
+    -26.77,
+    14.09
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    24.36,
+    -28.77,
+    18.38
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    13.81,
+    -39.59,
+    20.46
+   ]
+  },
+  {
+   "type": "pp",
+   "centreUm": [
+    0.81,
+    22.52,
+    41.62
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -8.38,
+    10.44,
+    41.56
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -19.41,
+    -0.03,
+    42.87
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    19.98,
+    26.98,
+    31.73
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    10.31,
+    25.14,
+    34.99
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    18.13,
+    16.96,
+    35.38
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    9.94,
+    16.92,
+    41.28
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    8.67,
+    14.72,
+    32.8
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -0.31,
+    13.94,
+    35.73
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    8.61,
+    6.38,
+    38.96
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -0.18,
+    3.93,
+    43.3
+   ]
+  },
+  {
+   "type": "delta",
+   "centreUm": [
+    0.53,
+    4.76,
+    32.77
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -10.99,
+    1.25,
+    38.37
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -1.42,
+    -5.82,
+    40.43
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -10.9,
+    -7.56,
+    47.11
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -10.02,
+    -9.11,
+    35.61
+   ]
+  },
+  {
+   "type": "pp",
+   "centreUm": [
+    -20.25,
+    -9.4,
+    39.06
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    27.94,
+    29.39,
+    24.95
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    35.36,
+    22.29,
+    26.41
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    29.03,
+    21.03,
+    31.59
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    27.78,
+    18.92,
+    21.14
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    18.13,
+    17.3,
+    27.51
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    28.71,
+    9.34,
+    26.62
+   ]
+  },
+  {
+   "type": "pp",
+   "centreUm": [
+    19.64,
+    8.46,
+    31.86
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    18.23,
+    7.83,
+    21.84
+   ]
+  },
+  {
+   "type": "delta",
+   "centreUm": [
+    10.68,
+    5.53,
+    26.29
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    17.05,
+    -2.17,
+    28.61
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    7.86,
+    -1.66,
+    34.61
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -11.42,
+    -29.81,
+    24.9
+   ]
+  },
+  {
+   "type": "delta",
+   "centreUm": [
+    37.09,
+    18.72,
+    12.54
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    37.39,
+    12.64,
+    21.55
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    35.89,
+    10.82,
+    9.56
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    27.0,
+    9.35,
+    16.68
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    36.06,
+    2.2,
+    17.94
+   ]
+  },
+  {
+   "type": "pp",
+   "centreUm": [
+    26.42,
+    1.42,
+    23.95
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    17.36,
+    -2.42,
+    15.34
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    23.13,
+    -10.15,
+    18.31
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    17.16,
+    -12.08,
+    23.87
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    16.17,
+    -13.16,
+    13.63
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    15.6,
+    -20.43,
+    17.67
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    5.77,
+    -23.79,
+    25.18
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    46.32,
+    11.99,
+    4.04
+   ]
+  },
+  {
+   "type": "delta",
+   "centreUm": [
+    45.57,
+    3.52,
+    10.25
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    44.05,
+    2.95,
+    1.48
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    35.53,
+    0.82,
+    6.13
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    45.12,
+    -4.34,
+    6.89
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    34.87,
+    -9.53,
+    1.09
+   ]
+  },
+  {
+   "type": "delta",
+   "centreUm": [
+    27.53,
+    -10.18,
+    7.92
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    35.18,
+    -16.19,
+    7.54
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    23.89,
+    -18.76,
+    12.09
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    26.51,
+    -19.47,
+    4.5
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    17.35,
+    -23.15,
+    9.22
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    23.4,
+    -29.61,
+    9.46
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    14.5,
+    -31.87,
+    3.55
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    14.0,
+    -41.67,
+    11.18
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    4.5,
+    -45.87,
+    3.87
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -3.98,
+    -46.84,
+    11.86
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    44.92,
+    -6.62,
+    -5.35
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    42.07,
+    -17.15,
+    2.0
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    45.15,
+    -16.62,
+    -8.59
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    36.28,
+    -18.55,
+    -1.79
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    35.58,
+    -29.0,
+    1.98
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    23.37,
+    -39.98,
+    -6.53
+   ]
+  },
+  {
+   "type": "pp",
+   "centreUm": [
+    14.67,
+    -43.37,
+    -0.8
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    1.53,
+    32.21,
+    34.58
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -27.7,
+    17.08,
+    36.78
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -17.93,
+    10.72,
+    36.91
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -26.32,
+    5.14,
+    33.3
+   ]
+  },
+  {
+   "type": "pp",
+   "centreUm": [
+    -28.25,
+    -2.62,
+    38.73
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -36.62,
+    -5.14,
+    32.83
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    19.97,
+    35.76,
+    23.41
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    11.48,
+    33.09,
+    18.24
+   ]
+  },
+  {
+   "type": "delta",
+   "centreUm": [
+    1.24,
+    31.85,
+    23.84
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -0.76,
+    22.37,
+    31.23
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -18.72,
+    7.83,
+    28.02
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -10.68,
+    0.98,
+    26.4
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -18.5,
+    0.1,
+    32.61
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -17.98,
+    -1.38,
+    22.11
+   ]
+  },
+  {
+   "type": "pp",
+   "centreUm": [
+    -30.05,
+    -22.54,
+    28.46
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    18.45,
+    35.86,
+    13.34
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    20.47,
+    25.75,
+    8.24
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -21.19,
+    -21.6,
+    13.59
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -28.86,
+    -22.91,
+    19.64
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    37.3,
+    28.41,
+    -2.97
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    29.83,
+    25.71,
+    2.03
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    37.52,
+    19.68,
+    3.24
+   ]
+  },
+  {
+   "type": "delta",
+   "centreUm": [
+    26.35,
+    17.77,
+    11.76
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    27.81,
+    15.7,
+    -1.49
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    19.21,
+    16.01,
+    5.29
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    28.03,
+    7.67,
+    4.94
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    17.06,
+    4.39,
+    -0.59
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    7.84,
+    4.28,
+    7.02
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    19.82,
+    -4.12,
+    6.37
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    8.3,
+    -8.02,
+    0.38
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -12.44,
+    -31.4,
+    3.23
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    46.06,
+    12.78,
+    -5.17
+   ]
+  },
+  {
+   "type": "delta",
+   "centreUm": [
+    35.03,
+    8.89,
+    -2.15
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    36.45,
+    0.45,
+    -4.8
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    27.44,
+    -0.78,
+    0.6
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    27.17,
+    -3.16,
+    -11.79
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    18.33,
+    -5.19,
+    -4.07
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    25.14,
+    -12.22,
+    -2.7
+   ]
+  },
+  {
+   "type": "delta",
+   "centreUm": [
+    15.2,
+    -13.86,
+    1.85
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    6.73,
+    -26.56,
+    -9.25
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -2.21,
+    -28.06,
+    -3.0
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -4.44,
+    -37.32,
+    4.97
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -3.51,
+    -37.07,
+    -7.02
+   ]
+  },
+  {
+   "type": "pp",
+   "centreUm": [
+    -10.38,
+    -41.15,
+    -0.91
+   ]
+  },
+  {
+   "type": "pp",
+   "centreUm": [
+    -4.06,
+    -46.71,
+    0.48
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    45.17,
+    1.31,
+    -10.55
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    35.12,
+    -0.64,
+    -16.57
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    35.02,
+    -9.97,
+    -9.46
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    34.7,
+    -21.04,
+    -14.41
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    24.6,
+    -24.47,
+    -19.83
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    23.47,
+    -31.55,
+    -12.29
+   ]
+  },
+  {
+   "type": "pp",
+   "centreUm": [
+    5.77,
+    -36.13,
+    -14.45
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    6.43,
+    -45.56,
+    -5.22
+   ]
+  },
+  {
+   "type": "delta",
+   "centreUm": [
+    33.34,
+    -20.06,
+    -26.6
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    33.33,
+    -30.74,
+    -17.12
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -16.04,
+    34.94,
+    17.51
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -24.03,
+    31.71,
+    24.76
+   ]
+  },
+  {
+   "type": "pp",
+   "centreUm": [
+    -16.8,
+    25.7,
+    23.05
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -24.45,
+    24.04,
+    30.24
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -25.95,
+    22.74,
+    20.55
+   ]
+  },
+  {
+   "type": "delta",
+   "centreUm": [
+    -34.46,
+    22.07,
+    26.32
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -25.43,
+    14.42,
+    27.25
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -34.94,
+    12.42,
+    29.53
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -35.76,
+    12.45,
+    19.74
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    11.01,
+    41.97,
+    12.7
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    2.55,
+    40.64,
+    19.94
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -6.57,
+    38.11,
+    12.22
+   ]
+  },
+  {
+   "type": "pp",
+   "centreUm": [
+    1.58,
+    31.27,
+    12.75
+   ]
+  },
+  {
+   "type": "delta",
+   "centreUm": [
+    -16.16,
+    26.24,
+    12.06
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -18.19,
+    16.06,
+    21.17
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -28.24,
+    13.83,
+    15.35
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -27.95,
+    4.36,
+    20.71
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -26.19,
+    2.87,
+    9.05
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -28.56,
+    -5.96,
+    16.09
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -37.5,
+    -8.88,
+    10.14
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -38.44,
+    -17.51,
+    18.37
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    19.56,
+    43.23,
+    6.25
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    21.03,
+    33.9,
+    1.59
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    11.44,
+    31.51,
+    -2.71
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    12.71,
+    23.55,
+    3.38
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -6.93,
+    7.85,
+    -1.0
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -9.81,
+    -1.33,
+    6.28
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -20.48,
+    -2.79,
+    11.72
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -28.91,
+    -16.8,
+    13.64
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -27.51,
+    -16.87,
+    0.81
+   ]
+  },
+  {
+   "type": "delta",
+   "centreUm": [
+    -37.81,
+    -17.81,
+    7.85
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -29.54,
+    -25.86,
+    6.59
+   ]
+  },
+  {
+   "type": "delta",
+   "centreUm": [
+    -37.66,
+    -28.5,
+    3.96
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    30.53,
+    35.74,
+    -2.57
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    29.73,
+    33.97,
+    -14.34
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    20.15,
+    31.96,
+    -10.7
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    16.66,
+    14.7,
+    -6.48
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    9.89,
+    12.52,
+    -1.43
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    10.54,
+    10.4,
+    -10.76
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    1.82,
+    8.23,
+    -6.55
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    9.65,
+    2.47,
+    -4.93
+   ]
+  },
+  {
+   "type": "delta",
+   "centreUm": [
+    -1.03,
+    -9.93,
+    -3.27
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -8.65,
+    -11.19,
+    0.84
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -11.09,
+    -23.58,
+    -3.37
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -19.15,
+    -24.59,
+    -8.67
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -28.75,
+    -28.76,
+    -3.87
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -20.5,
+    -32.85,
+    -1.33
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -28.21,
+    -35.74,
+    1.6
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -28.7,
+    -35.89,
+    -5.41
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    38.05,
+    17.01,
+    -18.45
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    29.17,
+    14.6,
+    -23.19
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    19.18,
+    14.8,
+    -16.92
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    27.79,
+    5.52,
+    -15.56
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    18.8,
+    3.66,
+    -20.63
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    19.08,
+    -5.7,
+    -13.92
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    7.76,
+    -9.6,
+    -21.3
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -1.49,
+    -31.25,
+    -14.22
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -11.97,
+    -32.22,
+    -5.83
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -11.32,
+    -32.37,
+    -17.34
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -19.58,
+    -35.04,
+    -13.75
+   ]
+  },
+  {
+   "type": "pp",
+   "centreUm": [
+    -11.46,
+    -40.94,
+    -11.52
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -21.09,
+    -43.04,
+    -7.3
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    37.93,
+    7.56,
+    -22.41
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    27.4,
+    4.61,
+    -27.92
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    36.74,
+    -1.5,
+    -26.59
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    26.73,
+    -4.2,
+    -21.32
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    25.98,
+    -6.76,
+    -32.83
+   ]
+  },
+  {
+   "type": "delta",
+   "centreUm": [
+    18.52,
+    -6.34,
+    -27.3
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    25.12,
+    -14.96,
+    -24.9
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    16.9,
+    -16.52,
+    -21.17
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    17.2,
+    -16.85,
+    -30.8
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    7.35,
+    -19.33,
+    -24.79
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    15.19,
+    -25.36,
+    -23.95
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    6.04,
+    -27.59,
+    -17.11
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    7.83,
+    -29.84,
+    -30.22
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    6.17,
+    -39.02,
+    -25.5
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -3.1,
+    -40.26,
+    -17.82
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    35.46,
+    -11.13,
+    -31.13
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    26.41,
+    -17.03,
+    -36.9
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    15.98,
+    -36.9,
+    -28.55
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -15.07,
+    44.04,
+    12.04
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -22.95,
+    41.63,
+    6.41
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -25.38,
+    33.25,
+    13.08
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -32.65,
+    28.75,
+    18.47
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -33.52,
+    28.98,
+    8.09
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -33.56,
+    20.37,
+    13.56
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -42.91,
+    19.31,
+    9.15
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -4.88,
+    47.34,
+    5.66
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -7.01,
+    45.27,
+    -3.63
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -15.52,
+    42.73,
+    1.28
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -6.44,
+    36.13,
+    0.81
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -15.55,
+    35.96,
+    7.15
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -26.65,
+    30.39,
+    2.43
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -24.83,
+    23.01,
+    8.36
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -25.9,
+    20.98,
+    -1.72
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -36.1,
+    18.45,
+    3.47
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -45.77,
+    -1.48,
+    11.28
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -45.3,
+    -2.98,
+    -0.48
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -47.02,
+    -12.97,
+    8.07
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    4.62,
+    46.46,
+    -9.62
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    4.57,
+    36.08,
+    -15.29
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -4.44,
+    36.62,
+    -9.22
+   ]
+  },
+  {
+   "type": "pp",
+   "centreUm": [
+    1.55,
+    27.97,
+    -9.37
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -5.81,
+    24.55,
+    -14.48
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -14.6,
+    22.51,
+    -7.66
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -6.61,
+    14.09,
+    -7.81
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -16.04,
+    13.59,
+    -12.37
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -24.98,
+    11.66,
+    -7.52
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -36.32,
+    -1.33,
+    -4.81
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -28.13,
+    -6.68,
+    -5.65
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -37.88,
+    -9.5,
+    1.58
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -38.01,
+    -11.38,
+    -11.48
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -37.98,
+    -21.98,
+    -4.6
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    20.17,
+    41.49,
+    -15.31
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    20.57,
+    31.12,
+    -19.79
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    12.73,
+    29.86,
+    -13.4
+   ]
+  },
+  {
+   "type": "delta",
+   "centreUm": [
+    3.59,
+    26.76,
+    -19.22
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    12.73,
+    19.3,
+    -18.23
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -7.65,
+    5.83,
+    -21.43
+   ]
+  },
+  {
+   "type": "delta",
+   "centreUm": [
+    -10.27,
+    -5.46,
+    -16.06
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -18.44,
+    -6.0,
+    -10.2
+   ]
+  },
+  {
+   "type": "pp",
+   "centreUm": [
+    -18.01,
+    -5.76,
+    -19.79
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -26.47,
+    -10.55,
+    -14.05
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -34.98,
+    -22.27,
+    -14.69
+   ]
+  },
+  {
+   "type": "pp",
+   "centreUm": [
+    -30.17,
+    -28.8,
+    -13.86
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -38.44,
+    -28.37,
+    -8.14
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    21.51,
+    28.97,
+    -31.37
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    29.72,
+    23.06,
+    -30.65
+   ]
+  },
+  {
+   "type": "delta",
+   "centreUm": [
+    20.36,
+    20.54,
+    -25.07
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    19.93,
+    20.62,
+    -34.66
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    10.97,
+    18.16,
+    -28.49
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    17.23,
+    11.35,
+    -27.56
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    9.86,
+    10.36,
+    -23.5
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    10.18,
+    7.94,
+    -33.76
+   ]
+  },
+  {
+   "type": "delta",
+   "centreUm": [
+    -0.16,
+    -11.38,
+    -27.1
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -9.07,
+    -13.85,
+    -32.71
+   ]
+  },
+  {
+   "type": "delta",
+   "centreUm": [
+    -19.33,
+    -16.28,
+    -26.0
+   ]
+  },
+  {
+   "type": "delta",
+   "centreUm": [
+    -9.13,
+    -24.08,
+    -24.9
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -19.48,
+    -27.7,
+    -31.42
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    27.14,
+    13.48,
+    -33.96
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    18.66,
+    11.74,
+    -38.5
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    27.07,
+    2.39,
+    -38.9
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    19.79,
+    1.65,
+    -44.08
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    7.9,
+    -10.24,
+    -33.21
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    1.06,
+    -13.76,
+    -38.29
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    8.89,
+    -19.98,
+    -35.81
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -0.37,
+    -23.26,
+    -42.15
+   ]
+  },
+  {
+   "type": "delta",
+   "centreUm": [
+    -10.13,
+    -25.43,
+    -35.53
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -9.87,
+    -34.43,
+    -28.65
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -42.33,
+    24.99,
+    2.13
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -14.6,
+    41.87,
+    -12.34
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -23.07,
+    38.54,
+    -15.84
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -33.98,
+    29.04,
+    -3.78
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -34.05,
+    27.01,
+    -14.71
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -33.98,
+    16.94,
+    -7.13
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -41.74,
+    16.0,
+    -13.73
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -5.17,
+    42.51,
+    -14.65
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -13.98,
+    40.99,
+    -21.5
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -7.05,
+    32.2,
+    -19.61
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -14.03,
+    32.54,
+    -15.71
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -16.17,
+    31.32,
+    -24.78
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -24.97,
+    28.86,
+    -18.7
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -17.38,
+    22.36,
+    -18.65
+   ]
+  },
+  {
+   "type": "delta",
+   "centreUm": [
+    -26.14,
+    20.75,
+    -14.22
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -25.5,
+    15.99,
+    -24.74
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -35.41,
+    17.12,
+    -18.57
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -26.36,
+    9.68,
+    -19.52
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -34.6,
+    6.71,
+    -12.23
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -34.67,
+    8.18,
+    -23.44
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -44.11,
+    5.1,
+    -17.43
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -44.7,
+    -3.51,
+    -12.49
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    2.37,
+    35.84,
+    -26.62
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -6.18,
+    32.28,
+    -30.63
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -7.35,
+    23.94,
+    -23.15
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -6.45,
+    21.28,
+    -36.76
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -6.89,
+    13.94,
+    -29.86
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -26.19,
+    7.4,
+    -28.09
+   ]
+  },
+  {
+   "type": "delta",
+   "centreUm": [
+    -27.23,
+    -0.36,
+    -23.18
+   ]
+  },
+  {
+   "type": "delta",
+   "centreUm": [
+    -27.54,
+    -10.65,
+    -26.79
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -37.62,
+    -12.01,
+    -21.29
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -35.32,
+    -13.22,
+    -31.91
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    13.18,
+    28.31,
+    -36.67
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    3.29,
+    24.87,
+    -39.9
+   ]
+  },
+  {
+   "type": "pp",
+   "centreUm": [
+    11.86,
+    18.36,
+    -40.54
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    1.98,
+    14.38,
+    -35.14
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    2.85,
+    13.94,
+    -46.51
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -7.86,
+    11.71,
+    -42.71
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    0.85,
+    4.87,
+    -37.8
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -8.47,
+    1.96,
+    -43.79
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -18.08,
+    0.26,
+    -38.56
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -8.33,
+    -6.56,
+    -38.95
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -18.19,
+    -8.12,
+    -33.28
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -16.06,
+    -9.37,
+    -42.96
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -27.37,
+    -10.14,
+    -35.82
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -19.28,
+    -17.53,
+    -36.47
+   ]
+  },
+  {
+   "type": "delta",
+   "centreUm": [
+    -28.16,
+    -20.62,
+    -30.59
+   ]
+  },
+  {
+   "type": "delta",
+   "centreUm": [
+    12.23,
+    8.24,
+    -45.81
+   ]
+  },
+  {
+   "type": "pp",
+   "centreUm": [
+    -8.69,
+    -7.66,
+    -47.28
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -8.33,
+    -17.56,
+    -42.82
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -24.0,
+    28.46,
+    -31.89
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -32.83,
+    25.14,
+    -24.4
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -35.58,
+    17.71,
+    -29.1
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -15.55,
+    29.59,
+    -35.2
+   ]
+  },
+  {
+   "type": "alpha",
+   "centreUm": [
+    -25.59,
+    16.17,
+    -34.64
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -25.66,
+    8.02,
+    -40.46
+   ]
+  },
+  {
+   "type": "beta",
+   "centreUm": [
+    -16.55,
+    11.36,
+    -44.15
+   ]
+  }
+ ],
+ "output": {
+  "file": "islet-representative.glb",
+  "bytes": 1001452,
+  "sha256": "c4f780db9b366ee08e92ec99060211fe9d127648ec170efec27dd7355a6ffd27",
+  "units": "micrometres, scaled to metres by the root node"
+ }
+}

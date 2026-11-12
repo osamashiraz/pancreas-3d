@@ -1,0 +1,739 @@
+{
+  "schemaVersion": "humanbio.ontology-candidates.v1",
+  "module": "human-pancreas",
+  "status": "proposed-associations-copied-from-hra",
+  "expertReviewed": false,
+  "retrievedOn": "2026-11-10",
+  "sources": {
+    "crosswalk": {
+      "file": "v2.0/models/asct-b-3d-models-crosswalk.csv",
+      "repository": "https://github.com/hubmapconsortium/ccf-releases",
+      "commit": "b036a91aaf7234f462b1249d4a5f4fb0e982f412",
+      "license": "CC-BY-4.0"
+    },
+    "asctb": {
+      "file": "v2.0/asct-b/asct-b-vh-pancreas.csv",
+      "version": "v1.3",
+      "doi": "10.48539/HBM336.TBNP.923",
+      "license": "CC-BY-4.0"
+    },
+    "referenceOrgans": [
+      {
+        "file": "v2.0/models/3d-vh-m-pancreas.glb",
+        "sha256": "6fc5de9825c2ce8449b5bd5c0751d6b754bca4aa1c63ea2353dd09efa5c44a15",
+        "units": "metres",
+        "license": "CC-BY-4.0"
+      },
+      {
+        "file": "v2.0/models/3d-vh-f-pancreas.glb",
+        "sha256": "edb41456634b8fc887e609520e0a59eb0626e0fd0faa88a5b40985bf358b626d",
+        "units": "metres",
+        "license": "CC-BY-4.0"
+      }
+    ]
+  },
+  "method": {
+    "id": "copy-hra-crosswalk-rows-v1",
+    "assumptions": [
+      "The HRA crosswalk and ASCT+B table are the authority for these mappings until expert review."
+    ],
+    "limitations": [
+      "Rows are copied, not re-derived. Known errors in the source are listed under knownIssues and are not corrected silently."
+    ]
+  },
+  "anatomicalStructures": [
+    {
+      "node": "VH_F_sphincter_of_heptopancreatic_ampulla",
+      "reference": "female",
+      "model": "VH_F_Small_Intestine",
+      "termId": "FMA:15077",
+      "termLabel": "Sphincter of hepatopancreatic ampulla",
+      "termIri": "http://purl.org/sig/ont/fma/fma15077"
+    },
+    {
+      "node": "VH_F_hepatopancreatic_ampulla",
+      "reference": "female",
+      "model": "VH_F_Biliary_Tree",
+      "termId": "UBERON:0004913",
+      "termLabel": "hepatopancreatic ampulla",
+      "termIri": "http://purl.obolibrary.org/obo/UBERON_0004913"
+    },
+    {
+      "node": "VH_F_dorsal_pancreatic_duct",
+      "reference": "female",
+      "model": "VH_F_Biliary_Tree",
+      "termId": "UBERON:0005429",
+      "termLabel": "dorsal pancreatic duct",
+      "termIri": "http://purl.obolibrary.org/obo/UBERON_0005429"
+    },
+    {
+      "node": "VH_F_common_bile_duct",
+      "reference": "female",
+      "model": "VH_F_Biliary_Tree",
+      "termId": "UBERON:0001174",
+      "termLabel": "common bile duct",
+      "termIri": "http://purl.obolibrary.org/obo/UBERON_0001174"
+    },
+    {
+      "node": "VH_F_ventral_pancreatic_duct",
+      "reference": "female",
+      "model": "VH_F_Biliary_Tree",
+      "termId": "UBERON:0001064",
+      "termLabel": "Ventral pancreatic duct",
+      "termIri": "http://purl.obolibrary.org/obo/UBERON_0001064"
+    },
+    {
+      "node": "VH_F_pancreas",
+      "reference": "female",
+      "model": "VH_F_Pancreas",
+      "termId": "UBERON:0001264",
+      "termLabel": "Pancreas",
+      "termIri": "http://purl.obolibrary.org/obo/UBERON_0001264"
+    },
+    {
+      "node": "VH_F_tail_of_pancreas",
+      "reference": "female",
+      "model": "VH_F_Pancreas",
+      "termId": "UBERON:0001151",
+      "termLabel": "tail of pancreas",
+      "termIri": "http://purl.obolibrary.org/obo/UBERON_0001151"
+    },
+    {
+      "node": "VH_F_body_of_pancreas",
+      "reference": "female",
+      "model": "VH_F_Pancreas",
+      "termId": "UBERON:0001150",
+      "termLabel": "body of pancreas",
+      "termIri": "http://purl.obolibrary.org/obo/UBERON_0001150"
+    },
+    {
+      "node": "VH_F_head_of_pancreas",
+      "reference": "female",
+      "model": "VH_F_Pancreas",
+      "termId": "UBERON:0001069",
+      "termLabel": "head of pancreas",
+      "termIri": "http://purl.obolibrary.org/obo/UBERON_0001069"
+    },
+    {
+      "node": "VH_F_neck_of_pancreas",
+      "reference": "female",
+      "model": "VH_F_Pancreas",
+      "termId": "FMA:14517",
+      "termLabel": "Neck of pancreas",
+      "termIri": "http://purl.org/sig/ont/fma/fma14517"
+    },
+    {
+      "node": "VH_F_superior_mesenteric_vein",
+      "reference": "female",
+      "model": "3d-vh-f-blood-vasculature",
+      "termId": "UBERON:0001138",
+      "termLabel": "superior mesenteric vein",
+      "termIri": "http://purl.org/sig/ont/fma/fma14332"
+    },
+    {
+      "node": "VH_F_inferior_pancreaticoduodenal_vein",
+      "reference": "female",
+      "model": "3d-vh-f-blood-vasculature",
+      "termId": "FMA:0329299",
+      "termLabel": "Inferior pancreaticoduodenal vein",
+      "termIri": "http://purl.org/sig/ont/fma/fma0329299"
+    },
+    {
+      "node": "VH_F_celiac_trunk",
+      "reference": "female",
+      "model": "3d-vh-f-blood-vasculature",
+      "termId": "FMA:14812",
+      "termLabel": "Celiac trunk",
+      "termIri": "http://purl.org/sig/ont/fma/fma14812"
+    },
+    {
+      "node": "VH_F_superior_mesenteric_artery",
+      "reference": "female",
+      "model": "3d-vh-f-blood-vasculature",
+      "termId": "UBERON:0001182",
+      "termLabel": "superior mesenteric artery",
+      "termIri": "http://purl.obolibrary.org/obo/UBERON_0001182"
+    },
+    {
+      "node": "VH_F_splenic_artery",
+      "reference": "female",
+      "model": "3d-vh-f-blood-vasculature",
+      "termId": "UBERON:0001194",
+      "termLabel": "splenic artery",
+      "termIri": "http://purl.obolibrary.org/obo/UBERON_0001194"
+    },
+    {
+      "node": "VH_F_splenic_vein",
+      "reference": "female",
+      "model": "3d-vh-f-blood-vasculature",
+      "termId": "UBERON:0003713",
+      "termLabel": "splenic vein",
+      "termIri": "http://purl.obolibrary.org/obo/UBERON_0003713"
+    },
+    {
+      "node": "VH_F_common_hepatic_artery",
+      "reference": "female",
+      "model": "3d-vh-f-blood-vasculature",
+      "termId": "UBERON:0005436",
+      "termLabel": "common hepatic artery",
+      "termIri": "http://purl.obolibrary.org/obo/UBERON_0005436"
+    },
+    {
+      "node": "VH_F_hepatic_portal_vein",
+      "reference": "female",
+      "model": "3d-vh-f-blood-vasculature",
+      "termId": "UBERON:0001639",
+      "termLabel": "hepatic portal vein",
+      "termIri": "http://purl.obolibrary.org/obo/UBERON_0001639"
+    },
+    {
+      "node": "VH_M_pancreas",
+      "reference": "male",
+      "model": "VH_M_Pancreas",
+      "termId": "UBERON:0001264",
+      "termLabel": "Pancreas",
+      "termIri": "http://purl.obolibrary.org/obo/UBERON_0001264"
+    },
+    {
+      "node": "VH_M_body_of_pancreas",
+      "reference": "male",
+      "model": "VH_M_Pancreas",
+      "termId": "UBERON:0001150",
+      "termLabel": "body of pancreas",
+      "termIri": "http://purl.obolibrary.org/obo/UBERON_0001150"
+    },
+    {
+      "node": "VH_M_tail_of_pancreas",
+      "reference": "male",
+      "model": "VH_M_Pancreas",
+      "termId": "UBERON:0001151",
+      "termLabel": "tail of pancreas",
+      "termIri": "http://purl.obolibrary.org/obo/UBERON_0001151"
+    },
+    {
+      "node": "VH_M_head_of_pancreas",
+      "reference": "male",
+      "model": "VH_M_Pancreas",
+      "termId": "UBERON:0001069",
+      "termLabel": "head of pancreas",
+      "termIri": "http://purl.obolibrary.org/obo/UBERON_0001069"
+    },
+    {
+      "node": "VH_M_neck_of_pancreas",
+      "reference": "male",
+      "model": "VH_M_Pancreas",
+      "termId": "FMA:14517",
+      "termLabel": "Neck of pancreas",
+      "termIri": "http://purl.org/sig/ont/fma/fma14517"
+    },
+    {
+      "node": "VH_M_uncinate_process_of_the_pancreas",
+      "reference": "male",
+      "model": "VH_M_Pancreas",
+      "termId": "UBERON:0010373",
+      "termLabel": "uncinate process of pancreas",
+      "termIri": "http://purl.obolibrary.org/obo/UBERON_0010373"
+    },
+    {
+      "node": "VH_M_dorsal_pancreatic_duct",
+      "reference": "male",
+      "model": "VH_M_Ducts_of_Pancreas",
+      "termId": "UBERON:0005429",
+      "termLabel": "dorsal pancreatic duct",
+      "termIri": "http://purl.obolibrary.org/obo/UBERON_0005429"
+    },
+    {
+      "node": "VH_M_common_bile_duct",
+      "reference": "male",
+      "model": "VH_M_Ducts_of_Pancreas",
+      "termId": "UBERON:0001174",
+      "termLabel": "common bile duct",
+      "termIri": "http://purl.obolibrary.org/obo/UBERON_0001174"
+    },
+    {
+      "node": "VH_M_ventral_pancreatic_duct",
+      "reference": "male",
+      "model": "VH_M_Ducts_of_Pancreas",
+      "termId": "UBERON:0001064",
+      "termLabel": "Ventral pancreatic duct",
+      "termIri": "http://purl.obolibrary.org/obo/UBERON_0001064"
+    },
+    {
+      "node": "VH_M_hepatopancreatic_ampulla",
+      "reference": "male",
+      "model": "VH_M_Ducts_of_Pancreas",
+      "termId": "UBERON:0004913",
+      "termLabel": "hepatopancreatic ampulla",
+      "termIri": "http://purl.obolibrary.org/obo/UBERON_0004913"
+    },
+    {
+      "node": "VH_M_sphincter_of_hepatopancreatic_ampulla",
+      "reference": "male",
+      "model": "VH_M_Small_Intestine",
+      "termId": "FMA:15077",
+      "termLabel": "Sphincter of hepatopancreatic ampulla",
+      "termIri": "http://purl.org/sig/ont/fma/fma15077"
+    },
+    {
+      "node": "VH_M_superior_mesenteric_vein",
+      "reference": "male",
+      "model": "3d-vh-m-blood-vasculature",
+      "termId": "UBERON:0001182",
+      "termLabel": "superior mesenteric artery",
+      "termIri": "http://purl.obolibrary.org/obo/UBERON_0001182"
+    },
+    {
+      "node": "VH_M_inferior_pancreaticoduodenal_vein",
+      "reference": "male",
+      "model": "3d-vh-m-blood-vasculature",
+      "termId": "FMA:0329299",
+      "termLabel": "Inferior pancreaticoduodenal vein",
+      "termIri": "http://purl.org/sig/ont/fma/fma0329299"
+    },
+    {
+      "node": "VH_M_superior_mesenteric_artery",
+      "reference": "male",
+      "model": "3d-vh-m-blood-vasculature",
+      "termId": "UBERON:0001182",
+      "termLabel": "superior mesenteric artery",
+      "termIri": "http://purl.obolibrary.org/obo/UBERON_0001182"
+    },
+    {
+      "node": "VH_M_splenic_vein",
+      "reference": "male",
+      "model": "3d-vh-m-blood-vasculature",
+      "termId": "UBERON:0003713",
+      "termLabel": "splenic vein",
+      "termIri": "http://purl.obolibrary.org/obo/UBERON_0003713"
+    },
+    {
+      "node": "VH_M_splenic_artery",
+      "reference": "male",
+      "model": "3d-vh-m-blood-vasculature",
+      "termId": "UBERON:0001194",
+      "termLabel": "splenic artery",
+      "termIri": "http://purl.obolibrary.org/obo/UBERON_0001194"
+    },
+    {
+      "node": "VH_M_celiac_trunk",
+      "reference": "male",
+      "model": "3d-vh-m-blood-vasculature",
+      "termId": "FMA:14812",
+      "termLabel": "Celiac trunk",
+      "termIri": "http://purl.org/sig/ont/fma/fma14812"
+    },
+    {
+      "node": "VH_M_common_hepatic_artery",
+      "reference": "male",
+      "model": "3d-vh-m-blood-vasculature",
+      "termId": "UBERON:0005436",
+      "termLabel": "common hepatic artery",
+      "termIri": "http://purl.obolibrary.org/obo/UBERON_0005436"
+    },
+    {
+      "node": "VH_M_hepatic_portal_vein",
+      "reference": "male",
+      "model": "3d-vh-m-blood-vasculature",
+      "termId": "UBERON:0001639",
+      "termLabel": "hepatic portal vein",
+      "termIri": "http://purl.obolibrary.org/obo/UBERON_0001639"
+    },
+    {
+      "node": "VH_F_duodenum",
+      "reference": "female",
+      "model": "VH_F_Small_Intestine",
+      "termId": "UBERON:0002114",
+      "termLabel": "duodenum",
+      "termIri": "http://purl.obolibrary.org/obo/UBERON_0002114"
+    },
+    {
+      "node": "VH_F_duodenum_superior",
+      "reference": "female",
+      "model": "VH_F_Small_Intestine",
+      "termId": "FMA:7206",
+      "termLabel": "superior part of duodenum",
+      "termIri": "http://purl.org/sig/ont/fma/fma14926"
+    },
+    {
+      "node": "VH_F_duodenal_ampulla",
+      "reference": "female",
+      "model": "VH_F_Small_Intestine",
+      "termId": "UBERON:0013644",
+      "termLabel": "duodenal ampulla",
+      "termIri": "http://purl.obolibrary.org/obo/UBERON_0013644"
+    },
+    {
+      "node": "VH_F_duodenum_descending",
+      "reference": "female",
+      "model": "VH_F_Small_Intestine",
+      "termId": "FMA:14928",
+      "termLabel": "descending part of duodenum",
+      "termIri": "http://purl.org/sig/ont/fma/fma14928"
+    },
+    {
+      "node": "VH_F_duodenum_ascending",
+      "reference": "female",
+      "model": "VH_F_Small_Intestine",
+      "termId": "FMA:14930",
+      "termLabel": "ascending part of duodenum",
+      "termIri": "http://purl.org/sig/ont/fma/fma14930"
+    },
+    {
+      "node": "VH_F_duodenum_horizontal",
+      "reference": "female",
+      "model": "VH_F_Small_Intestine",
+      "termId": "FMA:14929",
+      "termLabel": "horizontal part of duodenum",
+      "termIri": "http://purl.org/sig/ont/fma/fma14929"
+    },
+    {
+      "node": "VH_F_proper_hepatic_artery",
+      "reference": "female",
+      "model": "3d-vh-f-blood-vasculature",
+      "termId": "FMA:14772",
+      "termLabel": "Hepatic artery proper",
+      "termIri": "http://purl.org/sig/ont/fma/fma14772"
+    },
+    {
+      "node": "VH_F_spleen",
+      "reference": "female",
+      "model": "VH_F_Spleen",
+      "termId": "UBERON:0002106",
+      "termLabel": "spleen",
+      "termIri": "http://purl.obolibrary.org/obo/UBERON_0002106"
+    },
+    {
+      "node": "VH_F_gastric_surface_of_spleen",
+      "reference": "female",
+      "model": "VH_F_Spleen",
+      "termId": "FMA:15837",
+      "termLabel": "gastric surface of spleen",
+      "termIri": "http://purl.org/sig/ont/fma/fma15837"
+    },
+    {
+      "node": "VH_F_diaphragmatic_surface_of_spleen",
+      "reference": "female",
+      "model": "VH_F_Spleen",
+      "termId": "FMA:15828",
+      "termLabel": "diaphragmatic surface of spleen",
+      "termIri": "http://purl.org/sig/ont/fma/fma15828"
+    },
+    {
+      "node": "VH_F_colic_surface_of_spleen",
+      "reference": "female",
+      "model": "VH_F_Spleen",
+      "termId": "FMA:15838",
+      "termLabel": "colic surface of spleen",
+      "termIri": "http://purl.org/sig/ont/fma/fma15838"
+    },
+    {
+      "node": "VH_F_hilum_of_spleen",
+      "reference": "female",
+      "model": "VH_F_Spleen",
+      "termId": "UBERON:0001248",
+      "termLabel": "hilum of spleen",
+      "termIri": "http://purl.obolibrary.org/obo/UBERON_0001248"
+    },
+    {
+      "node": "VH_F_renal_surface_of_spleen",
+      "reference": "female",
+      "model": "VH_F_Spleen",
+      "termId": "FMA:15839",
+      "termLabel": "renal surface of spleen",
+      "termIri": "http://purl.org/sig/ont/fma/fma15839"
+    },
+    {
+      "node": "VH_M_duodenum",
+      "reference": "male",
+      "model": "VH_M_Small_Intestine",
+      "termId": "UBERON:0002114",
+      "termLabel": "duodenum",
+      "termIri": "http://purl.obolibrary.org/obo/UBERON_0002114"
+    },
+    {
+      "node": "VH_M_duodenum_ascending",
+      "reference": "male",
+      "model": "VH_M_Small_Intestine",
+      "termId": "FMA:14930",
+      "termLabel": "ascending part of duodenum",
+      "termIri": "http://purl.org/sig/ont/fma/fma14930"
+    },
+    {
+      "node": "VH_M_duodenum_descending",
+      "reference": "male",
+      "model": "VH_M_Small_Intestine",
+      "termId": "FMA:14928",
+      "termLabel": "descending part of duodenum",
+      "termIri": "http://purl.org/sig/ont/fma/fma14928"
+    },
+    {
+      "node": "VH_M_duodenum_horizonal",
+      "reference": "male",
+      "model": "VH_M_Small_Intestine",
+      "termId": "FMA:14929",
+      "termLabel": "horizontal part of duodenum",
+      "termIri": "http://purl.org/sig/ont/fma/fma14929"
+    },
+    {
+      "node": "VH_M_duodenum_superior",
+      "reference": "male",
+      "model": "VH_M_Small_Intestine",
+      "termId": "FMA:7206",
+      "termLabel": "superior part of duodenum",
+      "termIri": "http://purl.org/sig/ont/fma/fma14926"
+    },
+    {
+      "node": "VH_M_duodenal_ampulla",
+      "reference": "male",
+      "model": "VH_M_Small_Intestine",
+      "termId": "UBERON:0013644",
+      "termLabel": "duodenal ampulla",
+      "termIri": "http://purl.obolibrary.org/obo/UBERON_0013644"
+    },
+    {
+      "node": "VH_M_proper_hepatic_artery",
+      "reference": "male",
+      "model": "3d-vh-m-blood-vasculature",
+      "termId": "FMA:14772",
+      "termLabel": "Hepatic artery proper",
+      "termIri": "http://purl.org/sig/ont/fma/fma14772"
+    },
+    {
+      "node": "VH_M_spleen",
+      "reference": "male",
+      "model": "VH_M_Spleen",
+      "termId": "UBERON:0002106",
+      "termLabel": "spleen",
+      "termIri": "http://purl.obolibrary.org/obo/UBERON_0002106"
+    },
+    {
+      "node": "VH_M_colic_surface_of_spleen",
+      "reference": "male",
+      "model": "VH_M_Spleen",
+      "termId": "FMA:15838",
+      "termLabel": "colic surface of spleen",
+      "termIri": "http://purl.org/sig/ont/fma/fma15838"
+    },
+    {
+      "node": "VH_M_diaphragmatic_surface_of_spleen",
+      "reference": "male",
+      "model": "VH_M_Spleen",
+      "termId": "FMA:15828",
+      "termLabel": "diaphragmatic surface of spleen",
+      "termIri": "http://purl.org/sig/ont/fma/fma15828"
+    },
+    {
+      "node": "VH_M_gastric_surface_of_spleen",
+      "reference": "male",
+      "model": "VH_M_Spleen",
+      "termId": "FMA:15837",
+      "termLabel": "gastric surface of spleen",
+      "termIri": "http://purl.org/sig/ont/fma/fma15837"
+    },
+    {
+      "node": "VH_M_hilum_of_spleen",
+      "reference": "male",
+      "model": "VH_M_Spleen",
+      "termId": "UBERON:0001248",
+      "termLabel": "hilum of spleen",
+      "termIri": "http://purl.obolibrary.org/obo/UBERON_0001248"
+    },
+    {
+      "node": "VH_M_renal_surface_of_spleen",
+      "reference": "male",
+      "model": "VH_M_Spleen",
+      "termId": "FMA:15839",
+      "termLabel": "renal surface of spleen",
+      "termIri": "http://purl.org/sig/ont/fma/fma15839"
+    }
+  ],
+  "cellTypes": [
+    {
+      "termId": "CL:0000057",
+      "termLabel": "fibroblast",
+      "asctbName": "Fibroblast"
+    },
+    {
+      "termId": "CL:0000075",
+      "termLabel": "columnar/cuboidal epithelial cell",
+      "asctbName": "columnar/cuboidal epithelial cell"
+    },
+    {
+      "termId": "CL:0000084",
+      "termLabel": "T cell",
+      "asctbName": "T lymphocyte"
+    },
+    {
+      "termId": "CL:0000094",
+      "termLabel": "granulocyte",
+      "asctbName": "Granulocyte"
+    },
+    {
+      "termId": "CL:0000136",
+      "termLabel": "fat cell",
+      "asctbName": "Adipocyte"
+    },
+    {
+      "termId": "CL:0000146",
+      "termLabel": "simple columnar epithelial cell",
+      "asctbName": "Simple columnar epithelial cell"
+    },
+    {
+      "termId": "CL:0000169",
+      "termLabel": "type B pancreatic cell",
+      "asctbName": "Beta cell"
+    },
+    {
+      "termId": "CL:0000171",
+      "termLabel": "pancreatic A cell",
+      "asctbName": "Alpha cell"
+    },
+    {
+      "termId": "CL:0000173",
+      "termLabel": "pancreatic D cell",
+      "asctbName": "Delta cell"
+    },
+    {
+      "termId": "CL:0000192",
+      "termLabel": "smooth muscle cell",
+      "asctbName": "Smooth muscle cell"
+    },
+    {
+      "termId": "CL:0000235",
+      "termLabel": "macrophage",
+      "asctbName": "Macrophage"
+    },
+    {
+      "termId": "CL:0000236",
+      "termLabel": "B cell",
+      "asctbName": "B lymphocyte"
+    },
+    {
+      "termId": "CL:0000451",
+      "termLabel": "dendritic cell",
+      "asctbName": "Dendritic cell"
+    },
+    {
+      "termId": "CL:0000509",
+      "termLabel": "gastrin secreting cell",
+      "asctbName": "Gastrin cell"
+    },
+    {
+      "termId": "CL:0000542",
+      "termLabel": "lymphocyte",
+      "asctbName": "Lymphocyte"
+    },
+    {
+      "termId": "CL:0000577",
+      "termLabel": "type EC enteroendocrine cell",
+      "asctbName": "Enterochromaffin cell"
+    },
+    {
+      "termId": "CL:0000775",
+      "termLabel": "neutrophil",
+      "asctbName": "Neutrophil"
+    },
+    {
+      "termId": "CL:0002064",
+      "termLabel": "pancreatic acinar cell",
+      "asctbName": "Acinar cell"
+    },
+    {
+      "termId": "CL:0002079",
+      "termLabel": "pancreatic ductal cell",
+      "asctbName": "Ductal cell"
+    },
+    {
+      "termId": "CL:0002080",
+      "termLabel": "pancreatic centro-acinar cell",
+      "asctbName": "Centroacinar cell"
+    },
+    {
+      "termId": "CL:0002275",
+      "termLabel": "pancreatic PP cell",
+      "asctbName": "PP cell"
+    },
+    {
+      "termId": "CL:0002410",
+      "termLabel": "pancreatic stellate cell",
+      "asctbName": "Pancreatic stellate cell"
+    },
+    {
+      "termId": "CL:0002574",
+      "termLabel": "stromal cell of pancreas",
+      "asctbName": "Stromal cell"
+    },
+    {
+      "termId": "CL:0005019",
+      "termLabel": "pancreatic epsilon cell",
+      "asctbName": "Epsilon cell"
+    },
+    {
+      "termId": "CL:0008024",
+      "termLabel": "pancreatic endocrine cell",
+      "asctbName": "Endocrine cell"
+    },
+    {
+      "termId": "CL:1000322",
+      "termLabel": "pancreatic goblet cell",
+      "asctbName": "Pancreatic goblet cell"
+    },
+    {
+      "termId": "CL:1001433",
+      "termLabel": "epithelial cell of exocrine pancreas",
+      "asctbName": "Ductal epithelial cell"
+    },
+    {
+      "termId": "CL:1001599",
+      "termLabel": "pancreas exocrine glandular cell",
+      "asctbName": "Pancreas exocrine glandular cell"
+    }
+  ],
+  "knownIssues": [
+    {
+      "where": "crosswalk, VH_M_superior_mesenteric_vein",
+      "issue": "Mapped to UBERON:0001182 (superior mesenteric artery). The female row maps the same node to UBERON:0001138 (superior mesenteric vein).",
+      "action": "Use UBERON:0001138 for both; report upstream."
+    },
+    {
+      "where": "ASCT+B, Papilla of Santorini",
+      "issue": "Given UBERON:0005429, the same term as the accessory (dorsal) pancreatic duct.",
+      "action": "Leave the minor papilla unmapped."
+    },
+    {
+      "where": "crosswalk, VH_F_inferior_pancreaticoduodenal_vein and VH_M_inferior_pancreaticoduodenal_vein",
+      "issue": "FMA identifier written as FMA:0329299, which is not in the usual FMA form.",
+      "action": "Leave unmapped until checked against FMA."
+    },
+    {
+      "where": "crosswalk vs ASCT+B, sphincter of the ampulla",
+      "issue": "Crosswalk gives FMA:15077; ASCT+B gives UBERON:0004915.",
+      "action": "Use the UBERON term; keep the FMA term as a cross-reference."
+    },
+    {
+      "where": "node names",
+      "issue": "Female nodes are spelled VH_F_ucinate_process1 and VH_F_sphincter_of_heptopancreatic_ampulla.",
+      "action": "Keep verbatim; they are lookup keys."
+    },
+    {
+      "where": "crosswalk, ducts",
+      "issue": "VH_*_ducts_of_pancreas has no term.",
+      "action": "Leave unmapped."
+    },
+    {
+      "where": "duct naming",
+      "issue": "HRA labels the main duct 'ventral pancreatic duct' (UBERON:0001064) and the accessory duct 'dorsal pancreatic duct' (UBERON:0005429). In the adult the main duct is made of both embryonic ducts.",
+      "action": "Display names say main and accessory duct; descriptions explain the embryology."
+    },
+    {
+      "where": "node names",
+      "issue": "The male horizontal part of the duodenum is spelled VH_M_duodenum_horizonal.",
+      "action": "Keep verbatim; it is a lookup key."
+    },
+    {
+      "where": "crosswalk, duodenal ampulla",
+      "issue": "HRA's 'duodenal ampulla' (UBERON:0013644) is the duodenal bulb, not the hepatopancreatic ampulla of Vater.",
+      "action": "Display it as the duodenal bulb."
+    }
+  ]
+}

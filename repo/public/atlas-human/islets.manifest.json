@@ -1,0 +1,163 @@
+{
+ "schemaVersion": "humanbio.islet-distribution.v1",
+ "evidence": "simulated: islets placed at published densities, not imaged",
+ "seed": 20210910,
+ "voxelMm": 0.5,
+ "parameters": {
+  "endocrineFraction": {
+   "value": 0.015,
+   "source": "Hahn M, et al. 3D imaging of human organs with micrometer resolution - applied to the endocrine pancreas. Commun Biol 2021;4:1063. doi:10.1038/s42003-021-02589-x",
+   "verified": true,
+   "note": "Islets are about 1-2% of the pancreas; the middle of that range."
+  },
+  "isletDiameterUm": {
+   "value": 110.0,
+   "source": "Hahn M, et al. 3D imaging of human organs with micrometer resolution - applied to the endocrine pancreas. Commun Biol 2021;4:1063. doi:10.1038/s42003-021-02589-x",
+   "verified": true,
+   "note": "Mean 3D diameter. The count uses the volume of an islet of this diameter, which overestimates the count a little because islet sizes are skewed."
+  },
+  "regionalDensity": {
+   "value": {
+    "pancreas-head": 1.0,
+    "pancreas-uncinate": 1.0,
+    "pancreas-neck": 1.0,
+    "pancreas-body": 1.0,
+    "pancreas-tail": 2.0
+   },
+   "source": "Wang X, et al. Regional differences in islet distribution in the human pancreas--preferential beta-cell loss in the head region in patients with type 2 diabetes. PLoS One 2013;8(6):e67454. doi:10.1371/journal.pone.0067454",
+   "verified": true,
+   "note": "Similar in head and body, more than 2-fold higher in the tail; 2.0 is the low end. Neck and uncinate are not reported and are taken as head and body."
+  },
+  "clusterShare": {
+   "value": 0.4,
+   "source": "Hahn M, et al. 3D imaging of human organs with micrometer resolution - applied to the endocrine pancreas. Commun Biol 2021;4:1063. doi:10.1038/s42003-021-02589-x",
+   "verified": true,
+   "note": "About 40% of islets lay in high islet density regions in non-diabetic tissue."
+  },
+  "clusterDensityFactor": {
+   "value": 3.0,
+   "source": "Hahn M, et al. 3D imaging of human organs with micrometer resolution - applied to the endocrine pancreas. Commun Biol 2021;4:1063. doi:10.1038/s42003-021-02589-x",
+   "verified": true,
+   "note": "Islet count in high islet density regions about three times the average."
+  },
+  "clusterIslets": {
+   "value": [
+    100,
+    400
+   ],
+   "source": null,
+   "verified": false,
+   "note": "Hahn et al. define a cluster as more than 100 islets; the upper bound and the even spread between are assumptions."
+  },
+  "peripheryMm": {
+   "value": 3.0,
+   "source": null,
+   "verified": false,
+   "note": "Clusters lie \"in the periphery of the gland\" (Hahn); their centres are put within this depth of the surface, an assumption."
+  }
+ },
+ "references": [
+  {
+   "sex": "male",
+   "organVolumeCm3": 77.2,
+   "organVolumeNote": "Voxels of 0.5 mm, surface voxels counted half. Hahn et al. give an average human pancreas of about 73 cm3.",
+   "islets": 1660559,
+   "meanDensityPerMm3": 21.52,
+   "regions": {
+    "pancreas-head": {
+     "islets": 376931,
+     "clusters": 603,
+     "volumeMm3": 22168.0,
+     "densityPerMm3": 17.0
+    },
+    "pancreas-uncinate": {
+     "islets": 94452,
+     "clusters": 151,
+     "volumeMm3": 5555.0,
+     "densityPerMm3": 17.0
+    },
+    "pancreas-neck": {
+     "islets": 46942,
+     "clusters": 77,
+     "volumeMm3": 2761.0,
+     "densityPerMm3": 17.0
+    },
+    "pancreas-body": {
+     "islets": 281327,
+     "clusters": 446,
+     "volumeMm3": 16545.0,
+     "densityPerMm3": 17.0
+    },
+    "pancreas-tail": {
+     "islets": 860907,
+     "clusters": 1390,
+     "volumeMm3": 25316.0,
+     "densityPerMm3": 34.01
+    }
+   },
+   "tailToHeadBodyDensity": 2.0,
+   "clusteredShare": 0.4,
+   "output": {
+    "file": "islets-male.glb",
+    "bytes": 200524,
+    "sha256": "fec4aa19404cf4c1932efaba494b34b39fabe14b75347ed0565335e36a11f023",
+    "sampleEvery": 100,
+    "points": {
+     "background": 9963,
+     "clustered": 6642
+    }
+   }
+  },
+  {
+   "sex": "female",
+   "organVolumeCm3": 84.1,
+   "organVolumeNote": "Voxels of 0.5 mm, surface voxels counted half. Hahn et al. give an average human pancreas of about 73 cm3.",
+   "islets": 1810924,
+   "meanDensityPerMm3": 21.52,
+   "regions": {
+    "pancreas-head": {
+     "islets": 370583,
+     "clusters": 591,
+     "volumeMm3": 20138.0,
+     "densityPerMm3": 18.4
+    },
+    "pancreas-uncinate": {
+     "islets": 110335,
+     "clusters": 171,
+     "volumeMm3": 5996.0,
+     "densityPerMm3": 18.4
+    },
+    "pancreas-neck": {
+     "islets": 43410,
+     "clusters": 70,
+     "volumeMm3": 2359.0,
+     "densityPerMm3": 18.4
+    },
+    "pancreas-body": {
+     "islets": 532805,
+     "clusters": 860,
+     "volumeMm3": 28953.0,
+     "densityPerMm3": 18.4
+    },
+    "pancreas-tail": {
+     "islets": 753791,
+     "clusters": 1217,
+     "volumeMm3": 20481.0,
+     "densityPerMm3": 36.8
+    }
+   },
+   "tailToHeadBodyDensity": 2.0,
+   "clusteredShare": 0.4,
+   "output": {
+    "file": "islets-female.glb",
+    "bytes": 218564,
+    "sha256": "6fe9d77d2d6d374cce53269619c4fd18d8ae6794d050ccf7c94d581092b879d9",
+    "sampleEvery": 100,
+    "points": {
+     "background": 10865,
+     "clustered": 7243
+    }
+   }
+  }
+ ]
+}
