@@ -15,6 +15,9 @@
 10. HPA lumps human islet endocrine cells; beta and alpha HPA lists come from bulk-derived cell-type enrichment intersected with the islet list and are noisy. Delta granule size: Brereton 2015 legend and text disagree (drawn at 250 nm, as the text). Primary sources for delta-cell process length (Grube & Bohn 1983; Baskin 1984) not checked.
 11. Secretion in motion is not yet shown at the islet level (hormones into the islet capillaries) or as glucose-dependent switching between insulin and glucagon.
 
+12. Books checked (literature/, kept out of git): none of Beger 4th ed., Gorelick & Williams 2021 or Golson 2024 gives cell-level sizes (acinar cell, nucleus, acinus, duct radii, capillary, lobule, septum), so these stay not yet sourced. They differ from the model on organ length (14–23/25 cm against the HRA organ's ~15 cm), islet composition by region (beta 75–80% in the dorsal part; PP 54–94% of islet volume in the uncinate), islet cell size (9–10 µm against 11 µm), and main duct lumen (1–2.5 mm on EUS). Beger Fig 2.7 names the dorsal, great, inferior and transverse pancreatic arteries and the pancreaticoduodenal arcades (vessel names now checkable; caudal not found); Beger ch. 135 Table 135.2 has the Japan Pancreas Society classification (to verify the lymph node stations). Page references: docs/book-notes/
+13. Precursor views: PanIN location sources disagree (Beger ch. 126 head > tail; ch. 119 table head = tail); IPMN multifocality 10–20% (Robbins) vs 20–40% (Beger ch. 81); MCN size by chapter (median 3.5–5 cm; mean 6.5 cm; range 2–35 cm). Lesion cell sizes are illustrative.
+
 ## Next steps (agreed or proposed)
 - Disease states: type 1 diabetes (beta-cell loss), type 2 (reduced beta cells, head preferentially; Wang 2013), PanIN in ducts, pancreatitis, fibrosis.
 - Overlay user data (single-cell, spatial, CODEX) onto cell types.

@@ -31,6 +31,17 @@ body[data-stain="if"] .stage{background:radial-gradient(ellipse at 50% 38%,#2a25
 .ladder button span{display:block;font-size:11px;color:var(--muted)}
 .ladder .branch{display:flex;gap:5px;margin-left:12px}
 .ladder .branch button{min-width:0}
+.modes{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--rule);border-radius:7px;overflow:hidden;margin-bottom:4px;background:var(--panel);max-width:330px}
+.modes button{min-width:0!important;border:0!important;border-radius:0!important;border-right:1px solid var(--rule)!important;padding:5px 9px!important;font-size:12.5px!important;background:transparent!important}
+.modes button[aria-pressed="true"]{background:var(--accent)!important;color:#fff}.modes button:disabled{color:var(--muted);cursor:not-allowed;opacity:.6}
+.ladder .group{font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin:4px 0 0 12px}
+body[data-mode="precursors"] .ladder-pancreas{display:none}body:not([data-mode="precursors"]) .ladder-precursors{display:none}
+.ladder-pancreas,.ladder-precursors{display:flex;flex-direction:column;gap:5px}
+.insets{position:absolute;inset:0;pointer-events:none;z-index:4}.insets svg{position:absolute;inset:0;width:100%;height:100%}
+.inset{position:absolute;width:250px;height:178px;border:2px solid var(--accent);border-radius:8px;pointer-events:auto;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.inset b{position:absolute;left:0;right:0;bottom:0;font:600 12.5px "Public Sans",system-ui,sans-serif;background:color-mix(in srgb,var(--panel) 90%,transparent);color:var(--ink);padding:3px 8px;border-radius:0 0 6px 6px}
+.inset:hover{border-color:var(--ink)}.flash{position:absolute;inset:0;background:var(--canvas);opacity:0;pointer-events:none;transition:opacity .35s;z-index:3}
+@media (max-width:880px){.inset{width:150px;height:110px}}
 .ladder button[aria-current="true"]{border-color:var(--accent);box-shadow:inset 3px 0 0 var(--accent)}
 .levelname{position:absolute;left:50%;top:14px;transform:translateX(-50%);font:560 19px/1.2 "Newsreader",Georgia,serif;color:var(--ink);background:color-mix(in srgb,var(--panel) 80%,transparent);padding:3px 12px;border-radius:12px;pointer-events:none}
 .labels{position:absolute;inset:0;pointer-events:none;overflow:hidden}
@@ -85,14 +96,26 @@ ol{font-size:12.5px;color:var(--muted);padding-left:18px}ol li{margin-bottom:5px
  <div class="stage" id="stage">
   <div class="status" id="status">Loading the organ…</div>
   <nav class="ladder" aria-label="Zoom level">
+   <div class="modes" role="group" aria-label="What to show"><button type="button" data-mode="pancreas" aria-pressed="true">Pancreas</button><button type="button" data-mode="pancreatitis" disabled title="Coming later">Pancreatitis</button><button type="button" data-mode="precursors" aria-pressed="false">Precursor lesions</button><button type="button" data-mode="pda" disabled title="Coming later">PDA</button></div>
+   <div class="ladder-pancreas">
    <button type="button" data-go="organ">Organ<span>15 cm</span></button>
-   <button type="button" data-go="gross">Lobules<span>opened in place</span></button>
-   <button type="button" data-go="tissue">Tissue<span>core of a lobule</span></button>
-   <div class="branch"><button type="button" data-go="detail:acinus">Acinus</button><button type="button" data-go="cells:acinus">Its cells</button><button type="button" data-go="cell:acinus">One cell</button></div>
-   <div class="branch"><button type="button" data-go="detail:islet">Islet</button><button type="button" data-go="cells:islet">Its cells</button><button type="button" data-go="cell:islet" data-kind="beta">Beta cell</button></div>
-   <div class="branch"><button type="button" data-go="cell:islet" data-kind="alpha">Alpha cell</button><button type="button" data-go="cell:islet" data-kind="delta">Delta cell</button></div>
-   <div class="branch"><button type="button" data-go="detail:duct">Duct</button><button type="button" data-go="cells:duct">Its cells</button><button type="button" data-go="cell:duct">One cell</button></div>
+   <button type="button" data-go="tissue">Tissue<span>exocrine and endocrine together</span></button>
+   <div class="group">Exocrine</div>
+   <div class="branch"><button type="button" data-go="detail:acinus">Acinus</button><button type="button" data-go="cell:acinus">Acinar cell</button><button type="button" data-go="cells:acinus">Centroacinar cells</button></div>
+   <div class="branch"><button type="button" data-go="detail:duct">Duct</button><button type="button" data-go="cell:duct">Duct cell</button></div>
+   <div class="group">Endocrine: islets</div>
+   <div class="branch"><button type="button" data-go="detail:islet">Islet</button><button type="button" data-go="cells:islet">Its cells</button></div>
+   <div class="branch"><button type="button" data-go="cell:islet" data-kind="beta">Beta cell</button><button type="button" data-go="cell:islet" data-kind="alpha">Alpha cell</button><button type="button" data-go="cell:islet" data-kind="delta">Delta cell</button></div>
+   </div>
+   <div class="ladder-precursors">
+   <button type="button" data-lesion="overview">All precursors<span>where each arises</span></button>
+   <button type="button" data-lesion="panin">PanIN<span>small ducts, microscopic</span></button>
+   <button type="button" data-lesion="ipmn">IPMN<span>main and branch ducts</span></button>
+   <button type="button" data-lesion="mcn">MCN<span>mucinous cyst, body and tail</span></button>
+   </div>
   </nav>
+  <div class="insets" id="insets" aria-hidden="false"></div>
+  <div class="flash" id="flash"></div>
   <div class="caption" id="caption" aria-live="polite"></div>
   <button class="reset" id="reset" type="button">Reset view</button>
  </div>
@@ -130,9 +153,7 @@ ol{font-size:12.5px;color:var(--muted);padding-left:18px}ol li{margin-bottom:5px
    <li><span class="sw" style="background:var(--isletgross)"></span><span>Islets: pale islands among the acini, sizes about the mean of 110 µm, at the region’s density</span></li>
    <li><span class="sw" style="background:var(--intralobular)"></span><span>Interlobular ducts, with an artery (red) and vein (blue), in the septa</span></li>
   </ul>
-  <div data-for="organ"><span style="font-size:14px">Precursors and cancer</span><br>
-   <div class="seg wrap" role="group" aria-label="Show precursor lesions and cancer"><button type="button" data-disease="none" aria-pressed="true">None</button><button type="button" data-disease="panin" aria-pressed="false">PanIN</button><button type="button" data-disease="mcn" aria-pressed="false">MCN</button><button type="button" data-disease="mipmn" aria-pressed="false">Main-duct IPMN</button><button type="button" data-disease="bipmn" aria-pressed="false">Branch-duct IPMN</button><button type="button" data-disease="pda" aria-pressed="false">Cancer</button><button type="button" data-disease="all" aria-pressed="false">All</button></div></div>
-  <div class="markers lesions" id="lesioncard" data-for="organ" hidden></div>
+  <div class="markers lesions" id="lesioncard" hidden></div>
   <label class="toggle" data-for="organ"><input type="checkbox" id="islets"> Show the islets (one point per 100)</label>
   <div data-for="tissue detail cells cell"><span style="font-size:14px">Zoom into</span><br>
    <div class="seg" role="group" aria-label="What to zoom into"><button type="button" data-branch="acinus" aria-pressed="true">An acinus</button><button type="button" data-branch="islet" aria-pressed="false">The islet</button><button type="button" data-branch="duct" aria-pressed="false">A duct</button></div></div>

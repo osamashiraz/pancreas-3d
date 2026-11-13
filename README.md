@@ -69,21 +69,29 @@ The pancreas is two organs in one, and the model shows both:
 - Click any cell or structure to name it, isolate it or fade it.
 - **Links to a view**: the address follows what you are looking at, e.g. [`#site=9&view=islet&stain=if`](https://osamashiraz.github.io/pancreas-3d/#site=9&view=islet&stain=if), so a view can be shared or used in teaching.
 
-### Where pancreatic cancer begins
+### Where pancreatic cancer begins: precursor lesions
 
-**Precursors and cancer** marks, on the organ, where each route to pancreatic cancer arises, following Hingorani's review *Location, location, location* (Gastroenterology 2007) and Rodriguez et al. 2007:
+The switch at the top left chooses what to show: **Pancreas** (organ to cell), **Precursor lesions**, and later **Pancreatitis** and **PDA**. In **Pancreas** the ladder goes from the organ to the tissue, where the two compartments sit side by side, then to the **exocrine** structures (acinus, acinar cell, centroacinar cells, duct) and the **endocrine** islets (islet; beta, alpha and delta cells).
+
+**Precursor lesions** first shows the whole organ with each precursor marked where it arises. Following Figure 1 of Hingorani's *Location, location, location* (Gastroenterology 2007), each is linked by a line to an inset of its architecture:
+
+![Precursor lesions on the organ, with insets](docs/images/lesions.jpg)
 
 | Precursor | Size | Where in the gland | Where in the duct tree |
 |---|---|---|---|
-| PanIN | microscopic | head and uncinate process | periphery: terminal ductules |
-| Mucinous cystic neoplasm | cyst | body and tail | periphery |
-| Main-duct IPMN | dilated duct | head | centre: main duct |
-| Branch-duct IPMN | grape-like cysts | head or body | centre: major branches |
-| Ductal adenocarcinoma | mass | mainly the head | — |
+| PanIN | microscopic, usually < 0.5 cm | head and uncinate process | periphery: terminal ductules |
+| Mucinous cystic neoplasm | median 3.5–5 cm | body and tail (> 90%) | periphery; no duct connection |
+| Main-duct IPMN | main duct > 5 mm (≥ 10 mm high-risk) | head | centre: main duct |
+| Branch-duct IPMN | grape-like cysts > 10 mm | head, neck, uncinate | major side branches |
 
-Each comes with a card on its appearance, genes, who it affects and survival after resection. The placements are simulated by rule on the reference organ, and the sizes are illustrative.
+Clicking a lesion or its inset, or zooming into it, opens its own view, down to its cells:
 
-![Precursors and cancer on the organ](docs/images/lesions.jpg)
+| PanIN | IPMN | MCN |
+|---|---|---|
+| ![PanIN](docs/images/panin.jpg) | ![IPMN](docs/images/ipmn.jpg) | ![MCN](docs/images/mcn.jpg) |
+| A small duct opened lengthwise: normal cuboidal lining → low-grade PanIN (tall columnar cells, apical mucin, basal nuclei) → high-grade (papillae, atypical nuclei, loss of polarity) | A dilated main duct with finger-like papillae and mucin; beside it grape-like branch-duct cysts that open into the duct; one papilla drawn to its cells | A cyst cut in half: fibrous capsule, mucin-filled locules, septa of ovarian-type stroma; no connection with the duct; one stretch of wall drawn to its cells |
+
+Each comes with a card on its appearance, grading, genes, who it affects and survival, in our own words, citing Hingorani 2007, Rodriguez et al. 2007, *The Pancreas: An Integrated Textbook* (Beger et al., 4th ed., 2023) and *Robbins and Cotran Pathologic Basis of Disease* (9th ed.). Placement on the organ is simulated by rule; drawn sizes follow the stated sizes.
 
 ## Datasets and sources
 
@@ -99,7 +107,8 @@ Each comes with a card on its appearance, genes, who it affects and survival aft
 | Ducts and centroacinar cells | Endo et al. 2002 (rat); Beer et al. 2016 | One intercalated duct per acinus, no anastomoses |
 | Cell biology | Palade 1975; Messenger et al. 2014; Berclaz et al. 2016; Steward & Ishiguro 2009; Hegyi & Rakonczay 2015; diIorio et al. 2014 | Secretory pathway, zymogen and insulin granules, duct secretion, cilia |
 | Marker genes | **HRA ASCT+B** pancreas v1.3 (doi:10.48539/HBM336.TBNP.923); **Human Protein Atlas** v26.0 (CC BY-SA 4.0) | Marker panel per cell type (`repo/data/human-pancreas-markers.json`) |
-| Precursors and cancer | Hingorani, *Gastroenterology* 2007 (doi:10.1053/j.gastro.2007.05.059); Rodriguez et al., *Gastroenterology* 2007 | Where PanIN, MCN, IPMN and cancer arise; cards |
+| Precursor lesions | Hingorani, *Gastroenterology* 2007 (doi:10.1053/j.gastro.2007.05.059); Rodriguez et al., *Gastroenterology* 2007; Beger et al., *The Pancreas*, 4th ed., Wiley 2023 (ch. 81, 84, 86, 125, 126); Kumar, Abbas, Aster, *Robbins and Cotran*, 9th ed., 2015 (ch. 19) | Where PanIN, MCN and IPMN arise; sizes, grades, genes; architecture of each view |
+| Normal anatomy (checks) | Gorelick & Williams, eds., *The Pancreas: Biology and Physiology*, APA 2021 (CC BY-NC-ND; ch. 1 Longnecker) | Islet size and number, endocrine fraction, zymogen granule size |
 | Secretion and islet cells | Lee et al., *Physiol Rev* 2012; Rorsman & Ashcroft, *Physiol Rev* 2018; Brereton et al., *J Histochem Cytochem* 2015; Arrojo e Drigo et al., *Nat Commun* 2019 | Bicarbonate and insulin secretion; granule sizes; delta-cell processes |
 | Teaching text | StatPearls (NCBI Bookshelf, CC BY 4.0); Columbia and Basel histology notes; Human Protein Atlas | Narration, paraphrased in our own words with credit |
 

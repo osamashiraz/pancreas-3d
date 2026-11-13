@@ -676,6 +676,13 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
   const ray = new THREE.Raycaster(), ptr = new THREE.Vector2(); let down = null;
   onViews('pointerdown', (e) => { down = [e.clientX, e.clientY]; });
   onViews('pointermove', (e) => { if (e.buttons && down && Math.hypot(e.clientX - down[0], e.clientY - down[1]) > 5) VIEWS[focus].turned = true; });   // turned by hand
+  // In the precursor view, the lesion under the pointer: the organ moves so it comes to the middle, and zooming on opens it.
+  function aimLesion(e) {
+    if (!lesionGroup) return null; const r = VIEWS[focus].el.getBoundingClientRect(); ptr.set((e.clientX - r.left) / r.width * 2 - 1, -(e.clientY - r.top) / r.height * 2 + 1); ray.setFromCamera(ptr, camera);
+    const hit = ray.intersectObject(lesionGroup, true).find((h) => h.object.visible && h.object.parent.visible); if (!hit) return null;
+    let q = hit.object; while (q.parent && q.parent !== lesionGroup) q = q.parent; const key = Object.keys(LESION_VIEWS).find((k) => LESION_VIEWS[k].parts.includes(q.name)); if (!key) return null;
+    LES.pending = key; organLocal.copy(lesionGroup.getObjectByName(LESION_VIEWS[key].at).userData.at); return key;
+  }
   // Sites are not shown. Clicking the organ, or starting to zoom in on it from afar, picks one of the sites nearest the
   // point under the pointer at random, and the organ moves so that site comes to the middle of the view.
   function pickNear(e) {
@@ -686,9 +693,11 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
     setSite(near[Math.floor(Math.random() * near.length)][1]); return true;
   }
   onViews('pointerup', (e) => {
-    if (!down || Math.hypot(e.clientX - down[0], e.clientY - down[1]) > 5 || camera.position.distanceTo(controls.target) < 15000) { down = null; return; } down = null; pickNear(e);
+    if (!down || Math.hypot(e.clientX - down[0], e.clientY - down[1]) > 5 || camera.position.distanceTo(controls.target) < 15000) { down = null; return; } down = null;
+    if (MODE === 'precursors') { const k = aimLesion(e); if (k) enterLesion(k); return; } if (LES.view) return; pickNear(e);
   });
   onViews('wheel', (e) => { const v = VIEWS[focus];
+    if (MODE === 'precursors' && !LES.view) { if (e.deltaY < 0 && !LES.pending) aimLesion(e); return; }
     if (e.deltaY >= 0 || v.picked || COMPARE.on || STAGE.mode !== 'tissue' || flight || camera.position.distanceTo(controls.target) < 50000) return;
     v.picked = pickNear(e); }, { passive: true });
 
@@ -830,7 +839,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
     'islet-acinus': [['detail', 'islet'], ['detail', 'acinus']], 'islet-duct': [['detail', 'islet'], ['detail', 'duct']], 'acinus-duct': [['detail', 'acinus'], ['detail', 'duct']],
     'beta-acinar': [['cell', 'islet'], ['cell', 'acinus']], 'tissue-cell': [['tissue', null], ['cell', 'acinus']], 'organ-tissue': [['organ', null], ['tissue', null]],
   };
-  function setSplit(on) {
+  function setSplit(on) { if (on && MODE !== 'pancreas') setMode('pancreas');
     splitOn = on; if (on && !VIEWS[1]) { const v = makeView(1); v.camera.position.copy(VIEWS[0].camera.position); v.controls.target.copy(VIEWS[0].controls.target); v.controls.update(); }
     if (!on) { setFocus(0); if (tour) tour.view = 0; } resize(); VIEWS.forEach((v) => v.el.classList.toggle('focused', splitOn && v.i === focus));
     $('split').setAttribute('aria-pressed', String(on)); $('split').textContent = on ? 'One view' : 'Split screen'; $('presets').style.display = on ? '' : 'none';
@@ -861,16 +870,16 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
     if (T >= 1) { if (leg.then) leg.then(); flight.legs.shift(); flight.start = null; if (!flight.legs.length) { flight = null; STAGE.locked = false; } }
   }
   function setIsletKind(k) { if (k && k !== isletKind) { isletKind = k; refocus(); } }
-  document.querySelectorAll('.ladder button').forEach((b) => b.addEventListener('click', () => {
+  document.querySelectorAll('.ladder button[data-go]').forEach((b) => b.addEventListener('click', () => {
     const [lvl, br] = b.dataset.go.split(':'); setIsletKind(b.dataset.kind); if (br) document.querySelectorAll('[data-branch]').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.branch === br)));
     flyTo(stopFor(lvl, br), br, MODE_OF[lvl]); }));
   document.querySelectorAll('[data-branch]').forEach((b) => b.addEventListener('click', () => {
     document.querySelectorAll('[data-branch]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
     const lv = levelAt(camera.position.distanceTo(controls.target));
     if (STAGE.mode === 'tissue') branch = b.dataset.branch; else flyTo(stopFor(lv, b.dataset.branch), b.dataset.branch, STAGE.mode); }));
-  $('reset').addEventListener('click', () => { const lv = levelAt(camera.position.distanceTo(controls.target)); flyTo(stopFor(lv) || STOPS.organ, undefined, MODE_OF[lv]); });
+  $('reset').addEventListener('click', () => { if (LES.view) { enterLesion(LES.view); return; } const lv = levelAt(camera.position.distanceTo(controls.target)); flyTo(stopFor(lv) || STOPS.organ, undefined, MODE_OF[lv]); });
   // Escape steps back one stage.
-  window.addEventListener('keydown', (e) => { if (e.key !== 'Escape') return; const lv = levelAt(camera.position.distanceTo(controls.target));
+  window.addEventListener('keydown', (e) => { if (e.key !== 'Escape') return; if (LES.view) { exitLesion(); return; } const lv = levelAt(camera.position.distanceTo(controls.target));
     const up = { cell: 'cells', cells: 'detail', detail: 'tissue', tissue: 'gross', gross: 'organ' }[lv]; if (up) flyTo(stopFor(up), undefined, MODE_OF[up]); });
   $('surround').addEventListener('change', (e) => { surroundings = e.target.checked; });
   document.querySelectorAll('[data-stain]').forEach((b) => b.addEventListener('click', () => { stain = b.dataset.stain; setTimeout(hashNow);
@@ -969,7 +978,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
   function nextTour() { if (!tour) return; if (tour.i >= TOUR.length) { stopTour(); return; } const s = TOUR[tour.i++];
     setIsletKind(s.k); flyTo(s.d, s.br, s.m); tour.phase = 'fly'; tour.hold = s.hold; $('caption').textContent = s.say; say(s.say);
     if (s.br) document.querySelectorAll('[data-branch]').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.branch === s.br))); }
-  $('play').addEventListener('click', () => { if (tour) { stopTour(); return; } tour = { i: 0, view: focus }; $('play').textContent = 'Stop'; if (!motionOn) { motionOn = true; $('motion').checked = true; }   // the journey shows secretion in motion
+  $('play').addEventListener('click', () => { if (tour) { stopTour(); return; } if (MODE !== 'pancreas') setMode('pancreas'); tour = { i: 0, view: focus }; $('play').textContent = 'Stop'; if (!motionOn) { motionOn = true; $('motion').checked = true; }   // the journey shows secretion in motion
     if (window.speechSynthesis) speechSynthesis.getVoices(); nextTour(); });
   // The journey keeps going while you turn, zoom or click the model; only the Stop button ends it.
 
@@ -987,7 +996,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
       if (!(r < R.y + Math.max(0, q.z - S.x) * S.y && q.z > F.x)) return true; }
     return false;
   }
-  function drawDiseaseLabels(w) { const keys = disease === 'all' ? Object.keys(LESIONS) : [disease]; LABELS.__disease = keys.flatMap((k) => LABELS['disease:' + k] || []); drawLabels('__disease', w); }
+  function drawDiseaseLabels(w) { const keys = disease === 'all' ? Object.keys(LESIONS) : disease === 'precursors' ? ['panin', 'mcn', 'mipmn', 'bipmn'] : [disease]; LABELS.__disease = keys.flatMap((k) => LABELS['disease:' + k] || []); drawLabels('__disease', w); }
   function drawLabels(set, w) {
     let used = 0; const W = UI.w, H = UI.h, placed = [];
     if (namesOn && set && w > 0.5) for (const o of LABELS[set] || []) {
@@ -1072,6 +1081,10 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
     isletOld: 'The islet cut open among its acini: beta (green), alpha (magenta), delta (cyan) and PP (amber) cells intermixed along a dense capillary bed, with no core or mantle, as in human islets (Cabrera 2006; Brissova 2005).',
     duct: 'An intralobular duct on its own, opened lengthwise: a single layer of cuboidal duct cells round the lumen. Duct cells secrete the bicarbonate-rich fluid of pancreatic juice, 2 to 3 litres a day (Ishiguro 2012; Hegyi 2015). Zoom on and its cells separate.',
     ductOld: 'An intralobular duct cut lengthwise: a single layer of cuboidal duct cells round the lumen, collagen aligned along it (CODA), intercalated ducts joining it from acini. Duct cells secrete the bicarbonate-rich fluid of pancreatic juice, 2 to 3 litres a day (Ishiguro 2012; Hegyi 2015).',
+    precursors: 'Precursor lesions: where the routes to pancreatic ductal adenocarcinoma begin. PanIN arises in the small ducts at the periphery, most readily in the head; mucinous cystic neoplasms in the periphery of the body and tail; IPMN in the main duct or its major branches, usually in the head (Hingorani 2007). Each inset shows one lesion; click it, or a lesion on the organ, or zoom into one, to open it. Placement on the organ is simulated, by rule; sizes are illustrative.',
+    lesionPanIN: 'PanIN in a small duct, opened lengthwise among acini. Along its length the lining changes from normal cuboidal duct cells, to low-grade PanIN (tall columnar cells with apical mucin and small, basal nuclei), to high-grade PanIN (papillae, crowded enlarged nuclei that no longer sit at the base, cells budding into the lumen). Real PanINs are microscopic and cause no symptoms. Zoom in to the cells; zoom far out, or press Esc, to return to the organ. Sizes illustrative.',
+    lesionIPMN: 'A length of a main duct with IPMN, opened lengthwise: the duct is dilated, finger-like papillae grow from its wall and mucin fills it. Beside it, a branch-duct IPMN: a side branch swollen into grape-like cysts that still open into the duct. One papilla is drawn down to its cells: tall columnar mucinous cells over a core of stroma with a capillary. Zoom in to it; zoom far out, or press Esc, to return. Sizes illustrative.',
+    lesionMCN: 'A mucinous cystic neoplasm cut in half: a thick fibrous capsule round several locules filled with mucin, separated by septa, with no connection to the duct running beside it. A stretch of the wall at the top of the largest locule is drawn down to its cells: tall columnar mucinous lining over dense ovarian-type stroma of spindle cells. Zoom in to it; zoom far out, or press Esc, to return. Sizes illustrative.',
     acinusCell: 'One acinar cell, in its place in the acinus: rough ER round the basal nucleus makes digestive enzymes, the Golgi packages them, and zymogen granules wait at the apex (Palade 1975). With Motion on, granules leave the Golgi, travel to the apex and fuse with the membrane, releasing their enzymes into the lumen and on down the intercalated duct. Cholecystokinin and acetylcholine trigger this release by raising calcium inside the cell (Messenger et al. 2014). Organelle sizes and numbers, and the speed of the motion, are illustrative.',
     acinusCells: 'The acinus pulled apart into its cells, like the segments of an orange: each wedge-shaped acinar cell slides out along its own axis, carrying its basal nucleus and its apical granules; the centroacinar cells stay at the centre, and the intercalated duct draws back. Zoom on toward one cell to see it alone; zoom out and they close up again.',
     isletCells: 'The islet’s cells drawn apart from its centre so each stands distinct: beta (green), alpha (magenta), delta (cyan) and PP (amber), intermixed as in human islets (Cabrera 2006). Its capillaries stay in place. Zoom on to one beta cell.',
@@ -1083,8 +1096,9 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
   };
   let lastLevel = '';
   const LEVEL_NAMES = (key) => ({ compare: 'Head, body and tail compared', gross: 'Lobules (' + blockRegion + ')', organ: 'Organ', tissue: 'Tissue', acinus: 'Acinus', islet: 'Islet', duct: 'Duct',
-    acinusCells: 'Acinar cells, separated', isletCells: 'Islet cells, separated', ductCells: 'Duct cells, separated', acinusCell: 'Acinar cell', isletCell: 'Beta cell', alphaCell: 'Alpha cell', deltaCell: 'Delta cell', ductCell: 'Duct cell' }[key] || '');
+    acinusCells: 'Acinar cells, separated', isletCells: 'Islet cells, separated', ductCells: 'Duct cells, separated', precursors: 'Precursor lesions', acinusCell: 'Acinar cell', isletCell: 'Beta cell', alphaCell: 'Alpha cell', deltaCell: 'Delta cell', ductCell: 'Duct cell' }[key] || '');
   function viewFrame(now, v) {
+    if (LES.view) { lesionFrame(now, v); return; }
     stepFlight(now);
     stageStep(camera.position.distanceTo(controls.target), now);
     if (camera.position.distanceTo(controls.target) > 90000) v.picked = false;   // back out at the organ: the next zoom in picks again
@@ -1125,26 +1139,33 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
     if (motionOn) { const t = now / 1000; flow(groups.block, t); flow(BRANCHES[branch].detail, t); }
     { const b = BRANCHES[branch], t = motionOn ? now / 1000 : null; [b.detail, b.cellGroup].forEach((gg) => { if (gg && gg.visible && gg.userData.anim) gg.userData.anim(t); }); }   // secretion in motion
     if (marker) marker.visible = false;
-    const lv = levelAt(d), key = lv === 'detail' ? branch : lv === 'cells' ? branch + 'Cells' : lv === 'cell' ? cellKey(branch, isletKind) : lv;
+    const lv = levelAt(d), key = MODE === 'precursors' && lv === 'organ' ? 'precursors' : lv === 'detail' ? branch : lv === 'cells' ? branch + 'Cells' : lv === 'cell' ? cellKey(branch, isletKind) : lv;
     if (v.i === focus && (lv === 'gross' || lv === 'compare')) { const st = (k) => GROSS[k] && GROSS[k].userData.stats, firsts = ['head', 'body', 'tail'].map((rk) => SITE_LIST.findIndex((S0) => S0.region === rk && S0.verified));
       const txt = lv === 'compare' ? firsts.filter(st).map((k) => `${st(k).key[0].toUpperCase() + st(k).key.slice(1)}: ${st(k).count.toLocaleString('en')} islets in ${Math.round(st(k).volume)} mm³ (${Math.round(st(k).density)} per mm³)`).join('; ') + '.'
         : st(site) ? `Site ${site + 1}, in the ${blockRegion}: round the line going in, ${st(site).lobules} lobules are opened to their ducts, with ${st(site).count.toLocaleString('en')} islets in ${Math.round(st(site).volume)} mm³ (${Math.round(st(site).density)} per mm³).` : '';
       $('grossstats').textContent = txt; }
     if (key !== lastLevel) { lastLevel = key; UI.levelname.textContent = LEVEL_NAMES(key);
      if (v.i === focus) { writeHash(lv); showMarkers(selected ? MARKER_OF[selected] : MARKER_VIEW[key]); $('info').textContent = INFO[key];
-      document.querySelectorAll('[data-for]').forEach((el) => { el.style.display = el.dataset.for.split(' ').some((x) => x === key || x === lv) ? '' : 'none'; });
+      applyDataFor(key, MODE === 'precursors' ? key : lv);
       updatePickers();
-      document.querySelectorAll('.ladder button').forEach((b) => { const [l, br] = b.dataset.go.split(':'); b.setAttribute('aria-current', String(l === lv && (!br || br === branch) && (!b.dataset.kind || b.dataset.kind === isletKind))); }); } }
+      document.querySelectorAll('.ladder button[data-go]').forEach((b) => { const [l, br] = b.dataset.go.split(':'); b.setAttribute('aria-current', String(l === lv && (!br || br === branch) && (!b.dataset.kind || b.dataset.kind === isletKind))); }); } }
     explodeTags.forEach((o) => o.position.copy(o.userData.base).addScaledVector(o.userData.off, w.explode));
     if (lv === 'compare') drawLabels('compare', 1); else if (lv === 'gross') drawLabels('gross:' + site, w.gross);
     else if (lv === 'organ' && disease) drawDiseaseLabels(w.organ);
     else drawLabels(lv === 'organ' ? 'organ' : lv === 'tissue' ? 'tissue' : key, lv === 'organ' ? w.organ : lv === 'tissue' ? w.block : lv === 'cell' ? w.cell : w.detail);
     // Scale bar
+    drawScale(d);
+    controls.update(); renderer.setViewport(UI.x, 0, UI.w, UI.h); renderer.setScissor(UI.x, 0, UI.w, UI.h); renderer.render(scene, camera);
+    if (v.i === focus) drawInsets(now, MODE === 'precursors' && lv === 'organ' && UI.w > 640);
+    // Zooming into a lesion opens its view.
+    if (MODE === 'precursors' && LES.pending && d < 70000 && !flight) enterLesion(LES.pending);
+  }
+  function drawScale(d) {
     const wpp = 2 * d * Math.tan(camera.fov * Math.PI / 360) / UI.h, target = wpp * 110, p10 = Math.pow(10, Math.floor(Math.log10(target)));
     const nice = [1, 2, 5, 10].map((k) => k * p10).filter((x) => x <= target).pop() || p10; UI.bar.style.width = (nice / wpp) + 'px';
     UI.barlabel.textContent = nice >= 10000 ? `${+(nice / 10000).toPrecision(3)} cm` : nice >= 1000 ? `${+(nice / 1000).toPrecision(3)} mm` : `${+nice.toPrecision(3)} µm`;
-    controls.update(); renderer.setViewport(UI.x, 0, UI.w, UI.h); renderer.setScissor(UI.x, 0, UI.w, UI.h); renderer.render(scene, camera);
   }
+  function applyDataFor(key, lv) { document.querySelectorAll('[data-for]').forEach((el) => { el.style.display = el.dataset.for.split(' ').some((x) => x === key || x === lv) ? '' : 'none'; }); }
   function activate(v) { camera = v.camera; controls = v.controls; STAGE = v.STAGE; branch = v.branch; flight = v.flight; lastLevel = v.lastLevel; UI = v.ui; labelLayer = v.ui.labels; pool = v.ui.pool; }
   function save(v) { v.branch = branch; v.flight = flight; v.lastLevel = lastLevel; }
   function setFocus(i) { if (i === focus || !VIEWS[i]) return; save(VIEWS[focus]); focus = i; activate(VIEWS[i]); lastLevel = ''; VIEWS[i].lastLevel = '';
@@ -1163,27 +1184,27 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
   // written rule on the HRA organ; sizes are illustrative (PanIN markers far larger than the microscopic lesions).
   const LESIONS = {
     panin: { name: 'PanIN', full: 'Pancreatic intraepithelial neoplasia (PanIN)', color: '--panin',
-      where: 'Head and uncinate process; periphery of the gland, in the terminal ductules', size: 'Microscopic (the markers are drawn far larger)',
-      text: 'The commonest precursor of ductal adenocarcinoma: microscopic lesions of the smallest ducts that cause no symptoms. They progress to invasive cancer most readily in the head and uncinate process. Atypia increases from PanIN-1 to PanIN-2 to PanIN-3 (carcinoma in situ), in step with mutations in KRAS, CDKN2A/INK4A, TP53 and SMAD4/DPC4.',
-      survival: 'Invasive cancer from PanIN, after resection: 15–20% alive at 5 years, under 2% at 10 years.' },
+      where: 'Small ducts at the periphery (terminal ductules); progresses to cancer most readily in the head and uncinate process (Hingorani 2007). Found more often in the head than the tail (Beger 4th ed., ch. 126).', size: 'Microscopic, usually under 0.5 cm; invisible to the eye and on imaging (the organ markers are drawn far larger).',
+      text: 'The commonest precursor of ductal adenocarcinoma. Its cells are cuboidal to columnar with apical mucin, flat or micropapillary. Graded today in two tiers: low grade (formerly PanIN-1A, 1B and 2) and high grade (formerly PanIN-3: marked atypia, loss of polarity, budding), the latter found almost only beside invasive cancer. PanIN is present in 82% of pancreata with cancer, 60% with chronic pancreatitis and 16% of normal pancreata, more with age. KRAS is mutated in over 90% even at low grade and telomeres shorten first; CDKN2A follows, TP53 and SMAD4 come late (Beger 4th ed., ch. 126; Robbins 9th ed., ch. 19).',
+      survival: 'Invasive cancer from PanIN, after resection: 15–20% alive at 5 years, under 2% at 10 years (Hingorani 2007).' },
     mcn: { name: 'MCN', full: 'Mucinous cystic neoplasm (MCN)', color: '--mcn',
-      where: 'Body and tail; periphery of the gland', size: 'Macroscopic cyst (drawn about 3 cm; size not sourced)',
-      text: 'A cyst lined by mucin-making epithelium over a dense “ovarian” stroma whose cells carry progesterone and oestrogen receptors. Usually no connection with the ducts. Found mostly in women (10–20 : 1), in their forties. Once invasive, SMAD4/DPC4 mutations are almost universal.',
-      survival: 'With invasive cancer, after resection: 40–60% alive at 5 years.' },
+      where: 'Over 90% in the body or tail, at the periphery; no connection with the ducts (Hingorani 2007; Beger 4th ed., ch. 81 and 126).', size: 'Median 3.5–5 cm on imaging (range 0.5–20 cm); drawn 5 cm (Beger 4th ed., ch. 126).',
+      text: 'A solitary cyst, often with cysts within it, behind a thick fibrous capsule. It is lined by columnar mucin-making cells (flat or cuboidal in places) over dense “ovarian-type” stroma of spindle cells with oestrogen and progesterone receptors, which the diagnosis requires. Almost only in women (10–20 : 1), mostly perimenopausal, around 45–48 years. KRAS and RNF43 are mutated; GNAS is not, which separates it from IPMN. Invasive carcinoma in 6–25% of resected MCNs (Beger 4th ed., ch. 126; Hingorani 2007).',
+      survival: 'With invasive cancer, after resection: 40–60% alive at 5 years (Hingorani 2007); disease-specific 5-year survival of resected MCN 57–80% (Beger 4th ed., ch. 126).' },
     mipmn: { name: 'Main-duct IPMN', full: 'Intraductal papillary mucinous neoplasm of the main duct', color: '--ipmn',
-      where: 'Head; centre of the gland, in the main pancreatic duct', size: 'Macroscopic: a dilated main duct filled by papillary growth (drawn about 7 mm across)',
-      text: 'Mucin-making papillary growth along the inside of the main duct, which dilates. Papillae can block the duct and cause acute pancreatitis. Found in the seventh and eighth decades, slightly more in men (1.5 : 1). More aggressive than branch-duct IPMN: in the authors’ series 42% were invasive, against 11%, so resection is recommended (Sendai consensus). Often “intestinal” (MUC2, MUC5AC, CDX2).',
-      survival: 'With invasive cancer, after resection: about 60% at 5 years and at least 40% at 10 years, against under 2% at 10 years for PanIN-derived cancer.' },
+      where: 'Usually the head and uncinate process; the main duct, dilated (Hingorani 2007; Beger 4th ed., ch. 126).', size: 'Main duct dilated beyond 5 mm; 5–9 mm is a worrisome feature, 10 mm or more a high-risk sign (Beger 4th ed., ch. 84 and 86). Drawn at 10 mm.',
+      text: 'Long finger-like papillae of mucin-making cells grow along the inside of the main duct, which fills with thick mucin; the papilla of the duodenum may gape and extrude mucus. Papillae can block the duct and cause pancreatitis. Seventh and eighth decades, slightly more in men. Invasive carcinoma in 43.6% of main-duct IPMNs in pooled series. Often intestinal type (MUC2, CDX2), which gives colloid carcinoma. KRAS and GNAS are each mutated in 50–80% (Beger 4th ed., ch. 125 and 126; Hingorani 2007).',
+      survival: 'With invasive cancer, after resection: about 60% at 5 years and at least 40% at 10 years (Hingorani 2007).' },
     bipmn: { name: 'Branch-duct IPMN', full: 'Intraductal papillary mucinous neoplasm of a branch duct', color: '--ipmn',
-      where: 'Head or body; a major branch of the main duct (most of 145 resected were in the head or uncinate process)', size: 'Macroscopic, grape-like cysts (drawn about 2.5 cm, under the 3 cm threshold)',
-      text: 'Cystic dilation of a major side branch of the main duct. Less aggressive than main-duct IPMN: in Rodriguez et al. 2007, 11% were invasive and 11% carcinoma in situ. Cysts under 3 cm, without mural nodules or a dilated main duct, may be watched; size over 3 cm, nodules or a thick wall (over 3 mm) predicted invasive cancer. Often “gastric-foveolar” (MUC2 without MUC5AC or CDX2).',
-      survival: 'With invasive cancer, after resection: about 63% at 5 years.' },
+      where: 'Head or neck and uncinate process; a major side branch, next to a main duct that is not dilated (Beger 4th ed., ch. 81 and 86; Rodriguez et al. 2007).', size: 'Grape-like cysts over 10 mm that open into the duct; a cyst over 3 cm is a worrisome feature (Beger 4th ed., ch. 86).',
+      text: 'A cluster of dilated side branches, like grapes, that still communicate with the main duct, which separates it from MCN. Mostly gastric type: one layer of columnar cells with basal nuclei and abundant mucin, usually low grade. Less aggressive than main-duct IPMN: invasive carcinoma in 16.6% in pooled series, 11% in Rodriguez et al. 2007. Small cysts without mural nodules or a dilated main duct may be watched (Beger 4th ed., ch. 126; Rodriguez et al. 2007).',
+      survival: 'With invasive cancer, after resection: about 63% at 5 years (Hingorani 2007).' },
     pda: { name: 'Ductal adenocarcinoma', full: 'Invasive pancreatic ductal adenocarcinoma (PDA)', color: '--pda',
       where: 'Mainly the head of the gland, in people and in mouse models', size: 'Drawn about 3 cm, beside the common bile duct (size not sourced)',
       text: 'The cancer usually meant by “pancreatic cancer”, most often arising from PanIN. It spreads microscopically very early, which is why it is rarely cured even when caught small. Its location may reflect origin: the head and uncinate process come from both the ventral and dorsal buds of the embryo, the body and tail from the dorsal bud alone.',
       survival: 'Overall under 5% alive at 5 years; median survival 4–6 months in advanced disease; 15–20% at 5 years after a Whipple operation.' },
   };
-  const LESION_SOURCE = 'Hingorani SR. Location, location, location: precursors and prognoses for pancreatic cancer. Gastroenterology 2007;133:345-50, doi:10.1053/j.gastro.2007.05.059; branch-duct IPMN also Rodriguez JR et al. Gastroenterology 2007;133:72-9, doi:10.1053/j.gastro.2007.05.010. Placement on the HRA organ is simulated, by rule.';
+  const LESION_SOURCE = 'Hingorani SR. Gastroenterology 2007;133:345-50, doi:10.1053/j.gastro.2007.05.059. Rodriguez JR et al. Gastroenterology 2007;133:72-9, doi:10.1053/j.gastro.2007.05.010. Beger HG et al., eds. The Pancreas: An Integrated Textbook, 4th ed. Wiley 2023 (ch. 81, 84, 86, 125, 126). Kumar V, Abbas AK, Aster JC. Robbins and Cotran Pathologic Basis of Disease, 9th ed. 2015 (ch. 19). Text in our own words. Placement on the HRA organ is simulated, by rule; drawn sizes follow the sizes stated.';
   let disease = null, lesionGroup = null;
   function buildLesions() {
     if (lesionGroup) return lesionGroup;
@@ -1201,7 +1222,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
     // MCN: a multilocular cyst at the periphery of the tail.
     { const q = part('mcn'), tailV = vertsOf(['tail_of_pancreas']), far = tailV.reduce((b, v) => (v.distanceTo(C('neck')) > b.distanceTo(C('neck')) ? v : b)), at = far.clone().lerp(C('tail'), 0.35);
       const shell = mat('--mcn', { transparent: true, opacity: 0.55, depthWrite: false }), loc = mat('--mcn', { transparent: true, opacity: 0.35, depthWrite: false });
-      ball(q, at, 15000, shell); for (let k = 0; k < 6; k++) ball(q, at.clone().add(new THREE.Vector3(R() - 0.5, R() - 0.5, R() - 0.5).multiplyScalar(14000)), 4000 + 3000 * R(), loc);
+      ball(q, at, 25000, shell); for (let k = 0; k < 6; k++) ball(q, at.clone().add(new THREE.Vector3(R() - 0.5, R() - 0.5, R() - 0.5).multiplyScalar(14000)), 4000 + 3000 * R(), loc);
       q.userData.at = at; tag('disease:mcn', q, 'Mucinous cystic neoplasm', at); }
     // The main duct through the head: duct vertices nearer the head than the neck, binned along their main direction.
     const ductV = vertsOf(['ventral_pancreatic_duct', 'dorsal_pancreatic_duct']), inHead = ductV.filter((v) => C('head').distanceTo(v) < C('neck').distanceTo(v));
@@ -1228,32 +1249,193 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
     return g;
   }
   function setDisease(key) {
-    disease = key && (key === 'all' || LESIONS[key]) ? key : null;
+    disease = key && (key === 'all' || key === 'precursors' || LESIONS[key]) ? key : null;
     document.querySelectorAll('[data-disease]').forEach((b) => b.setAttribute('aria-pressed', String((b.dataset.disease || null) === (disease || null) || (!disease && b.dataset.disease === 'none'))));
     if (disease) buildLesions();
-    if (lesionGroup) { lesionGroup.visible = !!disease; lesionGroup.children.forEach((q) => { q.visible = disease === 'all' || q.name === disease; }); }
+    if (lesionGroup) { lesionGroup.visible = !!disease; lesionGroup.children.forEach((q) => { q.visible = disease === 'all' || (disease === 'precursors' && q.name !== 'pda') || q.name === disease; }); }
     pancreasMeshes.forEach((m) => { m.material.userData.base = disease ? 0.28 : ($('islets').checked ? 0.3 : 0.92); });
-    const card = $('lesioncard'), list = disease === 'all' ? Object.keys(LESIONS) : disease ? [disease] : [];
-    card.hidden = !list.length;
-    card.innerHTML = list.map((k) => { const L = LESIONS[k]; return `<h3><span class="sw" style="background:var(${L.color})"></span>${esc(L.full)}</h3>`
-      + (list.length === 1 ? `<p><strong>Where:</strong> ${esc(L.where)}</p><p><strong>Size:</strong> ${esc(L.size)}</p><p>${esc(L.text)}</p><p><strong>Prognosis:</strong> ${esc(L.survival)}</p>` : `<p>${esc(L.where)}.</p>`); }).join('')
-      + `<p class="src">${esc(LESION_SOURCE)}</p>`;
-    if (disease && disease !== 'all') { const at = lesionGroup.getObjectByName(disease).userData.at; if (at) { let bi = 0, bd = Infinity; SITE_LIST.forEach((S0, k) => { const dd = S0.local.distanceTo(at); if (dd < bd) { bd = dd; bi = k; } }); if (bi !== site) setSite(bi); } }
+    renderLesionCard();
+    if (disease && disease !== 'all' && disease !== 'precursors') { const at = lesionGroup.getObjectByName(disease).userData.at; if (at) { let bi = 0, bd = Infinity; SITE_LIST.forEach((S0, k) => { const dd = S0.local.distanceTo(at); if (dd < bd) { bd = dd; bi = k; } }); if (bi !== site) setSite(bi); } }
     if (disease && STAGE.mode === 'tissue' && camera.position.distanceTo(controls.target) < 60000) flyTo(STOPS.organ, undefined, 'tissue');
     hashNow();
   }
-  document.querySelectorAll('[data-disease]').forEach((b) => b.addEventListener('click', () => setDisease(b.dataset.disease === 'none' ? null : b.dataset.disease)));
+  // ---------- what is shown: the pancreas (organ to cell), or the precursor lesions (pancreatitis and PDA to come).
+  // Precursor lesions: the whole organ with PanIN, IPMN and MCN marked where they arise, each linked to an inset as in
+  // Hingorani 2007 (Figure 1); clicking or zooming into one opens a view of its architecture, down to its cells. Each view is
+  // its own scene in micrometres. Shapes follow the textbook descriptions; sizes are illustrative unless a source is named.
+  let MODE = 'pancreas';
+  const LES = { view: null, pending: null, saved: null, scenes: {}, insetCams: {} };
+  const LESION_VIEWS = {
+    panin: { title: 'PanIN', parts: ['panin'], at: 'panin', start: 520, exit: 6000, dir: [0.2, 0.75, 0.62] },
+    ipmn: { title: 'IPMN', parts: ['mipmn', 'bipmn'], at: 'mipmn', start: 70000, exit: 320000, dir: [0.15, 0.8, 0.58] },
+    mcn: { title: 'MCN', parts: ['mcn'], at: 'mcn', start: 125000, exit: 520000, dir: [0.1, 0.25, 0.97] },
+  };
+  const H_E = { mucin: '#d9e2ef', mucinCell: '#e7d6e6', nucleus: '--nucleus', atypical: '#1e1240', stroma: '--collagen', ovarian: '#c58db0', acinus: '#8d58a0', epithelium: '#f0cfe0', wall: '#e9c9c9', capillary: '--capillary' };
+  function lesionScene(key) {
+    if (LES.scenes[key]) return LES.scenes[key];
+    const sc = new THREE.Scene(); sc.environment = scene.environment;
+    sc.add(new THREE.HemisphereLight(0xffffff, 0xd9cdd6, 0.78)); const l1 = new THREE.DirectionalLight(0xffffff, 0.42); l1.position.set(0.5, 1, 0.8); sc.add(l1); const l2 = new THREE.DirectionalLight(0xffffff, 0.25); l2.position.set(-1, -0.3, -0.6); sc.add(l2);
+    const g = new THREE.Group(); g.userData.mats = []; sc.add(g); const set = 'lesion:' + key, R = rng(key.length * 7919 + 17);
+    const mat = (c, extra) => M(g, c, null, Object.assign({ roughness: 0.6 }, extra || {}));
+    const tube = (a, b, r, m) => inst(g, rod, m, [rodMatrix(a, b, r)], 'part');
+    const S = { scene: sc, group: g, focus: new THREE.Vector3() };
+    // Cells of a lining: centres along a surface, each a rounded box with its height along the surface normal.
+    const cellM = (c, normal, along, h, w, l) => { const n = normal.clone().normalize(), a = along.clone().sub(n.clone().multiplyScalar(along.dot(n))).normalize(), t = new THREE.Vector3().crossVectors(n, a);
+      return new THREE.Matrix4().makeBasis(a.multiplyScalar(l / 2), n.multiplyScalar(h / 2), t.multiplyScalar(w / 2)).setPosition(c); };
+    if (key === 'panin') {
+      // A small duct among acini, opened lengthwise, its lining changing along its length: normal cuboidal epithelium, then
+      // low-grade PanIN (tall columnar cells with apical mucin and small basal nuclei), then high-grade PanIN (papillae,
+      // crowded enlarged nuclei that lose their basal position, cells budding into the lumen).
+      const R0 = 45, L = 640, cells = [], nuc = [], atyp = [], muc = [], cores = [], fib = [], acini = [], gradeAt = (x) => (x < -110 ? 0 : x < 120 ? 1 : 2);
+      for (let x = -L / 2; x < L / 2; x += 7.5) { const gr = gradeAt(x), h = gr === 0 ? 9 : 22 + 4 * R(), w = gr === 0 ? 8 : 6.5, n = Math.round(2 * Math.PI * R0 / w);
+        for (let k = 0; k < n; k++) { const th = (k + (Math.round(x / 7.5) % 2) * 0.5) / n * 2 * Math.PI; if (Math.sin(th) > 0.25) continue;   // the near half is cut away
+          const rd = new THREE.Vector3(0, Math.sin(th), Math.cos(th)), c = rd.clone().multiplyScalar(R0 + h / 2).setX(x);
+          cells.push({ m: cellM(c, rd, X, h, w, 7.2), gr });
+          if (gr === 0) nuc.push(new THREE.Matrix4().makeScale(2.3, 2.3, 2.3).setPosition(rd.clone().multiplyScalar(R0 + h * 0.5).setX(x)));
+          else if (gr === 1) { nuc.push(new THREE.Matrix4().makeScale(1.6, 2.4, 1.6).setPosition(rd.clone().multiplyScalar(R0 + h * 0.82).setX(x))); muc.push(cellM(rd.clone().multiplyScalar(R0 + h * 0.25).setX(x), rd, X, h * 0.42, w * 0.85, 6.2)); }
+          else { const f = 0.25 + 0.6 * R(), s = 2.6 + 1.4 * R(); atyp.push(new THREE.Matrix4().makeScale(s, s * (0.8 + 0.5 * R()), s * 0.9).setPosition(rd.clone().multiplyScalar(R0 + h * f).setX(x))); if (R() < 0.4) muc.push(cellM(rd.clone().multiplyScalar(R0 + h * 0.15).setX(x), rd, X, h * 0.25, w * 0.7, 5)); } } }
+      // High-grade papillae: fronds of stroma lined by atypical cells, reaching into the lumen.
+      for (let k = 0; k < 9; k++) { const x = 140 + k * 19 + 6 * R(), th = Math.PI * (1.15 + 0.7 * R()), rd = new THREE.Vector3(0, Math.sin(th), Math.cos(th)), base = rd.clone().multiplyScalar(R0).setX(x), tip = rd.clone().multiplyScalar(R0 - 22 - 14 * R()).setX(x + 6 * (R() - 0.5));
+        cores.push(rodMatrix(base, tip, 4)); const ax = tip.clone().sub(base), len = ax.length(); ax.normalize(); const u = new THREE.Vector3().crossVectors(ax, X).normalize(), v = new THREE.Vector3().crossVectors(ax, u);
+        for (let t = 2; t < len; t += 6) for (let j = 0; j < 6; j++) { const a = j / 6 * 2 * Math.PI + t * 0.3, out = u.clone().multiplyScalar(Math.cos(a)).addScaledVector(v, Math.sin(a)), c = base.clone().addScaledVector(ax, t).addScaledVector(out, 8);
+          cells.push({ m: cellM(c, out, ax, 9, 5.5, 5.5), gr: 2 }); const s = 2.2 + R(); atyp.push(new THREE.Matrix4().makeScale(s, s, s).setPosition(base.clone().addScaledVector(ax, t).addScaledVector(out, 7 + 2 * R()))); } }
+      for (let k = 0; k < 6; k++) { const c = new THREE.Vector3(170 + 120 * R(), -8 - 16 * R(), -10 + 20 * R()); cells.push({ m: new THREE.Matrix4().makeScale(4.5, 4.5, 4.5).setPosition(c), gr: 2 }); atyp.push(new THREE.Matrix4().makeScale(2.8, 2.8, 2.8).setPosition(c)); }   // cells budding off
+      // Periductal stroma and acini round the duct (behind the cut).
+      for (let k = 0; k < 220; k++) { const x = -L / 2 + L * R(), th = Math.PI * (1.0 + R()), rr = R0 + 26 + 18 * R(), rd = new THREE.Vector3(0, Math.sin(th), Math.cos(th)); fib.push(rodMatrix(rd.clone().multiplyScalar(rr).setX(x), rd.clone().multiplyScalar(rr + 2 * R()).setX(x + 30 + 30 * R()), 0.9)); }
+      for (let k = 0; acini.length < 260 && k < 4000; k++) { const p = new THREE.Vector3((R() - 0.5) * (L + 120), -260 * R() + 40, (R() - 0.5) * 520); const r = Math.hypot(p.y, p.z); if (r < R0 + 60 || p.y > -12 || acini.some((q) => q.p.distanceTo(p) < 34)) continue; acini.push({ p, s: 14 + 4 * R() }); }
+      const add = (list, geo, c, name, extra) => { if (list.length) inst(g, geo, mat(c, extra), list, name); };
+      add(cells.filter((c) => c.gr === 0).map((c) => c.m), roundedBox, '--intralobular', 'normalDuctCell'); add(cells.filter((c) => c.gr > 0).map((c) => c.m), roundedBox, H_E.mucinCell, 'paninCell', { he: [1.2, 0.18] });
+      add(nuc, lowball, H_E.nucleus, 'nucleus'); add(atyp, ball, H_E.atypical, 'atypicalNucleus', { roughness: 0.4 }); add(muc, ballHi, H_E.mucin, 'mucin', { roughness: 0.3, he: [1.5, 0.08] });
+      add(cores, rod, '--collagen', 'papillaCore'); add(fib, rod, '--collagen', 'fibre', { roughness: 0.85 }); add(acini.map((a) => new THREE.Matrix4().makeScale(a.s, a.s * 0.9, a.s).setPosition(a.p)), ballHi, H_E.acinus, 'acinusBall', { he: [0.5, 0.3] });
+      tag(set, g, 'Normal duct: cuboidal cells', new THREE.Vector3(-220, -R0 - 6, 0)); tag(set, g, 'Low-grade PanIN: tall columnar cells, apical mucin, basal nuclei', new THREE.Vector3(0, -R0 - 14, -8));
+      tag(set, g, 'High-grade PanIN: papillae, atypical nuclei, loss of polarity', new THREE.Vector3(230, -R0 + 10, 0)); tag(set, g, 'Lumen', new THREE.Vector3(-120, 0, 0)); tag(set, g, 'Acini', new THREE.Vector3(-250, -150, -120)); tag(set, g, 'Periductal stroma', new THREE.Vector3(-60, -R0 - 34, -40));
+    } else if (key === 'ipmn') {
+      // A length of the main duct, dilated and opened lengthwise: papillae on its wall and mucin filling it (main-duct IPMN);
+      // beside it, a side branch swollen into grape-like cysts that still open into the duct (branch-duct IPMN). One papilla is
+      // drawn down to its cells: tall columnar mucinous cells on a fibrovascular core.
+      const Rm = 5000, L = 30000, wall = 900, half = (r, len) => new THREE.CylinderGeometry(r, r, len, 72, 1, true, Math.PI, Math.PI).rotateZ(Math.PI / 2);   // the lower half (y < 0), axis along x
+      const inner = new THREE.Mesh(half(Rm, L), mat(H_E.epithelium, { side: THREE.DoubleSide, he: [1 / 300, 0.25] })), outer = new THREE.Mesh(half(Rm + wall, L), mat(H_E.wall, { side: THREE.DoubleSide, he: [1 / 300, 0.25] }));
+      g.add(inner, outer);
+      const rim = new THREE.Mesh(new THREE.RingGeometry(Rm, Rm + wall, 64, 1, Math.PI, Math.PI), mat(H_E.wall, { side: THREE.DoubleSide, he: [1 / 200, 0.25] })); rim.rotation.y = Math.PI / 2; [-L / 2, L / 2].forEach((x) => { const r = rim.clone(); r.position.x = x; g.add(r); });
+      const paren = new THREE.Mesh(half(Rm + wall + 5000, L), mat(H_E.acinus, { side: THREE.DoubleSide, he: [1 / 900, 0.35] })); g.add(paren);
+      const muc = new THREE.Mesh(half(Rm * 0.97, L * 0.98), mat(H_E.mucin, { transparent: true, opacity: 0.22, depthWrite: false, he: false, side: THREE.DoubleSide })); g.add(muc);
+      const fronds = [], m4 = [];
+      for (let k = 0; k < 260; k++) { const x = (R() - 0.5) * L * 0.92, th = Math.PI * (1.08 + 0.84 * R()), rd = new THREE.Vector3(0, Math.sin(th), Math.cos(th)), base = rd.clone().multiplyScalar(Rm).setX(x);
+        if (Math.abs(x) < 900 && th > Math.PI * 1.35 && th < Math.PI * 1.65) continue;   // room for the featured papilla
+        const len = 700 + 1600 * R(), dir = rd.clone().negate().add(new THREE.Vector3((R() - 0.5) * 0.6, 0, (R() - 0.5) * 0.4)).normalize(); fronds.push(rodMatrix(base, base.clone().addScaledVector(dir, len), 110 + 90 * R())); m4.push(new THREE.Matrix4().makeScale(150, 150, 150).setPosition(base.clone().addScaledVector(dir, len))); }
+      inst(g, rod, mat(H_E.mucinCell, { he: [1 / 60, 0.3] }), fronds, 'papilla'); inst(g, ballHi, mat(H_E.mucinCell, { he: [1 / 60, 0.3] }), m4, 'papillaTip');
+      // The featured papilla at the bottom of the duct: core of stroma with a capillary, lined by tall columnar mucinous cells.
+      const fb = new THREE.Vector3(0, -Rm, 0), ft = new THREE.Vector3(0, -Rm + 950, 0), coreR = 70, cl = [], cn = [], cm = [];
+      tube(fb, ft, coreR, mat('--collagen', { he: [0.4, 0.25] })); tube(fb.clone().setZ(15), ft.clone().setZ(15).setY(ft.y - 40), 7, mat(H_E.capillary, { transparent: true, opacity: 0.7 }));
+      const tipBall = new THREE.Mesh(ballHi, mat('--collagen', { he: [0.4, 0.25] })); tipBall.position.copy(ft); tipBall.scale.setScalar(coreR); g.add(tipBall);
+      for (let y = 10; y < 950; y += 8) { const n = Math.round(2 * Math.PI * (coreR + 14) / 8); for (let j = 0; j < n; j++) { const a = (j + (y / 8 % 2) * 0.5) / n * 2 * Math.PI, out = new THREE.Vector3(Math.cos(a), 0, Math.sin(a)), c = fb.clone().setY(fb.y + y).addScaledVector(out, coreR + 14);
+        cl.push(cellM(c, out, Y, 28, 7.5, 7.5)); cn.push(new THREE.Matrix4().makeScale(1.7, 2.6, 1.7).setPosition(fb.clone().setY(fb.y + y).addScaledVector(out, coreR + 4))); cm.push(cellM(fb.clone().setY(fb.y + y).addScaledVector(out, coreR + 22), out, Y, 11, 6.4, 6.4)); } }
+      inst(g, roundedBox, mat(H_E.mucinCell, { he: [1.2, 0.18] }), cl, 'ipmnCell'); inst(g, lowball, mat(H_E.nucleus), cn, 'nucleus'); inst(g, ballHi, mat(H_E.mucin, { roughness: 0.3, he: [1.5, 0.08] }), cm, 'mucin');
+      // Branch-duct IPMN: a side branch from the duct wall, swollen into cysts that open into the duct.
+      const bRoot = new THREE.Vector3(8000, -2500, -Rm * 0.85), bTip = new THREE.Vector3(9000, -3000, -Rm - 9000); tube(bRoot, bTip, 700, mat(H_E.wall));
+      const cyst = mat(H_E.mucin, { transparent: true, opacity: 0.45, depthWrite: false, he: false }), cystWall = mat(H_E.epithelium, { transparent: true, opacity: 0.35, depthWrite: false, he: false, side: THREE.BackSide });
+      for (let k = 0; k < 6; k++) { const c = bTip.clone().add(new THREE.Vector3((R() - 0.5) * 13000, (R() - 0.5) * 7000, -R() * 9000)), r = 5200 + 2500 * R(); [cyst, cystWall].forEach((m) => { const o = new THREE.Mesh(ballHi, m); o.position.copy(c); o.scale.setScalar(r); g.add(o); }); }
+      tag(set, g, 'Main-duct IPMN: dilated main duct', new THREE.Vector3(-9000, -Rm - 300, 0)); tag(set, g, 'Papillae', new THREE.Vector3(-4000, -Rm + 1400, -1500)); tag(set, g, 'Mucin filling the duct', new THREE.Vector3(5000, -1500, 0));
+      tag(set, g, 'Branch-duct IPMN: cysts that open into the duct', bTip.clone().add(new THREE.Vector3(0, 1500, -2500))); tag(set, g, 'Tall columnar mucinous cells', ft.clone().add(new THREE.Vector3(coreR + 30, -300, 0))); tag(set, g, 'Fibrovascular core', ft.clone().add(new THREE.Vector3(0, -600, 0)));
+      S.focus.set(0, -Rm + 500, 0);
+    } else {
+      // A mucinous cystic neoplasm cut in half: a thick fibrous capsule round several locules full of mucin, separated by
+      // septa, with no connection to the duct running beside it. One stretch of a locule's wall is drawn down to its cells:
+      // a lining of tall columnar mucinous cells on dense "ovarian-type" stroma of spindle cells.
+      const Rc = 25000, cap = 1600, shape = new THREE.Shape(); shape.absarc(0, 0, Rc, 0, Math.PI * 2, false);
+      const loc = [[-7500, 6200, 10000], [12000, 8700, 7500], [9200, -9600, 7000], [-8700, -11200, 6600], [1200, 19100, 3100], [-20000, -5800, 2500]];   // locules that do not overlap; branch cysts above are drawn over 10 mm across
+      loc.forEach(([x, y, r]) => { const h = new THREE.Path(); h.absarc(x, y, r, 0, Math.PI * 2, true); shape.holes.push(h); });
+      const face = new THREE.Mesh(new THREE.ShapeGeometry(shape, 96), mat(H_E.ovarian, { side: THREE.DoubleSide, he: [1 / 400, 0.3] })); g.add(face);
+      const shell = new THREE.Mesh(new THREE.SphereGeometry(Rc, 96, 48, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2).rotateX(Math.PI / 2), mat('--collagen', { side: THREE.DoubleSide, he: [1 / 500, 0.25] })); g.add(shell);
+      const lining = mat(H_E.epithelium, { side: THREE.BackSide, he: [1 / 200, 0.2] }), gel = mat(H_E.mucin, { transparent: true, opacity: 0.35, depthWrite: false, he: false });
+      loc.forEach(([x, y, r]) => { const hemi = new THREE.SphereGeometry(r, 64, 32, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2).rotateX(Math.PI / 2); const o = new THREE.Mesh(hemi, lining); o.position.set(x, y, 0); o.scale.z = Math.min(1, (Rc - 2000) / r * 0.5); g.add(o);
+        const m = new THREE.Mesh(hemi, gel); m.position.set(x, y, 30); m.scale.set(0.98, 0.98, o.scale.z * 0.98); g.add(m); });
+      const duct = new THREE.CatmullRomCurve3([new THREE.Vector3(-60000, -38000, -8000), new THREE.Vector3(0, -40000, -9000), new THREE.Vector3(60000, -36000, -8000)]); g.add(new THREE.Mesh(new THREE.TubeGeometry(duct, 64, 1500, 16, false), mat('--organduct', { he: false })));
+      // The featured wall: a strip of the largest locule's lining at the top of the cut face, with its cells.
+      const [lx, ly, lr] = loc[0], cl = [], cn = [], cm = [], sp = [], spn = [], fib = [];
+      for (let a = 1.25; a < 1.9; a += 7.5 / lr) for (let z = -40; z <= 0; z += 7.5) { const out = new THREE.Vector3(Math.cos(a), Math.sin(a), 0), c = new THREE.Vector3(lx, ly, z + 4).addScaledVector(out, lr + 13);
+        cl.push(cellM(c, out.clone().negate(), new THREE.Vector3(0, 0, 1), 26, 7.5, 7.5)); cn.push(new THREE.Matrix4().makeScale(1.6, 1.6, 2.4).setPosition(new THREE.Vector3(lx, ly, z + 4).addScaledVector(out, lr + 22))); cm.push(cellM(new THREE.Vector3(lx, ly, z + 4).addScaledVector(out, lr + 4), out.clone().negate(), new THREE.Vector3(0, 0, 1), 9, 6.2, 6.2));
+        if (Math.round(z / 7.5) % 2 === 0) for (let d = 34; d < 230; d += 9) { const p = new THREE.Vector3(lx, ly, z + 2 + (R() - 0.5) * 6).addScaledVector(out, lr + d + (R() - 0.5) * 6), along = new THREE.Vector3(-out.y, out.x, 0);
+          sp.push(new THREE.Matrix4().makeBasis(along.clone().multiplyScalar(11), out.clone().multiplyScalar(2.6), new THREE.Vector3(0, 0, 2.6)).setPosition(p)); spn.push(new THREE.Matrix4().makeBasis(along.clone().multiplyScalar(4.5), out.clone().multiplyScalar(1.2), new THREE.Vector3(0, 0, 1.2)).setPosition(p)); }
+        if (R() < 0.3) fib.push(rodMatrix(new THREE.Vector3(lx, ly, z + 2).addScaledVector(out, lr + 240 + 80 * R()), new THREE.Vector3(lx, ly, z + 2).addScaledVector(new THREE.Vector3(Math.cos(a + 0.004), Math.sin(a + 0.004), 0), lr + 250 + 80 * R()), 1.6)); }
+      inst(g, roundedBox, mat(H_E.mucinCell, { he: [1.2, 0.18] }), cl, 'mcnCell'); inst(g, lowball, mat(H_E.nucleus), cn, 'nucleus'); inst(g, ballHi, mat(H_E.mucin, { roughness: 0.3, he: [1.5, 0.08] }), cm, 'mucin');
+      inst(g, ball, mat('#d9a3c2', { he: [0.8, 0.2] }), sp, 'ovarianStromaCell'); inst(g, lowball, mat('#3b2a6e'), spn, 'stromaNucleus'); inst(g, rod, mat('--collagen', { roughness: 0.85 }), fib, 'fibre');
+      const wallAt = new THREE.Vector3(lx, ly, 0).addScaledVector(new THREE.Vector3(Math.cos(1.57), Math.sin(1.57), 0), lr);
+      tag(set, g, 'Thick fibrous capsule', new THREE.Vector3(0, -Rc + 800, -6000)); tag(set, g, 'Locules filled with mucin', new THREE.Vector3(12500, 9000, 400)); tag(set, g, 'Septa: ovarian-type stroma', new THREE.Vector3(2000, -2000, 200));
+      tag(set, g, 'Duct beside it: no connection', duct.getPoint(0.3)); tag(set, g, 'Mucinous columnar lining', wallAt.clone().add(new THREE.Vector3(0, 10, 5))); tag(set, g, 'Ovarian-type stroma (spindle cells)', wallAt.clone().add(new THREE.Vector3(60, 140, 5)));
+      S.focus.set(0, 0, 0);
+    }
+    stainGroup(g); LES.scenes[key] = S; return S;
+  }
+  function setMode(m) {
+    if (m === MODE || !['pancreas', 'precursors'].includes(m)) return;
+    if (LES.view) exitLesion(true);
+    MODE = m; document.body.dataset.mode = m; if (splitOn) setSplit(false);
+    document.querySelectorAll('[data-mode]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === m)));
+    if (COMPARE.on) $('compare').click();
+    setDisease(m === 'precursors' ? 'precursors' : null);
+    if (m === 'pancreas') setSite(site);
+    flyTo(STOPS.organ, undefined, 'tissue'); lastLevel = ''; hashNow();
+  }
+  document.querySelectorAll('[data-mode]').forEach((b) => b.addEventListener('click', () => setMode(b.dataset.mode)));
+  function enterLesion(key) {
+    const V0 = LESION_VIEWS[key]; if (!V0) return; if (MODE !== 'precursors') setMode('precursors');
+    const S = lesionScene(key); if (!LES.view) LES.saved = { target: controls.target.clone(), dir: camera.position.clone().sub(controls.target).normalize() };
+    LES.view = key; LES.pending = null; flight = null; flash();
+    controls.target.copy(S.focus); camera.position.copy(S.focus).addScaledVector(new THREE.Vector3(...V0.dir).normalize(), V0.start); controls.update();
+    lastLevel = ''; renderLesionCard(); hashNow();
+  }
+  function exitLesion(quiet) {
+    if (!LES.view) return; LES.view = null; LES.pending = null; if (!quiet) flash();
+    const sv = LES.saved || { target: new THREE.Vector3(), dir: new THREE.Vector3(0, 0.25, 1).normalize() };
+    controls.target.copy(sv.target); camera.position.copy(sv.target).addScaledVector(sv.dir, 130000); controls.update(); lastLevel = ''; renderLesionCard(); hashNow();
+  }
+  function flash() { const f = $('flash'); f.style.transition = 'none'; f.style.opacity = '1'; requestAnimationFrame(() => { f.style.transition = 'opacity .45s'; f.style.opacity = '0'; }); }
+  document.querySelectorAll('[data-lesion]').forEach((b) => b.addEventListener('click', () => { const k = b.dataset.lesion; if (k === 'overview') { if (LES.view) exitLesion(); else flyTo(STOPS.organ, undefined, 'tissue'); } else enterLesion(k); }));
+  function renderLesionCard() {
+    const keys = MODE !== 'precursors' ? (disease && disease !== 'precursors' ? [disease] : []) : LES.view ? LESION_VIEWS[LES.view].parts : ['panin', 'mipmn', 'bipmn', 'mcn'], card = $('lesioncard');
+    card.hidden = !keys.length; if (!keys.length) return; const detailed = keys.length <= 2;
+    card.innerHTML = keys.map((k) => { const L = LESIONS[k]; return `<h3><span class="sw" style="background:var(${L.color})"></span>${esc(L.full)}</h3>`
+      + (detailed ? `<p><strong>Where:</strong> ${esc(L.where)}</p><p><strong>Size:</strong> ${esc(L.size)}</p><p>${esc(L.text)}</p><p><strong>Prognosis:</strong> ${esc(L.survival)}</p>` : `<p>${esc(L.where)}.</p>`); }).join('') + `<p class="src">${esc(LESION_SOURCE)}</p>`;
+  }
+  // Insets beside the organ, each a live view of one lesion's architecture, joined by a line to where it arises.
+  const INSETS = [{ key: 'mcn', pos: { right: 16, top: 70 } }, { key: 'ipmn', pos: { right: 16, bottom: 70 } }, { key: 'panin', pos: { left: 16, bottom: 70 } }];
+  function insetDom() {
+    const box = $('insets'); if (box.dataset.built) return; box.dataset.built = '1';
+    box.innerHTML = '<svg aria-hidden="true"></svg>' + INSETS.map((t) => `<div class="inset" data-inset="${t.key}" style="${Object.entries(t.pos).map(([k, v]) => `${k}:${v}px`).join(';')}" role="button" tabindex="0" aria-label="Open the ${LESION_VIEWS[t.key].title} view"><b>${LESION_VIEWS[t.key].title} ›</b></div>`).join('');
+    box.querySelectorAll('[data-inset]').forEach((el) => { el.addEventListener('click', () => enterLesion(el.dataset.inset)); el.addEventListener('keydown', (e) => { if (e.key === 'Enter') enterLesion(el.dataset.inset); }); });
+  }
+  function drawInsets(now, show) {
+    const box = $('insets'); box.style.display = show ? '' : 'none'; if (!show) return; insetDom();
+    const st = stage.getBoundingClientRect(), svg = box.querySelector('svg'), lines = [];
+    INSETS.forEach((t) => { const el = box.querySelector(`[data-inset="${t.key}"]`), r = el.getBoundingClientRect(), x = r.left - st.left, y = r.top - st.top, w = r.width, h = r.height;
+      const S = lesionScene(t.key), V0 = LESION_VIEWS[t.key], cam = LES.insetCams[t.key] || (LES.insetCams[t.key] = new THREE.PerspectiveCamera(30, 1, 1, 1e7)), a = now * 0.0004 + t.key.length;
+      cam.aspect = w / h; const d = V0.start * 1.25; cam.position.copy(S.focus).add(new THREE.Vector3(...V0.dir).normalize().add(new THREE.Vector3(Math.sin(a) * 0.35, 0, 0)).normalize().multiplyScalar(d));   // swings gently, always from the front cam.lookAt(S.focus); cam.near = d / 80; cam.far = d * 50; cam.updateProjectionMatrix();
+      const yb = st.height - (y + h); renderer.setViewport(x + 2, yb + 2, w - 4, h - 4); renderer.setScissor(x + 2, yb + 2, w - 4, h - 4); renderer.setClearColor(0xf7f0f4, 1); renderer.clear(); renderer.render(S.scene, cam); renderer.setClearColor(0x000000, 0);
+      const at = lesionGroup && lesionGroup.getObjectByName(V0.at); if (!at) return; const p = groups.organ.userData.inner.localToWorld(at.userData.at.clone()).project(camera);
+      const px = (p.x + 1) / 2 * UI.w, py = (1 - p.y) / 2 * UI.h, ex = Math.max(x, Math.min(x + w, px)), ey = Math.max(y, Math.min(y + h, py)); lines.push(`<line x1="${ex}" y1="${ey}" x2="${px}" y2="${py}"/><circle cx="${px}" cy="${py}" r="5"/>`); });
+    svg.innerHTML = `<g stroke="var(--accent)" stroke-width="2" fill="var(--accent)">${lines.join('')}</g>`;
+  }
+  function lesionFrame(now, v) {
+    const S = lesionScene(LES.view), V0 = LESION_VIEWS[LES.view], d = camera.position.distanceTo(controls.target);
+    if (d > V0.exit) { exitLesion(); return; }
+    camera.near = Math.max(0.05, d / 80); camera.far = d * 400; camera.updateProjectionMatrix();
+    const key = 'lesion' + V0.title.replace(/\W/g, ''); if (key !== lastLevel) { lastLevel = key; UI.levelname.textContent = V0.title; $('info').textContent = INFO[key] || ''; applyDataFor(key, key); showMarkers(null); }
+    drawLabels('lesion:' + LES.view, 1); drawScale(d);
+    controls.update(); renderer.setViewport(UI.x, 0, UI.w, UI.h); renderer.setScissor(UI.x, 0, UI.w, UI.h); renderer.render(S.scene, camera); drawInsets(now, false);
+  }
   // ---------- links to a view: #site=12&view=islet&stain=if opens the page there; the address follows the view
   const VIEW_KEYS = { organ: ['organ'], lobules: ['gross'], tissue: ['tissue'], acinus: ['detail', 'acinus'], 'acinus-cells': ['cells', 'acinus'], 'acinar-cell': ['cell', 'acinus'],
     islet: ['detail', 'islet'], 'islet-cells': ['cells', 'islet'], 'beta-cell': ['cell', 'islet', 'beta'], 'alpha-cell': ['cell', 'islet', 'alpha'], 'delta-cell': ['cell', 'islet', 'delta'], duct: ['detail', 'duct'], 'duct-cells': ['cells', 'duct'], 'duct-cell': ['cell', 'duct'] };
   const viewName = (lv) => Object.keys(VIEW_KEYS).find((k) => { const [l, br, kind] = VIEW_KEYS[k]; return l === lv && (!br || br === branch) && (!kind || kind === isletKind); }) || 'organ';
-  const hashNow = () => writeHash(levelAt(camera.position.distanceTo(controls.target)));
+  const hashNow = () => writeHash(LES.view ? 'lesion' : levelAt(camera.position.distanceTo(controls.target)));
   let hashReady = false; const START_HASH = location.hash;   // the link the page was opened with is read once the organ is built
-  function writeHash(lv) { if (!hashReady || splitOn || tour || site < 0) return; const h = `#site=${site + 1}&view=${viewName(lv)}${stain === 'if' ? '&stain=if' : ''}${disease ? '&disease=' + disease : ''}`;
+  function writeHash(lv) { if (!hashReady || splitOn || tour || site < 0) return; const h = MODE === 'precursors' ? `#mode=precursors${LES.view ? '&lesion=' + LES.view : ''}` : `#site=${site + 1}&view=${viewName(lv)}${stain === 'if' ? '&stain=if' : ''}${disease ? '&disease=' + disease : ''}`;
     if (location.hash !== h) try { history.replaceState(null, '', h); } catch (e) { /* a sandboxed page may refuse */ } }
   function readHash(h) { const q = new URLSearchParams((typeof h === 'string' ? h : location.hash).slice(1)), n = +q.get('site'), v = VIEW_KEYS[q.get('view')];
     if (n >= 1 && n <= SITE_LIST.length && n - 1 !== site) setSite(n - 1);
     if (q.get('stain') === 'if') document.querySelector('[data-stain=if]').click();
+    if (q.get('mode') === 'precursors') { setMode('precursors'); if (LESION_VIEWS[q.get('lesion')]) enterLesion(q.get('lesion')); return; } else if (MODE !== 'pancreas') setMode('pancreas');
     if (q.get('disease')) setDisease(q.get('disease'));
     if (v && v[0] !== 'organ') { const [lvl, br, kind] = v; setIsletKind(kind); if (br) document.querySelectorAll('[data-branch]').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.branch === br))); flyTo(stopFor(lvl, br), br, MODE_OF[lvl]); } }
   matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => location.reload());

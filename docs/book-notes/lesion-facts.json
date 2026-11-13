@@ -1,0 +1,1071 @@
+{
+ "PanIN": {
+  "facts": [
+   {
+    "fact": "PanIN is a microscopic, noninvasive duct lesion, usually under 0.5 cm, of cuboidal-to-columnar cells with variable apical mucin; epithelium almost always gastric-foveolar, flat or micropapillary.",
+    "value": "size <0.5 cm; flat or (micro)papillary; apical mucin",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 126 Pancreatic Cancer: Precancerous Lesions (Pfluger, Noe, Brosens)",
+    "pdfPage": "976",
+    "printedPage": "969",
+    "confidence": "high"
+   },
+   {
+    "fact": "Old three-tier grading: PanIN-1A flat and 1B micropapillary with minimal atypia and no mitoses; PanIN-2 pseudostratification, moderate atypia, hyperchromasia; PanIN-3 marked atypia, atypical mitoses, loss of polarity, cribriform or budding, necrosis possible.",
+    "value": "PanIN-1A/1B/2/3 cytology",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 126 Pancreatic Cancer: Precancerous Lesions (Pfluger, Noe, Brosens)",
+    "pdfPage": "976-977",
+    "printedPage": "969-970",
+    "confidence": "high"
+   },
+   {
+    "fact": "Current two-tier system: low-grade = former PanIN-1A/1B and PanIN-2; high-grade = former PanIN-3 ('carcinoma in situ'). High-grade PanIN is found almost only alongside invasive PDAC.",
+    "value": "LG = 1A/1B/2; HG = 3",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 126 Pancreatic Cancer: Precancerous Lesions (Pfluger, Noe, Brosens)",
+    "pdfPage": "977",
+    "printedPage": "970",
+    "confidence": "high"
+   },
+   {
+    "fact": "PanIN found in 82% of pancreata with PDAC, 60% with chronic pancreatitis and 16% of normal pancreata; both sexes equal; incidence tends to rise with age.",
+    "value": "82% PDAC / 60% CP / 16% normal; rises with age",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 126 Pancreatic Cancer: Precancerous Lesions (Pfluger, Noe, Brosens)",
+    "pdfPage": "976",
+    "printedPage": "969",
+    "confidence": "high"
+   },
+   {
+    "fact": "PanINs lie more often in the head than the tail, are macroscopically invisible and not seen on imaging, but may cause stricture with upstream duct dilation, lobular atrophy and fibrosis.",
+    "value": "head > tail",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 126 Pancreatic Cancer: Precancerous Lesions (Pfluger, Noe, Brosens)",
+    "pdfPage": "976",
+    "printedPage": "969",
+    "confidence": "high"
+   },
+   {
+    "fact": "Table of precursors: PanIN location head = tail, size <0.5 cm; early KRAS and CDKN2A, late TP53 and SMAD4 changes.",
+    "value": "head = tail (conflicts with Ch126)",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 119 Molecular Understanding of the Development of Ductal Pancreatic Cancer (Lee, Hruban, Wood)",
+    "pdfPage": "923",
+    "printedPage": "916",
+    "confidence": "medium"
+   },
+   {
+    "fact": "PanINs described as microscopic asymptomatic lesions of the terminal ductules (periphery of ductal tree) that progress to invasion most readily in head and uncinate process; 5-year survival after resection of resulting cancer 15-20%.",
+    "value": "periphery/terminal ductules; head & uncinate",
+    "book": "Hingorani SR. Location, Location, Location: Precursors and Prognoses for Pancreatic Cancer. Gastroenterology 133(1):345-350",
+    "edition": "July 2007 (cross-check only)",
+    "chapter": "Editorial text and Table 1",
+    "pdfPage": "1; 3",
+    "printedPage": "345; 347",
+    "confidence": "high"
+   },
+   {
+    "fact": "Invasive cancer is thought to arise from PanIN in small ducts: shared genetics, PanIN beside carcinoma, mouse models. Telomere shortening and KRAS early; CDKN2A mid; TP53, SMAD4, BRCA2 late; accumulation matters more than order.",
+    "value": "order: telomere+KRAS -> CDKN2A -> TP53/SMAD4/BRCA2",
+    "book": "Robbins and Cotran Pathologic Basis of Disease (Kumar, Abbas, Aster)",
+    "edition": "9th ed., Elsevier/Saunders, 2015",
+    "chapter": "Ch 19 The Pancreas",
+    "pdfPage": "907",
+    "printedPage": "892",
+    "confidence": "high"
+   },
+   {
+    "fact": "KRAS mutated in >90% of low- and high-grade PanIN; telomere shortening near-universal incl. PanIN-1A; GNAS in a subset; CDKN2A loss later; TP53 and SMAD4 late, SMAD4 perhaps only after invasion; PanIN lacks MUC2.",
+    "value": "KRAS >90%; telomere shortening earliest",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 126 Pancreatic Cancer: Precancerous Lesions (Pfluger, Noe, Brosens)",
+    "pdfPage": "978",
+    "printedPage": "971",
+    "confidence": "high"
+   },
+   {
+    "fact": "High-grade PanIN is hard to tell from 'cancerization' of a duct by invasive carcinoma; abrupt transition from normal to highly atypical epithelium in one duct with adjacent invasive tumor favors cancerization.",
+    "value": "abrupt transition = cancerization",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 126 Pancreatic Cancer: Precancerous Lesions (Pfluger, Noe, Brosens)",
+    "pdfPage": "977",
+    "printedPage": "970",
+    "confidence": "high"
+   },
+   {
+    "fact": "Rare PanIN variants: foamy gland, intestinal and oncocytic types; the last two may be early IPMN or IOPN.",
+    "value": "variants",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 126 Pancreatic Cancer: Precancerous Lesions (Pfluger, Noe, Brosens)",
+    "pdfPage": "978",
+    "printedPage": "971",
+    "confidence": "high"
+   },
+   {
+    "fact": "Mouse lineage-tracing: acinar cells undergo acinar-to-ductal metaplasia then PanIN then PDAC when Kras is mutated with inflammation; duct-derived tumors tended to bypass PanIN. Animal data, not shown in humans.",
+    "value": "acinar->ADM->PanIN->PDAC (mouse)",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 120 From Tissue Turnover to the Cell of Origin of Pancreatic Cancer (Kong, Thoma, Michalski)",
+    "pdfPage": "929-931",
+    "printedPage": "922-924",
+    "confidence": "medium"
+   }
+  ]
+ },
+ "IPMN": {
+  "facts": [
+   {
+    "fact": "IPMN: grossly visible, usually papillary, noninvasive mucin-producing neoplasm of main or branch ducts, usually >=1.0 cm. A lesion 0.5-1.0 cm is large PanIN or small IPMN.",
+    "value": "size >=1 cm; main/branch ducts",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 126 Pancreatic Cancer: Precancerous Lesions (Pfluger, Noe, Brosens)",
+    "pdfPage": "979",
+    "printedPage": "972",
+    "confidence": "high"
+   },
+   {
+    "fact": "IPMN sits most often in proximal gland (head, uncinate). Pooled invasive carcinoma: 43.6% main-duct, 16.6% branch-duct, 45.3% mixed. Duct-type split is mainly an imaging classification.",
+    "value": "invasive: MD 43.6 / BD 16.6 / mixed 45.3%",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 126 Pancreatic Cancer: Precancerous Lesions (Pfluger, Noe, Brosens)",
+    "pdfPage": "979",
+    "printedPage": "972",
+    "confidence": "high"
+   },
+   {
+    "fact": "Main-duct involvement (main-duct or mixed IPMN) means main duct dilated to more than 5 mm, focal or diffuse; short segments can look cystic. Gaping 'fish-mouth' papilla may extrude mucus.",
+    "value": "MPD >5 mm",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 84 Evaluation of Cystic Lesions Using EUS, MRI, and CT",
+    "pdfPage": "657",
+    "printedPage": "647",
+    "confidence": "high"
+   },
+   {
+    "fact": "Branch-duct IPMN shows as cysts over 10 mm that communicate with a non-dilated main duct; main-duct and mixed types have segmental or diffuse main duct dilation over 5 mm.",
+    "value": "BD cyst >10 mm; MD >5 mm",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 86 Natural History of Cystic Neoplasms: IPMN, MCN, SCN, and SPN (Klotz, Hackert, Buchler)",
+    "pdfPage": "676",
+    "printedPage": "666",
+    "confidence": "high"
+   },
+   {
+    "fact": "Consensus risk tiers: main duct 5-9 mm is a worrisome feature; main duct >10 mm or enhancing mural nodule >5 mm is a high-risk stigma; cyst >3 cm worrisome.",
+    "value": "MPD 5-9 mm worrisome; >=10 mm high-risk",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 86 Natural History of Cystic Neoplasms: IPMN, MCN, SCN, and SPN (Klotz, Hackert, Buchler)",
+    "pdfPage": "686",
+    "printedPage": "676",
+    "confidence": "high"
+   },
+   {
+    "fact": "Imaging risk of high-grade dysplasia or invasion: cyst >3 cm (OR 2.97), main duct dilation (OR 2.4), mural nodule (OR 7.7); nodule size cut-offs vary from >=3 mm to >10 mm.",
+    "value": "mural nodule OR 7.7",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 84 Evaluation of Cystic Lesions Using EUS, MRI, and CT",
+    "pdfPage": "657",
+    "printedPage": "647",
+    "confidence": "high"
+   },
+   {
+    "fact": "Gross: main-duct IPMN diffusely dilates main duct, with long finger-like papillae and thick tenacious mucin; branch-duct IPMN is a grape-like cluster of cysts beside the main duct; many are mixed.",
+    "value": "grape-like cysts; finger-like papillae",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 125 Pathology of Exocrine Pancreatic Tumors (Pittman, Hruban)",
+    "pdfPage": "968",
+    "printedPage": "961",
+    "confidence": "high"
+   },
+   {
+    "fact": "Branch-duct IPMN: multiple cystic dilations ('grape-like'), more often head/neck and uncinate process; IPMN mean age ~65, more men, mostly solitary and in the head, 20-40% multifocal.",
+    "value": "multifocal 20-40%",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 81 Histologic Classification and Staging of Cystic Neoplasms (Fukushima, Zamboni)",
+    "pdfPage": "636",
+    "printedPage": "626",
+    "confidence": "high"
+   },
+   {
+    "fact": "IPMN involves larger ducts, is commoner in men and more often in head than tail; 10-20% multifocal; lacks ovarian stroma and involves a duct (vs MCN). Mutations: GNAS, KRAS, TP53, SMAD4, RNF43.",
+    "value": "multifocal 10-20% (conflicts with Ch81)",
+    "book": "Robbins and Cotran Pathologic Basis of Disease (Kumar, Abbas, Aster)",
+    "edition": "9th ed., Elsevier/Saunders, 2015",
+    "chapter": "Ch 19 The Pancreas",
+    "pdfPage": "906",
+    "printedPage": "891",
+    "confidence": "high"
+   },
+   {
+    "fact": "Gastric-type IPMN (commonest): monolayer of columnar cells, basal nuclei, abundant mucin; flat, papillary or tubular; mostly branch ducts; usually low-grade, lowest invasion risk.",
+    "value": "gastric: branch ducts, low-grade",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 126 Pancreatic Cancer: Precancerous Lesions (Pfluger, Noe, Brosens)",
+    "pdfPage": "979",
+    "printedPage": "972",
+    "confidence": "high"
+   },
+   {
+    "fact": "Intestinal-type IPMN resembles colonic villous adenoma: long branching papillae, elongated 'cigar' nuclei, goblet cells, MUC2/CDX2; usually high-grade and in the main duct. Pancreatobiliary-type: mucin-poor cells, irregular nuclei, prominent nucleoli, arborizing, mostly high-grade, most often invasive.",
+    "value": "intestinal: main duct; pancreatobiliary: arborizing HG",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 126 Pancreatic Cancer: Precancerous Lesions (Pfluger, Noe, Brosens)",
+    "pdfPage": "981",
+    "printedPage": "974",
+    "confidence": "high"
+   },
+   {
+    "fact": "Oncocytic IPMN is now a separate entity (IOPN): arborizing papillae of 1-5 layers of eosinophilic cells with prominent nucleoli and punched-out spaces; mean size 4.6-6 cm; ~2/3 in head; lacks KRAS/GNAS; PRKACA/PRKACB fusions.",
+    "value": "IOPN size 4.6-6 cm; head 2/3",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 126 Pancreatic Cancer: Precancerous Lesions (Pfluger, Noe, Brosens)",
+    "pdfPage": "982",
+    "printedPage": "975",
+    "confidence": "high"
+   },
+   {
+    "fact": "Low-grade IPMN dysplasia: single layer of small uniform nuclei on well-formed papillae. High-grade: loss of polarity, hyperchromatic pleomorphic nuclei, irregular papillae, cribriform growth. About one-third of resected IPMN carry invasive PDAC.",
+    "value": "LG vs HG architecture; ~1/3 invasive",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 125 Pathology of Exocrine Pancreatic Tumors (Pittman, Hruban)",
+    "pdfPage": "969",
+    "printedPage": "962",
+    "confidence": "high"
+   },
+   {
+    "fact": "Intestinal-type IPMN gives colloid (mucinous noncystic) carcinoma: mucin pools dissect stroma with neoplastic cells floating. Pancreatobiliary and some gastric types give tubular carcinoma like PDAC.",
+    "value": "colloid <- intestinal; tubular <- PB/gastric",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 125 Pathology of Exocrine Pancreatic Tumors (Pittman, Hruban)",
+    "pdfPage": "966; 968-969",
+    "printedPage": "959; 961-962",
+    "confidence": "high"
+   },
+   {
+    "fact": "Colloid carcinoma from intestinal IPMN has better prognosis than PDAC (median survival 107 vs 20 months); tubular carcinoma from gastric branch-duct IPMN median 45 months.",
+    "value": "107 vs 20 months",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 86 Natural History of Cystic Neoplasms: IPMN, MCN, SCN, and SPN (Klotz, Hackert, Buchler)",
+    "pdfPage": "679",
+    "printedPage": "669",
+    "confidence": "medium"
+   },
+   {
+    "fact": "KRAS and GNAS each altered in 50-80% of IPMN, often together; RNF43 14-75%; CDKN2A common; TP53 in high-grade; SMAD4 usually only once invasive; KLF4 in low-grade. Average 26 mutations per IPMN.",
+    "value": "KRAS/GNAS 50-80%",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 126 Pancreatic Cancer: Precancerous Lesions (Pfluger, Noe, Brosens)",
+    "pdfPage": "980",
+    "printedPage": "973",
+    "confidence": "high"
+   },
+   {
+    "fact": "Cysts appear in >2% of asymptomatic imaging cohorts, >80% IPMN; cysts and IPMN reach 13.5% and 12.2% after age 80. Resected 5-year survival 94% high-grade vs 31% invasive.",
+    "value": "prevalence up to 12.2% >80y",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 126 Pancreatic Cancer: Precancerous Lesions (Pfluger, Noe, Brosens)",
+    "pdfPage": "978-979",
+    "printedPage": "971-972",
+    "confidence": "high"
+   },
+   {
+    "fact": "IPMN usually in head, 7th-8th decade, men:women 1.5:1; Br-IPMN series of 145 resections: 46% adenoma, 32% borderline, 11% in situ, 11% invasive; expectant care suggested for branch lesions <3 cm without nodule or duct dilation.",
+    "value": "Br-IPMN 22% malignant (11%+11%, derived)",
+    "book": "Hingorani SR. Location, Location, Location: Precursors and Prognoses for Pancreatic Cancer. Gastroenterology 133(1):345-350",
+    "edition": "July 2007 (cross-check only)",
+    "chapter": "Editorial text and Table 1",
+    "pdfPage": "2",
+    "printedPage": "346",
+    "confidence": "medium"
+   },
+   {
+    "fact": "Illustration: IPMN of pancreatic head with papillary tumor distending the main pancreatic duct and extending into smaller ducts and ductules.",
+    "value": "figure 19-10",
+    "book": "Robbins and Cotran Pathologic Basis of Disease (Kumar, Abbas, Aster)",
+    "edition": "9th ed., Elsevier/Saunders, 2015",
+    "chapter": "Ch 19 The Pancreas",
+    "pdfPage": "906",
+    "printedPage": "891",
+    "confidence": "high"
+   }
+  ]
+ },
+ "MCN": {
+  "facts": [
+   {
+    "fact": "MCN: mostly perimenopausal women, body/tail, solitary, 'cyst-in-cyst' septated growth, no communication with the duct system; ovarian-type stroma is mandatory. Median size 3.5-5 cm (range 0.5-20 cm).",
+    "value": "size 3.5-5 cm median (0.5-20)",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 126 Pancreatic Cancer: Precancerous Lesions (Pfluger, Noe, Brosens)",
+    "pdfPage": "983",
+    "printedPage": "976",
+    "confidence": "high"
+   },
+   {
+    "fact": "MCN: men:women 1:10-20; >90% in body-tail; mean age ~45; round, smooth lining, fibrous pseudocapsule, frequent calcification; 2-35 cm; unilocular or multilocular; papillae or mural nodules track with malignancy.",
+    "value": "size 2-35 cm; >90% body/tail",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 81 Histologic Classification and Staging of Cystic Neoplasms (Fukushima, Zamboni)",
+    "pdfPage": "634",
+    "printedPage": "624",
+    "confidence": "high"
+   },
+   {
+    "fact": "MCN: perimenopausal women, median age 48; >90% distal body or tail; mean size 6.5 cm; thick wall, no duct communication; 15-20% harbor focal invasive carcinoma.",
+    "value": "mean 6.5 cm; invasion 15-20%",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 86 Natural History of Cystic Neoplasms: IPMN, MCN, SCN, and SPN (Klotz, Hackert, Buchler)",
+    "pdfPage": "680",
+    "printedPage": "670",
+    "confidence": "high"
+   },
+   {
+    "fact": "Lining ranges from flat/cuboidal cells with little mucin to tall columnar with supranuclear mucin; low- and high-grade areas coexist; denuded epithelium common. Ovarian-type stroma: spindle cells, estrogen/progesterone receptor positive, luteinized cells inhibin-positive.",
+    "value": "columnar mucinous epithelium + ovarian stroma",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 126 Pancreatic Cancer: Precancerous Lesions (Pfluger, Noe, Brosens)",
+    "pdfPage": "984",
+    "printedPage": "977",
+    "confidence": "high"
+   },
+   {
+    "fact": "MCN genetics: average 16 coding mutations; KRAS hotspots (up to 100% in high-grade/invasive), RNF43; TP53 and CDKN2A in ~half of high-grade/invasive; GNAS absent, which separates MCN from IPMN.",
+    "value": "GNAS absent",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 126 Pancreatic Cancer: Precancerous Lesions (Pfluger, Noe, Brosens)",
+    "pdfPage": "985",
+    "printedPage": "978",
+    "confidence": "high"
+   },
+   {
+    "fact": "Noninvasive MCN patients are about 10 years younger than invasive (44 vs 55 years); invasive carcinoma in 6-25% of resected MCN; 5-year disease-specific survival 57-79.6%.",
+    "value": "invasive 6-25%",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 126 Pancreatic Cancer: Precancerous Lesions (Pfluger, Noe, Brosens)",
+    "pdfPage": "983",
+    "printedPage": "976",
+    "confidence": "high"
+   },
+   {
+    "fact": "~95% of MCN arise in women, usually in the tail, painless slow-growing; cysts larger than serous; thick tenacious mucin; columnar mucinous lining over dense ovarian-like stroma; up to a third have invasive carcinoma.",
+    "value": "tail; 95% women; up to 1/3 invasive",
+    "book": "Robbins and Cotran Pathologic Basis of Disease (Kumar, Abbas, Aster)",
+    "edition": "9th ed., Elsevier/Saunders, 2015",
+    "chapter": "Ch 19 The Pancreas",
+    "pdfPage": "906",
+    "printedPage": "891",
+    "confidence": "high"
+   },
+   {
+    "fact": "MCN lies in periphery of body/tail, 5th decade, women:men 10-20:1, stroma with wavy nuclei and hormone receptors; typically no contiguity with duct system (may arise from terminal ductules).",
+    "value": "body/tail; 10-20:1",
+    "book": "Hingorani SR. Location, Location, Location: Precursors and Prognoses for Pancreatic Cancer. Gastroenterology 133(1):345-350",
+    "edition": "July 2007 (cross-check only)",
+    "chapter": "Editorial text and Table 1",
+    "pdfPage": "2",
+    "printedPage": "346",
+    "confidence": "high"
+   },
+   {
+    "fact": "Proposed origin: primordial germ cells or ovarian-type tissue stranded in pancreatic body/tail during embryonic descent; mechanism still unknown.",
+    "value": "hypothesis only",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 126 Pancreatic Cancer: Precancerous Lesions (Pfluger, Noe, Brosens)",
+    "pdfPage": "983",
+    "printedPage": "976",
+    "confidence": "low"
+   }
+  ]
+ },
+ "other_cystic_and_solid": {
+  "facts": [
+   {
+    "fact": "Serous cystic neoplasm: multicystic, usually in the tail, cysts 1-3 mm with glycogen-rich cuboidal cells and clear straw-coloured fluid; ~25% of cystic neoplasms; women 2:1; 6th-7th decade; VHL inactivation; benign.",
+    "value": "cysts 1-3 mm; tail",
+    "book": "Robbins and Cotran Pathologic Basis of Disease (Kumar, Abbas, Aster)",
+    "edition": "9th ed., Elsevier/Saunders, 2015",
+    "chapter": "Ch 19 The Pancreas",
+    "pdfPage": "905",
+    "printedPage": "890",
+    "confidence": "high"
+   },
+   {
+    "fact": "Serous cystic neoplasms are typically in body and tail; mean size 4-6 cm at diagnosis; growth ~0.6 cm/year; mostly sporadic, multiple in VHL; no KRAS/RNF43/TP53 mutations.",
+    "value": "body & tail; 4-6 cm",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 86 Natural History of Cystic Neoplasms: IPMN, MCN, SCN, and SPN (Klotz, Hackert, Buchler)",
+    "pdfPage": "680",
+    "printedPage": "670",
+    "confidence": "high"
+   },
+   {
+    "fact": "Serous cystadenoma: sponge-like microcystic mass with central scar; monolayer of clear glycogen-rich cells, central round nuclei; no duct communication; F:M 7:3, mean age 60; VHL mutation in 50% of sporadic.",
+    "value": "microcystic + central scar",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 81 Histologic Classification and Staging of Cystic Neoplasms (Fukushima, Zamboni)",
+    "pdfPage": "633",
+    "printedPage": "623",
+    "confidence": "high"
+   },
+   {
+    "fact": "Serous cystadenoma may be microcystic (innumerable mm cysts around central scar), macrocystic (one or few large cysts) or solid; multiple lesions suggest VHL.",
+    "value": "variants",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 125 Pathology of Exocrine Pancreatic Tumors (Pittman, Hruban)",
+    "pdfPage": "970",
+    "printedPage": "963",
+    "confidence": "high"
+   },
+   {
+    "fact": "Solid-pseudopapillary neoplasm: mainly young women; large, well-circumscribed, solid and cystic with hemorrhagic debris; poorly cohesive cells in sheets or pseudopapillae; CTNNB1 (beta-catenin) mutation; usually cured by resection.",
+    "value": "large; young women",
+    "book": "Robbins and Cotran Pathologic Basis of Disease (Kumar, Abbas, Aster)",
+    "edition": "9th ed., Elsevier/Saunders, 2015",
+    "chapter": "Ch 19 The Pancreas",
+    "pdfPage": "906",
+    "printedPage": "891",
+    "confidence": "high"
+   },
+   {
+    "fact": "SPN: median age 30, mean size 8 cm, body/tail in 60%, tail most frequent; CTNNB1 exon 3 mutations 83-100%; ~6% locally advanced, 8% distant metastases at presentation.",
+    "value": "mean 8 cm; body/tail 60%",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 86 Natural History of Cystic Neoplasms: IPMN, MCN, SCN, and SPN (Klotz, Hackert, Buchler)",
+    "pdfPage": "681",
+    "printedPage": "671",
+    "confidence": "high"
+   },
+   {
+    "fact": "SPN occurs with equal frequency in head, body and tail; large, well-demarcated, solid or cystic with hemorrhage and necrosis; monomorphic clear-cytoplasm cells on pseudopapillae; nuclear beta-catenin.",
+    "value": "head=body=tail (conflicts with Ch86)",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 125 Pathology of Exocrine Pancreatic Tumors (Pittman, Hruban)",
+    "pdfPage": "970",
+    "printedPage": "963",
+    "confidence": "medium"
+   },
+   {
+    "fact": "ITPN: rare, solid noncystic intraductal tumor, little mucin; sexes equal; slight head predominance, about a quarter diffuse; back-to-back tubules of cuboidal cells with high-grade nuclei and comedo necrosis; up to 80% have invasion; lacks KRAS/GNAS.",
+    "value": "solid, tubular; size not given",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 126 Pancreatic Cancer: Precancerous Lesions (Pfluger, Noe, Brosens)",
+    "pdfPage": "982-983",
+    "printedPage": "975-976",
+    "confidence": "medium"
+   },
+   {
+    "fact": "Pseudocysts lack epithelial lining, are ~75% of pancreatic cysts, 2-30 cm, lined by fibrin and granulation tissue, often in lesser sac or retroperitoneum after pancreatitis.",
+    "value": "2-30 cm",
+    "book": "Robbins and Cotran Pathologic Basis of Disease (Kumar, Abbas, Aster)",
+    "edition": "9th ed., Elsevier/Saunders, 2015",
+    "chapter": "Ch 19 The Pancreas",
+    "pdfPage": "905",
+    "printedPage": "890",
+    "confidence": "high"
+   }
+  ]
+ },
+ "PDAC": {
+  "facts": [
+   {
+    "fact": "About 60% of pancreatic cancers arise in the head, 15% in the body, 5% in the tail, and 20% diffusely involve the gland.",
+    "value": "head 60 / body 15 / tail 5 / diffuse 20 %",
+    "book": "Robbins and Cotran Pathologic Basis of Disease (Kumar, Abbas, Aster)",
+    "edition": "9th ed., Elsevier/Saunders, 2015",
+    "chapter": "Ch 19 The Pancreas",
+    "pdfPage": "908",
+    "printedPage": "893",
+    "confidence": "high"
+   },
+   {
+    "fact": "About 25% of PDAC present in body or tail; these are larger and more often metastatic (>4 cm: head 21%, body 40%, tail 51%; metastatic: head 42%, body 69%, tail 84%); <15% resectable.",
+    "value": "body/tail ~25%; >4 cm 21/40/51%; mets 42/69/84%",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 137 Left Pancreatectomy for Body and Tail Cancer (van Hilst et al.)",
+    "pdfPage": "1070",
+    "printedPage": "1063",
+    "confidence": "high"
+   },
+   {
+    "fact": "Hard, stellate, gray-white ill-defined masses. Head tumors obstruct the distal common bile duct (biliary distension in ~50%, most get jaundice); body/tail tumors stay silent, grow large, and are disseminated at discovery.",
+    "value": "CBD obstruction ~50% head",
+    "book": "Robbins and Cotran Pathologic Basis of Disease (Kumar, Abbas, Aster)",
+    "edition": "9th ed., Elsevier/Saunders, 2015",
+    "chapter": "Ch 19 The Pancreas",
+    "pdfPage": "909",
+    "printedPage": "894",
+    "confidence": "high"
+   },
+   {
+    "fact": "Cancer tracks along nerves, invades blood vessels and retroperitoneum, spleen, adrenals, colon, stomach; peripancreatic, gastric, mesenteric, omental and portohepatic nodes often involved; distant spread chiefly liver and lungs.",
+    "value": "spread: nodes, liver, lung",
+    "book": "Robbins and Cotran Pathologic Basis of Disease (Kumar, Abbas, Aster)",
+    "edition": "9th ed., Elsevier/Saunders, 2015",
+    "chapter": "Ch 19 The Pancreas",
+    "pdfPage": "909",
+    "printedPage": "894",
+    "confidence": "high"
+   },
+   {
+    "fact": "Malignant glands are poorly formed, lined by pleomorphic cuboidal to columnar cells, in an intense desmoplastic reaction; dense fibrosis can hinder biopsy as much tissue is nonneoplastic; perineural, lymphatic and large-vessel invasion common.",
+    "value": "desmoplasia; perineural common",
+    "book": "Robbins and Cotran Pathologic Basis of Disease (Kumar, Abbas, Aster)",
+    "edition": "9th ed., Elsevier/Saunders, 2015",
+    "chapter": "Ch 19 The Pancreas",
+    "pdfPage": "909",
+    "printedPage": "894",
+    "confidence": "high"
+   },
+   {
+    "fact": "Gross: white-gray sclerotic firm mass infiltrating soft yellow lobulated parenchyma; invades or obstructs common bile duct and/or main duct, with upstream duct dilation and fibrous atrophy; most in head, then body/tail.",
+    "value": "upstream duct dilation + atrophy",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 125 Pathology of Exocrine Pancreatic Tumors (Pittman, Hruban)",
+    "pdfPage": "964",
+    "printedPage": "957",
+    "confidence": "high"
+   },
+   {
+    "fact": "Haphazard glands in dense desmoplastic stroma; perineural and intravascular invasion in practically all cases; cells may spread along vessel endothelium or inside ducts ('cancerization'). Benign mimics keep lobular architecture.",
+    "value": "perineural+vascular invasion ~all",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 125 Pathology of Exocrine Pancreatic Tumors (Pittman, Hruban)",
+    "pdfPage": "965",
+    "printedPage": "958",
+    "confidence": "high"
+   },
+   {
+    "fact": "Perineural invasion occurs in almost all cases and tracks with severe pain (pain ~70%); head tumors cause painless jaundice, body/tail rarely; proximity to portal vein, celiac trunk and SMA means small tumors may invade vessels.",
+    "value": "pain ~70%; vessels: PV, celiac, SMA",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 127 Clinical History and Risk Factors of Pancreatic Cancer (Huser, Assfalg, Friess)",
+    "pdfPage": "990",
+    "printedPage": "983",
+    "confidence": "high"
+   },
+   {
+    "fact": "At diagnosis only 15-20% are resectable; 40-50% metastatic; 30-40% locally advanced (vascular involvement). Head/uncinate tumors present early with jaundice; neck/body with celiac plexus pain; tail late.",
+    "value": "resectable 15-20%; metastatic 40-50%; LA 30-40%",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 134 Clinical Assessment and Staging of Advanced Pancreatic Cancer (Lindberg et al.)",
+    "pdfPage": "1044",
+    "printedPage": "1037",
+    "confidence": "high"
+   },
+   {
+    "fact": "Body/tail criteria (NCCN 2.2021, table garbled in extraction): borderline includes >180 degrees PV/SMV contact or celiac contact without aortic involvement; locally advanced is SMA contact >180 degrees, celiac plus aorta, unreconstructible PV/SMV.",
+    "value": "vessel contact >180 deg",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 137 Left Pancreatectomy for Body and Tail Cancer (van Hilst et al.)",
+    "pdfPage": "1071",
+    "printedPage": "1064",
+    "confidence": "low"
+   },
+   {
+    "fact": "EUS identified a mass in 70% of patients with indeterminate CT; mean tumor size 21 mm in that series (not a general size at diagnosis).",
+    "value": "mean 21 mm (selected series)",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 134 Clinical Assessment and Staging of Advanced Pancreatic Cancer (Lindberg et al.)",
+    "pdfPage": "1046",
+    "printedPage": "1039",
+    "confidence": "low"
+   },
+   {
+    "fact": "Imaging hallmarks: upstream pancreatic atrophy, abrupt main-duct cutoff with dilation, biliary dilation in head tumors; 'double duct sign' when both bile and pancreatic ducts dilate.",
+    "value": "double duct sign",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 129 Radiologic Diagnosis of Pancreatic Cancer: CT, MRI",
+    "pdfPage": "1006; 1011",
+    "printedPage": "999; 1004",
+    "confidence": "high"
+   },
+   {
+    "fact": "Gene alterations in PDAC: KRAS activating mutation 90-95%, CDKN2A 95% (most frequent tumor suppressor), SMAD4 55%, TP53 70-75% in text (table says 50-70%).",
+    "value": "KRAS 90-95; CDKN2A 95; SMAD4 55; TP53 50-75",
+    "book": "Robbins and Cotran Pathologic Basis of Disease (Kumar, Abbas, Aster)",
+    "edition": "9th ed., Elsevier/Saunders, 2015",
+    "chapter": "Ch 19 The Pancreas",
+    "pdfPage": "908",
+    "printedPage": "893",
+    "confidence": "high"
+   },
+   {
+    "fact": "KRAS >90% (codons 12, 13, 61); CDKN2A ~90% (about 40% mutation+LOH, 40% homozygous deletion, 10-15% methylation); TP53 ~75%; SMAD4 ~55%; MSI 2-3%.",
+    "value": "KRAS >90; CDKN2A ~90; TP53 ~75; SMAD4 ~55",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 119 Molecular Understanding of the Development of Ductal Pancreatic Cancer (Lee, Hruban, Wood)",
+    "pdfPage": "920-921",
+    "printedPage": "913-914",
+    "confidence": "high"
+   },
+   {
+    "fact": "Five-year survival ~10% in US; resected 15-25%; only ~33% present with local disease; most cases after age 60, sexes equal; smoking RR ~1.7, ~20% attributable.",
+    "value": "5-yr ~10%",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 117 Epidemiology of Pancreatic Cancer (Mocci, Klein)",
+    "pdfPage": "906-907",
+    "printedPage": "899-900",
+    "confidence": "high"
+   },
+   {
+    "fact": "Pancreatic cancer five-year survival is under 5% (2013-era data in this edition).",
+    "value": "5-yr <5% (older data)",
+    "book": "Robbins and Cotran Pathologic Basis of Disease (Kumar, Abbas, Aster)",
+    "edition": "9th ed., Elsevier/Saunders, 2015",
+    "chapter": "Ch 19 The Pancreas",
+    "pdfPage": "907",
+    "printedPage": "892",
+    "confidence": "high"
+   },
+   {
+    "fact": "80% of pancreatic cancers occur at ages 60-80; cigarette smoking is thought to double risk; chronic pancreatitis and diabetes are both risk factors and consequences.",
+    "value": "80% age 60-80; smoking x2",
+    "book": "Robbins and Cotran Pathologic Basis of Disease (Kumar, Abbas, Aster)",
+    "edition": "9th ed., Elsevier/Saunders, 2015",
+    "chapter": "Ch 19 The Pancreas",
+    "pdfPage": "908",
+    "printedPage": "893",
+    "confidence": "high"
+   },
+   {
+    "fact": "Five-year survival 39%, 13% and 3% for localized, regional and distant disease; over 80% unresectable at first diagnosis (per chapter).",
+    "value": "39/13/3 %",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 133 The Role of Laparoscopy and Peritoneal Cytology in the Management of Pancreatic Cancer",
+    "pdfPage": "1040",
+    "printedPage": "1033",
+    "confidence": "medium"
+   },
+   {
+    "fact": "About 70% of human pancreatic cells are acinar and 18.5% ductal; PDAC arises from exocrine cells (acinar via ADM/PanIN in mice, ductal also possible).",
+    "value": "acinar 70%, ductal 18.5%",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 120 From Tissue Turnover to the Cell of Origin of Pancreatic Cancer (Kong, Thoma, Michalski)",
+    "pdfPage": "928",
+    "printedPage": "921",
+    "confidence": "medium"
+   },
+   {
+    "fact": "Stromal cells (activated pancreatic stellate cells = cancer-associated fibroblasts) drive desmoplasia from PanIN stage through metastases; they make collagen and fibronectin.",
+    "value": "desmoplasia source: PSC/CAF",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 123 Tumor Microenvironment: Immune Cells and Immunosuppressive Functions of CAFs and Macrophages",
+    "pdfPage": "949-950",
+    "printedPage": "942-943",
+    "confidence": "high"
+   },
+   {
+    "fact": "Reported para-aortic node metastasis 16% and 26% in head cancer, 13% and 17% in body/tail cancer; at least 12 regional nodes needed for staging.",
+    "value": "para-aortic nodes 13-26%",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 135 Pancreatic Cancer: Indications for Resection",
+    "pdfPage": "1058",
+    "printedPage": "1051",
+    "confidence": "medium"
+   }
+  ]
+ },
+ "PanNET": {
+  "facts": [
+   {
+    "fact": "PanNETs are ~2% of pancreatic neoplasms, occur anywhere along the gland or peripancreatic tissue; solitary ones often <2 cm, encapsulated, pale to red-brown; look like giant islets; insulinoma amyloid common.",
+    "value": "<2 cm typical; anywhere",
+    "book": "Robbins and Cotran Pathologic Basis of Disease (Kumar, Abbas, Aster)",
+    "edition": "9th ed., Elsevier/Saunders, 2015",
+    "chapter": "Ch 24 The Endocrine System",
+    "pdfPage": "1136",
+    "printedPage": "1121",
+    "confidence": "high"
+   },
+   {
+    "fact": "Insulinoma is most common, ~90% benign; 60-90% of other PanNETs malignant; gastrinomas arise in duodenum and pancreas; sporadic alterations in MEN1, PTEN/TSC2, ATRX/DAXX (nearly half).",
+    "value": "insulinoma 90% benign",
+    "book": "Robbins and Cotran Pathologic Basis of Disease (Kumar, Abbas, Aster)",
+    "edition": "9th ed., Elsevier/Saunders, 2015",
+    "chapter": "Ch 24 The Endocrine System",
+    "pdfPage": "1136",
+    "printedPage": "1121",
+    "confidence": "high"
+   },
+   {
+    "fact": "PanNETs arise in all parts of pancreas; size 0.5-20 cm; insulinomas usually <2 cm, nonfunctioning larger; <5 mm = microtumors; functioning <40% of PanNETs; MEN1 30-70% develop them.",
+    "value": "size 0.5-20 cm",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 99 Pathology of Neuroendocrine Neoplasms (Kasajima, Sasano)",
+    "pdfPage": "771-773",
+    "printedPage": "763-765",
+    "confidence": "high"
+   },
+   {
+    "fact": "PanNETs <3% of pancreatic tumors; incidence <1/100,000; insulinoma malignancy <10%, gastrinoma and others >50%.",
+    "value": "insulinoma <10% malignant",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 98 Epidemiology and Classification of Neuroendocrine Tumors of the Pancreas",
+    "pdfPage": "761-763",
+    "printedPage": "753-755",
+    "confidence": "high"
+   }
+  ]
+ },
+ "acute_pancreatitis": {
+  "facts": [
+   {
+    "fact": "Western incidence 10-20 per 100,000; biliary disease and alcohol cause ~80%; gallstones in 35-60%; ~5% of gallstone patients get pancreatitis; alcohol share 65% US, 20% Sweden, <=5% S. France/UK.",
+    "value": "gallstones 35-60%; alcohol up to 65%; together ~80%",
+    "book": "Robbins and Cotran Pathologic Basis of Disease (Kumar, Abbas, Aster)",
+    "edition": "9th ed., Elsevier/Saunders, 2015",
+    "chapter": "Ch 19 The Pancreas",
+    "pdfPage": "899",
+    "printedPage": "884",
+    "confidence": "high"
+   },
+   {
+    "fact": "Three initiating routes: duct obstruction, primary acinar injury, defective intracellular proenzyme transport; trypsin activates prophospholipase and proelastase; lipase active, causes fat necrosis; edema and small-vessel thrombosis amplify injury.",
+    "value": "premature trypsin activation",
+    "book": "Robbins and Cotran Pathologic Basis of Disease (Kumar, Abbas, Aster)",
+    "edition": "9th ed., Elsevier/Saunders, 2015",
+    "chapter": "Ch 19 The Pancreas",
+    "pdfPage": "900",
+    "printedPage": "885",
+    "confidence": "high"
+   },
+   {
+    "fact": "Interstitial form: mild inflammation, edema, focal fat necrosis (fatty acids + calcium = soaps, granular blue). Necrotizing form: acinar, ductal and islet necrosis, red-black hemorrhagic gland with chalky fat necrosis, also in omentum and mesentery.",
+    "value": "edema+fat necrosis vs necrosis+hemorrhage",
+    "book": "Robbins and Cotran Pathologic Basis of Disease (Kumar, Abbas, Aster)",
+    "edition": "9th ed., Elsevier/Saunders, 2015",
+    "chapter": "Ch 19 The Pancreas",
+    "pdfPage": "902",
+    "printedPage": "887",
+    "confidence": "high"
+   },
+   {
+    "fact": "~5% of severe cases die in week one; 40-60% of necrotizing cases become infected; sequelae include sterile abscess and pseudocyst.",
+    "value": "infection 40-60%",
+    "book": "Robbins and Cotran Pathologic Basis of Disease (Kumar, Abbas, Aster)",
+    "edition": "9th ed., Elsevier/Saunders, 2015",
+    "chapter": "Ch 19 The Pancreas",
+    "pdfPage": "902",
+    "printedPage": "887",
+    "confidence": "high"
+   },
+   {
+    "fact": "Acute interstitial edematous pancreatitis affects 90-95% of patients; necrotizing 5-10%. Mild form often gallstone-related, severe form usually alcohol-related; fat necrosis (autodigestive) is the commonest pattern.",
+    "value": "interstitial 90-95%; necrotizing 5-10%",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 17 Histopathology of Acute Pancreatitis (Kloppel)",
+    "pdfPage": "177",
+    "printedPage": "164",
+    "confidence": "high"
+   },
+   {
+    "fact": "Fat necroses in interstitial disease are tiny (<10 mm) white spots; necrotizing disease has large confluent peripancreatic fat necrosis, hemorrhage when veins involved; necrosis 2-5 cm can resorb, >5 cm walls off by 20-30 days.",
+    "value": "fat necrosis <10 mm vs >5 cm",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 17 Histopathology of Acute Pancreatitis (Kloppel)",
+    "pdfPage": "178-179",
+    "printedPage": "165-166",
+    "confidence": "high"
+   },
+   {
+    "fact": "Acinar cells beside fat necrosis stay preserved, islets spared unless the lobule is necrotic; acinar necrosis as first lesion is not proven in common causes.",
+    "value": "acinar necrosis not proven as initiator",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 17 Histopathology of Acute Pancreatitis (Kloppel)",
+    "pdfPage": "178; 181",
+    "printedPage": "165; 168",
+    "confidence": "medium"
+   },
+   {
+    "fact": "Only about 5% or fewer heavy drinkers develop pancreatitis; diagnosis usually needs ~80-100 g alcohol daily for at least 5 years.",
+    "value": "<=5% of heavy drinkers",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 11 Epidemiology and Etiology of Alcohol-Induced Pancreatitis (Wilson et al.)",
+    "pdfPage": "120",
+    "printedPage": "107",
+    "confidence": "high"
+   },
+   {
+    "fact": "Genes: PRSS1 (gain of function), SPINK1 (loss), CFTR, CASR, CTRC and CPA1 raise risk of pancreatitis; mutations act by raising trypsin activity or duct plugging.",
+    "value": "PRSS1, SPINK1, CFTR, CASR, CTRC, CPA1",
+    "book": "Robbins and Cotran Pathologic Basis of Disease (Kumar, Abbas, Aster)",
+    "edition": "9th ed., Elsevier/Saunders, 2015",
+    "chapter": "Ch 19 The Pancreas",
+    "pdfPage": "901",
+    "printedPage": "886",
+    "confidence": "high"
+   }
+  ]
+ },
+ "chronic_pancreatitis": {
+  "facts": [
+   {
+    "fact": "Chronic pancreatitis: fibrosis, acinar dropout and variable duct dilation; hard gland with dilated ducts and calcified concretions; epithelium atrophic, hyperplastic or squamous-metaplastic; islets relatively spared, may fuse and look enlarged, lost in advanced disease.",
+    "value": "fibrosis + acinar loss; islets spared early",
+    "book": "Robbins and Cotran Pathologic Basis of Disease (Kumar, Abbas, Aster)",
+    "edition": "9th ed., Elsevier/Saunders, 2015",
+    "chapter": "Ch 19 The Pancreas",
+    "pdfPage": "903",
+    "printedPage": "888",
+    "confidence": "high"
+   },
+   {
+    "fact": "Most common cause is long-term alcohol; also duct obstruction, autoimmune, hereditary (up to 25% genetic); alcoholic type shows ductal dilatation with protein plugs and calcifications; stellate cells driven by TGF-beta and PDGF lay down collagen.",
+    "value": "alcohol most common; genetic up to 25%",
+    "book": "Robbins and Cotran Pathologic Basis of Disease (Kumar, Abbas, Aster)",
+    "edition": "9th ed., Elsevier/Saunders, 2015",
+    "chapter": "Ch 19 The Pancreas",
+    "pdfPage": "903",
+    "printedPage": "888",
+    "confidence": "high"
+   },
+   {
+    "fact": "Chronic pancreatitis: 20-25-year mortality 50%; pseudocysts in ~10%; hereditary pancreatitis carries 40% lifetime pancreatic cancer risk.",
+    "value": "hereditary: 40% lifetime cancer risk (text)",
+    "book": "Robbins and Cotran Pathologic Basis of Disease (Kumar, Abbas, Aster)",
+    "edition": "9th ed., Elsevier/Saunders, 2015",
+    "chapter": "Ch 19 The Pancreas",
+    "pdfPage": "904",
+    "printedPage": "889",
+    "confidence": "high"
+   },
+   {
+    "fact": "Hereditary pancreatitis genes: PRSS1 gain-of-function (dominant), SPINK1 loss (recessive), CFTR, also CASR, CTRC, CPA1; CFTR loss lowers bicarbonate and promotes protein plugs.",
+    "value": "PRSS1, SPINK1, CFTR, CTRC",
+    "book": "Robbins and Cotran Pathologic Basis of Disease (Kumar, Abbas, Aster)",
+    "edition": "9th ed., Elsevier/Saunders, 2015",
+    "chapter": "Ch 19 The Pancreas",
+    "pdfPage": "901",
+    "printedPage": "886",
+    "confidence": "high"
+   },
+   {
+    "fact": "Inherited cancer risk table: hereditary pancreatitis (PRSS1, SPINK1) gives 50-80-fold risk, 25-40% by age 70.",
+    "value": "25-40% by age 70",
+    "book": "Robbins and Cotran Pathologic Basis of Disease (Kumar, Abbas, Aster)",
+    "edition": "9th ed., Elsevier/Saunders, 2015",
+    "chapter": "Ch 19 The Pancreas",
+    "pdfPage": "909",
+    "printedPage": "894",
+    "confidence": "medium"
+   },
+   {
+    "fact": "Gland becomes firm, shrunken with irregular contour; dilated duct from stricture or intraductal stones; fibrosis blurs lobulation; strictures, stones, pseudocysts, vascular complications typical.",
+    "value": "firm, shrunken; dilated duct",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 52 Structural Complications: Strictures, Stones, Pseudocysts, and Vascular Complications (Tian et al.)",
+    "pdfPage": "436",
+    "printedPage": "424",
+    "confidence": "high"
+   },
+   {
+    "fact": "Duct stones in ~50% (50% at 5 years, nearly 100% by 14 years); bile duct stricture 3-46%; pseudocysts 20-40%; groove pancreatitis ~5%; vascular complications 8.4-12.2% (splenic vein thrombosis commonest).",
+    "value": "stones ~50%; pseudocyst 20-40%",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 52 Structural Complications: Strictures, Stones, Pseudocysts, and Vascular Complications (Tian et al.)",
+    "pdfPage": "437-439",
+    "printedPage": "425-427",
+    "confidence": "high"
+   },
+   {
+    "fact": "Mechanistic definition: fibro-inflammatory syndrome with persistent response to injury; established features atrophy, fibrosis, duct distortion/strictures, calcification, exocrine and endocrine failure, dysplasia; five stages from at-risk to end-stage.",
+    "value": "5-stage model",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 38 Definition and Classification of Chronic Pancreatitis (Whitcomb)",
+    "pdfPage": "330-331",
+    "printedPage": "318-319",
+    "confidence": "high"
+   },
+   {
+    "fact": "Hereditary pancreatitis: acute pancreatitis median onset 10-12 years, chronic by 2nd-3rd decade, ~50% lifetime cumulative; PRSS1 penetrance ~80% (93% in France); SPINK1, CFTR, CTRC also.",
+    "value": "penetrance ~80%",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 45 Hereditary Pancreatitis and Complex Genetic Causes (Ohlsen, Whitcomb)",
+    "pdfPage": "388",
+    "printedPage": "376",
+    "confidence": "high"
+   },
+   {
+    "fact": "Cancer risk in chronic pancreatitis: pooled RR 12.0 (definite CP), 69 (hereditary), 14.4 in first cohort; cumulative incidence 4% over 20 years.",
+    "value": "RR 12; hereditary RR 69; 4% at 20 y",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 61 Pancreatic Cancer Risks in Chronic Pancreatitis (Maisonneuve, Lowenfels)",
+    "pdfPage": "493",
+    "printedPage": "481",
+    "confidence": "high"
+   },
+   {
+    "fact": "Stellate cells are 4-7% of parenchymal cells, periacinar with vitamin A droplets; injury activates them to alpha-SMA myofibroblasts that make excess collagen.",
+    "value": "PSC 4-7% of cells",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 9 Fibrogenesis in the Pancreas: The Role of Pancreatic Stellate Cells (Apte et al.)",
+    "pdfPage": "100-101",
+    "printedPage": "86-87",
+    "confidence": "high"
+   },
+   {
+    "fact": "Diabetes occurs in 70% of chronic pancreatitis patients; most are insulin deficient.",
+    "value": "diabetes 70%",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 10 Pancreatic Endocrine-Exocrine Relationship (Furuyama, Kawaguchi)",
+    "pdfPage": "113",
+    "printedPage": "99",
+    "confidence": "high"
+   }
+  ]
+ },
+ "diabetes": {
+  "facts": [
+   {
+    "fact": "Type 1 diabetes shows classic features only after >90% of beta cells are destroyed; CD8+ cytotoxic T cells and TH1 cytokines injure beta cells; autoantigens insulin, GAD, ICA512.",
+    "value": "beta cells lost >90% at presentation",
+    "book": "Robbins and Cotran Pathologic Basis of Disease (Kumar, Abbas, Aster)",
+    "edition": "9th ed., Elsevier/Saunders, 2015",
+    "chapter": "Ch 24 The Endocrine System",
+    "pdfPage": "1125",
+    "printedPage": "1110",
+    "confidence": "high"
+   },
+   {
+    "fact": "Type 1: fewer, smaller islets; uneven insulitis of mostly T lymphocytes may persist at presentation. Type 2: subtle islet loss; amyloid starts around capillaries and between cells, can obliterate islets.",
+    "value": "insulitis T1; amyloid T2",
+    "book": "Robbins and Cotran Pathologic Basis of Disease (Kumar, Abbas, Aster)",
+    "edition": "9th ed., Elsevier/Saunders, 2015",
+    "chapter": "Ch 24 The Endocrine System",
+    "pdfPage": "1132",
+    "printedPage": "1117",
+    "confidence": "high"
+   },
+   {
+    "fact": "Islet amyloid is characteristic of long-standing type 2 diabetes, found in >90% of diabetic islets; >80% of type 2 patients are obese.",
+    "value": "amyloid >90% of islets",
+    "book": "Robbins and Cotran Pathologic Basis of Disease (Kumar, Abbas, Aster)",
+    "edition": "9th ed., Elsevier/Saunders, 2015",
+    "chapter": "Ch 24 The Endocrine System",
+    "pdfPage": "1127",
+    "printedPage": "1112",
+    "confidence": "high"
+   },
+   {
+    "fact": "Islet amyloid is made of islet amyloid polypeptide (AIAPP); listed under endocrine amyloid in type 2 diabetes.",
+    "value": "IAPP",
+    "book": "Robbins and Cotran Pathologic Basis of Disease (Kumar, Abbas, Aster)",
+    "edition": "9th ed., Elsevier/Saunders, 2015",
+    "chapter": "Ch 6 Diseases of the Immune System (amyloidosis)",
+    "pdfPage": "274-275",
+    "printedPage": "259-260 (259 inferred)",
+    "confidence": "medium"
+   },
+   {
+    "fact": "At onset of type 1, beta-cell mass can be reduced by >90%; proliferation rises but cannot compensate; mass roughly unchanged in prediabetic phase.",
+    "value": "onset: >90% loss",
+    "book": "Molecular and Cell Biology of Pancreas Development, Function and Regeneration (Golson, ed.; Adv Anat Embryol Cell Biol vol 239)",
+    "edition": "Springer, 2024",
+    "chapter": "Ch 'beta-Cell Heterogeneity and Plasticity' (Yong, Wang)",
+    "pdfPage": "73",
+    "printedPage": "66",
+    "confidence": "high"
+   },
+   {
+    "fact": "Table: human beta-cell mass in diabetes reduced up to 90%; obesity raises mass 1.5-2-fold in humans.",
+    "value": "up to 90% (T1D)",
+    "book": "Molecular and Cell Biology of Pancreas Development, Function and Regeneration (Golson, ed.; Adv Anat Embryol Cell Biol vol 239)",
+    "edition": "Springer, 2024",
+    "chapter": "Ch 'beta-Cell Heterogeneity and Plasticity' (Yong, Wang)",
+    "pdfPage": "72",
+    "printedPage": "65",
+    "confidence": "high"
+   },
+   {
+    "fact": "In type 2 diabetes human beta-cell loss ranges 24-65% with smaller islets; degranulation and dedifferentiation to progenitor-like cells increased about threefold.",
+    "value": "T2D loss 24-65%",
+    "book": "Molecular and Cell Biology of Pancreas Development, Function and Regeneration (Golson, ed.; Adv Anat Embryol Cell Biol vol 239)",
+    "edition": "Springer, 2024",
+    "chapter": "Ch 'beta-Cell Heterogeneity and Plasticity' (Yong, Wang)",
+    "pdfPage": "75",
+    "printedPage": "68",
+    "confidence": "high"
+   },
+   {
+    "fact": "Exocrine changes: pancreas 45% smaller in type 1; fecal elastase-1 low in 31.8% of diabetics (type 1 37.7%, type 2 26.2%).",
+    "value": "T1D pancreas -45%",
+    "book": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery (Beger et al., eds)",
+    "edition": "4th ed., Wiley, 2023",
+    "chapter": "Ch 10 Pancreatic Endocrine-Exocrine Relationship (Furuyama, Kawaguchi)",
+    "pdfPage": "112-113",
+    "printedPage": "98-99",
+    "confidence": "high"
+   }
+  ]
+ },
+ "_meta": {
+  "note": "pdfPage = PDF page index in the pdftotext file (count of form feeds before page + 1). printedPage = page number printed on the book page. Offsets differ by chapter in The Pancreas 4th ed. (printed = pdf minus 7 to 14). Facts paraphrased; confidence reflects text clarity after two-column extraction. Entries marked conflicts are disagreements listed in lesions_report.md."
+ }
+}
