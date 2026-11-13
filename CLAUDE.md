@@ -14,6 +14,8 @@ You are continuing a project that builds a source-grounded 3D model of the human
 
 ## Commands
 
+The GitHub repository is `osamashiraz/pancreas-atlas` (renamed from `pancreas-3d`; site: https://osamashiraz.github.io/pancreas-atlas/). The paths below use the local folder's name, which may still be `pancreas-3d`.
+
 ```bash
 git clone https://github.com/Qasim-Hussain-Code/MouseBio_3D && cd MouseBio_3D && npm ci
 bash ../pancreas-3d/scripts/install_into_mousebio.sh .        # copy the module in, type-check, run its tests

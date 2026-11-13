@@ -1,6 +1,6 @@
 # Human pancreas 3D — from organ to cell
 
-**[Open the interactive viewer →](https://osamashiraz.github.io/pancreas-3d/)** (runs in the browser; Chrome or Edge recommended)
+**[Open the interactive viewer →](https://osamashiraz.github.io/pancreas-atlas/)** (runs in the browser; Chrome or Edge recommended)
 
 An explorable 3D model of the human pancreas that you can zoom through continuously: from the whole organ (about 15 cm) opened in place layer by layer through its lobules and duct tree to a core of tissue, then a single acinus, islet or duct, its separated cells, and finally one cell with its organelles — all at true scale, in H&E or cell-type colours, with an optional narrated tour.
 
@@ -68,7 +68,7 @@ The pancreas is two organs in one, and the model shows both:
 - **Play the journey**: a 13-step narrated tour in Google's UK English female voice (Chrome; other browsers use a standard UK voice).
 - Click any cell or structure to name it, isolate it or fade it.
 - A quiet side panel: sources and the less-used controls (voice, speed, split screen, slice apart, comparison) are folded away, closed until opened.
-- **Links to a view**: the address follows what you are looking at, e.g. [`#site=9&view=islet&stain=if`](https://osamashiraz.github.io/pancreas-3d/#site=9&view=islet&stain=if), so a view can be shared or used in teaching.
+- **Links to a view**: the address follows what you are looking at, e.g. [`#site=9&view=islet&stain=if`](https://osamashiraz.github.io/pancreas-atlas/#site=9&view=islet&stain=if), so a view can be shared or used in teaching.
 
 ### Where pancreatic cancer begins: precursor lesions
 
@@ -124,7 +124,7 @@ The **Atlas** mode is a gallery for learning and teaching: 41 entries in nine gr
 - **side by side**: any entry beside one of its look-alikes, image to image and feature to feature;
 - **features table**: every entry by the same six features;
 - **quiz**: an image and four choices, then the line to remember;
-- links such as [`#atlas=pda-poor`](https://osamashiraz.github.io/pancreas-3d/#atlas=pda-poor), and from entries into the 3D views.
+- links such as [`#atlas=pda-poor`](https://osamashiraz.github.io/pancreas-atlas/#atlas=pda-poor), and from entries into the 3D views.
 
 The text is in our own words from page-referenced notes on Robbins and Cotran (9th ed.), Beger et al. (4th ed.), Hruban 2001, Basturk 2015, Kardon 2001, Kleeff 2016 and Gorelick and Williams 2021 (`docs/book-notes/atlas-facts.json`). Images come from Wikimedia Commons and open-access papers (CC BY, CC BY-SA, CC0 or public domain), each credited under the picture and in `viewer/assets/atlas/CREDITS.md`. Seven entries have no image yet because no openly licensed micrograph was found (centroacinar cells, reactive duct, squamous metaplasia, acute interstitial pancreatitis, cancerization of ducts, neuroendocrine carcinoma, pancreatoblastoma); several others are small or carry the source figure's arrows, as their captions say. Textbook and journal figures under copyright are not reproduced.
 
@@ -179,8 +179,8 @@ Open `dist/pancreas-organ-to-cell.html` in a browser (it needs internet for thre
 
 ```bash
 git clone https://github.com/Qasim-Hussain-Code/MouseBio_3D && cd MouseBio_3D && npm ci
-bash ../pancreas-3d/scripts/install_into_mousebio.sh .        # copy the module in, type-check, run its tests
-python3 ../pancreas-3d/viewer/build_viewer.py . ../pancreas-3d/dist/pancreas-organ-to-cell.html
+bash ../pancreas-atlas/scripts/install_into_mousebio.sh .        # copy the module in, type-check, run its tests
+python3 ../pancreas-atlas/viewer/build_viewer.py . ../pancreas-atlas/dist/pancreas-organ-to-cell.html
 ```
 
 Python builders need `numpy` and `scipy`; the smoke test needs `playwright`. Pushing a new `dist/` to `main` republishes the GitHub Pages site.
