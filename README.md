@@ -67,13 +67,14 @@ The pancreas is two organs in one, and the model shows both:
 - **Marker genes** for the cell in view or clicked, from the HRA ASCT+B table and the Human Protein Atlas, each linking to its HPA page.
 - **Play the journey**: a 13-step narrated tour in Google's UK English female voice (Chrome; other browsers use a standard UK voice).
 - Click any cell or structure to name it, isolate it or fade it.
+- A quiet side panel: sources and the less-used controls (voice, speed, split screen, slice apart, comparison) are folded away, closed until opened.
 - **Links to a view**: the address follows what you are looking at, e.g. [`#site=9&view=islet&stain=if`](https://osamashiraz.github.io/pancreas-3d/#site=9&view=islet&stain=if), so a view can be shared or used in teaching.
 
 ### Where pancreatic cancer begins: precursor lesions
 
 The switch at the top left chooses what to show: **Pancreas** (organ to cell), **Pancreatitis**, **Precursor lesions** and **PDA**. In **Pancreas** the ladder goes from the organ to the tissue, where the two compartments sit side by side, then to the **exocrine** structures (acinus, acinar cell, centroacinar cells, duct) and the **endocrine** islets (islet; beta, alpha and delta cells).
 
-**Precursor lesions** first shows the whole organ with each precursor marked where it arises. Following Figure 1 of Hingorani's *Location, location, location* (Gastroenterology 2007), each is linked by a line to an inset of its architecture:
+**Precursor lesions** first shows the whole organ with each precursor marked where it arises. Following Figure 1 of Hingorani's *Location, location, location* (Gastroenterology 2007), each is linked by a line to an inset showing it in high-power H&E (the insets can be hidden):
 
 ![Precursor lesions on the organ, with insets](docs/images/lesions.jpg)
 
@@ -84,7 +85,7 @@ The switch at the top left chooses what to show: **Pancreas** (organ to cell), *
 | Main-duct IPMN | main duct > 5 mm (≥ 10 mm high-risk) | head | centre: main duct |
 | Branch-duct IPMN | grape-like cysts > 10 mm | head, neck, uncinate | major side branches |
 
-Clicking a lesion or its inset, or zooming into it, opens its **histology**: a drawing in H&E colours of its key architecture, then real H&E micrographs (open-licensed, credited) with the same features numbered alike and explained below, links to more real examples at Johns Hopkins, what sets the lesion apart, and a table comparing PanIN, IPMN and MCN:
+Clicking a lesion or its inset, or zooming into it, opens its **histology**: a drawing in H&E colours of its key architecture, then real H&E micrographs (open-licensed, credited) with the same features numbered alike and explained below, then high-power views of the cells themselves (objective ×20 to ×40, from Distler et al. 2014, CC BY), links to more real examples at Johns Hopkins, what sets the lesion apart, and a table comparing PanIN, IPMN and MCN:
 
 | PanIN | IPMN | MCN |
 |---|---|---|

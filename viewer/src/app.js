@@ -629,7 +629,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
   function levelAtOld(d) { const S = SIZE[branch]; return d > 6000 ? 'organ' : d > (branch === 'islet' ? 450 : 320) ? 'tissue' : d > S.cut ? 'detail' : d > 32 ? 'cells' : 'cell'; }
 
   // ---------- the organ, in micrometres, moved so the zoom point sits at the origin
-  let pancreasMeshes = [], islets, marker, organLocal = new THREE.Vector3(), region = 'body';
+  let pancreasMeshes = [], marker, organLocal = new THREE.Vector3(), region = 'body';
   const SITES = {};   // the middle of each region, inside the organ: where each region's tissue is taken from
   const REGION_NAMES = { head_of_pancreas: 'head', uncinate_process_of_the_pancreas: 'uncinate process', neck_of_pancreas: 'neck', body_of_pancreas: 'body', tail_of_pancreas: 'tail' };
   const REGION_KEYS = { head: 'pancreas-head', 'uncinate process': 'pancreas-uncinate', neck: 'pancreas-neck', body: 'pancreas-body', tail: 'pancreas-tail' };
@@ -655,10 +655,6 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
     ng.scene.traverse((o) => { if (!o.isMesh) return; const n = o.name.slice(5), info = NEIGH[n]; if (!info) return; const solid = /aorta|vena|renal_(vein|artery)|renal_artery/.test(n);
       const geo = o.geometry.clone().applyMatrix4(o.matrixWorld).scale(1e6, 1e6, 1e6), m = new THREE.Mesh(geo, M(grp, info[1], null, { transparent: true, opacity: solid ? 0.5 : 0.12, depthWrite: false, side: THREE.DoubleSide, roughness: 0.65, he: false, layer: [0, ORG_TOL] }));
       m.name = n; m.userData = { kind: 'neighbour' }; neigh.add(m); if (info[0]) { geo.computeBoundingBox(); tag('organ', neigh, info[0], geo.boundingBox.getCenter(new THREE.Vector3())); } });
-    const ig = await parse(bytesOf('glb-islets')); islets = new THREE.Group(); grp.userData.points = [];
-    [['islets--background', '#2f4f86', 1100], ['islets--clustered', '#e8a400', 1300]].forEach(([n, c, s]) => { const src = ig.scene.getObjectByName(n); if (!src) return;
-      const p = new THREE.Points(src.geometry.clone().scale(1e6, 1e6, 1e6), new THREE.PointsMaterial({ color: c, size: s, depthWrite: false, transparent: true })); islets.add(p); grp.userData.points.push(p); });
-    islets.visible = false; inner.add(islets);
     marker = new THREE.Group();
     const dot = new THREE.Mesh(new THREE.SphereGeometry(2500, 20, 14), new THREE.MeshBasicMaterial({ color: '#2a1060', depthTest: false, transparent: true })); dot.renderOrder = 9;
     const ring = new THREE.Mesh(new THREE.TorusGeometry(6000, 900, 8, 40), new THREE.MeshBasicMaterial({ color: '#ff3d7f', depthTest: false, transparent: true })); ring.renderOrder = 9;
@@ -908,7 +904,6 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
   function applyToggles(g) { if (!g) return; g.traverse((o) => { if (!o.isInstancedMesh) return; for (const [k, list] of Object.entries(TOGGLES)) if (list.includes(o.name)) o.visible = shown[k]; }); }
   document.querySelectorAll('[data-toggle]').forEach((el) => el.addEventListener('change', () => { shown[el.dataset.toggle] = el.checked; applyToggles(groups.block); Object.values(BRANCHES).forEach((b) => applyToggles(b.detail)); }));
   $('neighbours').addEventListener('change', (e) => { const nb = groups.organ.userData.neighbours; if (nb) nb.visible = e.target.checked; });
-  $('islets').addEventListener('change', (e) => { if (islets) islets.visible = e.target.checked; pancreasMeshes.forEach((m) => { m.material.userData.base = disease ? 0.28 : e.target.checked ? 0.3 : 0.92; }); });
   let cutOpen = false;   // whole structures by default; tick Cut open to see inside
   $('cutopen').addEventListener('change', (e) => { cutOpen = e.target.checked; });
   // The cutaway always faces the viewer: it passes through the point being zoomed into and removes what lies in front.
@@ -1070,7 +1065,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
       + (a.related.length ? `<p>On related rows of the table</p>${geneLinks(a.related)}` : '')
       + (c.hpa.length ? `<p>Human Protein Atlas (RNA)</p>${geneLinks(c.hpa)}` : '')
       + (c.note ? `<p class="src">${esc(c.note)}</p>` : '')
-      + '<p class="src">HRA ASCT+B Pancreas v1.3 (CC BY 4.0); Human Protein Atlas v26.0 (CC BY-SA 4.0). Genes link to their HPA pages.</p>';
+      + srcFold('HRA ASCT+B Pancreas v1.3 (CC BY 4.0); Human Protein Atlas v26.0 (CC BY-SA 4.0). Genes link to their HPA pages.');
   }
   // ---------- click to identify, isolate or fade a kind of cell
   const KINDS = {
@@ -1340,7 +1335,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
     document.querySelectorAll('[data-disease]').forEach((b) => b.setAttribute('aria-pressed', String((b.dataset.disease || null) === (disease || null) || (!disease && b.dataset.disease === 'none'))));
     if (disease) buildLesions();
     if (lesionGroup) { lesionGroup.visible = !!disease; lesionGroup.children.forEach((q) => { q.visible = disease === 'all' || (MODE_PARTS[disease] || []).includes(q.name) || q.name === disease; }); }
-    pancreasMeshes.forEach((m) => { m.material.userData.base = disease ? 0.28 : ($('islets').checked ? 0.3 : 0.92); });
+    pancreasMeshes.forEach((m) => { m.material.userData.base = disease ? 0.28 : 0.92; });
     renderLesionCard();
     if (disease && disease !== 'all' && !MODE_PARTS[disease]) { const at = lesionGroup.getObjectByName(disease).userData.at; if (at) { let bi = 0, bd = Infinity; SITE_LIST.forEach((S0, k) => { const dd = S0.local.distanceTo(at); if (dd < bd) { bd = dd; bi = k; } }); if (bi !== site) setSite(bi); } }
     if (disease && STAGE.mode === 'tissue' && camera.position.distanceTo(controls.target) < 60000) flyTo(STOPS.organ, undefined, 'tissue');
@@ -1379,8 +1374,14 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
     ['Reversible?', '—', 'Usually, if the cause is removed', 'No'],
     ['Main causes', '—', 'Gallstones and alcohol (about 80%)', 'Long-term alcohol; genetic in up to 25%'],
   ];
+  const DISTLER = 'Distler et al. 2014 (CC BY)', DISTLER_REF = 'Distler M, Aust D, Weitz J, Pilarsky C, Grützmann R. Precursor lesions for sporadic pancreatic cancer: PanIN, IPMN, and MCN. Biomed Res Int 2014;2014:474905, doi:10.1155/2014/474905 (CC BY; high-power photographs)';
   const HISTO = {
-    panin: { title: 'Pancreatic intraepithelial neoplasia (PanIN)', lead: 'A microscopic change in the lining of small ducts. As the grade rises, the cells go from low cuboidal to tall columnar with mucin, the lining folds into papillae, and the nuclei crowd, enlarge and lose their place at the base.',
+    panin: { hp: [{ img: 'panin1a-hp', w: 560, h: 349, credit: `PanIN-1A: flat epithelium, basal nuclei, abundant supranuclear mucin (H&E, ×20). ${DISTLER}, fig. 3a.`,
+          marks: [[0.2, 0.42, 'Pale apical mucin', 0, 3], [0.37, 0.64, 'Tall columnar cells, basal nuclei', 0, 2]] },
+        { img: 'panin2-hp', w: 470, h: 404, credit: `PanIN-2: moderate atypia, polarity kept, partly papillary (H&E, ×20). ${DISTLER}, fig. 4a.`,
+          marks: [[0.13, 0.5, 'Crowded, stratified nuclei', 0, 5], [0.6, 0.72, 'Papillary folds', 0, 4]] },
+        { img: 'panin3-hp', w: 560, h: 319, credit: `PanIN-3: severe atypia, polarity lost, papillary (H&E, ×40). ${DISTLER}, fig. 4b.`,
+          marks: [[0.08, 0.12, 'Cells budding into the lumen', 0, 6], [0.62, 0.55, 'Nuclei crowded, polarity lost', 0, 6]] }], title: 'Pancreatic intraepithelial neoplasia (PanIN)', lead: 'A microscopic change in the lining of small ducts. As the grade rises, the cells go from low cuboidal to tall columnar with mucin, the lining folds into papillae, and the nuclei crowd, enlarge and lose their place at the base.',
       more: [['Johns Hopkins: mimickers of PanIN', 'https://pathology.jhu.edu/pancreas/medical-professionals/duct-lesions/mimickers-of-panin'], ['Johns Hopkins: pancreas cysts and precursors', 'https://pathology.jhu.edu/pancreas/ipmn/pancreas-cysts']],
       drawing: { w: 1000, h: 400, credit: 'Drawing for this site (schematic, not to scale), after the descriptions in Koorstra et al. 2008 and Beger et al. 4th ed., ch. 126, and the progression figure of Hackeng et al. 2016.',
         marks: [[0.052, 0.4375, 'Normal duct: low cuboidal cells'], [0.295, 0.63, 'Tall columnar cells, basal nuclei'], [0.295, 0.265, 'Pale apical mucin'], [0.565, 0.4375, 'Micropapillary folds'], [0.7, 0.62, 'Papillae; crowded, stratified nuclei'], [0.9, 0.4375, 'Budding, loss of polarity, marked atypia'], [0.165, 0.81, 'KRAS and telomere shortening first'], [0.373, 0.63, 'Lobular atrophy: small acini, fat, fibrosis, islet cells']] },
@@ -1394,8 +1395,14 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
           { label: 'MUC1 expression', unit: '%', vals: [null, 6, 5, 43, 85, null], src: 'as reviewed in Koorstra et al. 2008' },
           { label: 'Cyclin D1, nuclear', unit: '%', vals: [0, 0, 0, 29, 57, null], src: 'as reviewed in Koorstra et al. 2008' }],
         note: 'Proliferation rises steeply from PanIN-2 on. Older assays found KRAS in 36–87% of PanINs by grade; newer sequencing finds it in over 90%, even at low grade (Beger 4th ed., ch. 126). PanINs in chronic pancreatitis carry KRAS less often (about 10%).' },
-      sources: 'Beger HG et al., The Pancreas, 4th ed., 2023, ch. 126; Robbins and Cotran, 9th ed., ch. 19; Hingorani 2007; Klein WM, Hruban RH, Klein-Szanto AJP, Wilentz RE. Mod Pathol 2002;15:441-7, doi:10.1038/modpathol.3880544; Koorstra JBM, Feldmann G, Habbe N, Maitra A. Langenbecks Arch Surg 2008;393:561-70, doi:10.1007/s00423-008-0282-x; Basturk O et al. Am J Surg Pathol 2015;39:1730-41 (two-tier grading); Guo J et al. Int J Biol Sci 2016;12:292-301; Brune K et al. Am J Surg Pathol 2006;30:1067-76 (lobular atrophy).' },
-    ipmn: { drawing: { w: 1000, h: 420, credit: 'Drawing for this site (schematic, not to scale), after the descriptions in Beger et al. 4th ed., ch. 125 and 126, and Hingorani 2007.',
+      sources: 'Beger HG et al., The Pancreas, 4th ed., 2023, ch. 126; Robbins and Cotran, 9th ed., ch. 19; Hingorani 2007; Klein WM, Hruban RH, Klein-Szanto AJP, Wilentz RE. Mod Pathol 2002;15:441-7, doi:10.1038/modpathol.3880544; Koorstra JBM, Feldmann G, Habbe N, Maitra A. Langenbecks Arch Surg 2008;393:561-70, doi:10.1007/s00423-008-0282-x; Basturk O et al. Am J Surg Pathol 2015;39:1730-41 (two-tier grading); Guo J et al. Int J Biol Sci 2016;12:292-301; Brune K et al. Am J Surg Pathol 2006;30:1067-76 (lobular atrophy); ' + DISTLER_REF + '.' },
+    ipmn: { hp: [{ img: 'ipmn-gastric-hp', w: 560, h: 292, credit: `Gastric type, low grade: short papillae of foveolar cells with basal nuclei (H&E, ×20). ${DISTLER}, fig. 5a.`,
+          marks: [[0.3, 0.22, 'Papillae of tall mucinous cells', 0, 4], [0.45, 0.66, 'Ordinary stroma', 0, 7]] },
+        { img: 'ipmn-intestinal', w: 560, h: 343, credit: `Intestinal type: long finger-like papillae, elongated nuclei (H&E, ×4). ${DISTLER}, fig. 5c.`,
+          marks: [[0.5, 0.38, 'Long finger-like papillae', 0, 4], [0.08, 0.76, 'Ordinary stroma', 0, 7]] },
+        { img: 'ipmn-pb-hp', w: 560, h: 317, credit: `Pancreatobiliary type, high grade: complex papillae, nuclear orientation lost (H&E, ×20). ${DISTLER}, fig. 5e.`,
+          marks: [[0.45, 0.35, 'Complex papillae, atypical nuclei', 0, 5], [0.62, 0.86, 'Ordinary stroma', 0, 7]] }],
+      drawing: { w: 1000, h: 420, credit: 'Drawing for this site (schematic, not to scale), after the descriptions in Beger et al. 4th ed., ch. 125 and 126, and Hingorani 2007.',
         marks: [[0.045, 0.57, 'Main duct, dilated'], [0.667, 0.455, 'Branch opening into the duct'], [0.6, 0.56, 'Mucin'], [0.33, 0.55, 'Intestinal-type papillae, goblet cells'], [0.115, 0.6, 'Pancreatobiliary-type papillae'], [0.79, 0.085, 'Gastric-type lining of a cyst'], [0.96, 0.5, 'Ordinary stroma, no ovarian stroma']] },
       more: [['Johns Hopkins: IPMN', 'https://pathology.jhu.edu/pancreas/ipmn'], ['Johns Hopkins: pancreas cysts', 'https://pathology.jhu.edu/pancreas/ipmn/pancreas-cysts'], ['Johns Hopkins: cyst classification tool', 'https://pathology.jhu.edu/pancreas/medical-professionals/cyst-classification-tool']],
       title: 'Intraductal papillary mucinous neoplasm (IPMN)', lead: 'A mucin-making tumour that grows inside the duct system, either the main duct (which dilates) or its branches (which swell into grape-like cysts). Unlike PanIN it is visible to the eye; unlike MCN it connects with the ducts and has no ovarian-type stroma.',
@@ -1403,8 +1410,10 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
         marks: [[0.2, 0.395, 'Main duct, dilated, with tumour (arrowheads)', 1], [0.525, 0.505, 'Branch-duct cyst opening off the duct', 1], [0.115, 0.49, 'Mucin in the cyst', 1], [0.62, 0.15, 'Tall papillae of mucinous cells', 1], [0.13, 0.17, 'Pancreatobiliary type: complex papillae, atypical nuclei', 1], [0.66, 0.655, 'Flat mucinous lining', 1], [0.7, 0.705, 'No ovarian stroma', 1]] }],
       key: ['Main-duct IPMN: the main duct is dilated (over 5 mm; 10 mm or more is a high-risk sign) and lined by tumour.', 'Branch-duct IPMN: side branches swell into cysts (over 10 mm) that open into the duct.', 'Thick mucin fills the ducts and cysts; it may extrude from the duodenal papilla.', 'Papillae lined by tall mucinous columnar cells. Gastric type (photo b; drawn in the cysts): foveolar cells with a tall pale mucin cap and an oval basal nucleus, short thick papillae, pyloric-type glands at their base; mostly low grade. Intestinal type (drawn in the main duct): long finger-like villous papillae, darker pseudostratified cells with elongated nuclei, and goblet cells.', 'Pancreatobiliary type: thin, branching, interconnected papillae of cuboidal cells with enlarged nuclei and little mucin; usually high grade. (A fourth, oncocytic type, with thick papillae of intensely pink cells and lumina within the epithelium, is now a separate entity and is not drawn.)', 'Branch-duct cysts are lined by a flat or gently papillary layer of gastric-type cells.', 'Beneath it: ordinary fibrous stroma and pancreatic acini, with no ovarian-type stroma (which defines MCN).'],
       unique: ['Grows inside the duct system and stays connected with it: the key difference from MCN.', 'Macroscopic (usually 1 cm or more), with papillae and abundant mucin: the difference from PanIN.', 'Epithelial types (gastric, intestinal, pancreatobiliary; MUC2, MUC5AC, MUC1) that predict behaviour: intestinal type gives colloid carcinoma.', 'GNAS mutations in 50–80%, absent from MCN.', 'Main-duct IPMN is the more dangerous: invasive carcinoma in 43.6% against 16.6% for branch-duct IPMN.'],
-      sources: 'Beger HG et al., The Pancreas, 4th ed., 2023, ch. 84, 86, 125, 126; Hingorani 2007; Rodriguez et al. 2007; Basturk O et al. Am J Surg Pathol 2015;39:1730-41 (Baltimore consensus); Distler M et al. Biomed Res Int 2014:474905; Assarzadegan N et al. Langenbecks Arch Surg 2021;406:2643-55; Adsay V et al. Ann Surg 2016;263:162-77 (Verona consensus); Furukawa T et al. Virchows Arch 2005;447:794-9 (consensus on the IPMN types); Xiao SY. Scientifica 2012:893632 (IPMN update).' },
-    mcn: { drawing: { w: 1000, h: 420, credit: 'Drawing for this site (schematic, not to scale), after the descriptions in Beger et al. 4th ed., ch. 81 and 126, and Hingorani 2007.',
+      sources: 'Beger HG et al., The Pancreas, 4th ed., 2023, ch. 84, 86, 125, 126; Hingorani 2007; Rodriguez et al. 2007; Basturk O et al. Am J Surg Pathol 2015;39:1730-41 (Baltimore consensus); ' + DISTLER_REF + '; Assarzadegan N et al. Langenbecks Arch Surg 2021;406:2643-55; Adsay V et al. Ann Surg 2016;263:162-77 (Verona consensus); Furukawa T et al. Virchows Arch 2005;447:794-9 (consensus on the IPMN types); Xiao SY. Scientifica 2012:893632 (IPMN update).' },
+    mcn: { hp: [{ img: 'mcn-hp', w: 560, h: 363, credit: `Columnar mucinous lining over ovarian-type stroma (H&E, ×40). ${DISTLER}, fig. 6b.`,
+          marks: [[0.5, 0.09, 'Tall columnar cells, basal nuclei', 0, 6], [0.5, 0.62, 'Ovarian-type stroma: packed spindle cells, wavy nuclei', 0, 7]] }],
+      drawing: { w: 1000, h: 420, credit: 'Drawing for this site (schematic, not to scale), after the descriptions in Beger et al. 4th ed., ch. 81 and 126, and Hingorani 2007.',
         marks: [[0.08, 0.1, 'Normal pancreas'], [0.264, 0.5, 'Fibrous capsule'], [0.35, 0.72, 'Ovarian-type stroma'], [0.7, 0.24, 'Cyst with mucin'], [0.78, 0.47, 'Septum: cyst within the cyst'], [0.43, 0.36, 'Tall columnar cells, apical mucin'], [0.34, 0.2, 'Dense spindle cells, wavy nuclei']] },
       more: [['Johns Hopkins: pancreas cysts', 'https://pathology.jhu.edu/pancreas/ipmn/pancreas-cysts'], ['Johns Hopkins: cyst classification tool', 'https://pathology.jhu.edu/pancreas/medical-professionals/cyst-classification-tool']],
       title: 'Mucinous cystic neoplasm (MCN)', lead: 'A cyst behind a thick fibrous capsule, lined by mucinous cells over a dense, cellular “ovarian-type” stroma, which the diagnosis requires. It does not connect with the ducts, and occurs almost only in women, in the body or tail.',
@@ -1414,7 +1423,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
         marks: [[0.43, 0.3, 'Tall columnar cells, apical mucin', 1], [0.33, 0.64, 'Ovarian-type stroma: packed spindle cells, wavy nuclei', 1]] }],
       key: ['Normal pancreas beside the cyst.', 'A thick fibrous (pseudo)capsule separates the cyst from the gland; it is often calcified (drawn).', 'Ovarian-type stroma: densely packed spindle cells with wavy nuclei; they carry oestrogen and progesterone receptors and are required for the diagnosis.', 'The cyst (or cysts within it) holds thick mucin; it does not open into the ducts.', 'The lining varies: mostly columnar mucinous cells, with flat or cuboidal stretches without mucin and denuded areas (both drawn on the cyst wall).', 'At higher power: tall columnar cells with pale apical mucin and basal nuclei.', 'Beneath them, the hypercellular ovarian-type stroma: the hallmark of MCN. It may hold clusters of luteinized cells (plump, pink; found in 66% of 56 cases) and pale hyalinized areas (both drawn).'],
       unique: ['Ovarian-type stroma, which neither PanIN nor IPMN has.', 'No connection with the duct system (IPMN connects).', 'Almost only in women (10–20 : 1), around 45–48 years; over 90% in the body or tail.', 'No GNAS mutation (unlike IPMN).'],
-      sources: 'Beger HG et al., The Pancreas, 4th ed., 2023, ch. 81, 86, 126; Robbins and Cotran, 9th ed., ch. 19; Hingorani 2007 (wavy stromal nuclei); Distler M et al. Biomed Res Int 2014:474905; Matthaei H et al. Nat Rev Gastroenterol Hepatol 2011;8:141-50; Malaspina L et al. Curr Oncol 2025;32:352 (flat and denuded lining); Zamboni G et al. Am J Surg Pathol 1999;23:410-22, abstract (luteinized cells in 66%).' },
+      sources: 'Beger HG et al., The Pancreas, 4th ed., 2023, ch. 81, 86, 126; Robbins and Cotran, 9th ed., ch. 19; Hingorani 2007 (wavy stromal nuclei); ' + DISTLER_REF + '; Matthaei H et al. Nat Rev Gastroenterol Hepatol 2011;8:141-50; Malaspina L et al. Curr Oncol 2025;32:352 (flat and denuded lining); Zamboni G et al. Am J Surg Pathol 1999;23:410-22, abstract (luteinized cells in 66%).' },
     acute: { title: 'Acute pancreatitis', lead: 'Enzymes activated inside the gland digest it and the fat around it. Most cases are interstitial: the gland swells with oedema, with mild inflammation and small fat necroses. In the necrotizing form, parts of the gland and the surrounding fat die and bleed.',
       drawing: { w: 1000, h: 420, credit: 'Drawing for this site (schematic, not to scale), after the descriptions in Robbins and Cotran, 9th ed., ch. 19, and Beger et al. 4th ed., ch. 17.',
         marks: [[0.1, 0.24, 'Acini in lobules'], [0.232, 0.62, 'Oedematous septum'], [0.24, 0.3, 'Neutrophils'], [0.68, 0.7, 'Fat necrosis, calcium soaps'], [0.846, 0.5, 'Rim of neutrophils'], [0.64, 0.29, 'Haemorrhage'], [0.49, 0.8, 'Dead acini, no nuclei'], [0.94, 0.2, 'Viable fat']] },
@@ -1448,10 +1457,11 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
         rows: [['Share of cases', 'About 60%', 'About 15%', 'About 5% (diffuse 20%)'], ['First sign', 'Painless jaundice: the bile duct is blocked', 'Pain from the coeliac plexus', 'Late; silent'], ['Over 4 cm when found', '21%', '40%', '51%'], ['Spread when found', '42%', '69%', '84%']] },
       sources: 'Robbins and Cotran, 9th ed., ch. 19 (pp. 892-894); Beger HG et al., The Pancreas, 4th ed., 2023, ch. 119, 125, 128, 130, 134, 137.' },
   };
-  function markSvg(F, n0) {   // numbered pins only; each feature is described in the list below (and on hover)
+  function srcFold(s) { return `<details class="src"><summary>Sources</summary><p>${s}</p></details>`; }   // citations folded, closed by default
+  function markSvg(F, n0, s = 1) {   // numbered pins only; each feature is described in the list below (and on hover)
     const W = 1000, H = Math.round(1000 * F.h / F.w);
     return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">` + F.marks.map(([x, y, label, , num], k) => { const n = num || n0 + k;
-      return `<g class="mk"><title>${n}. ${esc(label)}</title><circle cx="${x * W}" cy="${y * H}" r="15"/><text class="n" x="${x * W}" y="${y * H + 6}">${n}</text></g>`; }).join('') + '</svg>';
+      return `<g class="mk"><title>${n}. ${esc(label)}</title><circle cx="${x * W}" cy="${y * H}" r="${15 * s}"/><text class="n" x="${x * W}" y="${y * H + 6 * s}"${s !== 1 ? ` style="font-size:${16 * s}px"` : ''}>${n}</text></g>`; }).join('') + '</svg>';
   }
   // ---------- drawings: schematic sections in H&E colours, drawn here, showing only the features that matter (not to scale).
   const HE = { stroma: '#f5d9e5', collagen: '#e7b6ca', fibro: '#7a5aa6', acinus: '#6e4199', apex: '#e47f9c', nucleus: '#3a2470', dark: '#22114b', cyto: '#f2d1e2', columnar: '#efd7e8', mucin: '#f1f3fa', mucinEdge: '#c3c9e3', lumen: '#fcf8fc', edge: '#c39cc1' };
@@ -1673,17 +1683,19 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
     const drawn = Hd.drawing && DRAWINGS[key] ? DRAWINGS[key]() : null;
     const drawFig = drawn ? `<figure><div class="frame" style="aspect-ratio:${drawn.w}/${drawn.h}">${drawn.svg}${markSvg(Hd.drawing, 1)}</div><figcaption>${esc(Hd.drawing.credit)}</figcaption></figure>` : '';
     let n = 1; const figs = Hd.figures.map((F) => { const html = `<figure><div class="frame" style="aspect-ratio:${F.w}/${F.h}"><img src="${HISTO_IMG[F.img]}" alt="${esc(Hd.title)}: H&amp;E micrograph"/>${markSvg(F, n)}</div><figcaption>${esc(F.credit)}</figcaption></figure>`; n += F.marks.length; return html; }).join('');
+    const hp = (Hd.hp || []).map((F) => `<figure><div class="frame" style="aspect-ratio:${F.w}/${F.h}"><img src="${HISTO_IMG[F.img]}" alt="${esc(Hd.title)}: high-power H&amp;E"/>${markSvg(F, 1, 2.6)}</div><figcaption>${esc(F.credit)}</figcaption></figure>`).join('');
     const cmp = Hd.compare || { title: 'PanIN, IPMN and MCN compared', cols: ['PanIN', 'IPMN', 'MCN'], rows: COMPARE_ROWS, on: { panin: 1, ipmn: 2, mcn: 3 }[key], src: 'Beger 4th ed. ch. 81, 86, 126; Hingorani 2007.' }, col = cmp.on;
     const more = Hd.more ? `<p class="more">More real examples: ${Hd.more.map(([t, u]) => `<a href="${u}" target="_blank" rel="noopener">${esc(t)} ↗</a>`).join(' · ')} <span>(external; images © Johns Hopkins, not reproduced here)</span></p>` : '';
     box.innerHTML = `<div class="hhead"><h2>${esc(Hd.title)}</h2><button type="button" class="hclose" data-lesion="overview">‹ All precursors</button></div><p class="lead">${esc(Hd.lead)}</p>`
-      + (drawn ? `${drawFig}<h3>Real H&amp;E: the same features, numbered alike</h3>` : '') + figs + more
+      + (drawn ? `${drawFig}<h3>Real H&amp;E: the same features, numbered alike</h3>` : '') + figs
+      + (hp ? `<h3>High power: the cells themselves</h3><p class="hpnote">The highest magnifications openly licensed (objective ×20 to ×40); pins use the same numbers.</p><div class="hpgrid">${hp}</div>` : '') + more
       + `<div class="hcols"><div><h3>Marked features</h3><ol>${Hd.key.map((t) => `<li>${esc(t)}</li>`).join('')}</ol></div><div class="apart"><h3>What sets it apart</h3><ul>${Hd.unique.map((t) => `<li>${esc(t)}</li>`).join('')}</ul></div></div>`
       + (Hd.chart ? `<h3>${esc(Hd.chart.title)}</h3><div class="tablewrap"><table class="prog"><thead><tr><th></th>${Hd.chart.cols.map((c) => `<th>${esc(c)}</th>`).join('')}</tr></thead><tbody>`
         + Hd.chart.rows.map((r) => { const mx = Math.max(...r.vals.filter((v) => v !== null)); return `<tr><th>${esc(r.label)}<small>${esc(r.src)}</small></th>${r.vals.map((v) => v === null ? '<td class="na">–</td>' : `<td><span class="bar" style="width:${Math.max(3, 100 * v / mx)}%"></span><span class="v">${v}${r.unit}</span></td>`).join('')}</tr>`; }).join('')
         + `</tbody></table></div><p class="src">${esc(Hd.chart.note)}</p>` : '')
       + `<h3>${esc(cmp.title)}</h3><div class="tablewrap"><table><thead><tr><th></th>${cmp.cols.map((c, i) => `<th${i + 1 === col ? ' class="on"' : ''}>${esc(c)}</th>`).join('')}</tr></thead><tbody>`
       + cmp.rows.map((r) => `<tr><th>${esc(r[0])}</th>${r.slice(1).map((c, i) => `<td${i + 1 === col ? ' class="on"' : ''}>${esc(c)}</td>`).join('')}</tr>`).join('') + '</tbody></table></div>'
-      + `<p class="src">Sources: ${esc(Hd.sources)} Comparison: ${esc(cmp.src)} Text in our own words. Images keep their own licences.</p>`;
+      + srcFold(`${esc(Hd.sources)} Comparison: ${esc(cmp.src)} Text in our own words. Images keep their own licences.`);
     box.querySelector('.hclose').addEventListener('click', () => exitLesion()); box.scrollTop = 0;
   }
   function setMode(m) {
@@ -1711,20 +1723,21 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
     const keys = (MODE === 'pancreas' ? (disease && !MODE_PARTS[disease] ? [disease] : []) : LES.view ? LESION_VIEWS[LES.view].parts : MODE_PARTS[MODE]).filter((k) => LESIONS[k]), card = $('lesioncard');
     card.hidden = !keys.length; if (!keys.length) return; const detailed = keys.length <= 2;
     card.innerHTML = keys.map((k) => { const L = LESIONS[k]; return `<h3><span class="sw" style="background:var(${L.color})"></span>${esc(L.full)}</h3>`
-      + (detailed ? `<p><strong>Where:</strong> ${esc(L.where)}</p><p><strong>Size:</strong> ${esc(L.size)}</p><p>${esc(L.text)}</p><p><strong>Prognosis:</strong> ${esc(L.survival)}</p>` : `<p>${esc(L.where)}.</p>`); }).join('') + `<p class="src">${esc(LESIONS[keys[0]].source || LESION_SOURCE)}</p>`;
+      + (detailed ? `<p><strong>Where:</strong> ${esc(L.where)}</p><p><strong>Size:</strong> ${esc(L.size)}</p><p>${esc(L.text)}</p><p><strong>Prognosis:</strong> ${esc(L.survival)}</p>` : `<p>${esc(L.where.replace(/\.$/, ''))}.</p>`); }).join('') + srcFold(esc(LESIONS[keys[0]].source || LESION_SOURCE));
   }
   // Insets beside the organ, each a live view of one lesion's architecture, joined by a line to where it arises.
   const INSETS_BY_MODE = { precursors: [{ key: 'mcn', pos: { right: 16, top: 70 } }, { key: 'panin', pos: { right: 16, bottom: 70 } }, { key: 'ipmn', pos: { left: 16, bottom: 70 } }],
     pancreatitis: [{ key: 'acute', pos: { right: 16, top: 70 } }, { key: 'chronic', pos: { left: 16, bottom: 70 } }], pda: [{ key: 'pda', pos: { right: 16, bottom: 70 } }] };
   let INSETS = INSETS_BY_MODE.precursors;
-  const INSET_CROP = { panin: '45% 50%', ipmn: '62% 12%', mcn: '50% 40%', acute: '40% 60%', chronic: '35% 40%', pda: '30% 50%' }, INSET_IMG = { panin: 'panin', ipmn: 'ipmn', mcn: 'mcn-low', acute: 'acute', chronic: 'chronic-gross', pda: 'pda-perineural' };
+  const INSET_CROP = { panin: '30% 50%', ipmn: '50% 40%', mcn: '50% 30%', acute: '45% 35%', chronic: '20% 40%', pda: '50% 50%' }, INSET_IMG = { panin: 'panin3-hp', ipmn: 'ipmn-pb-hp', mcn: 'mcn-hp', acute: 'acute', chronic: null, pda: 'pda-glands' };
+  const insetBg = (k) => { if (INSET_IMG[k]) return HISTO_IMG[INSET_IMG[k]]; const d = DRAWINGS[k](); return 'data:image/svg+xml,' + encodeURIComponent(d.svg.replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg" ')); };
   function insetDom() {
     const box = $('insets'); if (box.dataset.built === MODE) return; box.dataset.built = MODE; INSETS = INSETS_BY_MODE[MODE] || [];
-    box.innerHTML = '<svg aria-hidden="true"></svg>' + INSETS.map((t) => `<div class="inset" data-inset="${t.key}" style="${Object.entries(t.pos).map(([k, v]) => `${k}:${v}px`).join(';')};background-image:url(${HISTO_IMG[INSET_IMG[t.key]]});background-position:${INSET_CROP[t.key]}" role="button" tabindex="0" aria-label="Open ${LESION_VIEWS[t.key].title}: histology"><b>${LESION_VIEWS[t.key].title} ›</b></div>`).join('');
+    box.innerHTML = '<svg aria-hidden="true"></svg>' + INSETS.map((t) => `<div class="inset" data-inset="${t.key}" style="${Object.entries(t.pos).map(([k, v]) => `${k}:${v}px`).join(';')};background-image:url(&quot;${insetBg(t.key)}&quot;);background-position:${INSET_CROP[t.key]}" role="button" tabindex="0" aria-label="Open ${LESION_VIEWS[t.key].title}: histology"><b>${LESION_VIEWS[t.key].title} ›</b></div>`).join('');
     box.querySelectorAll('[data-inset]').forEach((el) => { el.addEventListener('click', () => enterLesion(el.dataset.inset)); el.addEventListener('keydown', (e) => { if (e.key === 'Enter') enterLesion(el.dataset.inset); }); });
   }
   function drawInsets(now, show) {
-    const box = $('insets'); box.style.display = show ? '' : 'none'; if (!show) return; insetDom();
+    const box = $('insets'); show = show && $('showinsets').checked; box.style.display = show ? '' : 'none'; if (!show) return; insetDom();
     const st = stage.getBoundingClientRect(), svg = box.querySelector('svg'), lines = [];
     INSETS.forEach((t) => { const el = box.querySelector(`[data-inset="${t.key}"]`), r = el.getBoundingClientRect(), x = r.left - st.left, y = r.top - st.top, w = r.width, h = r.height;
       const at = lesionGroup && lesionGroup.getObjectByName(LESION_VIEWS[t.key].at); if (!at) return; const p = groups.organ.userData.inner.localToWorld(at.userData.at.clone()).project(camera);

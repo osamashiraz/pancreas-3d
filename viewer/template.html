@@ -48,6 +48,7 @@ body[data-mode="precursors"] .ladder-mode[data-for-mode="precursors"],body[data-
 .histo .lead{max-width:860px;margin:4px 0 10px}.histo figure{margin:0 0 12px;max-width:1100px}.histo .frame{position:relative;width:100%;border-radius:6px;overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,.15)}
 .histo .frame img{position:absolute;inset:0;width:100%;height:100%;display:block}.histo .frame svg{position:absolute;inset:0;width:100%;height:100%}
 .histo figcaption{font-size:11.5px;color:var(--muted);margin-top:4px}
+.histo .hpgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;max-width:1100px}.histo .hpgrid figure{margin:0}.histo .hpnote{font-size:12.5px;color:var(--muted);margin:-4px 0 8px}
 .histo .frame svg.drawing{display:block}.mk{pointer-events:auto;cursor:help}.mk circle{fill:#ffd23f;stroke:#1d1f2a;stroke-width:2.5}.mk text.n{fill:#1d1f2a;text-anchor:middle;font:700 16px "Public Sans",system-ui,sans-serif}
 .drawing .dl{font:700 17px "Public Sans",system-ui,sans-serif;fill:#2a1d3a;text-anchor:middle;paint-order:stroke;stroke:#fbeef5;stroke-width:4px}.drawing .gl{font:600 12.5px "Public Sans",system-ui,sans-serif;fill:#2a1d3a}
 .histo .more{font-size:13px;margin:4px 0 12px;max-width:1100px}.histo .more a{color:var(--accent)}.histo .more span{color:var(--muted);font-size:11.5px}
@@ -107,6 +108,17 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline
 .note{font-size:12.5px;color:var(--muted);border-top:1px solid var(--rule);padding-top:10px}
 ol{font-size:12.5px;color:var(--muted);padding-left:18px}ol li{margin-bottom:5px}
 .unv{color:var(--warn)}
+.fold{border-top:1px solid var(--rule);margin:10px 0 0;padding:6px 0 0}
+.fold>summary{cursor:pointer;font-size:13.5px;color:var(--muted);list-style:none;display:flex;align-items:center;gap:6px;padding:2px 0}
+.fold>summary::-webkit-details-marker{display:none}
+.fold>summary::before{content:"";width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(-45deg);transition:transform .15s;margin-right:2px}
+.fold[open]>summary::before{transform:rotate(45deg)}
+.fold>summary:hover{color:var(--ink)}
+.tools .fold{border-top:0;margin:4px 0 0;padding:0}
+details.src{font-size:11.5px;color:var(--muted);margin:4px 0 0}details.src>summary{cursor:pointer;color:var(--muted)}details.src p{margin:4px 0 0}
+.note.fold{border-top:1px solid var(--rule)}.note.fold p{margin:6px 0 0}
+.toggle small{color:var(--muted);font-size:12.5px}
+.plain{font:inherit;font-size:13.5px;color:var(--ink);background:var(--panel);border:1px solid var(--rule);border-radius:6px;padding:5px 12px;cursor:pointer}.plain:hover,.plain[aria-pressed="true"]{border-color:var(--accent)}
 @media (max-width:880px){.app{grid-template-columns:1fr;grid-template-rows:62vh auto;height:auto}body{height:auto}aside{border-left:0;border-top:1px solid var(--rule)}.ladder button{min-width:0;padding:4px 8px}.ladder button span{display:none}}
 </style></head><body>
 <div class="app">
@@ -153,15 +165,20 @@ ol{font-size:12.5px;color:var(--muted);padding-left:18px}ol li{margin-bottom:5px
    <div class="row"><button class="play" id="play" type="button">Play the journey</button>
     <label><input type="checkbox" id="voice" checked> Voice</label>
     <label><input type="checkbox" id="names" checked> Names</label><label><input type="checkbox" id="motion"> Motion <small style="color:var(--muted)">(illustrative)</small></label></div>
+   <details class="fold" id="moreopts"><summary>More options</summary>
    <div class="row" style="gap:8px"><label style="display:flex;gap:6px;align-items:center;font-size:13px">Voice <select id="voicepick" aria-label="Narration voice" style="font:inherit;font-size:13px;max-width:170px;color:var(--ink);background:var(--panel);border:1px solid var(--rule);border-radius:6px;padding:3px"></select></label>
     <label style="display:flex;gap:6px;align-items:center;font-size:13px">Speed <input type="range" id="voicerate" min="0.7" max="1.15" step="0.01" value="0.88" style="width:90px" aria-label="Narration speed"><span id="ratelabel"></span></label></div>
-   <div class="row"><button type="button" id="split" aria-pressed="false" style="font:inherit;font-size:14px;color:var(--ink);background:var(--panel);border:1px solid var(--rule);border-radius:6px;padding:5px 12px;cursor:pointer">Split screen</button>
+   <div class="row"><button type="button" id="split" aria-pressed="false" class="plain">Split screen</button>
     <span style="font-size:12.5px;color:var(--muted)">Two views side by side; the panel controls the one you last touched.</span></div>
    <div class="row" id="presets" style="display:none;gap:6px">
     <button type="button" data-preset="islet-acinus" class="preset">Islet | Acinus</button><button type="button" data-preset="islet-duct" class="preset">Islet | Duct</button><button type="button" data-preset="acinus-duct" class="preset">Acinus | Duct</button>
     <button type="button" data-preset="beta-acinar" class="preset">Beta cell | Acinar cell</button><button type="button" data-preset="tissue-cell" class="preset">Tissue | Cell</button><button type="button" data-preset="organ-tissue" class="preset">Organ | Tissue</button></div>
    <label class="slider" data-for="organ tissue detail cell"><span id="slicelabel">Slice apart</span><input type="range" id="slice" min="0" max="1" step="0.01" value="0" aria-label="Slice apart: spacing between parallel slices"></label>
+   <div class="row" data-for="organ gross tissue compare"><button type="button" id="compare" class="plain">Compare head, body and tail</button></div>
+   </details>
   </div>
+  <label class="toggle" data-for="organ pancreatitis pda precursors"><input type="checkbox" id="neighbours"> Show nearby organs <small>(liver, gallbladder, kidneys, colon, great vessels)</small></label>
+  <label class="toggle" data-for="pancreatitis pda precursors"><input type="checkbox" id="showinsets" checked> Show insets <small>(histology beside the organ)</small></label>
   <div class="selection" id="selection" hidden>
    <h3 id="selname"></h3><p id="seltext"></p>
    <div class="row"><button type="button" id="isolate">Isolate</button><label style="display:flex;gap:6px;align-items:center;font-size:13px">Opacity <input type="range" id="selop" min="0" max="1" step="0.01" value="1" style="width:110px"></label><button type="button" id="selclose" aria-label="Clear selection">Clear</button></div>
@@ -170,7 +187,7 @@ ol{font-size:12.5px;color:var(--muted);padding-left:18px}ol li{margin-bottom:5px
   <p class="target" id="target" data-for="organ"></p>
   <div data-for="organ gross tissue compare"><span style="font-size:14px">Region</span><br>
    <div class="seg" role="group" aria-label="Region the tissue is taken from"><button type="button" data-region="head" aria-pressed="false">Head</button><button type="button" data-region="body" aria-pressed="true">Body</button><button type="button" data-region="tail" aria-pressed="false">Tail</button></div>
-   <button type="button" id="compare" class="play" style="margin:0 0 12px 8px;background:var(--panel);color:var(--ink);border:1px solid var(--rule)">Compare head, body and tail</button></div>
+</div>
   <div class="picker" data-for="organ gross tissue"><button type="button" id="siteprev" aria-label="Previous tissue site">◀</button><span id="sitelabel"></span><button type="button" id="sitenext" aria-label="Next tissue site">▶</button></div>
   <p class="target" id="grossstats" data-for="gross compare"></p>
   <ul class="legend" data-for="gross compare">
@@ -181,8 +198,6 @@ ol{font-size:12.5px;color:var(--muted);padding-left:18px}ol li{margin-bottom:5px
    <li><span class="sw" style="background:var(--intralobular)"></span><span>Interlobular ducts, with an artery (red) and vein (blue), in the septa</span></li>
   </ul>
   <div class="markers lesions" id="lesioncard" hidden></div>
-  <label class="toggle" data-for="organ pancreatitis pda precursors"><input type="checkbox" id="neighbours"> Show the organs round the pancreas (liver, gallbladder, kidneys, colon, great vessels)</label>
-  <label class="toggle" data-for="organ"><input type="checkbox" id="islets"> Show the islets (one point per 100)</label>
   <div data-for="tissue detail cells cell"><span style="font-size:14px">Zoom into</span><br>
    <div class="seg" role="group" aria-label="What to zoom into"><button type="button" data-branch="acinus" aria-pressed="true">An acinus</button><button type="button" data-branch="islet" aria-pressed="false">The islet</button><button type="button" data-branch="duct" aria-pressed="false">A duct</button></div></div>
   <span class="badge" data-for="tissue detail cells cell">Simulated: built from published descriptions and measurements</span>
@@ -193,7 +208,7 @@ ol{font-size:12.5px;color:var(--muted);padding-left:18px}ol li{margin-bottom:5px
   <p class="target" data-for="tissue detail cells">Click any cell or structure to name it, then isolate it or fade it.</p>
   <div data-for="tissue detail cells cell gross"><span style="font-size:14px">Stain</span><br>
    <div class="seg" role="group" aria-label="Stain"><button type="button" data-stain="he" aria-pressed="true">H&amp;E</button><button type="button" data-stain="if" aria-pressed="false">Cell types (immunostain)</button></div>
-   <p class="target" style="margin-top:-6px">Cell types colours each kind of cell like a multiplex immunofluorescence panel: acinar orange, duct teal, beta green, alpha magenta, delta cyan, PP amber, capillaries red, stellate cells yellow, collagen lavender, nuclei blue.</p></div>
+   <p class="target hint" style="margin-top:-6px">Cell types colours each kind of cell like a multiplex immunofluorescence panel: acinar orange, duct teal, beta green, alpha magenta, delta cyan, PP amber, capillaries red, stellate cells yellow, collagen lavender, nuclei blue.</p></div>
   <ul class="legend" data-for="tissue detail cells">
    <li><span class="sw" style="background:linear-gradient(180deg,var(--apex),var(--base))"></span><label><input type="checkbox" data-toggle="acinar" checked>Acinar cells<small>Wedges converging on the lumen like orange segments. As in H&amp;E: the base stains purple with hematoxylin (rough ER), the apex pink-red with eosin (zymogen granules); round, dark basal nuclei. Cut cells show their stained interior.</small></label></li>
    <li><span class="sw" style="background:var(--intralobular)"></span><label><input type="checkbox" data-toggle="duct" checked>Ducts and centroacinar cells<small>Pale-staining cuboidal cells in intralobular ducts, low flat cells in intercalated ducts, pale centroacinar cells inside each acinus; round nuclei.</small></label></li>
@@ -246,8 +261,8 @@ ol{font-size:12.5px;color:var(--muted);padding-left:18px}ol li{margin-bottom:5px
    <li><span class="sw" style="background:var(--basement)"></span><span>Basement membrane, beneath the cell</span></li>
   <li><span class="sw" style="background:var(--bicarbonate)"></span><span>Bicarbonate leaving into the lumen and carried along it (with Motion on)</span></li>
   </ul>
-  <p class="note" data-for="tissue detail cells cell">Acinar cells reach out until they meet a neighbouring acinus, a vessel, a duct or the islet, so acini deform against one another; they fill 52% of each tested block. Sizes of acinar, centroacinar, duct and beta cells, acini, granules, capillaries and stellate cells are <span class="unv">typical values not yet sourced</span>; the duct tree and centroacinar cells are described in rat (Endo 2002). The core is cut from the 300 µm block built and tested for its region; in the uncinate process its islet is PP-rich.</p>
-  <h2>Sources</h2>
+  <details class="fold note" data-for="tissue detail cells cell"><summary>How the tissue is built</summary><p>Acinar cells reach out until they meet a neighbouring acinus, a vessel, a duct or the islet, so acini deform against one another; they fill 52% of each tested block. Sizes of acinar, centroacinar, duct and beta cells, acini, granules, capillaries and stellate cells are <span class="unv">typical values not yet sourced</span>; the duct tree and centroacinar cells are described in rat (Endo 2002). The core is cut from the 300 µm block built and tested for its region; in the uncinate process its islet is PP-rich.</p></details>
+  <details class="fold sources"><summary>Sources</summary>
   <ol>
    <li>HRA 3D reference organs (HuBMAP), from the Visible Human Project. CC BY 4.0.</li>
    <li>Kiemen AL, et al. CODA. Nat Methods 2022. doi:10.1038/s41592-022-01650-9</li>
@@ -262,7 +277,7 @@ ol{font-size:12.5px;color:var(--muted);padding-left:18px}ol li{margin-bottom:5px
    <li>Steward MC, Ishiguro H. Pancreatic duct cell function. Curr Opin Gastroenterol 2009. doi:10.1097/MOG.0b013e32832e06ce</li>
    <li>diIorio P, et al. Cilia in the pancreas. Birth Defects Res C 2014. doi:10.1002/bdrc.21064</li>
    <li>Narration written for this viewer after: StatPearls, Anatomy, Abdomen and Pelvis, Pancreas (NCBI Bookshelf NBK532912) and the StatPearls chapter on the endocrine pancreas (NBK459261), CC BY 4.0; Columbia University histology laboratory notes on the exocrine and endocrine pancreas; University of Basel histology collection, exocrine pancreas; Human Protein Atlas, normal pancreas.</li>
-  </ol>
+  </ol></details>
  </aside>
 </div>
 <script type="application/json" id="histo">__HISTO_JSON__</script>
@@ -273,7 +288,6 @@ ol{font-size:12.5px;color:var(--muted);padding-left:18px}ol li{margin-bottom:5px
 <script type="application/json" id="organ">__ORGAN_JSON__</script>
 <script type="application/octet-stream" id="glb-region">__REGION_GLB_B64__</script>
 <script type="application/octet-stream" id="glb-neighbours">__NEIGHBOURS_GLB_B64__</script>
-<script type="application/octet-stream" id="glb-islets">__ISLETS_GLB_B64__</script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/loaders/GLTFLoader.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/controls/OrbitControls.js"></script>
