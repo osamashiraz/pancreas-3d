@@ -877,7 +877,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
     document.querySelectorAll('[data-branch]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
     const lv = levelAt(camera.position.distanceTo(controls.target));
     if (STAGE.mode === 'tissue') branch = b.dataset.branch; else flyTo(stopFor(lv, b.dataset.branch), b.dataset.branch, STAGE.mode); }));
-  $('reset').addEventListener('click', () => { if (LES.view) { enterLesion(LES.view); return; } const lv = levelAt(camera.position.distanceTo(controls.target)); flyTo(stopFor(lv) || STOPS.organ, undefined, MODE_OF[lv]); });
+  $('reset').addEventListener('click', () => { if (LES.view) { $('histopanel').scrollTop = 0; return; } const lv = levelAt(camera.position.distanceTo(controls.target)); flyTo(stopFor(lv) || STOPS.organ, undefined, MODE_OF[lv]); });
   // Escape steps back one stage.
   window.addEventListener('keydown', (e) => { if (e.key !== 'Escape') return; if (LES.view) { exitLesion(); return; } const lv = levelAt(camera.position.distanceTo(controls.target));
     const up = { cell: 'cells', cells: 'detail', detail: 'tissue', tissue: 'gross', gross: 'organ' }[lv]; if (up) flyTo(stopFor(up), undefined, MODE_OF[up]); });
@@ -1081,10 +1081,10 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
     isletOld: 'The islet cut open among its acini: beta (green), alpha (magenta), delta (cyan) and PP (amber) cells intermixed along a dense capillary bed, with no core or mantle, as in human islets (Cabrera 2006; Brissova 2005).',
     duct: 'An intralobular duct on its own, opened lengthwise: a single layer of cuboidal duct cells round the lumen. Duct cells secrete the bicarbonate-rich fluid of pancreatic juice, 2 to 3 litres a day (Ishiguro 2012; Hegyi 2015). Zoom on and its cells separate.',
     ductOld: 'An intralobular duct cut lengthwise: a single layer of cuboidal duct cells round the lumen, collagen aligned along it (CODA), intercalated ducts joining it from acini. Duct cells secrete the bicarbonate-rich fluid of pancreatic juice, 2 to 3 litres a day (Ishiguro 2012; Hegyi 2015).',
-    precursors: 'Precursor lesions: where the routes to pancreatic ductal adenocarcinoma begin. PanIN arises in the small ducts at the periphery, most readily in the head; mucinous cystic neoplasms in the periphery of the body and tail; IPMN in the main duct or its major branches, usually in the head (Hingorani 2007). Each inset shows one lesion; click it, or a lesion on the organ, or zoom into one, to open it. Placement on the organ is simulated, by rule; sizes are illustrative.',
-    lesionPanIN: 'PanIN in a small duct, opened lengthwise among acini. Along its length the lining changes from normal cuboidal duct cells, to low-grade PanIN (tall columnar cells with apical mucin and small, basal nuclei), to high-grade PanIN (papillae, crowded enlarged nuclei that no longer sit at the base, cells budding into the lumen). Real PanINs are microscopic and cause no symptoms. Zoom in to the cells; zoom far out, or press Esc, to return to the organ. Sizes illustrative.',
-    lesionIPMN: 'A length of a main duct with IPMN, opened lengthwise: the duct is dilated, finger-like papillae grow from its wall and mucin fills it. Beside it, a branch-duct IPMN: a side branch swollen into grape-like cysts that still open into the duct. One papilla is drawn down to its cells: tall columnar mucinous cells over a core of stroma with a capillary. Zoom in to it; zoom far out, or press Esc, to return. Sizes illustrative.',
-    lesionMCN: 'A mucinous cystic neoplasm cut in half: a thick fibrous capsule round several locules filled with mucin, separated by septa, with no connection to the duct running beside it. A stretch of the wall at the top of the largest locule is drawn down to its cells: tall columnar mucinous lining over dense ovarian-type stroma of spindle cells. Zoom in to it; zoom far out, or press Esc, to return. Sizes illustrative.',
+    precursors: 'Precursor lesions: where the routes to pancreatic ductal adenocarcinoma begin. PanIN arises in the small ducts at the periphery, most readily in the head; mucinous cystic neoplasms in the periphery of the body and tail; IPMN in the main duct or its major branches, usually in the head (Hingorani 2007). Each inset shows one lesion in H&E; click it, or a lesion on the organ, or zoom into one, to open its histology. Placement on the organ is simulated, by rule; sizes are illustrative.',
+    lesionPanIN: 'PanIN in real H&E sections, from a normal duct to high grade, with its key features numbered. Below: what sets it apart, and PanIN, IPMN and MCN compared. Press Esc or All precursors to return to the organ.',
+    lesionIPMN: 'IPMN in a resected pancreas and in H&E sections, main-duct and branch-duct, gastric and pancreatobiliary types, with its key features numbered. Below: what sets it apart, and the three precursors compared. Press Esc or All precursors to return.',
+    lesionMCN: 'MCN in H&E sections, at very low power and at the wall, with its key features numbered: the fibrous capsule, mucinous lining and dense ovarian-type stroma. Below: what sets it apart, and the three precursors compared. Press Esc or All precursors to return.',
     acinusCell: 'One acinar cell, in its place in the acinus: rough ER round the basal nucleus makes digestive enzymes, the Golgi packages them, and zymogen granules wait at the apex (Palade 1975). With Motion on, granules leave the Golgi, travel to the apex and fuse with the membrane, releasing their enzymes into the lumen and on down the intercalated duct. Cholecystokinin and acetylcholine trigger this release by raising calcium inside the cell (Messenger et al. 2014). Organelle sizes and numbers, and the speed of the motion, are illustrative.',
     acinusCells: 'The acinus pulled apart into its cells, like the segments of an orange: each wedge-shaped acinar cell slides out along its own axis, carrying its basal nucleus and its apical granules; the centroacinar cells stay at the centre, and the intercalated duct draws back. Zoom on toward one cell to see it alone; zoom out and they close up again.',
     isletCells: 'The islet’s cells drawn apart from its centre so each stands distinct: beta (green), alpha (magenta), delta (cyan) and PP (amber), intermixed as in human islets (Cabrera 2006). Its capillaries stay in place. Zoom on to one beta cell.',
@@ -1260,112 +1260,64 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
     hashNow();
   }
   // ---------- what is shown: the pancreas (organ to cell), or the precursor lesions (pancreatitis and PDA to come).
-  // Precursor lesions: the whole organ with PanIN, IPMN and MCN marked where they arise, each linked to an inset as in
-  // Hingorani 2007 (Figure 1); clicking or zooming into one opens a view of its architecture, down to its cells. Each view is
-  // its own scene in micrometres. Shapes follow the textbook descriptions; sizes are illustrative unless a source is named.
+  // Precursor lesions: the whole organ with PanIN, IPMN and MCN marked where they arise, each joined to an inset of its
+  // histology as in Hingorani 2007 (Figure 1); clicking or zooming into one opens real H&E micrographs with its features marked.
   let MODE = 'pancreas';
-  const LES = { view: null, pending: null, saved: null, scenes: {}, insetCams: {} };
-  const LESION_VIEWS = {
-    panin: { title: 'PanIN', parts: ['panin'], at: 'panin', start: 520, exit: 6000, dir: [0.2, 0.75, 0.62] },
-    ipmn: { title: 'IPMN', parts: ['mipmn', 'bipmn'], at: 'mipmn', start: 70000, exit: 320000, dir: [0.15, 0.8, 0.58] },
-    mcn: { title: 'MCN', parts: ['mcn'], at: 'mcn', start: 125000, exit: 520000, dir: [0.1, 0.25, 0.97] },
+  const LES = { view: null, pending: null };
+  const LESION_VIEWS = { panin: { title: 'PanIN', parts: ['panin'], at: 'panin' }, ipmn: { title: 'IPMN', parts: ['mipmn', 'bipmn'], at: 'mipmn' }, mcn: { title: 'MCN', parts: ['mcn'], at: 'mcn' } };
+
+  // Each precursor is shown in real H&E micrographs (open-licensed, credited), with its key features marked and numbered,
+  // what sets it apart, and a comparison of the three. Marks are placed by hand on each image (x, y as fractions of it).
+  const HISTO_IMG = JSON.parse($('histo').textContent);
+  const COMPARE_ROWS = [
+    ['Size', 'Microscopic, usually < 0.5 cm; not seen on imaging', 'Macroscopic, usually ≥ 1 cm; main duct > 5 mm, branch cysts > 10 mm', 'Cyst, median 3.5–5 cm (0.5–20)'],
+    ['Where', 'Small peripheral ducts; head more than tail', 'Main duct or its major branches; usually head and uncinate', 'Body or tail (> 90%), periphery'],
+    ['Connects with the ducts?', 'Arises within a small duct', 'Yes: grows inside the ducts', 'No'],
+    ['Lining', 'Cuboidal → columnar with apical mucin; flat → papillary as grade rises', 'Tall columnar mucinous cells on papillae; gastric, intestinal or pancreatobiliary type', 'Columnar mucinous cells, in places flat or cuboidal'],
+    ['Stroma', 'Ordinary periductal stroma', 'Ordinary fibrous stroma', 'Ovarian-type: dense spindle cells with wavy nuclei, oestrogen and progesterone receptors'],
+    ['Mucin', 'Within the cells', 'Abundant; fills the dilated ducts, may extrude from the papilla', 'Thick mucin in the locules'],
+    ['Who', '16% of normal pancreata, more with age; 82% of pancreata with cancer', '7th–8th decade, slightly more men', 'Almost only women (10–20 : 1), around 45–48 years'],
+    ['Genes', 'KRAS > 90% and telomere shortening early; CDKN2A, then TP53 and SMAD4', 'KRAS and GNAS, each 50–80%; RNF43', 'KRAS, RNF43; no GNAS'],
+  ];
+  const HISTO = {
+    panin: { title: 'Pancreatic intraepithelial neoplasia (PanIN)', lead: 'A microscopic change in the lining of small ducts. As the grade rises, the cells go from low cuboidal to tall columnar with mucin, the lining folds into papillae, and the nuclei crowd, enlarge and lose their place at the base.',
+      figures: [{ img: 'panin', w: 974, h: 344, credit: 'Hackeng WM, Hruban RH, Offerhaus GJ, Brosens LA. Diagn Pathol 2016;11:47, doi:10.1186/s13000-016-0497-z (CC BY 4.0); arranged by M. Häggström, via Wikimedia Commons.',
+        marks: [[0.105, 0.50, 'Normal duct: low cuboidal cells', 1], [0.215, 0.62, 'Tall columnar cells', -1], [0.395, 0.34, 'Pale apical mucin', 1], [0.46, 0.63, 'Micropapillary folds', 1], [0.6, 0.47, 'Papillae; crowded, stratified nuclei', 1], [0.88, 0.16, 'Budding, loss of polarity, marked atypia', -1], [0.33, 0.88, 'KRAS and telomere shortening first', 1]] }],
+      key: ['Normal duct: a single layer of low cuboidal cells with little mucin.', 'PanIN-1A (low grade): flat, tall columnar cells with small, round nuclei at the base.', 'Abundant pale mucin fills the top of each cell (gastric-foveolar type).', 'PanIN-1B (low grade): the lining folds into micropapillae; nuclei still basal.', 'PanIN-2 (now low grade): papillae, crowded and stratified nuclei, mild to moderate atypia.', 'PanIN-3 (high grade): marked atypia, loss of polarity, cells budding into the lumen; found almost only beside invasive cancer.', 'Genetic progression: telomere shortening and KRAS in over 90% from the start; CDKN2A (p16) loss, then TP53 and SMAD4 late.'],
+      unique: ['Microscopic: under 0.5 cm, invisible to the eye and to imaging, unlike IPMN and MCN.', 'In small peripheral ducts, not the main duct; no cyst.', 'No ovarian-type stroma; ordinary periductal stroma.', 'The commonest route to ductal adenocarcinoma (PanIN → PDA).'],
+      sources: 'Beger HG et al., The Pancreas, 4th ed., 2023, ch. 126; Robbins and Cotran, 9th ed., ch. 19; Hingorani 2007.' },
+    ipmn: { title: 'Intraductal papillary mucinous neoplasm (IPMN)', lead: 'A mucin-making tumour that grows inside the duct system, either the main duct (which dilates) or its branches (which swell into grape-like cysts). Unlike PanIN it is visible to the eye; unlike MCN it connects with the ducts and has no ovarian-type stroma.',
+      figures: [{ img: 'ipmn', w: 1400, h: 1268, credit: 'Shibata H, Ohike N, Norose T, et al. Clin J Gastroenterol 2017;10:274-8, doi:10.1007/s12328-017-0728-1 (CC BY 4.0), via Wikimedia Commons. a, b, d, e: H&E; c: resected pancreas.',
+        marks: [[0.2, 0.395, 'Main duct, dilated, with tumour (arrowheads)', 1], [0.525, 0.505, 'Branch-duct cyst opening off the duct', 1], [0.115, 0.49, 'Mucin in the cyst', 1], [0.62, 0.15, 'Tall papillae of mucinous cells', 1], [0.13, 0.17, 'Pancreatobiliary type: complex papillae, atypical nuclei', 1], [0.66, 0.655, 'Flat mucinous lining', 1], [0.7, 0.705, 'No ovarian stroma', 1]] }],
+      key: ['Main-duct IPMN: the main duct is dilated (over 5 mm; 10 mm or more is a high-risk sign) and lined by tumour.', 'Branch-duct IPMN: side branches swell into cysts (over 10 mm) that open into the duct.', 'Thick mucin fills the ducts and cysts; it may extrude from the duodenal papilla.', 'Gastric type: tall columnar cells with abundant mucin on finger-like papillae; mostly low grade.', 'Pancreatobiliary type: complex, branching papillae of mucin-poor cells with atypical nuclei; usually high grade.', 'In a branch-duct cyst the lining can be a single flat layer of gastric-type mucinous cells.', 'Beneath it: ordinary fibrous stroma and pancreatic acini, with no ovarian-type stroma (which defines MCN).'],
+      unique: ['Grows inside the duct system and stays connected with it: the key difference from MCN.', 'Macroscopic (usually 1 cm or more), with papillae and abundant mucin: the difference from PanIN.', 'Epithelial types (gastric, intestinal, pancreatobiliary; MUC2, MUC5AC, MUC1) that predict behaviour: intestinal type gives colloid carcinoma.', 'GNAS mutations in 50–80%, absent from MCN.', 'Main-duct IPMN is the more dangerous: invasive carcinoma in 43.6% against 16.6% for branch-duct IPMN.'],
+      sources: 'Beger HG et al., The Pancreas, 4th ed., 2023, ch. 84, 86, 125, 126; Hingorani 2007; Rodriguez et al. 2007.' },
+    mcn: { title: 'Mucinous cystic neoplasm (MCN)', lead: 'A cyst behind a thick fibrous capsule, lined by mucinous cells over a dense, cellular “ovarian-type” stroma, which the diagnosis requires. It does not connect with the ducts, and occurs almost only in women, in the body or tail.',
+      figures: [{ img: 'mcn-low', w: 1400, h: 933, credit: 'Nephron, via Wikimedia Commons (CC BY-SA 3.0): benign pancreatic mucinous cystic neoplasm, very low magnification.',
+        marks: [[0.14, 0.45, 'Normal pancreas (acini)', 1], [0.31, 0.55, 'Fibrous capsule', 1], [0.5, 0.26, 'Dense, cellular ovarian-type stroma', 1], [0.8, 0.62, 'Cyst (locule) with mucin', -1], [0.43, 0.78, 'Mucinous lining, folded', 1]] },
+        { img: 'mcn-wall', w: 672, h: 428, credit: 'Humpath, via Wikimedia Commons (CC BY-SA 3.0): mucinous cystadenoma of the pancreas.',
+        marks: [[0.43, 0.3, 'Tall columnar cells, apical mucin', 1], [0.33, 0.64, 'Ovarian-type stroma: packed spindle cells, wavy nuclei', 1]] }],
+      key: ['Normal pancreas beside the cyst.', 'A thick fibrous (pseudo)capsule separates the cyst from the gland.', 'Ovarian-type stroma: densely packed spindle cells with wavy nuclei; they carry oestrogen and progesterone receptors and are required for the diagnosis.', 'The cyst (or cysts within it) holds thick mucin; it does not open into the ducts.', 'A lining of columnar mucinous cells, in places folded or flat.', 'At higher power: tall columnar cells with pale apical mucin and basal nuclei.', 'Beneath them, the hypercellular ovarian-type stroma: the hallmark of MCN.'],
+      unique: ['Ovarian-type stroma, which neither PanIN nor IPMN has.', 'No connection with the duct system (IPMN connects).', 'Almost only in women (10–20 : 1), around 45–48 years; over 90% in the body or tail.', 'No GNAS mutation (unlike IPMN).'],
+      sources: 'Beger HG et al., The Pancreas, 4th ed., 2023, ch. 81, 86, 126; Robbins and Cotran, 9th ed., ch. 19; Hingorani 2007.' },
   };
-  const H_E = { mucin: '#d9e2ef', mucinCell: '#e7d6e6', nucleus: '--nucleus', atypical: '#1e1240', stroma: '--collagen', ovarian: '#c58db0', acinus: '#8d58a0', epithelium: '#f0cfe0', wall: '#e9c9c9', capillary: '--capillary' };
-  function lesionScene(key) {
-    if (LES.scenes[key]) return LES.scenes[key];
-    const sc = new THREE.Scene(); sc.environment = scene.environment;
-    sc.add(new THREE.HemisphereLight(0xffffff, 0xd9cdd6, 0.78)); const l1 = new THREE.DirectionalLight(0xffffff, 0.42); l1.position.set(0.5, 1, 0.8); sc.add(l1); const l2 = new THREE.DirectionalLight(0xffffff, 0.25); l2.position.set(-1, -0.3, -0.6); sc.add(l2);
-    const g = new THREE.Group(); g.userData.mats = []; sc.add(g); const set = 'lesion:' + key, R = rng(key.length * 7919 + 17);
-    const mat = (c, extra) => M(g, c, null, Object.assign({ roughness: 0.6 }, extra || {}));
-    const tube = (a, b, r, m) => inst(g, rod, m, [rodMatrix(a, b, r)], 'part');
-    const S = { scene: sc, group: g, focus: new THREE.Vector3() };
-    // Cells of a lining: centres along a surface, each a rounded box with its height along the surface normal.
-    const cellM = (c, normal, along, h, w, l) => { const n = normal.clone().normalize(), a = along.clone().sub(n.clone().multiplyScalar(along.dot(n))).normalize(), t = new THREE.Vector3().crossVectors(n, a);
-      return new THREE.Matrix4().makeBasis(a.multiplyScalar(l / 2), n.multiplyScalar(h / 2), t.multiplyScalar(w / 2)).setPosition(c); };
-    if (key === 'panin') {
-      // A small duct among acini, opened lengthwise, its lining changing along its length: normal cuboidal epithelium, then
-      // low-grade PanIN (tall columnar cells with apical mucin and small basal nuclei), then high-grade PanIN (papillae,
-      // crowded enlarged nuclei that lose their basal position, cells budding into the lumen).
-      const R0 = 45, L = 640, cells = [], nuc = [], atyp = [], muc = [], cores = [], fib = [], acini = [], gradeAt = (x) => (x < -110 ? 0 : x < 120 ? 1 : 2);
-      for (let x = -L / 2; x < L / 2; x += 7.5) { const gr = gradeAt(x), h = gr === 0 ? 9 : 22 + 4 * R(), w = gr === 0 ? 8 : 6.5, n = Math.round(2 * Math.PI * R0 / w);
-        for (let k = 0; k < n; k++) { const th = (k + (Math.round(x / 7.5) % 2) * 0.5) / n * 2 * Math.PI; if (Math.sin(th) > 0.25) continue;   // the near half is cut away
-          const rd = new THREE.Vector3(0, Math.sin(th), Math.cos(th)), c = rd.clone().multiplyScalar(R0 + h / 2).setX(x);
-          cells.push({ m: cellM(c, rd, X, h, w, 7.2), gr });
-          if (gr === 0) nuc.push(new THREE.Matrix4().makeScale(2.3, 2.3, 2.3).setPosition(rd.clone().multiplyScalar(R0 + h * 0.5).setX(x)));
-          else if (gr === 1) { nuc.push(new THREE.Matrix4().makeScale(1.6, 2.4, 1.6).setPosition(rd.clone().multiplyScalar(R0 + h * 0.82).setX(x))); muc.push(cellM(rd.clone().multiplyScalar(R0 + h * 0.25).setX(x), rd, X, h * 0.42, w * 0.85, 6.2)); }
-          else { const f = 0.25 + 0.6 * R(), s = 2.6 + 1.4 * R(); atyp.push(new THREE.Matrix4().makeScale(s, s * (0.8 + 0.5 * R()), s * 0.9).setPosition(rd.clone().multiplyScalar(R0 + h * f).setX(x))); if (R() < 0.4) muc.push(cellM(rd.clone().multiplyScalar(R0 + h * 0.15).setX(x), rd, X, h * 0.25, w * 0.7, 5)); } } }
-      // High-grade papillae: fronds of stroma lined by atypical cells, reaching into the lumen.
-      for (let k = 0; k < 9; k++) { const x = 140 + k * 19 + 6 * R(), th = Math.PI * (1.15 + 0.7 * R()), rd = new THREE.Vector3(0, Math.sin(th), Math.cos(th)), base = rd.clone().multiplyScalar(R0).setX(x), tip = rd.clone().multiplyScalar(R0 - 22 - 14 * R()).setX(x + 6 * (R() - 0.5));
-        cores.push(rodMatrix(base, tip, 4)); const ax = tip.clone().sub(base), len = ax.length(); ax.normalize(); const u = new THREE.Vector3().crossVectors(ax, X).normalize(), v = new THREE.Vector3().crossVectors(ax, u);
-        for (let t = 2; t < len; t += 6) for (let j = 0; j < 6; j++) { const a = j / 6 * 2 * Math.PI + t * 0.3, out = u.clone().multiplyScalar(Math.cos(a)).addScaledVector(v, Math.sin(a)), c = base.clone().addScaledVector(ax, t).addScaledVector(out, 8);
-          cells.push({ m: cellM(c, out, ax, 9, 5.5, 5.5), gr: 2 }); const s = 2.2 + R(); atyp.push(new THREE.Matrix4().makeScale(s, s, s).setPosition(base.clone().addScaledVector(ax, t).addScaledVector(out, 7 + 2 * R()))); } }
-      for (let k = 0; k < 6; k++) { const c = new THREE.Vector3(170 + 120 * R(), -8 - 16 * R(), -10 + 20 * R()); cells.push({ m: new THREE.Matrix4().makeScale(4.5, 4.5, 4.5).setPosition(c), gr: 2 }); atyp.push(new THREE.Matrix4().makeScale(2.8, 2.8, 2.8).setPosition(c)); }   // cells budding off
-      // Periductal stroma and acini round the duct (behind the cut).
-      for (let k = 0; k < 220; k++) { const x = -L / 2 + L * R(), th = Math.PI * (1.0 + R()), rr = R0 + 26 + 18 * R(), rd = new THREE.Vector3(0, Math.sin(th), Math.cos(th)); fib.push(rodMatrix(rd.clone().multiplyScalar(rr).setX(x), rd.clone().multiplyScalar(rr + 2 * R()).setX(x + 30 + 30 * R()), 0.9)); }
-      for (let k = 0; acini.length < 260 && k < 4000; k++) { const p = new THREE.Vector3((R() - 0.5) * (L + 120), -260 * R() + 40, (R() - 0.5) * 520); const r = Math.hypot(p.y, p.z); if (r < R0 + 60 || p.y > -12 || acini.some((q) => q.p.distanceTo(p) < 34)) continue; acini.push({ p, s: 14 + 4 * R() }); }
-      const add = (list, geo, c, name, extra) => { if (list.length) inst(g, geo, mat(c, extra), list, name); };
-      add(cells.filter((c) => c.gr === 0).map((c) => c.m), roundedBox, '--intralobular', 'normalDuctCell'); add(cells.filter((c) => c.gr > 0).map((c) => c.m), roundedBox, H_E.mucinCell, 'paninCell', { he: [1.2, 0.18] });
-      add(nuc, lowball, H_E.nucleus, 'nucleus'); add(atyp, ball, H_E.atypical, 'atypicalNucleus', { roughness: 0.4 }); add(muc, ballHi, H_E.mucin, 'mucin', { roughness: 0.3, he: [1.5, 0.08] });
-      add(cores, rod, '--collagen', 'papillaCore'); add(fib, rod, '--collagen', 'fibre', { roughness: 0.85 }); add(acini.map((a) => new THREE.Matrix4().makeScale(a.s, a.s * 0.9, a.s).setPosition(a.p)), ballHi, H_E.acinus, 'acinusBall', { he: [0.5, 0.3] });
-      tag(set, g, 'Normal duct: cuboidal cells', new THREE.Vector3(-220, -R0 - 6, 0)); tag(set, g, 'Low-grade PanIN: tall columnar cells, apical mucin, basal nuclei', new THREE.Vector3(0, -R0 - 14, -8));
-      tag(set, g, 'High-grade PanIN: papillae, atypical nuclei, loss of polarity', new THREE.Vector3(230, -R0 + 10, 0)); tag(set, g, 'Lumen', new THREE.Vector3(-120, 0, 0)); tag(set, g, 'Acini', new THREE.Vector3(-250, -150, -120)); tag(set, g, 'Periductal stroma', new THREE.Vector3(-60, -R0 - 34, -40));
-    } else if (key === 'ipmn') {
-      // A length of the main duct, dilated and opened lengthwise: papillae on its wall and mucin filling it (main-duct IPMN);
-      // beside it, a side branch swollen into grape-like cysts that still open into the duct (branch-duct IPMN). One papilla is
-      // drawn down to its cells: tall columnar mucinous cells on a fibrovascular core.
-      const Rm = 5000, L = 30000, wall = 900, half = (r, len) => new THREE.CylinderGeometry(r, r, len, 72, 1, true, Math.PI, Math.PI).rotateZ(Math.PI / 2);   // the lower half (y < 0), axis along x
-      const inner = new THREE.Mesh(half(Rm, L), mat(H_E.epithelium, { side: THREE.DoubleSide, he: [1 / 300, 0.25] })), outer = new THREE.Mesh(half(Rm + wall, L), mat(H_E.wall, { side: THREE.DoubleSide, he: [1 / 300, 0.25] }));
-      g.add(inner, outer);
-      const rim = new THREE.Mesh(new THREE.RingGeometry(Rm, Rm + wall, 64, 1, Math.PI, Math.PI), mat(H_E.wall, { side: THREE.DoubleSide, he: [1 / 200, 0.25] })); rim.rotation.y = Math.PI / 2; [-L / 2, L / 2].forEach((x) => { const r = rim.clone(); r.position.x = x; g.add(r); });
-      const paren = new THREE.Mesh(half(Rm + wall + 5000, L), mat(H_E.acinus, { side: THREE.DoubleSide, he: [1 / 900, 0.35] })); g.add(paren);
-      const muc = new THREE.Mesh(half(Rm * 0.97, L * 0.98), mat(H_E.mucin, { transparent: true, opacity: 0.22, depthWrite: false, he: false, side: THREE.DoubleSide })); g.add(muc);
-      const fronds = [], m4 = [];
-      for (let k = 0; k < 260; k++) { const x = (R() - 0.5) * L * 0.92, th = Math.PI * (1.08 + 0.84 * R()), rd = new THREE.Vector3(0, Math.sin(th), Math.cos(th)), base = rd.clone().multiplyScalar(Rm).setX(x);
-        if (Math.abs(x) < 900 && th > Math.PI * 1.35 && th < Math.PI * 1.65) continue;   // room for the featured papilla
-        const len = 700 + 1600 * R(), dir = rd.clone().negate().add(new THREE.Vector3((R() - 0.5) * 0.6, 0, (R() - 0.5) * 0.4)).normalize(); fronds.push(rodMatrix(base, base.clone().addScaledVector(dir, len), 110 + 90 * R())); m4.push(new THREE.Matrix4().makeScale(150, 150, 150).setPosition(base.clone().addScaledVector(dir, len))); }
-      inst(g, rod, mat(H_E.mucinCell, { he: [1 / 60, 0.3] }), fronds, 'papilla'); inst(g, ballHi, mat(H_E.mucinCell, { he: [1 / 60, 0.3] }), m4, 'papillaTip');
-      // The featured papilla at the bottom of the duct: core of stroma with a capillary, lined by tall columnar mucinous cells.
-      const fb = new THREE.Vector3(0, -Rm, 0), ft = new THREE.Vector3(0, -Rm + 950, 0), coreR = 70, cl = [], cn = [], cm = [];
-      tube(fb, ft, coreR, mat('--collagen', { he: [0.4, 0.25] })); tube(fb.clone().setZ(15), ft.clone().setZ(15).setY(ft.y - 40), 7, mat(H_E.capillary, { transparent: true, opacity: 0.7 }));
-      const tipBall = new THREE.Mesh(ballHi, mat('--collagen', { he: [0.4, 0.25] })); tipBall.position.copy(ft); tipBall.scale.setScalar(coreR); g.add(tipBall);
-      for (let y = 10; y < 950; y += 8) { const n = Math.round(2 * Math.PI * (coreR + 14) / 8); for (let j = 0; j < n; j++) { const a = (j + (y / 8 % 2) * 0.5) / n * 2 * Math.PI, out = new THREE.Vector3(Math.cos(a), 0, Math.sin(a)), c = fb.clone().setY(fb.y + y).addScaledVector(out, coreR + 14);
-        cl.push(cellM(c, out, Y, 28, 7.5, 7.5)); cn.push(new THREE.Matrix4().makeScale(1.7, 2.6, 1.7).setPosition(fb.clone().setY(fb.y + y).addScaledVector(out, coreR + 4))); cm.push(cellM(fb.clone().setY(fb.y + y).addScaledVector(out, coreR + 22), out, Y, 11, 6.4, 6.4)); } }
-      inst(g, roundedBox, mat(H_E.mucinCell, { he: [1.2, 0.18] }), cl, 'ipmnCell'); inst(g, lowball, mat(H_E.nucleus), cn, 'nucleus'); inst(g, ballHi, mat(H_E.mucin, { roughness: 0.3, he: [1.5, 0.08] }), cm, 'mucin');
-      // Branch-duct IPMN: a side branch from the duct wall, swollen into cysts that open into the duct.
-      const bRoot = new THREE.Vector3(8000, -2500, -Rm * 0.85), bTip = new THREE.Vector3(9000, -3000, -Rm - 9000); tube(bRoot, bTip, 700, mat(H_E.wall));
-      const cyst = mat(H_E.mucin, { transparent: true, opacity: 0.45, depthWrite: false, he: false }), cystWall = mat(H_E.epithelium, { transparent: true, opacity: 0.35, depthWrite: false, he: false, side: THREE.BackSide });
-      for (let k = 0; k < 6; k++) { const c = bTip.clone().add(new THREE.Vector3((R() - 0.5) * 13000, (R() - 0.5) * 7000, -R() * 9000)), r = 5200 + 2500 * R(); [cyst, cystWall].forEach((m) => { const o = new THREE.Mesh(ballHi, m); o.position.copy(c); o.scale.setScalar(r); g.add(o); }); }
-      tag(set, g, 'Main-duct IPMN: dilated main duct', new THREE.Vector3(-9000, -Rm - 300, 0)); tag(set, g, 'Papillae', new THREE.Vector3(-4000, -Rm + 1400, -1500)); tag(set, g, 'Mucin filling the duct', new THREE.Vector3(5000, -1500, 0));
-      tag(set, g, 'Branch-duct IPMN: cysts that open into the duct', bTip.clone().add(new THREE.Vector3(0, 1500, -2500))); tag(set, g, 'Tall columnar mucinous cells', ft.clone().add(new THREE.Vector3(coreR + 30, -300, 0))); tag(set, g, 'Fibrovascular core', ft.clone().add(new THREE.Vector3(0, -600, 0)));
-      S.focus.set(0, -Rm + 500, 0);
-    } else {
-      // A mucinous cystic neoplasm cut in half: a thick fibrous capsule round several locules full of mucin, separated by
-      // septa, with no connection to the duct running beside it. One stretch of a locule's wall is drawn down to its cells:
-      // a lining of tall columnar mucinous cells on dense "ovarian-type" stroma of spindle cells.
-      const Rc = 25000, cap = 1600, shape = new THREE.Shape(); shape.absarc(0, 0, Rc, 0, Math.PI * 2, false);
-      const loc = [[-7500, 6200, 10000], [12000, 8700, 7500], [9200, -9600, 7000], [-8700, -11200, 6600], [1200, 19100, 3100], [-20000, -5800, 2500]];   // locules that do not overlap; branch cysts above are drawn over 10 mm across
-      loc.forEach(([x, y, r]) => { const h = new THREE.Path(); h.absarc(x, y, r, 0, Math.PI * 2, true); shape.holes.push(h); });
-      const face = new THREE.Mesh(new THREE.ShapeGeometry(shape, 96), mat(H_E.ovarian, { side: THREE.DoubleSide, he: [1 / 400, 0.3] })); g.add(face);
-      const shell = new THREE.Mesh(new THREE.SphereGeometry(Rc, 96, 48, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2).rotateX(Math.PI / 2), mat('--collagen', { side: THREE.DoubleSide, he: [1 / 500, 0.25] })); g.add(shell);
-      const lining = mat(H_E.epithelium, { side: THREE.BackSide, he: [1 / 200, 0.2] }), gel = mat(H_E.mucin, { transparent: true, opacity: 0.35, depthWrite: false, he: false });
-      loc.forEach(([x, y, r]) => { const hemi = new THREE.SphereGeometry(r, 64, 32, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2).rotateX(Math.PI / 2); const o = new THREE.Mesh(hemi, lining); o.position.set(x, y, 0); o.scale.z = Math.min(1, (Rc - 2000) / r * 0.5); g.add(o);
-        const m = new THREE.Mesh(hemi, gel); m.position.set(x, y, 30); m.scale.set(0.98, 0.98, o.scale.z * 0.98); g.add(m); });
-      const duct = new THREE.CatmullRomCurve3([new THREE.Vector3(-60000, -38000, -8000), new THREE.Vector3(0, -40000, -9000), new THREE.Vector3(60000, -36000, -8000)]); g.add(new THREE.Mesh(new THREE.TubeGeometry(duct, 64, 1500, 16, false), mat('--organduct', { he: false })));
-      // The featured wall: a strip of the largest locule's lining at the top of the cut face, with its cells.
-      const [lx, ly, lr] = loc[0], cl = [], cn = [], cm = [], sp = [], spn = [], fib = [];
-      for (let a = 1.25; a < 1.9; a += 7.5 / lr) for (let z = -40; z <= 0; z += 7.5) { const out = new THREE.Vector3(Math.cos(a), Math.sin(a), 0), c = new THREE.Vector3(lx, ly, z + 4).addScaledVector(out, lr + 13);
-        cl.push(cellM(c, out.clone().negate(), new THREE.Vector3(0, 0, 1), 26, 7.5, 7.5)); cn.push(new THREE.Matrix4().makeScale(1.6, 1.6, 2.4).setPosition(new THREE.Vector3(lx, ly, z + 4).addScaledVector(out, lr + 22))); cm.push(cellM(new THREE.Vector3(lx, ly, z + 4).addScaledVector(out, lr + 4), out.clone().negate(), new THREE.Vector3(0, 0, 1), 9, 6.2, 6.2));
-        if (Math.round(z / 7.5) % 2 === 0) for (let d = 34; d < 230; d += 9) { const p = new THREE.Vector3(lx, ly, z + 2 + (R() - 0.5) * 6).addScaledVector(out, lr + d + (R() - 0.5) * 6), along = new THREE.Vector3(-out.y, out.x, 0);
-          sp.push(new THREE.Matrix4().makeBasis(along.clone().multiplyScalar(11), out.clone().multiplyScalar(2.6), new THREE.Vector3(0, 0, 2.6)).setPosition(p)); spn.push(new THREE.Matrix4().makeBasis(along.clone().multiplyScalar(4.5), out.clone().multiplyScalar(1.2), new THREE.Vector3(0, 0, 1.2)).setPosition(p)); }
-        if (R() < 0.3) fib.push(rodMatrix(new THREE.Vector3(lx, ly, z + 2).addScaledVector(out, lr + 240 + 80 * R()), new THREE.Vector3(lx, ly, z + 2).addScaledVector(new THREE.Vector3(Math.cos(a + 0.004), Math.sin(a + 0.004), 0), lr + 250 + 80 * R()), 1.6)); }
-      inst(g, roundedBox, mat(H_E.mucinCell, { he: [1.2, 0.18] }), cl, 'mcnCell'); inst(g, lowball, mat(H_E.nucleus), cn, 'nucleus'); inst(g, ballHi, mat(H_E.mucin, { roughness: 0.3, he: [1.5, 0.08] }), cm, 'mucin');
-      inst(g, ball, mat('#d9a3c2', { he: [0.8, 0.2] }), sp, 'ovarianStromaCell'); inst(g, lowball, mat('#3b2a6e'), spn, 'stromaNucleus'); inst(g, rod, mat('--collagen', { roughness: 0.85 }), fib, 'fibre');
-      const wallAt = new THREE.Vector3(lx, ly, 0).addScaledVector(new THREE.Vector3(Math.cos(1.57), Math.sin(1.57), 0), lr);
-      tag(set, g, 'Thick fibrous capsule', new THREE.Vector3(0, -Rc + 800, -6000)); tag(set, g, 'Locules filled with mucin', new THREE.Vector3(12500, 9000, 400)); tag(set, g, 'Septa: ovarian-type stroma', new THREE.Vector3(2000, -2000, 200));
-      tag(set, g, 'Duct beside it: no connection', duct.getPoint(0.3)); tag(set, g, 'Mucinous columnar lining', wallAt.clone().add(new THREE.Vector3(0, 10, 5))); tag(set, g, 'Ovarian-type stroma (spindle cells)', wallAt.clone().add(new THREE.Vector3(60, 140, 5)));
-      S.focus.set(0, 0, 0);
-    }
-    stainGroup(g); LES.scenes[key] = S; return S;
+  function markSvg(F, n0) {
+    const W = 1000, H = Math.round(1000 * F.h / F.w);
+    return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">` + F.marks.map(([x, y, label, side], k) => {
+      const cx = x * W, cy = y * H, n = n0 + k, tw = label.length * 8.4 + 16, lx = side > 0 ? cx + 22 : cx - 22 - tw, ly = cy - 13;
+      const fx = Math.max(4, Math.min(W - tw - 4, lx));
+      return `<g class="mk"><line x1="${cx}" y1="${cy}" x2="${side > 0 ? fx : fx + tw}" y2="${cy}"/><rect x="${fx}" y="${ly}" width="${tw}" height="26" rx="5"/><text x="${fx + 8}" y="${cy + 5}">${esc(label)}</text><circle cx="${cx}" cy="${cy}" r="15"/><text class="n" x="${cx}" y="${cy + 6}">${n}</text></g>`; }).join('') + '</svg>';
+  }
+  function renderHisto(key) {
+    const box = $('histopanel'), Hd = HISTO[key]; if (!Hd) { box.hidden = true; return; } box.hidden = false;
+    let n = 1; const figs = Hd.figures.map((F) => { const html = `<figure><div class="frame" style="aspect-ratio:${F.w}/${F.h}"><img src="${HISTO_IMG[F.img]}" alt="${esc(Hd.title)}: H&amp;E micrograph"/>${markSvg(F, n)}</div><figcaption>${esc(F.credit)}</figcaption></figure>`; n += F.marks.length; return html; }).join('');
+    const col = { panin: 1, ipmn: 2, mcn: 3 }[key];
+    box.innerHTML = `<div class="hhead"><h2>${esc(Hd.title)}</h2><button type="button" class="hclose" data-lesion="overview">‹ All precursors</button></div><p class="lead">${esc(Hd.lead)}</p>${figs}`
+      + `<div class="hcols"><div><h3>Marked features</h3><ol>${Hd.key.map((t) => `<li>${esc(t)}</li>`).join('')}</ol></div><div class="apart"><h3>What sets it apart</h3><ul>${Hd.unique.map((t) => `<li>${esc(t)}</li>`).join('')}</ul></div></div>`
+      + `<h3>PanIN, IPMN and MCN compared</h3><div class="tablewrap"><table><thead><tr><th></th><th${col === 1 ? ' class="on"' : ''}>PanIN</th><th${col === 2 ? ' class="on"' : ''}>IPMN</th><th${col === 3 ? ' class="on"' : ''}>MCN</th></tr></thead><tbody>`
+      + COMPARE_ROWS.map((r) => `<tr><th>${esc(r[0])}</th>${r.slice(1).map((c, i) => `<td${i + 1 === col ? ' class="on"' : ''}>${esc(c)}</td>`).join('')}</tr>`).join('') + '</tbody></table></div>'
+      + `<p class="src">Sources: ${esc(Hd.sources)} Comparison: Beger 4th ed. ch. 81, 86, 126; Hingorani 2007. Text in our own words. Images keep their own licences.</p>`;
+    box.querySelector('.hclose').addEventListener('click', () => exitLesion()); box.scrollTop = 0;
   }
   function setMode(m) {
     if (m === MODE || !['pancreas', 'precursors'].includes(m)) return;
@@ -1379,16 +1331,12 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
   }
   document.querySelectorAll('[data-mode]').forEach((b) => b.addEventListener('click', () => setMode(b.dataset.mode)));
   function enterLesion(key) {
-    const V0 = LESION_VIEWS[key]; if (!V0) return; if (MODE !== 'precursors') setMode('precursors');
-    const S = lesionScene(key); if (!LES.view) LES.saved = { target: controls.target.clone(), dir: camera.position.clone().sub(controls.target).normalize() };
-    LES.view = key; LES.pending = null; flight = null; flash();
-    controls.target.copy(S.focus); camera.position.copy(S.focus).addScaledVector(new THREE.Vector3(...V0.dir).normalize(), V0.start); controls.update();
-    lastLevel = ''; renderLesionCard(); hashNow();
+    if (!LESION_VIEWS[key]) return; if (MODE !== 'precursors') setMode('precursors');
+    LES.view = key; LES.pending = null; flight = null; flash(); renderHisto(key); lastLevel = ''; renderLesionCard(); hashNow();
   }
   function exitLesion(quiet) {
-    if (!LES.view) return; LES.view = null; LES.pending = null; if (!quiet) flash();
-    const sv = LES.saved || { target: new THREE.Vector3(), dir: new THREE.Vector3(0, 0.25, 1).normalize() };
-    controls.target.copy(sv.target); camera.position.copy(sv.target).addScaledVector(sv.dir, 130000); controls.update(); lastLevel = ''; renderLesionCard(); hashNow();
+    if (!LES.view) return; LES.view = null; LES.pending = null; if (!quiet) flash(); renderHisto(null);
+    const dir = camera.position.clone().sub(controls.target); if (dir.lengthSq() < 1e-6) dir.set(0, 0.25, 1); camera.position.copy(controls.target).addScaledVector(dir.normalize(), Math.max(130000, camera.position.distanceTo(controls.target))); controls.update(); lastLevel = ''; renderLesionCard(); hashNow();
   }
   function flash() { const f = $('flash'); f.style.transition = 'none'; f.style.opacity = '1'; requestAnimationFrame(() => { f.style.transition = 'opacity .45s'; f.style.opacity = '0'; }); }
   document.querySelectorAll('[data-lesion]').forEach((b) => b.addEventListener('click', () => { const k = b.dataset.lesion; if (k === 'overview') { if (LES.view) exitLesion(); else flyTo(STOPS.organ, undefined, 'tissue'); } else enterLesion(k); }));
@@ -1400,30 +1348,26 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
   }
   // Insets beside the organ, each a live view of one lesion's architecture, joined by a line to where it arises.
   const INSETS = [{ key: 'mcn', pos: { right: 16, top: 70 } }, { key: 'ipmn', pos: { right: 16, bottom: 70 } }, { key: 'panin', pos: { left: 16, bottom: 70 } }];
+  const INSET_CROP = { panin: '45% 50%', ipmn: '62% 12%', mcn: '50% 40%' }, INSET_IMG = { panin: 'panin', ipmn: 'ipmn', mcn: 'mcn-low' };
   function insetDom() {
     const box = $('insets'); if (box.dataset.built) return; box.dataset.built = '1';
-    box.innerHTML = '<svg aria-hidden="true"></svg>' + INSETS.map((t) => `<div class="inset" data-inset="${t.key}" style="${Object.entries(t.pos).map(([k, v]) => `${k}:${v}px`).join(';')}" role="button" tabindex="0" aria-label="Open the ${LESION_VIEWS[t.key].title} view"><b>${LESION_VIEWS[t.key].title} ›</b></div>`).join('');
+    box.innerHTML = '<svg aria-hidden="true"></svg>' + INSETS.map((t) => `<div class="inset" data-inset="${t.key}" style="${Object.entries(t.pos).map(([k, v]) => `${k}:${v}px`).join(';')};background-image:url(${HISTO_IMG[INSET_IMG[t.key]]});background-position:${INSET_CROP[t.key]}" role="button" tabindex="0" aria-label="Open ${LESION_VIEWS[t.key].title}: histology"><b>${LESION_VIEWS[t.key].title} ›</b></div>`).join('');
     box.querySelectorAll('[data-inset]').forEach((el) => { el.addEventListener('click', () => enterLesion(el.dataset.inset)); el.addEventListener('keydown', (e) => { if (e.key === 'Enter') enterLesion(el.dataset.inset); }); });
   }
   function drawInsets(now, show) {
     const box = $('insets'); box.style.display = show ? '' : 'none'; if (!show) return; insetDom();
     const st = stage.getBoundingClientRect(), svg = box.querySelector('svg'), lines = [];
     INSETS.forEach((t) => { const el = box.querySelector(`[data-inset="${t.key}"]`), r = el.getBoundingClientRect(), x = r.left - st.left, y = r.top - st.top, w = r.width, h = r.height;
-      const S = lesionScene(t.key), V0 = LESION_VIEWS[t.key], cam = LES.insetCams[t.key] || (LES.insetCams[t.key] = new THREE.PerspectiveCamera(30, 1, 1, 1e7)), a = now * 0.0004 + t.key.length;
-      cam.aspect = w / h; const d = V0.start * 1.25; cam.position.copy(S.focus).add(new THREE.Vector3(...V0.dir).normalize().add(new THREE.Vector3(Math.sin(a) * 0.35, 0, 0)).normalize().multiplyScalar(d));   // swings gently, always from the front cam.lookAt(S.focus); cam.near = d / 80; cam.far = d * 50; cam.updateProjectionMatrix();
-      const yb = st.height - (y + h); renderer.setViewport(x + 2, yb + 2, w - 4, h - 4); renderer.setScissor(x + 2, yb + 2, w - 4, h - 4); renderer.setClearColor(0xf7f0f4, 1); renderer.clear(); renderer.render(S.scene, cam); renderer.setClearColor(0x000000, 0);
-      const at = lesionGroup && lesionGroup.getObjectByName(V0.at); if (!at) return; const p = groups.organ.userData.inner.localToWorld(at.userData.at.clone()).project(camera);
+      const at = lesionGroup && lesionGroup.getObjectByName(LESION_VIEWS[t.key].at); if (!at) return; const p = groups.organ.userData.inner.localToWorld(at.userData.at.clone()).project(camera);
       const px = (p.x + 1) / 2 * UI.w, py = (1 - p.y) / 2 * UI.h, ex = Math.max(x, Math.min(x + w, px)), ey = Math.max(y, Math.min(y + h, py)); lines.push(`<line x1="${ex}" y1="${ey}" x2="${px}" y2="${py}"/><circle cx="${px}" cy="${py}" r="5"/>`); });
     svg.innerHTML = `<g stroke="var(--accent)" stroke-width="2" fill="var(--accent)">${lines.join('')}</g>`;
   }
-  function lesionFrame(now, v) {
-    const S = lesionScene(LES.view), V0 = LESION_VIEWS[LES.view], d = camera.position.distanceTo(controls.target);
-    if (d > V0.exit) { exitLesion(); return; }
-    camera.near = Math.max(0.05, d / 80); camera.far = d * 400; camera.updateProjectionMatrix();
-    const key = 'lesion' + V0.title.replace(/\W/g, ''); if (key !== lastLevel) { lastLevel = key; UI.levelname.textContent = V0.title; $('info').textContent = INFO[key] || ''; applyDataFor(key, key); showMarkers(null); }
-    drawLabels('lesion:' + LES.view, 1); drawScale(d);
-    controls.update(); renderer.setViewport(UI.x, 0, UI.w, UI.h); renderer.setScissor(UI.x, 0, UI.w, UI.h); renderer.render(S.scene, camera); drawInsets(now, false);
+  function lesionFrame(now, v) {   // the histology panel covers the view; nothing 3D is drawn behind it
+    const V0 = LESION_VIEWS[LES.view], key = 'lesion' + V0.title.replace(/\W/g, '');
+    if (key !== lastLevel) { lastLevel = key; UI.levelname.textContent = V0.title + ': histology'; $('info').textContent = INFO[key] || ''; applyDataFor(key, key); showMarkers(null); }
+    drawLabels(null, 0); drawInsets(now, false); renderer.setViewport(UI.x, 0, UI.w, UI.h); renderer.setScissor(UI.x, 0, UI.w, UI.h); renderer.clear();
   }
+
   // ---------- links to a view: #site=12&view=islet&stain=if opens the page there; the address follows the view
   const VIEW_KEYS = { organ: ['organ'], lobules: ['gross'], tissue: ['tissue'], acinus: ['detail', 'acinus'], 'acinus-cells': ['cells', 'acinus'], 'acinar-cell': ['cell', 'acinus'],
     islet: ['detail', 'islet'], 'islet-cells': ['cells', 'islet'], 'beta-cell': ['cell', 'islet', 'beta'], 'alpha-cell': ['cell', 'islet', 'alpha'], 'delta-cell': ['cell', 'islet', 'delta'], duct: ['detail', 'duct'], 'duct-cells': ['cells', 'duct'], 'duct-cell': ['cell', 'duct'] };

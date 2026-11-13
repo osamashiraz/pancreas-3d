@@ -84,12 +84,14 @@ The switch at the top left chooses what to show: **Pancreas** (organ to cell), *
 | Main-duct IPMN | main duct > 5 mm (≥ 10 mm high-risk) | head | centre: main duct |
 | Branch-duct IPMN | grape-like cysts > 10 mm | head, neck, uncinate | major side branches |
 
-Clicking a lesion or its inset, or zooming into it, opens its own view, down to its cells:
+Clicking a lesion or its inset, or zooming into it, opens its **histology**: real H&E micrographs (open-licensed, credited) with the key features numbered and explained, what sets the lesion apart, and a table comparing PanIN, IPMN and MCN:
 
 | PanIN | IPMN | MCN |
 |---|---|---|
-| ![PanIN](docs/images/panin.jpg) | ![IPMN](docs/images/ipmn.jpg) | ![MCN](docs/images/mcn.jpg) |
-| A small duct opened lengthwise: normal cuboidal lining → low-grade PanIN (tall columnar cells, apical mucin, basal nuclei) → high-grade (papillae, atypical nuclei, loss of polarity) | A dilated main duct with finger-like papillae and mucin; beside it grape-like branch-duct cysts that open into the duct; one papilla drawn to its cells | A cyst cut in half: fibrous capsule, mucin-filled locules, septa of ovarian-type stroma; no connection with the duct; one stretch of wall drawn to its cells |
+| ![PanIN histology](docs/images/panin.jpg) | ![IPMN histology](docs/images/ipmn.jpg) | ![MCN histology](docs/images/mcn.jpg) |
+| Normal duct → PanIN-1a → 1b → 2 → 3: low cuboidal cells become tall columnar with apical mucin, then micropapillae and papillae with crowded, atypical nuclei; KRAS and telomere shortening first | Gross specimen and H&E: dilated main duct and branch-duct cysts that open into it; tall mucinous papillae (gastric type), complex papillae (pancreatobiliary type); ordinary stroma, no ovarian stroma | Fibrous capsule, mucin-filled cyst, mucinous columnar lining, and the dense, cellular ovarian-type stroma of spindle cells with wavy nuclei that defines it |
+
+Images: Hackeng et al., *Diagn Pathol* 2016 (CC BY 4.0); Shibata et al., *Clin J Gastroenterol* 2017 (CC BY 4.0); Nephron and Humpath, Wikimedia Commons (CC BY-SA 3.0). See [`viewer/assets/histology/CREDITS.md`](viewer/assets/histology/CREDITS.md).
 
 Each comes with a card on its appearance, grading, genes, who it affects and survival, in our own words, citing Hingorani 2007, Rodriguez et al. 2007, *The Pancreas: An Integrated Textbook* (Beger et al., 4th ed., 2023) and *Robbins and Cotran Pathologic Basis of Disease* (9th ed.). Placement on the organ is simulated by rule; drawn sizes follow the stated sizes.
 
