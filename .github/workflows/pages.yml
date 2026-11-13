@@ -3,7 +3,7 @@ name: Deploy viewer to GitHub Pages
 on:
   push:
     branches: [main]
-    paths: ['dist/**', '.github/workflows/pages.yml']
+    paths: ['dist/**', 'viewer/test/**', '.github/workflows/pages.yml']
   workflow_dispatch:
 
 permissions:
@@ -16,7 +16,32 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  smoke:
+    # Load the built viewer in headless Chromium (software WebGL) and walk every stage before it is published.
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Playwright and Chromium
+        run: |
+          pip install playwright==1.48.0
+          python -m playwright install --with-deps chromium
+      - name: Smoke test
+        env:
+          SMOKE_WAIT: '15000'
+        run: python viewer/test/smoke.py dist/pancreas-organ-to-cell.html
+      - name: Keep the screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-screenshots
+          path: viewer/test/out/
+
   deploy:
+    needs: smoke
     runs-on: ubuntu-latest
     environment:
       name: github-pages

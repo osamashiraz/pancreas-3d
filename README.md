@@ -64,6 +64,7 @@ The pancreas is two organs in one, and the model shows both:
 - **Cut open** a structure, **slice apart** (organ into transverse slices, tissue into serial sections), **split screen** to compare two views, **compare head, body and tail**.
 - **Play the journey**: a 13-step narrated tour in Google's UK English female voice (Chrome; other browsers use a standard UK voice).
 - Click any cell or structure to name it, isolate it or fade it.
+- **Links to a view**: the address follows what you are looking at, e.g. [`#site=9&view=islet&stain=if`](https://osamashiraz.github.io/pancreas-3d/#site=9&view=islet&stain=if), so a view can be shared or used in teaching.
 
 ## Datasets and sources
 

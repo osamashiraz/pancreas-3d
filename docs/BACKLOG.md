@@ -9,8 +9,7 @@
 6. Verify two citations against the books: Gray's Anatomy 42nd ed. (vessel anatomy), Japan Pancreas Society classification (lymph node stations).
 7. Report the HRA crosswalk error (male superior mesenteric vein mapped to UBERON:0001182, the artery).
 
-8. Layers opened in place: turning the view far from the line going in while deep in the opening looks into the wall of the lobule column (as in MouseBio_3D); names are not hidden behind walls. Around 2 mm from the site the duct tree near the line can crowd the view (the large interlobular duct may pass close to it).
-9. `viewer/test/smoke.py` still checks branches only; add a check of the layer stops (15,000, 4,200 and 800 µm).
+8. Layers opened in place: turning the view far from the line going in while deep in the opening looks into the wall of the lobule column (as in MouseBio_3D); names behind that wall are hidden. Around 2 mm from the site the duct tree near the line can crowd the view (the large interlobular duct may pass close to it).
 
 ## Next steps (agreed or proposed)
 - Marker genes on click from the ASCT+B table (CPA1, PRSS1 for acinar; KRT19, CFTR for duct; INS, GCG, SST, PPY).

@@ -167,7 +167,7 @@ ol{font-size:12.5px;color:var(--muted);padding-left:18px}ol li{margin-bottom:5px
    <li><span class="sw" style="background:var(--slc26)"></span><span>SLC26A6, apical Cl⁻/HCO₃⁻ exchanger</span></li>
    <li><span class="sw" style="background:var(--basement)"></span><span>Basement membrane, beneath the cell</span></li>
   </ul>
-  <p class="note" data-for="tissue detail cells cell">Acinar cells reach out until they meet a neighbouring acinus, a vessel, a duct or the islet, so acini deform against one another; they fill 52% of the block. Sizes of acinar, centroacinar, duct and beta cells, acini, granules, capillaries and stellate cells are <span class="unv">typical values not yet sourced</span>; the duct tree and centroacinar cells are described in rat (Endo 2002). The block is generic: the same wherever you zoom in.</p>
+  <p class="note" data-for="tissue detail cells cell">Acinar cells reach out until they meet a neighbouring acinus, a vessel, a duct or the islet, so acini deform against one another; they fill 52% of each tested block. Sizes of acinar, centroacinar, duct and beta cells, acini, granules, capillaries and stellate cells are <span class="unv">typical values not yet sourced</span>; the duct tree and centroacinar cells are described in rat (Endo 2002). The core is cut from the 300 µm block built and tested for its region, or generated in your browser from the site’s seed by the same rules.</p>
   <h2>Sources</h2>
   <ol>
    <li>HRA 3D reference organs (HuBMAP), from the Visible Human Project. CC BY 4.0.</li>
@@ -1113,7 +1113,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
     if (i === site) return; site = i; blockRegion = SITE_LIST[i].region; B = blockOf(i);
     const drop = (g) => { if (g) scene.remove(g); };
     drop(groups.block); groups.block = null; if (SLICE.block) { drop(SLICE.block); SLICE.block = null; }
-    refocus(); orientLayers();
+    refocus(); orientLayers(); hashNow();
   }
   // The line going in at the site sets the frame of the openings; the flat top of the core passes through the islet.
   function orientLayers() { const S0 = siteAxis(SITE_LIST[site]); ORG_TOL.value.makeRotationFromQuaternion(quatFromTo(S0.axis, Z)); LAYER.F.value.w = THREE.MathUtils.clamp(I.dot(S0.axis), -60, 60); }
@@ -1446,7 +1446,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
   window.addEventListener('keydown', (e) => { if (e.key !== 'Escape') return; const lv = levelAt(camera.position.distanceTo(controls.target));
     const up = { cell: 'cells', cells: 'detail', detail: 'tissue', tissue: 'gross', gross: 'organ' }[lv]; if (up) flyTo(stopFor(up), undefined, MODE_OF[up]); });
   $('surround').addEventListener('change', (e) => { surroundings = e.target.checked; });
-  document.querySelectorAll('[data-stain]').forEach((b) => b.addEventListener('click', () => { stain = b.dataset.stain;
+  document.querySelectorAll('[data-stain]').forEach((b) => b.addEventListener('click', () => { stain = b.dataset.stain; setTimeout(hashNow);
     document.querySelectorAll('[data-stain]').forEach((x) => x.setAttribute('aria-pressed', String(x === b))); document.body.dataset.stain = stain; }));
 
   // ---------- toggles
@@ -1493,8 +1493,9 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
   // ---------- play the journey
   const TOUR = [
     { d: 2.6e5, br: 'acinus', m: 'tissue', say: 'The pancreas lies across the back of the abdomen, behind the stomach. Its head sits in the C-shaped curve of the duodenum, and its neck, body and tail run to the left, the tail reaching towards the spleen. It is two glands in one: an exocrine gland that makes digestive juice, and scattered endocrine islets that release hormones into the blood.' },
-    { d: 4200, m: 'tissue', say: 'At low magnification, thin septa of connective tissue divide the gland into lobules, and carry its larger ducts and vessels. Most of each lobule is densely stained exocrine tissue. The islets of Langerhans stand out among it as paler, rounded islands.' },
-    { d: 800, m: 'tissue', say: 'Inside a lobule, grape-like acini bud from a branching tree of small ducts, with capillaries and a little connective tissue between them. The islet sits among the acini without a duct of its own. Its hormones leave through its capillaries.' },
+    { d: 15000, m: 'tissue', say: 'Zooming in, the surface of the gland opens around the chosen spot. Inside, the tissue is divided into lobules, a millimetre or two across, by thin septa of connective tissue. The septa carry the larger ducts, vessels and nerves.' },
+    { d: 4200, m: 'tissue', say: 'The lobules near the spot open in turn to show their skeleton: a branching tree of ducts. A large interlobular duct runs between the lobules beside an artery and a vein. Smaller ducts enter each lobule, and the finest end in grape-like clusters of acini. Paler, rounded islets of Langerhans are scattered among them.' },
+    { d: 800, m: 'tissue', say: 'At the bottom of the opening lies a small core of tissue, cut through an islet. Densely stained acini surround it, budding from small ducts, with capillaries and a little connective tissue between them. The islet has no duct of its own. Its hormones leave through its capillaries.' },
     { d: 210, m: 'structure', say: 'Each acinus is a cluster of pyramidal cells around a tiny central lumen. In an H and E stain, the base of each cell is purple, because it is packed with rough endoplasmic reticulum, and its apex is pink with zymogen granules: the stored digestive enzymes.' },
     { d: 100, m: 'cells', say: 'Pulled apart, the cells show their shape: broad at the base, narrow at the lumen, with a round nucleus near the base. The pale cells left at the centre are centroacinar cells. They are the first cells of the duct, and are found only in the pancreas.' },
     { d: 26, m: 'cell', say: 'Inside one acinar cell, enzymes are made on the rough endoplasmic reticulum, packaged in the Golgi apparatus, and stored as zymogen granules at the apex, until a meal signals their release into the lumen.' },
@@ -1545,10 +1546,21 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
   // ---------- names
   let namesOn = true; $('names').addEventListener('change', (e) => { namesOn = e.target.checked; });
   let labelLayer = VIEWS[0].ui.labels, pool = VIEWS[0].ui.pool;
+  // A name is hidden when the solid lobules stand between it and the camera, as when the view is turned inside the opening.
+  // The test follows the shader: points along the line of sight are tested against the column and its crater-shaped hole.
+  function hiddenByLobules(p) {
+    const g = GROSS[site]; if (!g || COMPARE.on || !(g.userData.w > 0.5)) return false;
+    const m = g.userData.toL.value, a = camera.position.clone().applyMatrix4(m), b = p.clone().applyMatrix4(m), len = a.distanceTo(b), q = new THREE.Vector3();
+    const R = LAYER.R.value, S = LAYER.S.value, F = LAYER.F.value;
+    for (let k = 1; k < 32; k++) { const t = k / 32 * 0.97; if (t * len < camera.near) continue; q.lerpVectors(a, b, t); const r = Math.hypot(q.x, q.y);
+      if (q.z < -BELOW || q.z > g.userData.top || r > R.x) continue;
+      if (!(r < R.y + Math.max(0, q.z - S.x) * S.y && q.z > F.x)) return true; }
+    return false;
+  }
   function drawLabels(set, w) {
     let used = 0; const W = UI.w, H = UI.h, placed = [];
     if (namesOn && set && w > 0.5) for (const o of LABELS[set] || []) {
-      const p = o.getWorldPosition(new THREE.Vector3()); if (o.userData.check && !o.userData.check(p)) continue;
+      const p = o.getWorldPosition(new THREE.Vector3()); if (o.userData.check && !o.userData.check(p)) continue; if (set !== 'organ' && hiddenByLobules(p)) continue;
       const sl = set === 'organ' ? SLICE.organ : set === 'tissue' ? SLICE.block : null;
       if (sl && sl.visible) { const { n, axis, th } = sl.userData, c = p.dot(axis), s0 = sl.userData.slabs[0];
         const k = Math.max(0, Math.min(n - 1, Math.floor((c - s0.lo) / th))); p.addScaledVector(axis, sl.userData.slabs[k].slab.position.dot(axis)); }
@@ -1640,7 +1652,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
       if (COMPARE.on) g.position.copy(COMPARE.right).multiplyScalar((ci - 1) * 5600); else g.position.set(0, 0, 0); g.quaternion.copy(COMPARE.on ? COMPARE.q : g.userData.q); g.updateMatrixWorld(true); g.userData.toL.value.copy(g.matrixWorld).invert();
       if (show) { stainGroup(g); const R0 = LAYER.R.value.x, rr = (LAYER.R.value.y + Math.min(R0, Hv(d) / 2)) / 2; g.userData.wall.scale.set(R0 * 0.995 + 1, R0 * 0.995 + 1, g.userData.top + BELOW);
         g.userData.ring.position.set(rr * 0.83, rr * 0.56, Math.min(g.userData.top, 0.7 * d)); }
-      fade(g, show ? w.gross : 0); });
+      g.userData.w = show ? w.gross : 0; fade(g, g.userData.w); });
     if (w.block > 0.01) { ensureBlock(); stainGroup(groups.block); if (SLICE.block) stainGroup(SLICE.block); } fade(groups.block, w.block);
     // Slice apart: the organ while it is in view, otherwise the block.
     const slicing = SLICE.value > 0.001, inner = groups.organ.userData.inner;
@@ -1666,7 +1678,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
         : st(site) ? `Site ${site + 1}, in the ${blockRegion}: round the line going in, ${st(site).lobules} lobules are opened to their ducts, with ${st(site).count.toLocaleString('en')} islets in ${Math.round(st(site).volume)} mm³ (${Math.round(st(site).density)} per mm³).` : '';
       $('grossstats').textContent = txt; }
     if (key !== lastLevel) { lastLevel = key; UI.levelname.textContent = LEVEL_NAMES(key);
-     if (v.i === focus) { $('info').textContent = INFO[key];
+     if (v.i === focus) { writeHash(lv); $('info').textContent = INFO[key];
       document.querySelectorAll('[data-for]').forEach((el) => { el.style.display = el.dataset.for.split(' ').some((x) => x === key || x === lv) ? '' : 'none'; });
       updatePickers();
       document.querySelectorAll('.ladder button').forEach((b) => { const [l, br] = b.dataset.go.split(':'); b.setAttribute('aria-current', String(l === lv && (!br || br === branch))); }); } }
@@ -1692,8 +1704,20 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
     for (let k = 0; k < n; k++) { const v = VIEWS[k]; activate(v); viewFrame(now, v); save(v); }
     activate(VIEWS[focus]);
   }
+  // ---------- links to a view: #site=12&view=islet&stain=if opens the page there; the address follows the view
+  const VIEW_KEYS = { organ: ['organ'], lobules: ['gross'], tissue: ['tissue'], acinus: ['detail', 'acinus'], 'acinus-cells': ['cells', 'acinus'], 'acinar-cell': ['cell', 'acinus'],
+    islet: ['detail', 'islet'], 'islet-cells': ['cells', 'islet'], 'beta-cell': ['cell', 'islet'], duct: ['detail', 'duct'], 'duct-cells': ['cells', 'duct'], 'duct-cell': ['cell', 'duct'] };
+  const viewName = (lv) => Object.keys(VIEW_KEYS).find((k) => { const [l, br] = VIEW_KEYS[k]; return l === lv && (!br || br === branch); }) || 'organ';
+  const hashNow = () => writeHash(levelAt(camera.position.distanceTo(controls.target)));
+  let hashReady = false; const START_HASH = location.hash;   // the link the page was opened with is read once the organ is built
+  function writeHash(lv) { if (!hashReady || splitOn || tour || site < 0) return; const h = `#site=${site + 1}&view=${viewName(lv)}${stain === 'if' ? '&stain=if' : ''}`;
+    if (location.hash !== h) try { history.replaceState(null, '', h); } catch (e) { /* a sandboxed page may refuse */ } }
+  function readHash(h) { const q = new URLSearchParams((typeof h === 'string' ? h : location.hash).slice(1)), n = +q.get('site'), v = VIEW_KEYS[q.get('view')];
+    if (n >= 1 && n <= SITE_LIST.length && n - 1 !== site) setSite(n - 1);
+    if (q.get('stain') === 'if') document.querySelector('[data-stain=if]').click();
+    if (v && v[0] !== 'organ') { const [lvl, br] = v; if (br) document.querySelectorAll('[data-branch]').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.branch === br))); flyTo(stopFor(lvl, br), br, MODE_OF[lvl]); } }
   matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => location.reload());
-  buildOrgan().then(() => { camera.position.set(0, 0.25, 1).normalize().multiplyScalar(STOPS.organ); controls.target.set(0, 0, 0); controls.update(); $('status').style.display = 'none'; renderer.setAnimationLoop(frame); })
+  buildOrgan().then(() => { camera.position.set(0, 0.25, 1).normalize().multiplyScalar(STOPS.organ); controls.target.set(0, 0, 0); controls.update(); $('status').style.display = 'none'; renderer.setAnimationLoop(frame); readHash(START_HASH); hashReady = true; window.addEventListener('hashchange', () => readHash()); })
     .catch((e) => { $('status').textContent = 'The organ could not be read: ' + e; });
   window.__zoom = { split: setSplit, focus: setFocus, views: () => VIEWS.map((v) => [v.STAGE.mode, v.branch, Math.round(v.camera.position.distanceTo(v.controls.target))]), stage: () => STAGE.mode, flyTo, setBranch: (k) => { branch = k; }, distance: () => camera.position.distanceTo(controls.target) };
 })();
