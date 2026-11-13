@@ -159,7 +159,7 @@ test('every circuit route joins structures of the inventory', () => {
 
 test('unverified references are marked so they cannot be committed unnoticed', () => {
   const unverified = Object.entries(REFS).filter(([, ref]) => !ref.verified).map(([key]) => key);
-  assert.deepEqual(unverified.sort(), ['GRAY', 'JPS']);
+  assert.deepEqual(unverified.sort(), ['GRAY']);
 });
 
 test('the loader builds only ready structures, in millimetres, centred on the pancreas', async () => {

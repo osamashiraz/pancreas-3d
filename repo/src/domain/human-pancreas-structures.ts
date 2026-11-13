@@ -61,7 +61,7 @@ export const simulatedAssetOf = (sex: Sex): SimulatedAsset => `pancreas-simulate
 export interface Branch { readonly name: string; readonly via: readonly Landmark[] }
 export const branchNode = (structureId: string, branch: string) => `sim--${structureId.replace(':', '--')}--${branch}`;
 
-/** A lymph node station, numbered as the Japan Pancreas Society does (reference marked unverified in REFS). */
+/** A lymph node station, numbered as the Japan Pancreas Society does (eighth edition, Table 1; see REFS.JPS). */
 export interface Station { readonly name: string; readonly label: string; readonly count: number }
 /** Node of one lymph node in the simulated file: `node--human-<sex>--<structure>--<station>-<n>`, counting from 1. */
 export const lymphNode = (structureId: string, station: string, n: number) => `node--${structureId.replace(':', '--')}--${station}-${n}`;
@@ -101,7 +101,7 @@ export const REFS = {
   CABRERA: { verified: true, text: 'Cabrera O, Berman DM, Kenyon NS, Ricordi C, Berggren PO, Caicedo A. The unique cytoarchitecture of human pancreatic islets has implications for islet cell function. Proc Natl Acad Sci U S A 2006;103(7):2334-9. doi:10.1073/pnas.0510790103' },
   WALKER: { verified: true, text: 'Walker JT, Saunders DC, Brissova M, Powers AC. The human islet: mini-organ with mega-impact. Endocr Rev 2021;42(5):605-657. doi:10.1210/endrev/bnab010' },
   GRAY: { verified: false, text: 'Standring S, ed. Gray\'s Anatomy: The Anatomical Basis of Clinical Practice. 42nd ed. Elsevier, 2021. Chapter on the pancreas.' },
-  JPS: { verified: false, text: 'Japan Pancreas Society. Classification of Pancreatic Carcinoma. 4th English ed. Kanehara, 2017. (Lymph node stations.)' },
+  JPS: { verified: true, text: 'Ishida M, Fujii T, Kishiwada M, et al. Japanese classification of pancreatic carcinoma by the Japan Pancreas Society: eighth edition. J Hepatobiliary Pancreat Sci 2024;31(11):755-68. doi:10.1002/jhbp.12056. (Table 1: station numbers and names of lymph nodes.)' },
 } as const;
 const R = (...keys: (keyof typeof REFS)[]) => keys.map((key) => REFS[key].text);
 
@@ -274,13 +274,13 @@ export function pancreasStructures(sex: Sex): readonly StructurePlan[] {
     stations(sex, 'nodes-pancreaticoduodenal', 'Pancreaticoduodenal lymph nodes (stations 13 and 17)', [
       { name: '13a', label: 'Posterior, above the papilla', count: 2 }, { name: '13b', label: 'Posterior, below the papilla', count: 2 },
       { name: '17a', label: 'Anterior, above the papilla', count: 2 }, { name: '17b', label: 'Anterior, below the papilla', count: 2 }],
-      'Along the arcades, behind (13) and in front of (17) the head. They are placed on the simulated arcades, so they inherit their uncertainty.'),
+      'Along the arcades, behind (13) and in front of (17) the head. The eighth edition records 13 and 17 without the division above (a) and below (b) the papilla used by earlier editions; it is kept here only to spread the nodes along the arcades. They are placed on the simulated arcades, so they inherit their uncertainty.'),
     stations(sex, 'nodes-hepatic-artery', 'Nodes along the common hepatic artery (station 8)', [
       { name: '8a', label: 'Anterosuperior', count: 3 }, { name: '8p', label: 'Posterior', count: 1 }],
       'In front of and above (8a) and behind (8p) the common hepatic artery.'),
     stations(sex, 'nodes-sma', 'Nodes along the superior mesenteric artery (station 14)', [
       { name: '14', label: 'Round the root of the superior mesenteric artery', count: 3 }],
-      'Round the root of the superior mesenteric artery, from its origin to the inferior pancreaticoduodenal artery. Their removal is part of resection for cancer of the head.'),
+      'Round the root of the superior mesenteric artery, from its origin to the inferior pancreaticoduodenal artery. The eighth edition divides 14 by the side of a tumour (14t, 14op), which a model without a tumour cannot show. Their removal is part of resection for cancer of the head.'),
     stations(sex, 'nodes-splenic', 'Nodes along the splenic artery and at the splenic hilum (stations 10 and 11)', [
       { name: '11p', label: 'Along the proximal splenic artery', count: 2 }, { name: '11d', label: 'Along the distal splenic artery', count: 2 },
       { name: '10', label: 'At the splenic hilum', count: 2 }],
