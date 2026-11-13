@@ -3,7 +3,7 @@
 ## Open issues
 1. Some nuclei in cut acinar cells render as rings rather than solid dots (cause not found; cut-face shading works for cells and islet nuclei).
 2. The 4 mm piece in Cell types colours was not visually checked (same code path as the acinus, which was).
-3. Narration voice depends on the browser: Google UK English Female exists only in Chrome; others fall back (Microsoft Sonia/Libby, Google UK English Male, Daniel/Serena/Kate). Audio was never testable in headless runs.
+3. Narration offers Google UK English Female (default) and Male, which exist only in Chrome; other browsers fall back to standard UK narrators (Microsoft Sonia/Libby/Ryan, Apple Daniel/Serena/Kate). Audio was never testable in headless runs.
 4. Islet | Acinus split preset: in software rendering, the islet half was still in flight when checked; Beta cell | Acinar cell was confirmed.
 5. Organ slices show hollow shells (HRA meshes have no interior); capping not done.
 6. Verify two citations against the books: Gray's Anatomy 42nd ed. (vessel anatomy), Japan Pancreas Society classification (lymph node stations).

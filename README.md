@@ -32,7 +32,7 @@ Every number either names its source or is marked *not yet sourced* in the code,
 
 ### The organ, opened layer by layer
 
-The reference pancreas (head, neck, body, tail, uncinate process) with the main and accessory pancreatic ducts, bile duct and ampulla, and the coeliac, splenic, hepatic and superior mesenteric vessels. Sixty tissue sites (dots in head, body and tail) are the places you can zoom into.
+The reference pancreas (head, neck, body, tail, uncinate process) with the main and accessory pancreatic ducts, bile duct and ampulla, and the coeliac, splenic, hepatic and superior mesenteric vessels. Sixty tissue sites (20 each in head, body and tail) lie hidden in the gland: zoom in on any part of the organ and one of the sites nearest the pointer is picked at random and brought to the middle of the view.
 
 Zooming into a site opens the gland **in place, layer by layer**, the way [MouseBio_3D](https://github.com/Qasim-Hussain-Code/MouseBio_3D) opens the mouse: a line goes into the gland at the site, and as you zoom the organ's surface opens round it. Inside, the **lobules** stand cut across, with pale septa of connective tissue between them. Round the line, the lobules near the site open in turn to show what fills them: the **duct tree** (large interlobular duct with its artery and vein, interlobular, intralobular and terminal ducts ending in grape-like clusters of acini) and the **islets**, twice as dense in the tail as in the head. At the bottom of the opening lies a **core of tissue**, cut flat through its islet. Each outer layer stays as a ring round the next, and zooming out closes them again.
 
@@ -62,7 +62,7 @@ The pancreas is two organs in one, and the model shows both:
 - Three branches to follow: **acinus → acinar cells → one acinar cell**, **islet → islet cells → beta cell**, **duct → duct cells → one duct cell**.
 - **Stain**: H&E (purple nuclei, pink cytoplasm, red granules, pale islets) or **Cell types** (immunofluorescence-like colours).
 - **Cut open** a structure, **slice apart** (organ into transverse slices, tissue into serial sections), **split screen** to compare two views, **compare head, body and tail**.
-- **Play the journey**: a 13-step narrated tour (browser speech; best in Chrome).
+- **Play the journey**: a 13-step narrated tour in Google's UK English female voice (Chrome; other browsers use a standard UK voice).
 - Click any cell or structure to name it, isolate it or fade it.
 
 ## Datasets and sources

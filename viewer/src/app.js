@@ -18,6 +18,7 @@
     PICKS.acinus = fps(B.acini.map((a, i) => ({ i, p: new THREE.Vector3(...a.centre) })).filter((o) => o.p.distanceTo(Ic) > B.islet.radiusUm + 25 && inner(o.p, 125)).sort((a, b) => a.p.length() - b.p.length()), 25);
     PICKS.duct = fps(B.ducts.map((d, i) => ({ i, d, p: new THREE.Vector3(...d.a).add(new THREE.Vector3(...d.b)).multiplyScalar(0.5) }))
       .filter((o) => o.d.kind === 'intralobular' && new THREE.Vector3(...o.d.a).distanceTo(new THREE.Vector3(...o.d.b)) > 10 && o.d.r > 6.6 && inner(o.p, 120)).sort((a, b) => b.d.r - a.d.r), 25);
+    if (!PICKS.acinus.length) PICKS.acinus = fps(B.acini.map((a, i) => ({ i, p: new THREE.Vector3(...a.centre) })).sort((a, b) => a.p.length() - b.p.length()), 25);   // a generated block may have none clear of a large islet
     if (!PICKS.duct.length) PICKS.duct = [B.ducts.findIndex((d) => d.kind === 'intralobular')];
   }
   const blockKey = (region) => (region === 'tail' ? 'tail' : region === 'head' || region === 'uncinate process' ? 'head' : 'body');
@@ -315,7 +316,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
 
   // ---------- names: invisible markers placed in the scene, shown as labels when names are on
   const LABELS = {};
-  function tag(set, parent, text, pos) { const o = new THREE.Object3D(); o.position.copy(pos); o.userData.label = text; parent.add(o); if (set === 'tissue') o.userData.check = inCore; (LABELS[set] = LABELS[set] || []).push(o); return o; }
+  function tag(set, parent, text, pos) { if (!pos) return null; const o = new THREE.Object3D(); o.position.copy(pos); o.userData.label = text; parent.add(o); if (set === 'tissue') o.userData.check = inCore; (LABELS[set] = LABELS[set] || []).push(o); return o; }
 
   // ---------- the enlarged cells, at their true places
   function buildAcinarCell(group) {
@@ -386,7 +387,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
 
   const explodeTags = [], labelRoots = [];
   function makeBlockLabels() {
-  { const near = (pts, p) => pts.reduce((b, q) => (q.distanceTo(p) < b.distanceTo(p) ? q : b));
+  { const near = (pts, p) => (pts.length ? pts.reduce((b, q) => (q.distanceTo(p) < b.distanceTo(p) ? q : b)) : null);   // null: nothing of that kind in this block
     const root = new THREE.Group(); scene.add(root); labelRoots.push(root);
     const nodes = B.capillaries.nodes.map((n) => new THREE.Vector3(...n)), fibres = B.stroma.fibres.filter((f) => f.kind === 'periductal').map((f) => new THREE.Vector3(...f.a).add(new THREE.Vector3(...f.b)).multiplyScalar(0.5));
     tag('tissue', root, 'Islet', I); tag('tissue', root, 'Intralobular duct', D); tag('tissue', root, 'Acinus', F);
@@ -401,13 +402,13 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
     tag('islet', root, 'Capillary', near(B.capillaries.isletSegments.map(([a]) => new THREE.Vector3(...a)), I.clone().add(new THREE.Vector3(-6, 12, 12))));
     tag('duct', root, 'Duct lumen', D); tag('duct', root, 'Duct epithelium', Pd); tag('duct', root, 'Periductal collagen', near(fibres, D));
     tag('duct', root, 'Acinus', near(B.acini.map((a) => new THREE.Vector3(...a.centre)), D)); }
-  { const root = new THREE.Group(); scene.add(root); labelRoots.push(root); const mv = (set, text, base, off) => { const o = tag(set, root, text, base); o.userData.base = base.clone(); o.userData.off = off.clone(); explodeTags.push(o); };
+  { const root = new THREE.Group(); scene.add(root); labelRoots.push(root); const mv = (set, text, base, off) => { if (!base) return; const o = tag(set, root, text, base); o.userData.base = base.clone(); o.userData.off = off.clone(); explodeTags.push(o); };
     const c0 = faCells[fc], c1 = faCells[(fc + 7) % faCells.length], Q = new THREE.Quaternion(...B.acini[fa].q);
     mv('acinusCells', 'Acinar cell', new THREE.Vector3(0, 0.75, 0).applyMatrix4(c0.m), OFF.acinus); mv('acinusCells', 'Zymogen granules', new THREE.Vector3(0, 0.2, 0).applyMatrix4(c1.m), c1.world.clone().multiplyScalar(0.38 * c1.reach));
     mv('acinusCells', 'Centroacinar cells', F.clone().add(new THREE.Vector3(0, 0, -B.acini[fa].r * 0.5).applyQuaternion(Q)), new THREE.Vector3());
     mv('acinusCells', 'Basal nucleus', new THREE.Vector3(0, 0.7, 0).applyMatrix4(c1.m), c1.world.clone().multiplyScalar(0.38 * c1.reach));
     const firstOf = (t) => B.islet.cells.map((c, i) => [c, i]).filter(([c]) => c[0] === t).map(([c]) => new THREE.Vector3(...c.slice(1))).sort((p, q) => Math.abs(p.x - I.x + 4) + 0.2 * p.distanceTo(I) - Math.abs(q.x - I.x + 4) - 0.2 * q.distanceTo(I))[0];
-    mv('isletCells', 'Beta cell', Pb, OFF.islet); ['alpha', 'delta', 'pp'].forEach((t) => { const p = firstOf(t); mv('isletCells', { alpha: 'Alpha cell', delta: 'Delta cell', pp: 'PP cell' }[t], p, p.clone().sub(I).multiplyScalar(0.4)); });
+    mv('isletCells', 'Beta cell', Pb, OFF.islet); ['alpha', 'delta', 'pp'].forEach((t) => { const p = firstOf(t); if (p) mv('isletCells', { alpha: 'Alpha cell', delta: 'Delta cell', pp: 'PP cell' }[t], p, p.clone().sub(I).multiplyScalar(0.4)); });
     mv('ductCells', 'Duct cell', Pd, OFF.duct); }
   }
   makeBlockLabels();
@@ -558,10 +559,6 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
       const centre = SITES[rk], R2 = rng(9001 + ri);
       for (let k = 0; k < 20; k++) { const local = k === 0 ? centre.clone() : centre.clone().lerp(pool[Math.floor(R2() * pool.length)], 0.25 + 0.45 * R2());
         SITE_LIST.push({ i: SITE_LIST.length, region: rk, local, seed: 2000 + SITE_LIST.length, verified: k === 0 }); } });
-    const dots = new THREE.InstancedMesh(new THREE.SphereGeometry(1, 14, 10), new THREE.MeshBasicMaterial({ color: '#ffffff', transparent: true, depthTest: false }), SITE_LIST.length);
-    const DOT = { head: new THREE.Color('#c0703a'), body: new THREE.Color('#6a3fb0'), tail: new THREE.Color('#1f8a70') };
-    SITE_LIST.forEach((S0, k) => { dots.setMatrixAt(k, new THREE.Matrix4().setPosition(S0.local)); dots.setColorAt(k, DOT[S0.region]); });
-    dots.renderOrder = 8; dots.name = 'sites'; groups.organ.userData.inner.add(dots); groups.organ.userData.dots = dots;
     setSite(SITE_LIST.findIndex((S0) => S0.region === 'body' && S0.verified), true); groups.organ.userData.inner.position.copy(organLocal).negate();
     scene.add(grp);
   }
@@ -571,7 +568,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
     const finish = () => { switchSite(i); $('status').style.display = 'none'; updatePickers(); };
     if (now || S0.verified || GEN.has(i)) finish();
     else { $('status').style.display = 'grid'; $('status').textContent = `Building the tissue of site ${i + 1} (${S0.region}) from seed ${S0.seed}…`; setTimeout(finish, 40); }
-    $('target').innerHTML = `Tissue site <strong>${i + 1} of ${SITE_LIST.length}</strong>, in the <strong>${S0.region}</strong>, where the model places about ${Math.round(ORG.densities[KEY_OF[S0.region]])} islets per mm³. ${S0.verified ? 'Its block is the one built and tested in the repo.' : `Its block is generated in your browser from seed ${S0.seed}, by the same rules.`} Click a dot, or use the arrows, to choose another site.`;
+    $('target').innerHTML = `Tissue site <strong>${i + 1} of ${SITE_LIST.length}</strong>, in the <strong>${S0.region}</strong>, where the model places about ${Math.round(ORG.densities[KEY_OF[S0.region]])} islets per mm³. ${S0.verified ? 'Its block is the one built and tested in the repo.' : `Its block is generated in your browser from seed ${S0.seed}, by the same rules.`} Zoom in on any part of the organ to open it at a site nearby, chosen at random, or use the arrows.`;
   }
   // The line going in at a site: of 160 directions, the shortest way out of the gland, leaning towards the front of the
   // body; and how deep the site lies along it.
@@ -586,14 +583,21 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
   const ray = new THREE.Raycaster(), ptr = new THREE.Vector2(); let down = null;
   onViews('pointerdown', (e) => { down = [e.clientX, e.clientY]; });
   onViews('pointermove', (e) => { if (e.buttons && down && Math.hypot(e.clientX - down[0], e.clientY - down[1]) > 5) VIEWS[focus].turned = true; });   // turned by hand
-  onViews('pointerup', (e) => {
-    if (!down || Math.hypot(e.clientX - down[0], e.clientY - down[1]) > 5 || camera.position.distanceTo(controls.target) < 15000) { down = null; return; } down = null;
+  // Sites are not shown. Clicking the organ, or starting to zoom in on it from afar, picks one of the sites nearest the
+  // point under the pointer at random, and the organ moves so that site comes to the middle of the view.
+  function pickNear(e) {
     const r = VIEWS[focus].el.getBoundingClientRect(); ptr.set((e.clientX - r.left) / r.width * 2 - 1, -(e.clientY - r.top) / r.height * 2 + 1);
-    ray.setFromCamera(ptr, camera); const hit = ray.intersectObjects(pancreasMeshes, false)[0];
-    const dotHit = groups.organ.userData.dots && ray.intersectObject(groups.organ.userData.dots, false)[0];
-    if (dotHit) { setSite(dotHit.instanceId); return; }
-    if (hit) { const local = hit.point.clone().sub(groups.organ.userData.inner.position); let bi = 0, bd = Infinity; SITE_LIST.forEach((S0, k) => { const d = S0.local.distanceTo(local); if (d < bd) { bd = d; bi = k; } }); setSite(bi); }
+    ray.setFromCamera(ptr, camera); const hit = ray.intersectObjects(pancreasMeshes, false)[0]; if (!hit) return false;
+    const local = hit.point.clone().sub(groups.organ.userData.inner.position);
+    const near = SITE_LIST.map((S0) => [S0.local.distanceTo(local), S0.i]).sort((a, b) => a[0] - b[0]).slice(0, 4);
+    setSite(near[Math.floor(Math.random() * near.length)][1]); return true;
+  }
+  onViews('pointerup', (e) => {
+    if (!down || Math.hypot(e.clientX - down[0], e.clientY - down[1]) > 5 || camera.position.distanceTo(controls.target) < 15000) { down = null; return; } down = null; pickNear(e);
   });
+  onViews('wheel', (e) => { const v = VIEWS[focus];
+    if (e.deltaY >= 0 || v.picked || COMPARE.on || STAGE.mode !== 'tissue' || flight || camera.position.distanceTo(controls.target) < 50000) return;
+    v.picked = pickNear(e); }, { passive: true });
 
   // ---------- lobules in place: a column of tissue along the line going in at the site, from below the site up to the
   // surface of the gland. Solid lobules fill it. Round the line, inside their opening, the lobules near the site are drawn
@@ -711,7 +715,6 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
   { const root = new THREE.Group(); scene.add(root); ['Head', 'Body', 'Tail'].forEach((t, i) => COMPARE.names.push(tag('compare', root, t, new THREE.Vector3((i - 1) * 5600, 2700, 0)))); }
 
   // ---------- pickers: step through sites, and through the acini, ducts and islets
-  let showSites = true;
   function updatePickers() {
     if (!SITE_LIST.length || site < 0) return; const S0 = SITE_LIST[site];
     $('sitelabel').textContent = `Site ${site + 1} of ${SITE_LIST.length} · ${S0.region} · ${S0.verified ? 'tested block' : 'seed ' + S0.seed}`;
@@ -728,7 +731,6 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
   function stepPick(dir) { if (branch === 'islet') { stepSite(dir); return; }
     const n = PICKS[branch].length; PICK[branch] = (PICK[branch] + dir + n) % n; refocus(); }
   $('pickprev').addEventListener('click', () => stepPick(-1)); $('picknext').addEventListener('click', () => stepPick(1));
-  $('showsites').addEventListener('change', (e) => { showSites = e.target.checked; });
 
   // ---------- split screen: two views side by side, each showing its own part
   const PRESETS = {
@@ -842,12 +844,12 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
   let tour = null;
   let voiceOn = true, voiceRate = 0.88, voiceName = '';
   try { voiceRate = +(localStorage.getItem('pz-rate') || 0.88); voiceName = localStorage.getItem('pz-voice-pro') || ''; } catch (e) { /* storage may be unavailable */ }
-  // Prefer the most natural voices a browser offers (neural or enhanced voices), in English.
-  // Only clear, measured voices suited to a lecture: Google's UK and US English voices, Microsoft's natural voices and
-  // Apple's standard narrators. Novelty and character voices are left out. Google UK English Female is the default.
-  const PROFESSIONAL = /^(google uk english (female|male)|google us english)$|microsoft (sonia|libby|ryan|maisie|thomas|aria|jenny|guy|andrew|emma|brian|ava|christopher|michelle|natasha|william)\b|^(daniel|serena|kate|oliver|samantha|moira|karen|tessa|arthur|martha|catherine|gordon)\b/i;
-  const RANK = [/^google uk english female$/i, /microsoft sonia.*natural|microsoft libby.*natural/i, /^google uk english male$/i, /natural|neural|online/i, /^(daniel|serena|kate)\b/i, /premium|enhanced/i];
-  function englishVoices() { if (!window.speechSynthesis) return []; const en = speechSynthesis.getVoices().filter((x) => /^en([-_]|$)/i.test(x.lang)), pro = en.filter((x) => PROFESSIONAL.test(x.name)); return pro.length ? pro : en; }
+  // Narration uses Google's UK English voices only, the female voice by default. They come with Chrome; other browsers
+  // fall back to their standard UK narrators (Microsoft's natural UK voices, Apple's Daniel, Serena and Kate).
+  const GOOGLE_UK = /^google uk english (female|male)$/i, UK_NARRATORS = /^microsoft (sonia|libby|ryan|maisie|thomas)\b|^(daniel|serena|kate|oliver|arthur|martha)\b/i;
+  const RANK = [/^google uk english female$/i, /^google uk english male$/i, /microsoft (sonia|libby).*natural/i, /^serena\b|^kate\b/i];
+  function englishVoices() { if (!window.speechSynthesis) return []; const en = speechSynthesis.getVoices().filter((x) => /^en([-_]|$)/i.test(x.lang)), google = en.filter((x) => GOOGLE_UK.test(x.name));
+    return google.length ? google : en.filter((x) => UK_NARRATORS.test(x.name) && !/novelty/i.test(x.voiceURI || '')); }
   function bestVoice() { const vs = englishVoices(); if (voiceName) { const v = vs.find((x) => x.name === voiceName); if (v) return v; }
     for (const r of RANK) { const v = vs.find((x) => r.test(x.name)); if (v) return v; } return vs[0]; }
   function fillVoices() { const sel = $('voicepick'); if (!sel) return; const vs = englishVoices(), best = bestVoice();
@@ -954,6 +956,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
   function viewFrame(now, v) {
     stepFlight(now);
     stageStep(camera.position.distanceTo(controls.target), now);
+    if (camera.position.distanceTo(controls.target) > 90000) v.picked = false;   // back out at the organ: the next zoom in picks again
     if (tour && !flight && v.i === tour.view) { if (tour.phase === 'fly') { tour.phase = 'hold'; tour.until = now + 450; } else if (now > tour.until && !tour.speaking && now > (tour.readUntil || 0)) nextTour(); }
     const d = camera.position.distanceTo(controls.target);
     // Move the target toward the structure being zoomed into, carrying the camera with it.
@@ -990,8 +993,6 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
     }
     if (motionOn) { const t = now / 1000; flow(groups.block, t); flow(BRANCHES[branch].detail, t); }
     if (marker) marker.visible = false;
-    { const dots = groups.organ.userData.dots; if (dots) { dots.visible = showSites && w.organ > 0.3 && LAYER.R.value.x < 1; if (dots.visible) { const s = Math.max(250, d * 0.006), m4 = new THREE.Matrix4();
-        SITE_LIST.forEach((S0, k) => { const sc = k === site ? s * 1.8 : s; m4.makeScale(sc, sc, sc).setPosition(S0.local); dots.setMatrixAt(k, m4); }); dots.instanceMatrix.needsUpdate = true; } } }   // no focus marker on the organ; clicking still chooses where to zoom in
     const lv = levelAt(d), key = lv === 'detail' ? branch : lv === 'cells' ? branch + 'Cells' : lv === 'cell' ? branch + 'Cell' : lv;
     if (v.i === focus && (lv === 'gross' || lv === 'compare')) { const st = (k) => GROSS[k] && GROSS[k].userData.stats, firsts = ['head', 'body', 'tail'].map((rk) => SITE_LIST.findIndex((S0) => S0.region === rk && S0.verified));
       const txt = lv === 'compare' ? firsts.filter(st).map((k) => `${st(k).key[0].toUpperCase() + st(k).key.slice(1)}: ${st(k).count.toLocaleString('en')} islets in ${Math.round(st(k).volume)} mm³ (${Math.round(st(k).density)} per mm³)`).join('; ') + '.'
