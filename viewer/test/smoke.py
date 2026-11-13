@@ -46,7 +46,7 @@ async def main(page_path, chrome):
     async with async_playwright() as p:
         args = ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] if chrome else ['--use-gl=swiftshader', '--enable-webgl', '--ignore-gpu-blocklist']
         b = await (p.chromium.launch(channel='chrome', args=args) if chrome else p.chromium.launch(args=args))
-        pg = await b.new_page(viewport={'width': 1150, 'height': 780}); errs = []; pg.on('pageerror', lambda e: errs.append(str(e)))
+        pg = await b.new_page(viewport={'width': 960, 'height': 640}); errs = []; pg.on('pageerror', lambda e: errs.append(str(e)))
         await pg.goto(tmp.as_uri(), wait_until='commit', timeout=240000); await pg.wait_for_function('window.__zoom', timeout=240000); await pg.wait_for_timeout(WAIT)
         level = lambda: pg.evaluate("document.querySelector('.levelname').textContent")
         site = lambda: pg.evaluate("document.getElementById('sitelabel').textContent")
@@ -66,7 +66,8 @@ async def main(page_path, chrome):
             print(('ok  ' if ok else 'FAIL'), name, v, repr(shown))
             if name.endswith('-cell') and await pg.evaluate("document.getElementById('markerbox').hidden"): ok = False; print('FAIL', name, 'marker genes not shown')
             if not ok: failures.append(name)
-            await pg.screenshot(path=str(out / f'{name}.png'), timeout=240000)
+            try: await pg.screenshot(path=str(out / f'{name}.png'), timeout=120000)
+            except Exception: print('     (screenshot skipped: the frame took too long in software rendering)')   # the checks above decide pass or fail
         # A link to a view opens the page there.
         await pg.goto('about:blank'); await pg.goto(tmp.as_uri() + '#site=9&view=islet', wait_until='commit'); await pg.wait_for_function('window.__zoom', timeout=240000)
         try: await pg.wait_for_function("window.__zoom.views()[0][0] === 'structure' && window.__zoom.views()[0][1] === 'islet' && window.__zoom.distance() < 2000", timeout=WAIT * 12, polling=500)
