@@ -34,6 +34,7 @@ def main():
         '__ORGAN_JSON__': json.dumps(organ),
         '__REGION_GLB_B64__': base64.b64encode((atlas / 'pancreas-region-male.glb').read_bytes()).decode(),
         '__ISLETS_GLB_B64__': base64.b64encode((atlas / 'islets-male.glb').read_bytes()).decode(),
+        '__NEIGHBOURS_GLB_B64__': base64.b64encode((atlas / 'neighbours-male.glb').read_bytes()).decode(),
         '__HISTO_JSON__': json.dumps({p.stem: 'data:image/jpeg;base64,' + base64.b64encode(p.read_bytes()).decode() for p in sorted((HERE / 'assets' / 'histology').glob('*.jpg'))}),
         '__MARKERS_JSON__': esc((repo / 'data' / 'human-pancreas-markers.json').read_text()),
     }

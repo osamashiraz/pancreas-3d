@@ -18,8 +18,11 @@
 12. Books checked (literature/, kept out of git): none of Beger 4th ed., Gorelick & Williams 2021 or Golson 2024 gives cell-level sizes (acinar cell, nucleus, acinus, duct radii, capillary, lobule, septum), so these stay not yet sourced. They differ from the model on organ length (14–23/25 cm against the HRA organ's ~15 cm), islet composition by region (beta 75–80% in the dorsal part; PP 54–94% of islet volume in the uncinate), islet cell size (9–10 µm against 11 µm), and main duct lumen (1–2.5 mm on EUS). Beger Fig 2.7 names the dorsal, great, inferior and transverse pancreatic arteries and the pancreaticoduodenal arcades (vessel names now checkable; caudal not found); Beger ch. 135 Table 135.2 has the Japan Pancreas Society classification (to verify the lymph node stations). Page references: docs/book-notes/
 13. Precursor views: PanIN location sources disagree (Beger ch. 126 head > tail; ch. 119 table head = tail); IPMN multifocality 10–20% (Robbins) vs 20–40% (Beger ch. 81); MCN size by chapter (median 3.5–5 cm; mean 6.5 cm; range 2–35 cm). Marker positions on the micrographs were placed by eye; worth a pathologist's check. A normal intralobular duct micrograph (e.g. Berkshire Community College CC0 series) could be added beside PanIN.
 
+14. Organs round the pancreas: male model only (the female united model is a 76 MB 7z archive not yet fetched); the neighbours file is not yet registered in the module's loader or tests. The HRA v2.0 model has no stomach or adrenals.
+15. Pancreatitis and PDA: placement and sizes on the organ are simulated; no open-licensed H&E of chronic pancreatitis was found (a gross specimen is shown); the PDA head/body/tail split comes from Robbins (9th ed.), whose survival figure (under 5%) is older than Beger's (about 10%).
+
 ## Next steps (agreed or proposed)
-- Disease states: type 1 diabetes (beta-cell loss), type 2 (reduced beta cells, head preferentially; Wang 2013), PanIN in ducts, pancreatitis, fibrosis.
+- Disease states still to add: type 1 diabetes (beta-cell loss, insulitis), type 2 (islet amyloid, reduced beta cells).
 - Overlay user data (single-cell, spatial, CODEX) onto cell types.
 - Nerves (coeliac plexus, splanchnic, vagal, intrapancreatic ganglia) — needs more of the HRA body model.
 - Superior pancreaticoduodenal veins, minor papilla.

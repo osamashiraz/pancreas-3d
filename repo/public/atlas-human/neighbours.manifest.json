@@ -1,0 +1,212 @@
+{
+  "schemaVersion": "humanbio.region-extract.v1",
+  "license": "CC-BY-4.0",
+  "attribution": "Human Reference Atlas 3D Reference Object Library (HuBMAP), from the Visible Human Project of the U.S. National Library of Medicine.",
+  "method": "Accessor bytes copied unchanged from named nodes with identity world transforms; tangents, texture coordinates and materials dropped.",
+  "note": "The HRA v2.0 united models have no stomach and no adrenal glands.",
+  "references": [
+    {
+      "sex": "male",
+      "source": {
+        "repository": "https://github.com/hubmapconsortium/ccf-releases",
+        "version": "v2.0",
+        "commit": "b036a91aaf7234f462b1249d4a5f4fb0e982f412",
+        "license": "CC-BY-4.0",
+        "archive": "3d-vh-m-united.glb.zip",
+        "archiveSha256": "8e7e941afaf685b13b614586ae078444fdbbdd1ca4ded8cf62b7d766e3fd41d5",
+        "file": "3d-vh-m-united.glb",
+        "sha256": "34c45c90aa4acd36be19edf8b878a8e7137db9e8cb90e8e6332c2abd49d7cf9d"
+      },
+      "output": {
+        "file": "neighbours-male.glb",
+        "bytes": 1795804,
+        "sha256": "10cd2cadc3c7b6494d0cdc22f92efa700882736fbc6e8238a92125dd4eac2313",
+        "units": "metres",
+        "frame": "HRA, unchanged"
+      },
+      "nodes": [
+        {
+          "node": "VH_M_liver_capsule",
+          "triangles": 27860,
+          "positionSha256": [
+            "b581d20245c887430090da9f0c59dc41368b1922a1142e0a7713a2aa66438a55"
+          ],
+          "extentMm": [
+            191.4,
+            174.6,
+            193.9
+          ]
+        },
+        {
+          "node": "VH_M_gallbladder",
+          "triangles": 1990,
+          "positionSha256": [
+            "38e62eb41e815e229c5520ebe7f97468b039e876746f0c81c3fe83264f3b8983"
+          ],
+          "extentMm": [
+            42.4,
+            41.7,
+            72.8
+          ]
+        },
+        {
+          "node": "VH_M_kidney_capsule_L",
+          "triangles": 11222,
+          "positionSha256": [
+            "6737fb18a3d7aa8251145c7e71ab016a8fa19a2453437cd3e2c7645691697fd4"
+          ],
+          "extentMm": [
+            75.7,
+            106.5,
+            82.4
+          ]
+        },
+        {
+          "node": "VH_M_kidney_capsule_R",
+          "triangles": 9500,
+          "positionSha256": [
+            "2b878b4e48ba2399abdd3978b6f786e4b6eda54bdb065762628ed2ceb478548c"
+          ],
+          "extentMm": [
+            65.5,
+            112.5,
+            76.4
+          ]
+        },
+        {
+          "node": "VH_M_renal_vein_L",
+          "triangles": 1338,
+          "positionSha256": [
+            "499ec893f994a9d34d43f66fd748125865d0d800b74a6908e4a1d3f0b8753746"
+          ],
+          "extentMm": [
+            67.9,
+            21.1,
+            33.3
+          ]
+        },
+        {
+          "node": "VH_M_renal_vein_R",
+          "triangles": 536,
+          "positionSha256": [
+            "abd9aff6136422638bb467d28f41647480536c68f0a18e793efbdda600f84fde"
+          ],
+          "extentMm": [
+            29.6,
+            19.3,
+            11.9
+          ]
+        },
+        {
+          "node": "VH_M_left_renal_artery",
+          "triangles": 1734,
+          "positionSha256": [
+            "bcd1d93d738dc7d9bcab88c534e297bf1fb0ee3981808ae7756ef5b027921fb0"
+          ],
+          "extentMm": [
+            55.0,
+            15.0,
+            22.0
+          ]
+        },
+        {
+          "node": "VH_M_right_renal_artery",
+          "triangles": 1400,
+          "positionSha256": [
+            "533bb758f5a795ebbce1a36a6a675eab453a9ae0da12d7407e57e7d7b3512712"
+          ],
+          "extentMm": [
+            35.5,
+            19.6,
+            29.9
+          ]
+        },
+        {
+          "node": "VH_M_descending_aorta_a",
+          "triangles": 4984,
+          "positionSha256": [
+            "da7f389b1943d0fc58ce90a44752cf1402309377fbd81e20ca731195f50a4de0"
+          ],
+          "extentMm": [
+            18.3,
+            143.5,
+            24.6
+          ]
+        },
+        {
+          "node": "VH_M_descending_aorta_b",
+          "triangles": 7666,
+          "positionSha256": [
+            "0c5582374c853490f60fd208fcca70ec95a977f9e2dfd849fd034d173c92e938"
+          ],
+          "extentMm": [
+            20.1,
+            215.9,
+            60.4
+          ]
+        },
+        {
+          "node": "VH_M_inferior_vena_cava_a",
+          "triangles": 5880,
+          "positionSha256": [
+            "eb974bd3d4484b0eeee0cee5dbf4a4adab7b3a1dc421bf56c0d4351a423757cd"
+          ],
+          "extentMm": [
+            33.3,
+            57.2,
+            48.3
+          ]
+        },
+        {
+          "node": "VH_M_inferior_vena_cava_b",
+          "triangles": 11122,
+          "positionSha256": [
+            "6a5adf1e09f9f3a3dec3d650d924c3ad5dd152399f76ab129754dec4a26529bd"
+          ],
+          "extentMm": [
+            50.5,
+            235.5,
+            48.8
+          ]
+        },
+        {
+          "node": "VH_M_transverse_colon",
+          "triangles": 8888,
+          "positionSha256": [
+            "7aabfe39bb6362e1fb2c6b96757af02647b816032ebaed3819b8f2e3c8f81a15"
+          ],
+          "extentMm": [
+            220.2,
+            194.2,
+            140.9
+          ]
+        },
+        {
+          "node": "VH_M_hepatic_flexure_of_colon",
+          "triangles": 2332,
+          "positionSha256": [
+            "9fa780dd13cec3256626d568f548c528a7d565ee0bbd5757826fbf3dd682c18f"
+          ],
+          "extentMm": [
+            93.3,
+            82.6,
+            119.3
+          ]
+        },
+        {
+          "node": "VH_M_splenic_flexure_of_colon",
+          "triangles": 2000,
+          "positionSha256": [
+            "b1f7a1536d4bd7de1a1986741a81ba876472f187d630285f011cc4ab66c75abf"
+          ],
+          "extentMm": [
+            67.2,
+            78.5,
+            104.2
+          ]
+        }
+      ],
+      "missing": []
+    }
+  ]
+}

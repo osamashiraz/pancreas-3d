@@ -10,3 +10,11 @@ Real H&E micrographs used in the precursor-lesion views, resized for the web. Th
 | `mcn-wall.jpg` | Mucinous cystic neoplasm: mucinous columnar lining over ovarian-type stroma | Humpath, Wikimedia Commons ("Mucinous cystadenoma of the pancreas.jpg") | CC BY-SA 3.0 |
 
 Licences: https://creativecommons.org/licenses/by/4.0/ and https://creativecommons.org/licenses/by-sa/3.0/
+
+| File | What | Author / source | Licence |
+|---|---|---|---|
+| `acute.jpg` | Acute (necrotizing) pancreatitis: tryptic fat necrosis with an inflammatory rim and haemorrhage | Patho, Wikimedia Commons ("Tryptic fat tissue necrosis in severe pancreatitis, HE 1.JPG") | CC BY-SA 3.0 |
+| `chronic-gross.jpg` | Chronic calcifying pancreatitis, resected head: stones and a dilated duct | Denis Desaulniers and Bernard Têtu, Bibliothèque de l'Université Laval, via Wikimedia Commons ("Pancréas Pancréatite 55-o.apatho-650-pancreas.jpg") | CC BY-SA 4.0 |
+| `pda-perineural.jpg` | Pancreatic ductal adenocarcinoma of the head: malignant glands round a nerve (perineural invasion) | KGH, Wikimedia Commons ("Pancreas adenocarcinoma (1) Case 01.jpg") | CC BY-SA 3.0 |
+| `pda-glands.jpg` | Pancreatic ductal adenocarcinoma: malignant glands, high power | Singh PK, Tayao M, Andrici J, et al. Loss of BAP1 expression is very rare in pancreatic ductal adenocarcinoma. *PLoS One* 2016;11:e0150338, doi:10.1371/journal.pone.0150338, via Wikimedia Commons | CC BY 4.0 |
+| `pda-stroma.jpg` | Desmoplastic stroma of PDA, loose, moderate and dense (H&E row, cropped from the published figure) | Wang LM, Silva MA, D'Costa Z, et al. The prognostic role of desmoplastic stroma in pancreatic ductal adenocarcinoma. *Oncotarget* 2016;7:4183-94, doi:10.18632/oncotarget.6770, via Wikimedia Commons | CC BY 3.0 |

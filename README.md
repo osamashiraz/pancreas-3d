@@ -71,7 +71,7 @@ The pancreas is two organs in one, and the model shows both:
 
 ### Where pancreatic cancer begins: precursor lesions
 
-The switch at the top left chooses what to show: **Pancreas** (organ to cell), **Precursor lesions**, and later **Pancreatitis** and **PDA**. In **Pancreas** the ladder goes from the organ to the tissue, where the two compartments sit side by side, then to the **exocrine** structures (acinus, acinar cell, centroacinar cells, duct) and the **endocrine** islets (islet; beta, alpha and delta cells).
+The switch at the top left chooses what to show: **Pancreas** (organ to cell), **Pancreatitis**, **Precursor lesions** and **PDA**. In **Pancreas** the ladder goes from the organ to the tissue, where the two compartments sit side by side, then to the **exocrine** structures (acinus, acinar cell, centroacinar cells, duct) and the **endocrine** islets (islet; beta, alpha and delta cells).
 
 **Precursor lesions** first shows the whole organ with each precursor marked where it arises. Following Figure 1 of Hingorani's *Location, location, location* (Gastroenterology 2007), each is linked by a line to an inset of its architecture:
 
@@ -95,6 +95,29 @@ Images: Hackeng et al., *Diagn Pathol* 2016 (CC BY 4.0); Shibata et al., *Clin J
 
 Each comes with a card on its appearance, grading, genes, who it affects and survival, in our own words, citing Hingorani 2007, Rodriguez et al. 2007, *The Pancreas: An Integrated Textbook* (Beger et al., 4th ed., 2023) and *Robbins and Cotran Pathologic Basis of Disease* (9th ed.). Placement on the organ is simulated by rule; drawn sizes follow the stated sizes.
 
+### Pancreatitis
+
+**Pancreatitis** shows acute and chronic pancreatitis on the organ, each linked to its histology. In a patient they are separate conditions; they are drawn on one organ to compare.
+
+| Organ | Acute | Chronic |
+|---|---|---|
+| ![Pancreatitis on the organ](docs/images/pancreatitis.jpg) | ![Acute pancreatitis](docs/images/acute.jpg) | ![Chronic pancreatitis](docs/images/chronic.jpg) |
+| Acute changes on the body and tail (inflamed fat, chalky fat necroses, haemorrhage); chronic changes in the head (beaded duct, stones) | Oedematous septa with neutrophils, dead acini, fat necrosis with calcium soaps, a rim of neutrophils, haemorrhage | Dense fibrosis with activated stellate cells, atrophic acini, spared islets, a dilated duct with a calcified stone, lymphocytes |
+
+A table compares normal pancreas, acute and chronic pancreatitis (lobules, inflammation, fat, ducts, islets, reversibility, causes), from *Robbins and Cotran* (9th ed., ch. 19) and *The Pancreas* (Beger et al., 4th ed., ch. 7, 17, 41).
+
+### Pancreatic ductal adenocarcinoma
+
+**PDA** shows the tumour in the head, the bile duct and main duct dilated behind it (the double duct sign), enlarged regional nodes and liver metastases, and its histology: irregular malignant glands of atypical cells in dense desmoplastic stroma, invading a nerve and a vein. Cards give location (head 60%, body 15%, tail 5%, diffuse 20%), genes (KRAS, CDKN2A, TP53, SMAD4), resectability and survival; a table compares head, body and tail tumours.
+
+| Organ | Histology |
+|---|---|
+| ![PDA on the organ](docs/images/pda.jpg) | ![PDA histology](docs/images/pda-histology.jpg) |
+
+### The organs round the pancreas
+
+The liver, gallbladder, kidneys and their vessels, aorta, inferior vena cava and transverse colon are extracted unchanged from the same HRA body model (`repo/scripts/human/extract_neighbours.py`), shown faintly round the pancreas with their names, and can be hidden. The HRA v2.0 body model has no stomach or adrenal glands, so they are not shown.
+
 ## Datasets and sources
 
 | What | Source | Use in the model |
@@ -109,6 +132,8 @@ Each comes with a card on its appearance, grading, genes, who it affects and sur
 | Ducts and centroacinar cells | Endo et al. 2002 (rat); Beer et al. 2016 | One intercalated duct per acinus, no anastomoses |
 | Cell biology | Palade 1975; Messenger et al. 2014; Berclaz et al. 2016; Steward & Ishiguro 2009; Hegyi & Rakonczay 2015; diIorio et al. 2014 | Secretory pathway, zymogen and insulin granules, duct secretion, cilia |
 | Marker genes | **HRA ASCT+B** pancreas v1.3 (doi:10.48539/HBM336.TBNP.923); **Human Protein Atlas** v26.0 (CC BY-SA 4.0) | Marker panel per cell type (`repo/data/human-pancreas-markers.json`) |
+| Pancreatitis and PDA | Kumar, Abbas, Aster, *Robbins and Cotran*, 9th ed., 2015 (ch. 19); Beger et al., *The Pancreas*, 4th ed., 2023 (ch. 7, 17, 41, 47, 119, 125, 128, 130, 134, 137); images from Wikimedia Commons (Patho; Université Laval; KGH; Singh et al. 2016; Wang et al. 2016) | Organ changes, histology drawings, cards, comparison tables |
+| Organs round the pancreas | HRA 3D Reference Object Library v2.0, male united model | Liver, gallbladder, kidneys, great vessels, colon (geometry unchanged) |
 | Precursor lesions | Hingorani, *Gastroenterology* 2007 (doi:10.1053/j.gastro.2007.05.059); Rodriguez et al., *Gastroenterology* 2007; Beger et al., *The Pancreas*, 4th ed., Wiley 2023 (ch. 81, 84, 86, 125, 126); Kumar, Abbas, Aster, *Robbins and Cotran*, 9th ed., 2015 (ch. 19) | Where PanIN, MCN and IPMN arise; sizes, grades, genes; architecture of each view |
 | Normal anatomy (checks) | Gorelick & Williams, eds., *The Pancreas: Biology and Physiology*, APA 2021 (CC BY-NC-ND; ch. 1 Longnecker) | Islet size and number, endocrine fraction, zymogen granule size |
 | Secretion and islet cells | Lee et al., *Physiol Rev* 2012; Rorsman & Ashcroft, *Physiol Rev* 2018; Brereton et al., *J Histochem Cytochem* 2015; Arrojo e Drigo et al., *Nat Commun* 2019 | Bicarbonate and insulin secretion; granule sizes; delta-cell processes |

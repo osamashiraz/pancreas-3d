@@ -98,7 +98,7 @@ def pad(data: bytes, fill: bytes) -> bytes:
     return data + fill * ((4 - len(data) % 4) % 4)
 
 
-def extract(sex: str, src_dir: Path, out_dir: Path) -> dict:
+def extract(sex: str, src_dir: Path, out_dir: Path, node_list=None, out_name: str = '', root: str = 'pancreas_region') -> dict:
     meta = SOURCES[sex]
     data = (src_dir / meta['file']).read_bytes()
     if sha256(data) != meta['sha256']:
@@ -116,7 +116,7 @@ def extract(sex: str, src_dir: Path, out_dir: Path) -> dict:
         accessors.append(out)
         return len(accessors) - 1
 
-    for entry in NODES:
+    for entry in (node_list or NODES):
         names = [meta['prefix'] + n for n in (entry if isinstance(entry, tuple) else (entry,))]
         found = [n for n in names if n in glb.by_name and 'mesh' in glb.doc['nodes'][glb.by_name[n]]]
         if len(found) != 1:
@@ -151,7 +151,7 @@ def extract(sex: str, src_dir: Path, out_dir: Path) -> dict:
                   'copyright': 'Derived from the HRA 3D Reference Object Library (HuBMAP), CC BY 4.0'},
         'extras': {'derivedFrom': {**RELEASE, 'file': meta['file'], 'sha256': meta['sha256']}},
         'scene': 0, 'scenes': [{'nodes': [len(nodes)]}],
-        'nodes': nodes + [{'name': f'{meta["prefix"]}pancreas_region', 'children': list(range(len(nodes)))}],
+        'nodes': nodes + [{'name': f'{meta["prefix"]}{root}', 'children': list(range(len(nodes)))}],
         'meshes': meshes, 'accessors': accessors, 'bufferViews': views, 'buffers': [{'byteLength': len(body)}],
     }
     json_bytes = pad(json.dumps(doc, separators=(',', ':')).encode(), b' ')
@@ -159,7 +159,7 @@ def extract(sex: str, src_dir: Path, out_dir: Path) -> dict:
     total = 12 + 8 + len(json_bytes) + 8 + len(bin_bytes)
     out = struct.pack('<III', 0x46546C67, 2, total) + struct.pack('<II', len(json_bytes), 0x4E4F534A) + json_bytes \
         + struct.pack('<II', len(bin_bytes), 0x004E4942) + bin_bytes
-    out_name = f'pancreas-region-{sex}.glb'
+    out_name = out_name or f'pancreas-region-{sex}.glb'
     (out_dir / out_name).write_bytes(out)
     return {'sex': sex, 'source': {**RELEASE, 'archive': meta['archive'], 'archiveSha256': meta['archiveSha256'],
                                    'file': meta['file'], 'sha256': meta['sha256']},

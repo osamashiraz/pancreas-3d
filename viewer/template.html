@@ -10,7 +10,7 @@
 --beta:#3fae49;--alpha:#d63384;--delta:#1fa6d1;--pp:#f2b21b;--rer:#6f7fd6;--golgi:#e3b13a;--mito:#4fae78;--lumen:#9ad0e6;
 --insulincore:#20402a;--insulinhalo:#dff2df;--cilium:#ffffff;--microvilli:#5d7f99;--tightjunction:#1d2b4f;--cftr:#2f6fe0;--slc26:#ef8a1a;--basement:#e7d9c2;
 --organ:#e6c49c;--parenchyma:#8d58a0;--isletgross:#dcb7d9;--organduct:#f1d36b;--artery:#c8333a;--vein:#3f5a9a;--neighbour:#b9a49c;
---isletnucleus:#5a4799;--insulin:#3a9e48;--glucagon:#c4307a;--glucagoncore:#3b1630;--glucagonhalo:#f4dfe9;--somatostatin:#1d93bd;--somatostatincore:#5f7894;--glucose:#e2b21c;--panin:#f0a830;--mcn:#4f86c6;--ipmn:#20a39a;--pda:#6b4a3a;--enzyme:#e46a7e;--bicarbonate:#1aa7b5;--grossduct:#f3d9e6;--grossartery:#c9485b;--grossvein:#ad5f7c;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+--isletnucleus:#5a4799;--insulin:#3a9e48;--glucagon:#c4307a;--glucagoncore:#3b1630;--glucagonhalo:#f4dfe9;--somatostatin:#1d93bd;--somatostatincore:#5f7894;--glucose:#e2b21c;--panin:#f0a830;--acute:#f0b94e;--chronic:#9c8f84;--mcn:#4f86c6;--ipmn:#20a39a;--pda:#6b4a3a;--enzyme:#e46a7e;--bicarbonate:#1aa7b5;--grossduct:#f3d9e6;--grossartery:#c9485b;--grossvein:#ad5f7c;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#13141a;--panel:#1b1c24;--ink:#e8e7ee;--muted:#a1a2b2;--rule:#2d2e3a;--accent:#b49ae6;--warn:#e2b45f;--canvas:#101117}}
 :root[data-theme="dark"]{color-scheme:dark;--bg:#13141a;--panel:#1b1c24;--ink:#e8e7ee;--muted:#a1a2b2;--rule:#2d2e3a;--accent:#b49ae6;--warn:#e2b45f;--canvas:#101117}
 *,*::before,*::after{box-sizing:inherit}html{height:100%}
@@ -35,8 +35,9 @@ body[data-stain="if"] .stage{background:radial-gradient(ellipse at 50% 38%,#2a25
 .modes button{min-width:0!important;border:0!important;border-radius:0!important;border-right:1px solid var(--rule)!important;padding:5px 9px!important;font-size:12.5px!important;background:transparent!important}
 .modes button[aria-pressed="true"]{background:var(--accent)!important;color:#fff}.modes button:disabled{color:var(--muted);cursor:not-allowed;opacity:.6}
 .ladder .group{font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin:4px 0 0 12px}
-body[data-mode="precursors"] .ladder-pancreas{display:none}body:not([data-mode="precursors"]) .ladder-precursors{display:none}
-.ladder-pancreas,.ladder-precursors{display:flex;flex-direction:column;gap:5px}
+body[data-mode]:not([data-mode="pancreas"]) .ladder-pancreas{display:none}.ladder-mode{display:none}
+body[data-mode="precursors"] .ladder-mode[data-for-mode="precursors"],body[data-mode="pancreatitis"] .ladder-mode[data-for-mode="pancreatitis"],body[data-mode="pda"] .ladder-mode[data-for-mode="pda"]{display:flex}
+.ladder-pancreas,.ladder-mode{flex-direction:column;gap:5px}.ladder-pancreas{display:flex}
 .insets{position:absolute;inset:0;pointer-events:none;z-index:4}.insets svg{position:absolute;inset:0;width:100%;height:100%}
 .inset{position:absolute;width:250px;height:178px;border:2px solid var(--accent);border-radius:8px;pointer-events:auto;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.15)}
 .inset{background-size:cover;background-color:var(--panel)}
@@ -111,7 +112,7 @@ ol{font-size:12.5px;color:var(--muted);padding-left:18px}ol li{margin-bottom:5px
  <div class="stage" id="stage">
   <div class="status" id="status">Loading the organ…</div>
   <nav class="ladder" aria-label="Zoom level">
-   <div class="modes" role="group" aria-label="What to show"><button type="button" data-mode="pancreas" aria-pressed="true">Pancreas</button><button type="button" data-mode="pancreatitis" disabled title="Coming later">Pancreatitis</button><button type="button" data-mode="precursors" aria-pressed="false">Precursor lesions</button><button type="button" data-mode="pda" disabled title="Coming later">PDA</button></div>
+   <div class="modes" role="group" aria-label="What to show"><button type="button" data-mode="pancreas" aria-pressed="true">Pancreas</button><button type="button" data-mode="pancreatitis" aria-pressed="false">Pancreatitis</button><button type="button" data-mode="precursors" aria-pressed="false">Precursor lesions</button><button type="button" data-mode="pda" aria-pressed="false">PDA</button></div>
    <div class="ladder-pancreas">
    <button type="button" data-go="organ">Organ<span>15 cm</span></button>
    <button type="button" data-go="tissue">Tissue<span>exocrine and endocrine together</span></button>
@@ -122,7 +123,16 @@ ol{font-size:12.5px;color:var(--muted);padding-left:18px}ol li{margin-bottom:5px
    <div class="branch"><button type="button" data-go="detail:islet">Islet</button><button type="button" data-go="cells:islet">Its cells</button></div>
    <div class="branch"><button type="button" data-go="cell:islet" data-kind="beta">Beta cell</button><button type="button" data-go="cell:islet" data-kind="alpha">Alpha cell</button><button type="button" data-go="cell:islet" data-kind="delta">Delta cell</button></div>
    </div>
-   <div class="ladder-precursors">
+   <div class="ladder-mode" data-for-mode="pancreatitis">
+   <button type="button" data-lesion="overview">Pancreatitis<span>acute and chronic, on the organ</span></button>
+   <button type="button" data-lesion="acute">Acute<span>oedema, fat necrosis, haemorrhage</span></button>
+   <button type="button" data-lesion="chronic">Chronic<span>fibrosis, stones, dilated duct</span></button>
+   </div>
+   <div class="ladder-mode" data-for-mode="pda">
+   <button type="button" data-lesion="overview">Pancreatic cancer<span>where it arises and spreads</span></button>
+   <button type="button" data-lesion="pda">Histology<span>glands, desmoplasia, nerves</span></button>
+   </div>
+   <div class="ladder-mode ladder-precursors" data-for-mode="precursors">
    <button type="button" data-lesion="overview">All precursors<span>where each arises</span></button>
    <button type="button" data-lesion="panin">PanIN<span>small ducts, microscopic</span></button>
    <button type="button" data-lesion="ipmn">IPMN<span>main and branch ducts</span></button>
@@ -170,6 +180,7 @@ ol{font-size:12.5px;color:var(--muted);padding-left:18px}ol li{margin-bottom:5px
    <li><span class="sw" style="background:var(--intralobular)"></span><span>Interlobular ducts, with an artery (red) and vein (blue), in the septa</span></li>
   </ul>
   <div class="markers lesions" id="lesioncard" hidden></div>
+  <label class="toggle" data-for="organ pancreatitis pda precursors"><input type="checkbox" id="neighbours" checked> Show the organs round the pancreas (liver, gallbladder, kidneys, colon, great vessels)</label>
   <label class="toggle" data-for="organ"><input type="checkbox" id="islets"> Show the islets (one point per 100)</label>
   <div data-for="tissue detail cells cell"><span style="font-size:14px">Zoom into</span><br>
    <div class="seg" role="group" aria-label="What to zoom into"><button type="button" data-branch="acinus" aria-pressed="true">An acinus</button><button type="button" data-branch="islet" aria-pressed="false">The islet</button><button type="button" data-branch="duct" aria-pressed="false">A duct</button></div></div>
@@ -260,6 +271,7 @@ ol{font-size:12.5px;color:var(--muted);padding-left:18px}ol li{margin-bottom:5px
 <script type="application/json" id="block-tail">__BLOCK_TAIL__</script>
 <script type="application/json" id="organ">__ORGAN_JSON__</script>
 <script type="application/octet-stream" id="glb-region">__REGION_GLB_B64__</script>
+<script type="application/octet-stream" id="glb-neighbours">__NEIGHBOURS_GLB_B64__</script>
 <script type="application/octet-stream" id="glb-islets">__ISLETS_GLB_B64__</script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/loaders/GLTFLoader.js"></script>

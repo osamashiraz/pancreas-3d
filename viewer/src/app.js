@@ -645,6 +645,15 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
         ventral_pancreatic_duct: 'Main pancreatic duct', common_bile_duct: 'Common bile duct', splenic_vein: 'Splenic vein', superior_mesenteric_vein: 'Superior mesenteric vein', superior_mesenteric_artery: 'Superior mesenteric artery',
         hepatic_portal_vein: 'Portal vein', splenic_artery: 'Splenic artery', duodenum_descending: 'Duodenum', hilum_of_spleen: 'Spleen' };
       if (ORGAN_NAMES[n]) { geo.computeBoundingBox(); tag('organ', inner, ORGAN_NAMES[n], geo.boundingBox.getCenter(new THREE.Vector3())); } });
+    // The organs round the pancreas, from the same HRA body model (scripts/human/extract_neighbours.py): liver, gallbladder,
+    // kidneys and their vessels, aorta, inferior vena cava, transverse colon. The HRA v2.0 model has no stomach or adrenals.
+    const NEIGH = { liver_capsule: ['Liver', '#9c4f45'], gallbladder: ['Gallbladder', '#5f8a3a'], kidney_capsule_L: ['Left kidney', '#8e5466'], kidney_capsule_R: ['Right kidney', '#8e5466'],
+      renal_vein_L: [null, '--vein'], renal_vein_R: [null, '--vein'], left_renal_artery: [null, '--artery'], right_renal_artery: [null, '--artery'], descending_aorta_a: ['Aorta', '--artery'], descending_aorta_b: [null, '--artery'],
+      inferior_vena_cava_a: ['Inferior vena cava', '--vein'], inferior_vena_cava_b: [null, '--vein'], transverse_colon: ['Transverse colon', '#b98e7c'], hepatic_flexure_of_colon: [null, '#b98e7c'], splenic_flexure_of_colon: [null, '#b98e7c'] };
+    const ng = await parse(bytesOf('glb-neighbours')); ng.scene.updateMatrixWorld(true); const neigh = new THREE.Group(); neigh.name = 'neighbours'; inner.add(neigh); grp.userData.neighbours = neigh;
+    ng.scene.traverse((o) => { if (!o.isMesh) return; const n = o.name.slice(5), info = NEIGH[n]; if (!info) return; const solid = /aorta|vena|renal_(vein|artery)|renal_artery/.test(n);
+      const geo = o.geometry.clone().applyMatrix4(o.matrixWorld).scale(1e6, 1e6, 1e6), m = new THREE.Mesh(geo, M(grp, info[1], null, { transparent: true, opacity: solid ? 0.5 : 0.12, depthWrite: false, side: THREE.DoubleSide, roughness: 0.65, he: false, layer: [0, ORG_TOL] }));
+      m.name = n; m.userData = { kind: 'neighbour' }; neigh.add(m); if (info[0]) { geo.computeBoundingBox(); tag('organ', neigh, info[0], geo.boundingBox.getCenter(new THREE.Vector3())); } });
     const ig = await parse(bytesOf('glb-islets')); islets = new THREE.Group(); grp.userData.points = [];
     [['islets--background', '#2f4f86', 1100], ['islets--clustered', '#e8a400', 1300]].forEach(([n, c, s]) => { const src = ig.scene.getObjectByName(n); if (!src) return;
       const p = new THREE.Points(src.geometry.clone().scale(1e6, 1e6, 1e6), new THREE.PointsMaterial({ color: c, size: s, depthWrite: false, transparent: true })); islets.add(p); grp.userData.points.push(p); });
@@ -687,7 +696,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
   function aimLesion(e) {
     if (!lesionGroup) return null; const r = VIEWS[focus].el.getBoundingClientRect(); ptr.set((e.clientX - r.left) / r.width * 2 - 1, -(e.clientY - r.top) / r.height * 2 + 1); ray.setFromCamera(ptr, camera);
     const hit = ray.intersectObject(lesionGroup, true).find((h) => h.object.visible && h.object.parent.visible); if (!hit) return null;
-    let q = hit.object; while (q.parent && q.parent !== lesionGroup) q = q.parent; const key = Object.keys(LESION_VIEWS).find((k) => LESION_VIEWS[k].parts.includes(q.name)); if (!key) return null;
+    let q = hit.object; while (q.parent && q.parent !== lesionGroup) q = q.parent; const key = Object.keys(LESION_VIEWS).find((k) => LESION_VIEWS[k].mode === MODE && LESION_VIEWS[k].parts.includes(q.name)); if (!key) return null;
     LES.pending = key; organLocal.copy(lesionGroup.getObjectByName(LESION_VIEWS[key].at).userData.at); return key;
   }
   // Sites are not shown. Clicking the organ, or starting to zoom in on it from afar, picks one of the sites nearest the
@@ -701,10 +710,10 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
   }
   onViews('pointerup', (e) => {
     if (!down || Math.hypot(e.clientX - down[0], e.clientY - down[1]) > 5 || camera.position.distanceTo(controls.target) < 15000) { down = null; return; } down = null;
-    if (MODE === 'precursors') { const k = aimLesion(e); if (k) enterLesion(k); return; } if (LES.view) return; pickNear(e);
+    if (MODE !== 'pancreas') { const k = aimLesion(e); if (k) enterLesion(k); return; } if (LES.view) return; pickNear(e);
   });
   onViews('wheel', (e) => { const v = VIEWS[focus];
-    if (MODE === 'precursors' && !LES.view) { if (e.deltaY < 0 && !LES.pending) aimLesion(e); return; }
+    if (MODE !== 'pancreas' && !LES.view) { if (e.deltaY < 0 && !LES.pending) aimLesion(e); return; }
     if (e.deltaY >= 0 || v.picked || COMPARE.on || STAGE.mode !== 'tissue' || flight || camera.position.distanceTo(controls.target) < 50000) return;
     v.picked = pickNear(e); }, { passive: true });
 
@@ -897,6 +906,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
   const shown = Object.fromEntries(Object.keys(TOGGLES).map((k) => [k, true]));
   function applyToggles(g) { if (!g) return; g.traverse((o) => { if (!o.isInstancedMesh) return; for (const [k, list] of Object.entries(TOGGLES)) if (list.includes(o.name)) o.visible = shown[k]; }); }
   document.querySelectorAll('[data-toggle]').forEach((el) => el.addEventListener('change', () => { shown[el.dataset.toggle] = el.checked; applyToggles(groups.block); Object.values(BRANCHES).forEach((b) => applyToggles(b.detail)); }));
+  $('neighbours').addEventListener('change', (e) => { const nb = groups.organ.userData.neighbours; if (nb) nb.visible = e.target.checked; });
   $('islets').addEventListener('change', (e) => { if (islets) islets.visible = e.target.checked; pancreasMeshes.forEach((m) => { m.material.userData.base = disease ? 0.28 : e.target.checked ? 0.3 : 0.92; }); });
   let cutOpen = false;   // whole structures by default; tick Cut open to see inside
   $('cutopen').addEventListener('change', (e) => { cutOpen = e.target.checked; });
@@ -1023,11 +1033,11 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
       if (!(r < R.y + Math.max(0, q.z - S.x) * S.y && q.z > F.x)) return true; }
     return false;
   }
-  function drawDiseaseLabels(w) { const keys = disease === 'all' ? Object.keys(LESIONS) : disease === 'precursors' ? ['panin', 'mcn', 'mipmn', 'bipmn'] : [disease]; LABELS.__disease = keys.flatMap((k) => LABELS['disease:' + k] || []); drawLabels('__disease', w); }
+  function drawDiseaseLabels(w) { const keys = disease === 'all' ? Object.keys(LESIONS) : MODE_PARTS[disease] || [disease]; LABELS.__disease = keys.flatMap((k) => LABELS['disease:' + k] || []); drawLabels('__disease', w); }
   function drawLabels(set, w) {
     let used = 0; const W = UI.w, H = UI.h, placed = [];
     if (namesOn && set && w > 0.5) for (const o of LABELS[set] || []) {
-      const p = o.getWorldPosition(new THREE.Vector3()); if (o.userData.check && !o.userData.check(p)) continue; if (set !== 'organ' && hiddenByLobules(p)) continue;
+      if (o.parent && o.parent.visible === false) continue; const p = o.getWorldPosition(new THREE.Vector3()); if (o.userData.check && !o.userData.check(p)) continue; if (set !== 'organ' && hiddenByLobules(p)) continue;
       const sl = set === 'organ' ? SLICE.organ : set === 'tissue' ? SLICE.block : null;
       if (sl && sl.visible) { const { n, axis, th } = sl.userData, c = p.dot(axis), s0 = sl.userData.slabs[0];
         const k = Math.max(0, Math.min(n - 1, Math.floor((c - s0.lo) / th))); p.addScaledVector(axis, sl.userData.slabs[k].slab.position.dot(axis)); }
@@ -1108,6 +1118,11 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
     isletOld: 'The islet cut open among its acini: beta (green), alpha (magenta), delta (cyan) and PP (amber) cells intermixed along a dense capillary bed, with no core or mantle, as in human islets (Cabrera 2006; Brissova 2005).',
     duct: 'An intralobular duct on its own, opened lengthwise: a single layer of cuboidal duct cells round the lumen. Duct cells secrete the bicarbonate-rich fluid of pancreatic juice, 2 to 3 litres a day (Ishiguro 2012; Hegyi 2015). Zoom on and its cells separate.',
     ductOld: 'An intralobular duct cut lengthwise: a single layer of cuboidal duct cells round the lumen, collagen aligned along it (CODA), intercalated ducts joining it from acini. Duct cells secrete the bicarbonate-rich fluid of pancreatic juice, 2 to 3 litres a day (Ishiguro 2012; Hegyi 2015).',
+    pancreatitis: 'Pancreatitis: inflammation of the pancreas. Acute pancreatitis (drawn on the body and tail): the gland swells, enzymes digest it and the fat round it, leaving chalky fat necroses, and in the severe, necrotizing form it bleeds. Chronic pancreatitis (drawn in the head): repeated injury replaces the gland with scar; the duct dilates between strictures into a chain of lakes and fills with calcified stones. In a patient they are separate conditions; both are drawn on one organ to compare. Click an inset or a change on the organ to see its histology.',
+    pda: 'Pancreatic ductal adenocarcinoma: about 60% arise in the head, 15% in the body, 5% in the tail, and 20% involve the gland diffusely (Robbins). A head tumour blocks the bile duct and the main duct, which dilate behind it (the double duct sign); it spreads early to regional lymph nodes and the liver. Click the tumour or the inset to see its histology. Sizes and placement are illustrative.',
+    lesionAcutepancreatitis: 'Acute pancreatitis: a drawing and real H&E of fat necrosis, with its features numbered alike. Below: what sets it apart, and normal pancreas, acute and chronic pancreatitis compared. Press Esc to return to the organ.',
+    lesionChronicpancreatitis: 'Chronic pancreatitis: a drawing of the fibrotic gland with a dilated duct and a stone, and a resected specimen with stones, numbered alike. Below: what sets it apart, and the three states compared. Press Esc to return to the organ.',
+    lesionPDA: 'Pancreatic ductal adenocarcinoma: a drawing and real H&E of malignant glands in desmoplastic stroma invading a nerve, numbered alike. Below: what sets it apart, and PDA by location compared. Press Esc to return to the organ.',
     precursors: 'Precursor lesions: where the routes to pancreatic ductal adenocarcinoma begin. PanIN arises in the small ducts at the periphery, most readily in the head; mucinous cystic neoplasms in the periphery of the body and tail; IPMN in the main duct or its major branches, usually in the head (Hingorani 2007). Each inset shows one lesion in H&E; click it, or a lesion on the organ, or zoom into one, to open its histology. Placement on the organ is simulated, by rule; sizes are illustrative.',
     lesionPanIN: 'PanIN in real H&E sections, from a normal duct to high grade, with its key features numbered. Below: what sets it apart, and PanIN, IPMN and MCN compared. Press Esc or All precursors to return to the organ.',
     lesionIPMN: 'IPMN in a resected pancreas and in H&E sections, main-duct and branch-duct, gastric and pancreatobiliary types, with its key features numbered. Below: what sets it apart, and the three precursors compared. Press Esc or All precursors to return.',
@@ -1123,7 +1138,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
   };
   let lastLevel = '';
   const LEVEL_NAMES = (key) => ({ compare: 'Head, body and tail compared', gross: 'Lobules (' + blockRegion + ')', organ: 'Organ', tissue: 'Tissue', acinus: 'Acinus', islet: 'Islet', duct: 'Duct',
-    acinusCells: 'Acinar cells, separated', isletCells: 'Islet cells, separated', ductCells: 'Duct cells, separated', precursors: 'Precursor lesions', acinusCell: 'Acinar cell', isletCell: 'Beta cell', alphaCell: 'Alpha cell', deltaCell: 'Delta cell', ductCell: 'Duct cell' }[key] || '');
+    acinusCells: 'Acinar cells, separated', isletCells: 'Islet cells, separated', ductCells: 'Duct cells, separated', precursors: 'Precursor lesions', pancreatitis: 'Pancreatitis', pda: 'Pancreatic ductal adenocarcinoma', acinusCell: 'Acinar cell', isletCell: 'Beta cell', alphaCell: 'Alpha cell', deltaCell: 'Delta cell', ductCell: 'Duct cell' }[key] || '');
   function viewFrame(now, v) {
     if (LES.view) { lesionFrame(now, v); return; }
     stepFlight(now);
@@ -1172,14 +1187,14 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
     if (motionOn) { const t = now / 1000; flow(groups.block, t); flow(BRANCHES[branch].detail, t); }
     { const b = BRANCHES[branch], t = motionOn ? now / 1000 : null; [b.detail, b.cellGroup].forEach((gg) => { if (gg && gg.visible && gg.userData.anim) gg.userData.anim(t); }); }   // secretion in motion
     if (marker) marker.visible = false;
-    const lv = levelAt(d), key = MODE === 'precursors' && lv === 'organ' ? 'precursors' : lv === 'detail' ? branch : lv === 'cells' ? branch + 'Cells' : lv === 'cell' ? cellKey(branch, isletKind) : lv;
+    const lv = levelAt(d), key = MODE !== 'pancreas' && lv === 'organ' ? MODE : lv === 'detail' ? branch : lv === 'cells' ? branch + 'Cells' : lv === 'cell' ? cellKey(branch, isletKind) : lv;
     if (v.i === focus && (lv === 'gross' || lv === 'compare')) { const st = (k) => GROSS[k] && GROSS[k].userData.stats, firsts = ['head', 'body', 'tail'].map((rk) => SITE_LIST.findIndex((S0) => S0.region === rk && S0.verified));
       const txt = lv === 'compare' ? firsts.filter(st).map((k) => `${st(k).key[0].toUpperCase() + st(k).key.slice(1)}: ${st(k).count.toLocaleString('en')} islets in ${Math.round(st(k).volume)} mm³ (${Math.round(st(k).density)} per mm³)`).join('; ') + '.'
         : st(site) ? `Site ${site + 1}, in the ${blockRegion}: round the line going in, ${st(site).lobules} lobules are opened to their ducts, with ${st(site).count.toLocaleString('en')} islets in ${Math.round(st(site).volume)} mm³ (${Math.round(st(site).density)} per mm³).` : '';
       $('grossstats').textContent = txt; }
     if (key !== lastLevel) { lastLevel = key; UI.levelname.textContent = LEVEL_NAMES(key);
      if (v.i === focus) { writeHash(lv); showMarkers(selected ? MARKER_OF[selected] : MARKER_VIEW[key]); $('info').textContent = INFO[key] + (/^islet/.test(key) && SITE_LIST[site] && SITE_LIST[site].sub === 'uncinate process' ? ' This site lies in the uncinate process, where PP cells (amber in Cell types) make up most of the islet (Gorelick and Williams 2021).' : '');
-      applyDataFor(key, MODE === 'precursors' ? key : lv);
+      applyDataFor(key, MODE !== 'pancreas' ? key : lv);
       updatePickers();
       document.querySelectorAll('.ladder button[data-go]').forEach((b) => { const [l, br] = b.dataset.go.split(':'); b.setAttribute('aria-current', String(l === lv && (!br || br === branch) && (!b.dataset.kind || b.dataset.kind === isletKind))); }); } }
     explodeTags.forEach((o) => o.position.copy(o.userData.base).addScaledVector(o.userData.off, w.explode));
@@ -1189,9 +1204,9 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
     // Scale bar
     drawScale(d);
     controls.update(); renderer.setViewport(UI.x, 0, UI.w, UI.h); renderer.setScissor(UI.x, 0, UI.w, UI.h); renderer.render(scene, camera);
-    if (v.i === focus) drawInsets(now, MODE === 'precursors' && lv === 'organ' && UI.w > 640);
+    if (v.i === focus) drawInsets(now, MODE !== 'pancreas' && lv === 'organ' && UI.w > 640);
     // Zooming into a lesion opens its view.
-    if (MODE === 'precursors' && LES.pending && d < 70000 && !flight) enterLesion(LES.pending);
+    if (MODE !== 'pancreas' && LES.pending && d < 70000 && !flight) enterLesion(LES.pending);
   }
   function drawScale(d) {
     const wpp = 2 * d * Math.tan(camera.fov * Math.PI / 360) / UI.h, target = wpp * 110, p10 = Math.pow(10, Math.floor(Math.log10(target)));
@@ -1232,10 +1247,22 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
       where: 'Head or neck and uncinate process; a major side branch, next to a main duct that is not dilated (Beger 4th ed., ch. 81 and 86; Rodriguez et al. 2007).', size: 'Grape-like cysts over 10 mm that open into the duct; a cyst over 3 cm is a worrisome feature (Beger 4th ed., ch. 86).',
       text: 'A cluster of dilated side branches, like grapes, that still communicate with the main duct, which separates it from MCN. Mostly gastric type: one layer of columnar cells with basal nuclei and abundant mucin, usually low grade. Less aggressive than main-duct IPMN: invasive carcinoma in 16.6% in pooled series, 11% in Rodriguez et al. 2007. Small cysts without mural nodules or a dilated main duct may be watched (Beger 4th ed., ch. 126; Rodriguez et al. 2007).',
       survival: 'With invasive cancer, after resection: about 63% at 5 years (Hingorani 2007).' },
-    pda: { name: 'Ductal adenocarcinoma', full: 'Invasive pancreatic ductal adenocarcinoma (PDA)', color: '--pda',
-      where: 'Mainly the head of the gland, in people and in mouse models', size: 'Drawn about 3 cm, beside the common bile duct (size not sourced)',
-      text: 'The cancer usually meant by “pancreatic cancer”, most often arising from PanIN. It spreads microscopically very early, which is why it is rarely cured even when caught small. Its location may reflect origin: the head and uncinate process come from both the ventral and dorsal buds of the embryo, the body and tail from the dorsal bud alone.',
-      survival: 'Overall under 5% alive at 5 years; median survival 4–6 months in advanced disease; 15–20% at 5 years after a Whipple operation.' },
+    pda: { name: 'Ductal adenocarcinoma', full: 'Pancreatic ductal adenocarcinoma (PDA)', color: '--pda',
+      where: 'Head about 60%, body 15%, tail 5%, diffuse 20% (Robbins 9th ed.). Head tumours block the bile duct; body and tail tumours are silent, larger and more often spread when found (Beger 4th ed., ch. 137).', size: 'A hard, grey-white, ill-defined mass (drawn about 3 cm; size not sourced).',
+      text: 'Malignant glands, poorly formed and lined by pleomorphic cuboidal to columnar cells, infiltrate an intense desmoplastic stroma laid down by activated stellate cells. Invasion along nerves is found in practically every case and tracks with pain; vessels are often invaded. Upstream of the tumour the ducts dilate and the gland atrophies. Genes: KRAS over 90%, CDKN2A about 90–95%, TP53 about 75%, SMAD4 about 55%. At diagnosis 15–20% are resectable, 30–40% locally advanced and 40–50% have spread, chiefly to the liver and lungs (Robbins 9th ed., ch. 19; Beger 4th ed., ch. 119, 125, 130, 134).',
+      survival: 'Five-year survival about 10% overall (39% localized, 13% regional, 3% distant); 15–25% after resection (Beger 4th ed.); older data under 5% (Robbins 9th ed.).',
+      source: 'Robbins 9th ed. ch. 19 (pp. 892-894); Beger 4th ed. ch. 119, 125, 128, 130, 134, 137; Hingorani 2007. Text in our own words. Placement and sizes on the organ are simulated, by rule.' },
+    pdaSpread: { name: 'Spread', full: 'Where PDA spreads', color: '--pda', where: 'Upstream ducts, bile duct, regional lymph nodes, liver', size: 'Illustrative', text: '', survival: '' },
+    acute: { name: 'Acute pancreatitis', full: 'Acute pancreatitis', color: '--acute',
+      where: 'Can involve the whole gland and the fat around it; drawn on the body and tail.', size: 'Interstitial oedematous form in 90–95%: swelling and fat necroses under 10 mm. Necrotizing form in 5–10%: confluent necrosis of gland and fat, which over 5 cm walls off in 20–30 days (Beger 4th ed., ch. 17).',
+      text: 'Enzymes activated too early digest the gland and the fat around it. Trypsin activates other proenzymes; lipase splits fat, and the freed fatty acids bind calcium into chalky soaps (fat necrosis). In the interstitial form there is oedema, mild inflammation and small fat necroses; in the necrotizing form acini, ducts and islets die and veins bleed. Gallstones and alcohol cause about 80%; genes such as PRSS1, SPINK1, CFTR and CTRC raise risk (Robbins 9th ed., ch. 19).',
+      survival: 'About 5% of severe cases die in the first week; 40–60% of necrotizing cases become infected; pseudocysts can follow (Robbins 9th ed., ch. 19).',
+      source: 'Robbins 9th ed. ch. 19 (pp. 884-887); Beger 4th ed. ch. 17 (pp. 164-168). Text in our own words. Placement on the organ is simulated, by rule.' },
+    chronic: { name: 'Chronic pancreatitis', full: 'Chronic pancreatitis', color: '--chronic',
+      where: 'The whole gland, often worst in the head; drawn in the head.', size: 'Gland firm and shrunken, with a dilated, strictured duct and stones in about half (Beger 4th ed., ch. 41).',
+      text: 'Repeated injury leads to fibrosis and loss of acini. Activated stellate cells (4–7% of the gland’s cells) lay down collagen. Ducts dilate behind strictures and fill with protein plugs that calcify into stones; islets are spared at first and gather together, then are lost, so 70% develop diabetes. Long-term alcohol is the commonest cause; up to a quarter are genetic (PRSS1, SPINK1, CFTR, CTRC) (Robbins 9th ed., ch. 19; Beger 4th ed., ch. 7, 41).',
+      survival: 'Mortality about 50% at 20–25 years; pancreatic cancer risk about 12-fold, and 69-fold in hereditary pancreatitis (Robbins 9th ed.; Beger 4th ed., ch. 47).',
+      source: 'Robbins 9th ed. ch. 19 (pp. 886-889); Beger 4th ed. ch. 7, 41, 47. Text in our own words. Placement on the organ is simulated, by rule.' },
   };
   const LESION_SOURCE = 'Hingorani SR. Gastroenterology 2007;133:345-50, doi:10.1053/j.gastro.2007.05.059. Rodriguez JR et al. Gastroenterology 2007;133:72-9, doi:10.1053/j.gastro.2007.05.010. Beger HG et al., eds. The Pancreas: An Integrated Textbook, 4th ed. Wiley 2023 (ch. 81, 84, 86, 125, 126). Kumar V, Abbas AK, Aster JC. Robbins and Cotran Pathologic Basis of Disease, 9th ed. 2015 (ch. 19). Text in our own words. Placement on the HRA organ is simulated, by rule; drawn sizes follow the sizes stated.';
   let disease = null, lesionGroup = null;
@@ -1279,16 +1306,41 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
       for (let i = 0; i < p.count; i++) { const v = new THREE.Vector3().fromBufferAttribute(p, i), n = 1 + 0.22 * Math.sin(v.x * 5.1 + 1.3) * Math.cos(v.y * 4.3) + 0.12 * Math.sin(v.z * 9.7 + v.x * 3); p.setXYZ(i, v.x * n, v.y * n, v.z * n); }
       geo.computeVertexNormals(); const o = new THREE.Mesh(geo, mat('--pda', { roughness: 0.85 })); o.position.copy(at); o.scale.setScalar(14000); q.add(o);
       q.userData.at = at; tag('disease:pda', q, 'Ductal adenocarcinoma', at); }
+    const pathOf = (verts, a, b, step) => { const ax = b.clone().sub(a).normalize(), bins = new Map(); verts.forEach((v) => { const k = Math.round(v.clone().sub(a).dot(ax) / step); const l = bins.get(k) || []; l.push(v); bins.set(k, l); });
+      return [...bins.keys()].sort((x, y) => x - y).filter((k) => bins.get(k).length > 2).map((k) => bins.get(k).reduce((s0, v) => s0.add(v), new THREE.Vector3()).divideScalar(bins.get(k).length)); };
+    // Spread of PDA: the bile duct and the main duct dilated behind the tumour (the double duct sign), enlarged nodes, liver metastases.
+    { const q = part('pdaSpread'), m = mat('--organduct', { transparent: true, opacity: 0.55, depthWrite: false }), cbd = vertsOf(['common_bile_duct']);
+      if (cbd.length) { const lo = cbd.reduce((b, v) => (v.y < b.y ? v : b)), hi = cbd.reduce((b, v) => (v.y > b.y ? v : b)), pth = pathOf(cbd, lo, hi, 3000); if (pth.length > 2) { q.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pth), 40, 4200, 12, false), m)); tag('disease:pdaSpread', q, 'Bile duct, dilated', pth[Math.floor(pth.length * 0.7)]); } }
+      const up = vertsOf(['dorsal_pancreatic_duct', 'ventral_pancreatic_duct']).filter((v) => C('neck').distanceTo(v) < C('head').distanceTo(v)), dp = pathOf(up, C('neck'), C('tail'), 4000);
+      if (dp.length > 2) { q.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(dp), 60, 3000, 12, false), m)); tag('disease:pdaSpread', q, 'Main duct, dilated upstream', dp[Math.floor(dp.length / 2)]); }
+      const nm = mat('#5b5466', { roughness: 0.7 }); for (let k = 0; k < 4; k++) ball(q, C('head').clone().add(new THREE.Vector3((R() - 0.5) * 30000, (R() - 0.5) * 20000, -12000 - R() * 8000)), 3500 + 1500 * R(), nm);
+      const liver = vertsOf(['liver_capsule']);
+      if (liver.length) { const lc = liver.reduce((a, v) => a.add(v), new THREE.Vector3()).divideScalar(liver.length), mm = mat('#f4efe6', { roughness: 0.8 }); let first = null;
+        for (let k = 0; k < 7; k++) { const v = liver[Math.floor(R() * liver.length)].clone().lerp(lc, 0.08 + 0.1 * R()); ball(q, v, 5000 + 4000 * R(), mm); first = first || v; } tag('disease:pdaSpread', q, 'Liver metastases', first); } }
+    // Acute pancreatitis, on the body and tail: swollen, inflamed fat round the gland, chalky fat necroses, and haemorrhage.
+    { const q = part('acute'), halo = mat('--acute', { transparent: true, opacity: 0.28, depthWrite: false }), chalk = mat('#fbf6e9', { roughness: 0.9 }), blood = mat('#7a1424', { roughness: 0.6 });
+      ['body_of_pancreas', 'tail_of_pancreas'].forEach((n) => { const src = inner.getObjectByName(n); if (!src) return; const c = C(REGION_NAMES[n]), gm = src.geometry.clone().translate(-c.x, -c.y, -c.z).scale(1.12, 1.12, 1.12).translate(c.x, c.y, c.z); q.add(new THREE.Mesh(gm, halo)); });
+      const surf = vertsOf(['body_of_pancreas', 'tail_of_pancreas']), mid = C('body').clone().lerp(C('tail'), 0.5);
+      for (let k = 0; k < 26; k++) { const v = surf[Math.floor(R() * surf.length)], out = v.clone().sub(mid).normalize(); ball(q, v.clone().addScaledVector(out, 2500 + 3000 * R()), 900 + 1500 * R(), chalk); }
+      for (let k = 0; k < 5; k++) { const v = surf[Math.floor(R() * surf.length)], o = ball(q, v, 3500 + 2000 * R(), blood); o.scale.y *= 0.4; }
+      q.userData.at = mid; tag('disease:acute', q, 'Acute pancreatitis: oedema, fat necrosis, haemorrhage', C('tail').clone().lerp(mid, 0.3)); }
+    // Chronic pancreatitis, in the head: a beaded, dilated duct ("chain of lakes") with calcified stones, in a firm, shrunken gland.
+    { const q = part('chronic'), lake = mat('#cfe0ef', { transparent: true, opacity: 0.6, depthWrite: false }), stone = mat('#f3e7b8', { roughness: 0.9, emissive: new THREE.Color('#3a2f00') });
+      if (path.length > 1) { const curve = new THREE.CatmullRomCurve3(path), N = 30;
+        for (let k = 0; k <= N; k++) { const t = k / N; ball(q, curve.getPoint(t), 2200 + 1800 * Math.max(0, Math.sin(t * Math.PI * 5)), lake); }   // dilations between strictures
+        for (let k = 0; k < 16; k++) ball(q, curve.getPoint(R()).add(new THREE.Vector3((R() - 0.5) * 2500, (R() - 0.5) * 2500, (R() - 0.5) * 2500)), 700 + 900 * R(), stone);
+        const headV = vertsOf(['head_of_pancreas']); for (let k = 0; k < 10; k++) ball(q, headV[Math.floor(R() * headV.length)].clone().lerp(C('head'), 0.2 + 0.3 * R()), 600 + 700 * R(), stone);
+        q.userData.at = curve.getPoint(0.5); tag('disease:chronic', q, 'Chronic pancreatitis: stones, beaded duct, fibrosis', curve.getPoint(0.4)); } }
     return g;
   }
   function setDisease(key) {
-    disease = key && (key === 'all' || key === 'precursors' || LESIONS[key]) ? key : null;
+    disease = key && (key === 'all' || MODE_PARTS[key] || LESIONS[key]) ? key : null;
     document.querySelectorAll('[data-disease]').forEach((b) => b.setAttribute('aria-pressed', String((b.dataset.disease || null) === (disease || null) || (!disease && b.dataset.disease === 'none'))));
     if (disease) buildLesions();
-    if (lesionGroup) { lesionGroup.visible = !!disease; lesionGroup.children.forEach((q) => { q.visible = disease === 'all' || (disease === 'precursors' && q.name !== 'pda') || q.name === disease; }); }
+    if (lesionGroup) { lesionGroup.visible = !!disease; lesionGroup.children.forEach((q) => { q.visible = disease === 'all' || (MODE_PARTS[disease] || []).includes(q.name) || q.name === disease; }); }
     pancreasMeshes.forEach((m) => { m.material.userData.base = disease ? 0.28 : ($('islets').checked ? 0.3 : 0.92); });
     renderLesionCard();
-    if (disease && disease !== 'all' && disease !== 'precursors') { const at = lesionGroup.getObjectByName(disease).userData.at; if (at) { let bi = 0, bd = Infinity; SITE_LIST.forEach((S0, k) => { const dd = S0.local.distanceTo(at); if (dd < bd) { bd = dd; bi = k; } }); if (bi !== site) setSite(bi); } }
+    if (disease && disease !== 'all' && !MODE_PARTS[disease]) { const at = lesionGroup.getObjectByName(disease).userData.at; if (at) { let bi = 0, bd = Infinity; SITE_LIST.forEach((S0, k) => { const dd = S0.local.distanceTo(at); if (dd < bd) { bd = dd; bi = k; } }); if (bi !== site) setSite(bi); } }
     if (disease && STAGE.mode === 'tissue' && camera.position.distanceTo(controls.target) < 60000) flyTo(STOPS.organ, undefined, 'tissue');
     hashNow();
   }
@@ -1297,7 +1349,11 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
   // histology as in Hingorani 2007 (Figure 1); clicking or zooming into one opens real H&E micrographs with its features marked.
   let MODE = 'pancreas';
   const LES = { view: null, pending: null };
-  const LESION_VIEWS = { panin: { title: 'PanIN', parts: ['panin'], at: 'panin' }, ipmn: { title: 'IPMN', parts: ['mipmn', 'bipmn'], at: 'mipmn' }, mcn: { title: 'MCN', parts: ['mcn'], at: 'mcn' } };
+  const LESION_VIEWS = { panin: { mode: 'precursors', title: 'PanIN', parts: ['panin'], at: 'panin' }, ipmn: { mode: 'precursors', title: 'IPMN', parts: ['mipmn', 'bipmn'], at: 'mipmn' }, mcn: { mode: 'precursors', title: 'MCN', parts: ['mcn'], at: 'mcn' },
+    acute: { mode: 'pancreatitis', title: 'Acute pancreatitis', parts: ['acute'], at: 'acute' }, chronic: { mode: 'pancreatitis', title: 'Chronic pancreatitis', parts: ['chronic'], at: 'chronic' },
+    pda: { mode: 'pda', title: 'PDA', parts: ['pda', 'pdaSpread'], at: 'pda' } };
+  // What each disease mode shows on the organ.
+  const MODE_PARTS = { precursors: ['panin', 'mcn', 'mipmn', 'bipmn'], pancreatitis: ['acute', 'chronic'], pda: ['pda', 'pdaSpread'] };
 
   // Each precursor is shown in real H&E micrographs (open-licensed, credited), with its key features marked and numbered,
   // what sets it apart, and a comparison of the three. Marks are placed by hand on each image (x, y as fractions of it).
@@ -1311,6 +1367,15 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
     ['Mucin', 'Within the cells', 'Abundant; fills the dilated ducts, may extrude from the papilla', 'Thick mucin in the locules'],
     ['Who', '16% of normal pancreata, more with age; 82% of pancreata with cancer', '7th–8th decade, slightly more men', 'Almost only women (10–20 : 1), around 45–48 years'],
     ['Genes', 'KRAS > 90% and telomere shortening early; CDKN2A, then TP53 and SMAD4', 'KRAS and GNAS, each 50–80%; RNF43', 'KRAS, RNF43; no GNAS'],
+  ];
+  const PANC_ROWS = [
+    ['Lobules', 'Packed acini, thin septa', 'Pushed apart by oedema; in the necrotizing form, parts die', 'Lost; replaced by dense fibrosis'],
+    ['Inflammation', 'None', 'Neutrophils', 'Lymphocytes and plasma cells'],
+    ['Fat', 'Viable', 'Fat necrosis with calcium soaps', 'May be replaced by fibrosis'],
+    ['Ducts', 'Normal calibre', 'May be blocked (gallstone)', 'Dilated, strictured, with stones'],
+    ['Islets', 'Scattered among acini', 'Spared unless the lobule dies', 'Spared at first, then lost: diabetes in 70%'],
+    ['Reversible?', '—', 'Usually, if the cause is removed', 'No'],
+    ['Main causes', '—', 'Gallstones and alcohol (about 80%)', 'Long-term alcohol; genetic in up to 25%'],
   ];
   const HISTO = {
     panin: { title: 'Pancreatic intraepithelial neoplasia (PanIN)', lead: 'A microscopic change in the lining of small ducts. As the grade rises, the cells go from low cuboidal to tall columnar with mucin, the lining folds into papillae, and the nuclei crowd, enlarge and lose their place at the base.',
@@ -1348,11 +1413,43 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
       key: ['Normal pancreas beside the cyst.', 'A thick fibrous (pseudo)capsule separates the cyst from the gland; it is often calcified (drawn).', 'Ovarian-type stroma: densely packed spindle cells with wavy nuclei; they carry oestrogen and progesterone receptors and are required for the diagnosis.', 'The cyst (or cysts within it) holds thick mucin; it does not open into the ducts.', 'The lining varies: mostly columnar mucinous cells, with flat or cuboidal stretches without mucin and denuded areas (both drawn on the cyst wall).', 'At higher power: tall columnar cells with pale apical mucin and basal nuclei.', 'Beneath them, the hypercellular ovarian-type stroma: the hallmark of MCN. It may hold clusters of luteinized cells (plump, pink; found in 66% of 56 cases) and pale hyalinized areas (both drawn).'],
       unique: ['Ovarian-type stroma, which neither PanIN nor IPMN has.', 'No connection with the duct system (IPMN connects).', 'Almost only in women (10–20 : 1), around 45–48 years; over 90% in the body or tail.', 'No GNAS mutation (unlike IPMN).'],
       sources: 'Beger HG et al., The Pancreas, 4th ed., 2023, ch. 81, 86, 126; Robbins and Cotran, 9th ed., ch. 19; Hingorani 2007 (wavy stromal nuclei); Distler M et al. Biomed Res Int 2014:474905; Matthaei H et al. Nat Rev Gastroenterol Hepatol 2011;8:141-50; Malaspina L et al. Curr Oncol 2025;32:352 (flat and denuded lining); Zamboni G et al. Am J Surg Pathol 1999;23:410-22, abstract (luteinized cells in 66%).' },
+    acute: { title: 'Acute pancreatitis', lead: 'Enzymes activated inside the gland digest it and the fat around it. Most cases are interstitial: the gland swells with oedema, with mild inflammation and small fat necroses. In the necrotizing form, parts of the gland and the surrounding fat die and bleed.',
+      drawing: { w: 1000, h: 420, credit: 'Drawing for this site (schematic, not to scale), after the descriptions in Robbins and Cotran, 9th ed., ch. 19, and Beger et al. 4th ed., ch. 17.',
+        marks: [[0.1, 0.24, 'Acini in lobules'], [0.232, 0.62, 'Oedematous septum'], [0.24, 0.3, 'Neutrophils'], [0.68, 0.7, 'Fat necrosis, calcium soaps'], [0.846, 0.5, 'Rim of neutrophils'], [0.64, 0.29, 'Haemorrhage'], [0.49, 0.8, 'Dead acini, no nuclei'], [0.94, 0.2, 'Viable fat']] },
+      figures: [{ img: 'acute', w: 1200, h: 800, credit: 'Patho, via Wikimedia Commons (CC BY-SA 3.0): tryptic fat necrosis in severe pancreatitis, H&E.',
+        marks: [[0.12, 0.12, 'Viable fat', 0, 8], [0.45, 0.75, 'Fat necrosis', 0, 4], [0.36, 0.33, 'Inflammatory rim', 0, 5], [0.95, 0.29, 'Haemorrhage', 0, 6]] }],
+      key: ['Lobules of acini, still recognisable.', 'Interstitial oedema: the septa between lobules widen and pale, with fibrin strands.', 'Neutrophils in the septa: acute inflammation.', 'Fat necrosis: lipase splits fat, and the freed fatty acids bind calcium into chalky soaps (granular blue-purple); the fat cells become ghosts.', 'A rim of neutrophils at the edge of the necrosis.', 'Haemorrhage where vessels are digested (necrotizing form).', 'Acini that have died: pale ghosts without nuclei (necrotizing form).', 'Viable fat beyond the necrosis.'],
+      unique: ['Trypsin activated inside the gland starts a cascade of other enzymes (Robbins).', 'Fat necrosis with calcium soaps is the commonest pattern (Beger ch. 17).', 'Interstitial (90–95%) and necrotizing (5–10%) forms differ in extent and outcome.', 'Causes: gallstones (35–60%) and alcohol together about 80%.'],
+      compare: { title: 'Normal pancreas, acute and chronic pancreatitis compared', cols: ['Normal', 'Acute', 'Chronic'], on: 2, src: 'Robbins 9th ed. ch. 19; Beger 4th ed. ch. 7, 17, 41.', rows: PANC_ROWS },
+      sources: 'Robbins and Cotran, 9th ed., ch. 19 (pp. 884-887); Beger HG et al., The Pancreas, 4th ed., 2023, ch. 17 (pp. 164-168).' },
+    chronic: { title: 'Chronic pancreatitis', lead: 'Repeated injury replaces the gland with scar. Acini are lost, ducts dilate behind strictures and fill with calcified stones, and the islets, spared at first, are lost later, so diabetes follows.',
+      drawing: { w: 1000, h: 420, credit: 'Drawing for this site (schematic, not to scale), after the descriptions in Robbins and Cotran, 9th ed., ch. 19, and Beger et al. 4th ed., ch. 7 and 41.',
+        marks: [[0.06, 0.6, 'Dense fibrosis'], [0.36, 0.42, 'Dilated duct, flattened lining'], [0.5, 0.52, 'Calcified protein plug (stone)'], [0.11, 0.22, 'Small, atrophic acini'], [0.84, 0.44, 'Islets spared, gathered'], [0.3, 0.86, 'Lymphocytes'], [0.62, 0.86, 'Activated stellate cells']] },
+      figures: [{ img: 'chronic-gross', w: 900, h: 924, credit: 'Denis Desaulniers and Bernard Têtu, Bibliothèque de l’Université Laval, via Wikimedia Commons (CC BY-SA 4.0): chronic calcifying pancreatitis, resected head (gross specimen; no open-licensed H&E was found).',
+        marks: [[0.22, 0.45, 'Stones', 0, 3], [0.5, 0.39, 'Dilated duct', 0, 2], [0.24, 0.74, 'Firm, fibrotic gland', 0, 1], [0.78, 0.58, 'Duodenum', 0, 8]] }],
+      key: ['Dense fibrosis replaces the lobules; the gland becomes firm and shrunken.', 'The duct is dilated behind strictures, with a flattened, atrophic lining.', 'Protein plugs in the duct calcify into stones (in about half of patients).', 'Only small islands of atrophic acini remain.', 'Islets are spared at first and gather together, then are lost: diabetes follows in 70%.', 'Chronic inflammation: lymphocytes, scattered and in clusters.', 'Activated stellate cells (myofibroblasts) lay down the collagen.', 'In the resected specimen (photo): the duodenum, round the head.'],
+      unique: ['Irreversible: fibrosis and loss of exocrine and then endocrine tissue.', 'Calcified stones and a beaded, dilated duct (“chain of lakes” on imaging).', 'Activated stellate cells drive the fibrosis.', 'Raises the risk of pancreatic cancer about 12-fold.'],
+      compare: { title: 'Normal pancreas, acute and chronic pancreatitis compared', cols: ['Normal', 'Acute', 'Chronic'], on: 3, src: 'Robbins 9th ed. ch. 19; Beger 4th ed. ch. 7, 17, 41.', rows: PANC_ROWS },
+      sources: 'Robbins and Cotran, 9th ed., ch. 19 (pp. 886-889); Beger HG et al., The Pancreas, 4th ed., 2023, ch. 7, 41, 47.' },
+    pda: { title: 'Pancreatic ductal adenocarcinoma (PDA)', lead: 'The common pancreatic cancer. Malignant glands infiltrate a dense, scar-like (desmoplastic) stroma, follow nerves and invade vessels. Most arise in the head, where they block the bile duct.',
+      drawing: { w: 1000, h: 420, credit: 'Drawing for this site (schematic, not to scale), after the descriptions in Robbins and Cotran, 9th ed., ch. 19, and Beger et al. 4th ed., ch. 125.',
+        marks: [[0.15, 0.13, 'Irregular malignant glands'], [0.32, 0.7, 'Atypical, pleomorphic nuclei'], [0.52, 0.94, 'Desmoplastic stroma'], [0.83, 0.52, 'Perineural invasion'], [0.975, 0.52, 'Tumour in a vein'], [0.44, 0.73, 'Necrotic debris'], [0.06, 0.6, 'Spared islet']] },
+      figures: [{ img: 'pda-perineural', w: 700, h: 527, credit: 'KGH, via Wikimedia Commons (CC BY-SA 3.0): pancreatic adenocarcinoma of the head, H&E.',
+        marks: [[0.3, 0.47, 'Nerve with tumour round it', 0, 4], [0.7, 0.29, 'Malignant glands', 0, 1], [0.82, 0.56, 'Atypical cells', 0, 2], [0.06, 0.9, 'Stroma', 0, 3]] },
+        { img: 'pda-glands', w: 891, h: 749, credit: 'Singh PK, Tayao M, Andrici J, et al. PLoS One 2016;11:e0150338 (CC BY 4.0), via Wikimedia Commons: pancreatic ductal adenocarcinoma, H&E.',
+        marks: [[0.3, 0.25, 'Pleomorphic nuclei', 0, 2], [0.62, 0.55, 'Gland lumen with debris', 0, 6]] },
+        { img: 'pda-stroma', w: 1200, h: 214, credit: 'Wang LM, Silva MA, D’Costa Z, et al. Oncotarget 2016;7:4183-94 (CC BY 3.0), via Wikimedia Commons; H&E row cropped: loose, moderate and dense desmoplastic stroma.',
+        marks: [[0.52, 0.55, 'Desmoplastic stroma', 0, 3]] }],
+      key: ['Malignant glands: poorly formed, irregular and angulated, some incomplete, haphazardly placed.', 'Lined by pleomorphic cuboidal to columnar cells with large, dark nuclei.', 'Dense desmoplastic stroma, made by activated stellate cells (cancer-associated fibroblasts); it can make up most of the tumour.', 'Perineural invasion: glands inside or round nerves, in practically every case; it tracks with pain.', 'Vascular invasion: tumour in a vein.', 'Necrotic debris in a gland’s lumen.', 'Islets can survive among the tumour.'],
+      unique: ['Desmoplasia: more scar than tumour cells, which makes biopsy hard.', 'Spreads early along nerves and into vessels; most in the head, blocking the bile duct (jaundice) and the main duct (the double duct sign).', 'Genes: KRAS (over 90%), CDKN2A, TP53, SMAD4.', 'Most often from PanIN; sometimes from IPMN or MCN (with a better outcome).'],
+      compare: { title: 'PDA by location', cols: ['Head', 'Body', 'Tail'], on: 1, src: 'Robbins 9th ed. ch. 19 (p. 893); Beger 4th ed. ch. 137 (p. 1063).',
+        rows: [['Share of cases', 'About 60%', 'About 15%', 'About 5% (diffuse 20%)'], ['First sign', 'Painless jaundice: the bile duct is blocked', 'Pain from the coeliac plexus', 'Late; silent'], ['Over 4 cm when found', '21%', '40%', '51%'], ['Spread when found', '42%', '69%', '84%']] },
+      sources: 'Robbins and Cotran, 9th ed., ch. 19 (pp. 892-894); Beger HG et al., The Pancreas, 4th ed., 2023, ch. 119, 125, 128, 130, 134, 137.' },
   };
   function markSvg(F, n0) {   // numbered pins only; each feature is described in the list below (and on hover)
     const W = 1000, H = Math.round(1000 * F.h / F.w);
-    return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">` + F.marks.map(([x, y, label], k) =>
-      `<g class="mk"><title>${n0 + k}. ${esc(label)}</title><circle cx="${x * W}" cy="${y * H}" r="15"/><text class="n" x="${x * W}" y="${y * H + 6}">${n0 + k}</text></g>`).join('') + '</svg>';
+    return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">` + F.marks.map(([x, y, label, , num], k) => { const n = num || n0 + k;
+      return `<g class="mk"><title>${n}. ${esc(label)}</title><circle cx="${x * W}" cy="${y * H}" r="15"/><text class="n" x="${x * W}" y="${y * H + 6}">${n}</text></g>`; }).join('') + '</svg>';
   }
   // ---------- drawings: schematic sections in H&E colours, drawn here, showing only the features that matter (not to scale).
   const HE = { stroma: '#f5d9e5', collagen: '#e7b6ca', fibro: '#7a5aa6', acinus: '#6e4199', apex: '#e47f9c', nucleus: '#3a2470', dark: '#22114b', cyto: '#f2d1e2', columnar: '#efd7e8', mucin: '#f1f3fa', mucinEdge: '#c3c9e3', lumen: '#fcf8fc', edge: '#c39cc1' };
@@ -1507,13 +1604,74 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
     out.push(`<text x="105" y="345" class="dl">Duct: no connection</text>`, `<text x="264" y="24" class="dl">Capsule</text>`, `<text x="720" y="60" class="dl">Locule with mucin</text>`, `<text x="880" y="380" class="dl">Second locule</text>`);
     return { svg: `<svg viewBox="0 0 ${W} ${H}" class="drawing" role="img" aria-label="Drawing: normal pancreas, a thick fibrous capsule, dense wavy ovarian-type stroma, and a cyst lined by tall columnar mucinous cells and filled with mucin, with a septum forming a second locule; a nearby duct is not connected">${out.join('')}</svg>`, w: W, h: H };
   }
-  const DRAWINGS = { panin: drawPanIN, ipmn: drawIPMN, mcn: drawMCN };
+  // Fat cells: polygons of white fat with a thin pink rim (viable), or ghost outlines with chalky blue soaps (necrotic).
+  function drawFat(x0, y0, x1, y1, R, out, necrotic) {
+    for (let y = y0; y < y1; y += 26) for (let x = x0 + ((y / 26) % 2) * 13; x < x1; x += 26) { const cx = x + (R() - 0.5) * 6, cy = y + (R() - 0.5) * 6, r = 12 + 3 * R(), pts = Array.from({ length: 7 }, (_, i) => { const a = i / 7 * 6.283 + R() * 0.3; return [cx + Math.cos(a) * r, cy + Math.sin(a) * r]; });
+      if (!necrotic) { out.push(pol(pts, '#fffafd', '#e6aec4', 1.2)); if (R() < 0.08) out.push(ell(cx + r * 0.7, cy, 3, 1.2, 90, HE.fibro)); }
+      else { out.push(pol(pts, '#f3dbe8', '#d7b0c6', 1)); for (let k = 0; k < 9; k++) out.push(`<circle cx="${(cx + (R() - 0.5) * r * 1.4).toFixed(1)}" cy="${(cy + (R() - 0.5) * r * 1.4).toFixed(1)}" r="${(0.9 + R()).toFixed(1)}" fill="#6f6fbf"/>`); } }
+  }
+  const neutrophil = (x, y, out) => { for (let j = 0; j < 3; j++) out.push(`<circle cx="${(x + (j - 1) * 2.2).toFixed(1)}" cy="${(y + (j % 2) * 1.6).toFixed(1)}" r="1.5" fill="#2a1550"/>`); };
+  function drawAcute() {
+    const R = rng(5150), W = 1000, H = 420, out = [];
+    drawStroma(R, W, H, out, 40);
+    // Lobules of acini, pushed apart by oedematous septa (pale, loose, with fibrin strands and neutrophils).
+    out.push(`<rect x="0" y="0" width="520" height="${H}" fill="#f7e9f0"/>`);
+    const lob = [[20, 20, 225, 190], [265, 20, 480, 190], [20, 235, 225, 400], [265, 235, 440, 400]];
+    lob.forEach(([a, b, c, d]) => { out.push(`<rect x="${a}" y="${b}" width="${c - a}" height="${d - b}" rx="18" fill="#f2cde0"/>`); for (let y = b + 16; y < d - 10; y += 30) for (let x = a + 16 + ((y / 30) % 2) * 14; x < c - 10; x += 30) drawAcinus(x + (R() - 0.5) * 4, y + (R() - 0.5) * 4, 12 + 2 * R(), R, out); });
+    for (let k = 0; k < 40; k++) { const vert = R() < 0.5, x = vert ? 232 + (R() - 0.5) * 22 : 20 + R() * 460, y = vert ? 20 + R() * 380 : 205 + (R() - 0.5) * 24; out.push(`<path d="M${x.toFixed(0)} ${y.toFixed(0)} q6 ${((R() - 0.5) * 8).toFixed(0)} 14 0" stroke="#e7a9c2" stroke-width="1" fill="none"/>`); if (R() < 0.6) neutrophil(x + 4, y + 6, out); }
+    // Necrotizing edge: acini that have died (pale pink ghosts with no nuclei), then fat necrosis with chalky soaps, a rim of neutrophils, haemorrhage, and viable fat.
+    for (let k = 0; k < 7; k++) { const x = 455 + R() * 70, y = 250 + R() * 150; out.push(`<circle cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="${(11 + 3 * R()).toFixed(1)}" fill="#f4d3e1" stroke="#e5b7cb" stroke-width="1"/>`); }
+    drawFat(540, 10, 840, 410, R, out, true); drawFat(870, 10, 1000, 410, R, out, false);
+    for (let k = 0; k < 220; k++) { const y = R() * H, x = 846 + Math.sin(y / 30) * 10 + (R() - 0.5) * 26; neutrophil(x, y, out); }
+    for (let k = 0; k < 80; k++) { const x = 640 + (R() - 0.5) * 90, y = 120 + (R() - 0.5) * 90; out.push(ell(x, y, 3.2, 1.6, R() * 180, '#d23a49')); }
+    out.push(`<text x="250" y="${H - 6}" class="gl" text-anchor="middle">pancreas (oedematous)</text>`, `<text x="690" y="${H - 6}" class="gl" text-anchor="middle">fat necrosis</text>`, `<text x="935" y="${H - 6}" class="gl" text-anchor="middle">viable fat</text>`);
+    return { svg: `<svg viewBox="0 0 ${W} ${H}" class="drawing" role="img" aria-label="Drawing: acute pancreatitis, with oedematous septa and neutrophils between lobules, dead acini at the edge, fat necrosis with calcium soaps, a rim of neutrophils, haemorrhage and viable fat">${out.join('')}</svg>`, w: W, h: H };
+  }
+  function drawChronic() {
+    const R = rng(6260), W = 1000, H = 420, out = [];
+    out.push(`<rect width="${W}" height="${H}" fill="#eebcd0"/>`);
+    for (let k = 0; k < 380; k++) { const x = R() * W, y = R() * H, dx = 26 + 30 * R(); out.push(`<path d="M${x.toFixed(0)} ${y.toFixed(0)} q${(dx / 2).toFixed(0)} ${((R() - 0.5) * 12).toFixed(0)} ${dx.toFixed(0)} 0" stroke="#dd97b4" stroke-width="1.6" fill="none"/>`); }   // dense collagen
+    for (let k = 0; k < 160; k++) out.push(ell(R() * W, R() * H, 5, 1.4, (R() - 0.5) * 40, '#6a4a9a', 0.85));   // activated stellate cells (myofibroblasts)
+    // A few small, atrophic acini left in islands; islets spared and gathered together.
+    [[110, 95], [170, 330], [880, 360]].forEach(([x, y]) => { for (let k = 0; k < 6; k++) drawAcinus(x + (R() - 0.5) * 60, y + (R() - 0.5) * 50, 9 + 2 * R(), R, out); });
+    [[820, 120], [870, 160], [790, 175]].forEach(([x, y]) => { out.push(`<circle cx="${x}" cy="${y}" r="30" fill="#f6e2ec" stroke="#e2c1d2" stroke-width="1"/>`); for (let k = 0; k < 18; k++) { const a = R() * 6.28, rr = R() * 26; out.push(`<circle cx="${(x + Math.cos(a) * rr).toFixed(1)}" cy="${(y + Math.sin(a) * rr).toFixed(1)}" r="2" fill="#6b56a3"/>`); } });
+    // A dilated, irregular duct lined by flattened cells, holding a laminated, calcified protein plug.
+    const dc = [500, 215], ring = Array.from({ length: 61 }, (_, i) => { const a = i / 60 * 6.283; return [dc[0] + Math.cos(a) * (150 + 14 * Math.sin(a * 5)), dc[1] + Math.sin(a) * (120 + 10 * Math.cos(a * 4))]; });
+    out.push(pol(ring, HE.lumen)); lining(ring, (x, y) => [dc[0] - x, dc[1] - y], { w: 13, h: 11, nuc: 'central', fill: '#f4d4e3' }, out, R);
+    for (let r = 60; r > 4; r -= 7) out.push(`<ellipse cx="${dc[0] + 10}" cy="${dc[1] + 5}" rx="${r * 1.2}" ry="${r}" fill="${r % 14 < 7 ? '#8579c4' : '#a69bd6'}"/>`);
+    // Chronic inflammation: lymphocytes, scattered and in a small cluster.
+    for (let k = 0; k < 140; k++) { const cl = k < 60, x = cl ? 300 + (R() - 0.5) * 70 : R() * W, y = cl ? 360 + (R() - 0.5) * 50 : R() * H; out.push(`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="2.6" fill="#2d1b5e"/>`); }
+    out.push(`<text x="500" y="30" class="dl">Dilated duct with a stone</text>`, `<text x="830" y="70" class="dl">Islets, spared</text>`);
+    return { svg: `<svg viewBox="0 0 ${W} ${H}" class="drawing" role="img" aria-label="Drawing: chronic pancreatitis, with dense fibrosis and activated stellate cells, a few atrophic acini, spared islets gathered together, a dilated duct with a flattened lining and a calcified stone, and lymphocytes">${out.join('')}</svg>`, w: W, h: H };
+  }
+  function drawPDA() {
+    const R = rng(7370), W = 1000, H = 420, out = [];
+    out.push(`<rect width="${W}" height="${H}" fill="#ecc9d8"/>`);
+    for (let k = 0; k < 300; k++) { const x = R() * W, y = R() * H, dx = 18 + 26 * R(), a = Math.sin(x / 90 + y / 70) * 40; out.push(`<path d="M${x.toFixed(0)} ${y.toFixed(0)} q${(dx / 2).toFixed(0)} ${((R() - 0.5) * 10).toFixed(0)} ${dx.toFixed(0)} 0" transform="rotate(${a.toFixed(0)} ${x.toFixed(0)} ${y.toFixed(0)})" stroke="#d8a3bd" stroke-width="1.3" fill="none"/>`); }
+    for (let k = 0; k < 220; k++) out.push(ell(R() * W, R() * H, 5, 1.3, Math.sin(k) * 50, '#6a4a9a', 0.8));   // desmoplastic stroma: fibroblasts in collagen
+    // A nerve, invaded: fascicles with wavy fibres and Schwann-cell nuclei, malignant glands inside its sheath.
+    const nv = [760, 265, 62]; out.push(`<circle cx="${nv[0]}" cy="${nv[1]}" r="${nv[2] + 6}" fill="#f1dce6" stroke="#cf9fb8" stroke-width="2"/>`);
+    for (let k = 0; k < 60; k++) { const a = R() * 6.28, rr = R() * nv[2] * 0.9, x = nv[0] + Math.cos(a) * rr, y = nv[1] + Math.sin(a) * rr; out.push(`<path d="M${(x - 8).toFixed(0)} ${y.toFixed(0)} q4 -3 8 0 t8 0" stroke="#d7b7c8" stroke-width="1.3" fill="none"/>`); if (k % 3 === 0) out.push(ell(x, y, 4, 1.3, 0, '#5a4592')); }
+    // Malignant glands: irregular, angulated, sometimes incomplete; atypical cells with large, pleomorphic, dark nuclei.
+    const gland = (cx, cy, r, open) => { const n = 9, pts = Array.from({ length: n + 1 }, (_, i) => { const a = i / n * 6.283; return [cx + Math.cos(a) * r * (0.7 + 0.5 * R()), cy + Math.sin(a) * r * (0.7 + 0.5 * R())]; }); pts[n] = pts[0];
+      out.push(pol(pts, HE.lumen)); lining(open ? pts.slice(0, 6) : pts, (x, y) => [cx - x, cy - y], { w: 11, h: 20, hj: 5, mucin: 0.15, nuc: 'random', dark: true, fill: '#f0c9dc' }, out, R); };
+    [[150, 115, 50], [275, 245, 58, true], [115, 330, 44], [395, 110, 44], [440, 305, 60], [580, 160, 46, true], [620, 345, 44], [880, 85, 40], [925, 345, 42, true]].forEach(([x, y, r, o]) => gland(x, y, r, o));
+    [[730, 235, 18], [790, 300, 16], [742, 300, 14]].forEach(([x, y, r]) => gland(x, y, r, false));   // in the nerve
+    // Necrotic debris in a gland's lumen; tumour cells in a vein; a spared islet.
+    for (let k = 0; k < 50; k++) out.push(`<circle cx="${(440 + (R() - 0.5) * 44).toFixed(1)}" cy="${(305 + (R() - 0.5) * 40).toFixed(1)}" r="${(1 + R() * 1.5).toFixed(1)}" fill="${R() < 0.5 ? '#3a2470' : '#e7a0b8'}"/>`);
+    out.push(`<circle cx="930" cy="200" r="36" fill="#f7eef3" stroke="#d7414f" stroke-width="3"/>`); for (let k = 0; k < 14; k++) out.push(ell(915 + R() * 30, 185 + R() * 30, 3, 1.5, R() * 180, '#d23a49'));
+    gland(940, 206, 12, false);
+    out.push(`<circle cx="60" cy="210" r="28" fill="#f6e2ec" stroke="#e2c1d2"/>`); for (let k = 0; k < 16; k++) { const a = R() * 6.28, rr = R() * 24; out.push(`<circle cx="${(60 + Math.cos(a) * rr).toFixed(1)}" cy="${(210 + Math.sin(a) * rr).toFixed(1)}" r="2" fill="#6b56a3"/>`); }
+    out.push(`<text x="760" y="${265 - 62 - 14}" class="dl">Nerve</text>`, `<text x="930" y="150" class="dl">Vein</text>`);
+    return { svg: `<svg viewBox="0 0 ${W} ${H}" class="drawing" role="img" aria-label="Drawing: pancreatic ductal adenocarcinoma, with irregular malignant glands of atypical cells in dense desmoplastic stroma, glands inside a nerve (perineural invasion), tumour in a vein, necrotic debris in a lumen, and a spared islet">${out.join('')}</svg>`, w: W, h: H };
+  }
+  const DRAWINGS = { panin: drawPanIN, ipmn: drawIPMN, mcn: drawMCN, acute: drawAcute, chronic: drawChronic, pda: drawPDA };
   function renderHisto(key) {
     const box = $('histopanel'), Hd = HISTO[key]; if (!Hd) { box.hidden = true; return; } box.hidden = false;
     const drawn = Hd.drawing && DRAWINGS[key] ? DRAWINGS[key]() : null;
     const drawFig = drawn ? `<figure><div class="frame" style="aspect-ratio:${drawn.w}/${drawn.h}">${drawn.svg}${markSvg(Hd.drawing, 1)}</div><figcaption>${esc(Hd.drawing.credit)}</figcaption></figure>` : '';
     let n = 1; const figs = Hd.figures.map((F) => { const html = `<figure><div class="frame" style="aspect-ratio:${F.w}/${F.h}"><img src="${HISTO_IMG[F.img]}" alt="${esc(Hd.title)}: H&amp;E micrograph"/>${markSvg(F, n)}</div><figcaption>${esc(F.credit)}</figcaption></figure>`; n += F.marks.length; return html; }).join('');
-    const col = { panin: 1, ipmn: 2, mcn: 3 }[key];
+    const cmp = Hd.compare || { title: 'PanIN, IPMN and MCN compared', cols: ['PanIN', 'IPMN', 'MCN'], rows: COMPARE_ROWS, on: { panin: 1, ipmn: 2, mcn: 3 }[key], src: 'Beger 4th ed. ch. 81, 86, 126; Hingorani 2007.' }, col = cmp.on;
     const more = Hd.more ? `<p class="more">More real examples: ${Hd.more.map(([t, u]) => `<a href="${u}" target="_blank" rel="noopener">${esc(t)} ↗</a>`).join(' · ')} <span>(external; images © Johns Hopkins, not reproduced here)</span></p>` : '';
     box.innerHTML = `<div class="hhead"><h2>${esc(Hd.title)}</h2><button type="button" class="hclose" data-lesion="overview">‹ All precursors</button></div><p class="lead">${esc(Hd.lead)}</p>`
       + (drawn ? `${drawFig}<h3>Real H&amp;E: the same features, numbered alike</h3>` : '') + figs + more
@@ -1521,24 +1679,24 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
       + (Hd.chart ? `<h3>${esc(Hd.chart.title)}</h3><div class="tablewrap"><table class="prog"><thead><tr><th></th>${Hd.chart.cols.map((c) => `<th>${esc(c)}</th>`).join('')}</tr></thead><tbody>`
         + Hd.chart.rows.map((r) => { const mx = Math.max(...r.vals.filter((v) => v !== null)); return `<tr><th>${esc(r.label)}<small>${esc(r.src)}</small></th>${r.vals.map((v) => v === null ? '<td class="na">–</td>' : `<td><span class="bar" style="width:${Math.max(3, 100 * v / mx)}%"></span><span class="v">${v}${r.unit}</span></td>`).join('')}</tr>`; }).join('')
         + `</tbody></table></div><p class="src">${esc(Hd.chart.note)}</p>` : '')
-      + `<h3>PanIN, IPMN and MCN compared</h3><div class="tablewrap"><table><thead><tr><th></th><th${col === 1 ? ' class="on"' : ''}>PanIN</th><th${col === 2 ? ' class="on"' : ''}>IPMN</th><th${col === 3 ? ' class="on"' : ''}>MCN</th></tr></thead><tbody>`
-      + COMPARE_ROWS.map((r) => `<tr><th>${esc(r[0])}</th>${r.slice(1).map((c, i) => `<td${i + 1 === col ? ' class="on"' : ''}>${esc(c)}</td>`).join('')}</tr>`).join('') + '</tbody></table></div>'
-      + `<p class="src">Sources: ${esc(Hd.sources)} Comparison: Beger 4th ed. ch. 81, 86, 126; Hingorani 2007. Text in our own words. Images keep their own licences.</p>`;
+      + `<h3>${esc(cmp.title)}</h3><div class="tablewrap"><table><thead><tr><th></th>${cmp.cols.map((c, i) => `<th${i + 1 === col ? ' class="on"' : ''}>${esc(c)}</th>`).join('')}</tr></thead><tbody>`
+      + cmp.rows.map((r) => `<tr><th>${esc(r[0])}</th>${r.slice(1).map((c, i) => `<td${i + 1 === col ? ' class="on"' : ''}>${esc(c)}</td>`).join('')}</tr>`).join('') + '</tbody></table></div>'
+      + `<p class="src">Sources: ${esc(Hd.sources)} Comparison: ${esc(cmp.src)} Text in our own words. Images keep their own licences.</p>`;
     box.querySelector('.hclose').addEventListener('click', () => exitLesion()); box.scrollTop = 0;
   }
   function setMode(m) {
-    if (m === MODE || !['pancreas', 'precursors'].includes(m)) return;
+    if (m === MODE || !['pancreas', 'precursors', 'pancreatitis', 'pda'].includes(m)) return;
     if (LES.view) exitLesion(true);
     MODE = m; document.body.dataset.mode = m; if (splitOn) setSplit(false);
     document.querySelectorAll('[data-mode]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === m)));
     if (COMPARE.on) $('compare').click();
-    setDisease(m === 'precursors' ? 'precursors' : null);
+    setDisease(MODE_PARTS[m] ? m : null); pancreasMeshes.forEach((pm) => { pm.material.color.copy(col('--organ')); });
     if (m === 'pancreas') setSite(site);
     flyTo(STOPS.organ, undefined, 'tissue'); lastLevel = ''; hashNow();
   }
   document.querySelectorAll('[data-mode]').forEach((b) => b.addEventListener('click', () => setMode(b.dataset.mode)));
   function enterLesion(key) {
-    if (!LESION_VIEWS[key]) return; if (MODE !== 'precursors') setMode('precursors');
+    if (!LESION_VIEWS[key]) return; if (MODE !== LESION_VIEWS[key].mode) setMode(LESION_VIEWS[key].mode);
     LES.view = key; LES.pending = null; flight = null; flash(); renderHisto(key); lastLevel = ''; renderLesionCard(); hashNow();
   }
   function exitLesion(quiet) {
@@ -1548,16 +1706,18 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
   function flash() { const f = $('flash'); f.style.transition = 'none'; f.style.opacity = '1'; requestAnimationFrame(() => { f.style.transition = 'opacity .45s'; f.style.opacity = '0'; }); }
   document.querySelectorAll('[data-lesion]').forEach((b) => b.addEventListener('click', () => { const k = b.dataset.lesion; if (k === 'overview') { if (LES.view) exitLesion(); else flyTo(STOPS.organ, undefined, 'tissue'); } else enterLesion(k); }));
   function renderLesionCard() {
-    const keys = MODE !== 'precursors' ? (disease && disease !== 'precursors' ? [disease] : []) : LES.view ? LESION_VIEWS[LES.view].parts : ['panin', 'mipmn', 'bipmn', 'mcn'], card = $('lesioncard');
+    const keys = (MODE === 'pancreas' ? (disease && !MODE_PARTS[disease] ? [disease] : []) : LES.view ? LESION_VIEWS[LES.view].parts : MODE_PARTS[MODE]).filter((k) => LESIONS[k]), card = $('lesioncard');
     card.hidden = !keys.length; if (!keys.length) return; const detailed = keys.length <= 2;
     card.innerHTML = keys.map((k) => { const L = LESIONS[k]; return `<h3><span class="sw" style="background:var(${L.color})"></span>${esc(L.full)}</h3>`
-      + (detailed ? `<p><strong>Where:</strong> ${esc(L.where)}</p><p><strong>Size:</strong> ${esc(L.size)}</p><p>${esc(L.text)}</p><p><strong>Prognosis:</strong> ${esc(L.survival)}</p>` : `<p>${esc(L.where)}.</p>`); }).join('') + `<p class="src">${esc(LESION_SOURCE)}</p>`;
+      + (detailed ? `<p><strong>Where:</strong> ${esc(L.where)}</p><p><strong>Size:</strong> ${esc(L.size)}</p><p>${esc(L.text)}</p><p><strong>Prognosis:</strong> ${esc(L.survival)}</p>` : `<p>${esc(L.where)}.</p>`); }).join('') + `<p class="src">${esc(LESIONS[keys[0]].source || LESION_SOURCE)}</p>`;
   }
   // Insets beside the organ, each a live view of one lesion's architecture, joined by a line to where it arises.
-  const INSETS = [{ key: 'mcn', pos: { right: 16, top: 70 } }, { key: 'panin', pos: { right: 16, bottom: 70 } }, { key: 'ipmn', pos: { left: 16, bottom: 70 } }];
-  const INSET_CROP = { panin: '45% 50%', ipmn: '62% 12%', mcn: '50% 40%' }, INSET_IMG = { panin: 'panin', ipmn: 'ipmn', mcn: 'mcn-low' };
+  const INSETS_BY_MODE = { precursors: [{ key: 'mcn', pos: { right: 16, top: 70 } }, { key: 'panin', pos: { right: 16, bottom: 70 } }, { key: 'ipmn', pos: { left: 16, bottom: 70 } }],
+    pancreatitis: [{ key: 'acute', pos: { right: 16, top: 70 } }, { key: 'chronic', pos: { left: 16, bottom: 70 } }], pda: [{ key: 'pda', pos: { right: 16, bottom: 70 } }] };
+  let INSETS = INSETS_BY_MODE.precursors;
+  const INSET_CROP = { panin: '45% 50%', ipmn: '62% 12%', mcn: '50% 40%', acute: '40% 60%', chronic: '35% 40%', pda: '30% 50%' }, INSET_IMG = { panin: 'panin', ipmn: 'ipmn', mcn: 'mcn-low', acute: 'acute', chronic: 'chronic-gross', pda: 'pda-perineural' };
   function insetDom() {
-    const box = $('insets'); if (box.dataset.built) return; box.dataset.built = '1';
+    const box = $('insets'); if (box.dataset.built === MODE) return; box.dataset.built = MODE; INSETS = INSETS_BY_MODE[MODE] || [];
     box.innerHTML = '<svg aria-hidden="true"></svg>' + INSETS.map((t) => `<div class="inset" data-inset="${t.key}" style="${Object.entries(t.pos).map(([k, v]) => `${k}:${v}px`).join(';')};background-image:url(${HISTO_IMG[INSET_IMG[t.key]]});background-position:${INSET_CROP[t.key]}" role="button" tabindex="0" aria-label="Open ${LESION_VIEWS[t.key].title}: histology"><b>${LESION_VIEWS[t.key].title} ›</b></div>`).join('');
     box.querySelectorAll('[data-inset]').forEach((el) => { el.addEventListener('click', () => enterLesion(el.dataset.inset)); el.addEventListener('keydown', (e) => { if (e.key === 'Enter') enterLesion(el.dataset.inset); }); });
   }
@@ -1581,12 +1741,12 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
   const viewName = (lv) => Object.keys(VIEW_KEYS).find((k) => { const [l, br, kind] = VIEW_KEYS[k]; return l === lv && (!br || br === branch) && (!kind || kind === isletKind); }) || 'organ';
   const hashNow = () => writeHash(LES.view ? 'lesion' : levelAt(camera.position.distanceTo(controls.target)));
   let hashReady = false; const START_HASH = location.hash;   // the link the page was opened with is read once the organ is built
-  function writeHash(lv) { if (!hashReady || splitOn || tour || site < 0) return; const h = MODE === 'precursors' ? `#mode=precursors${LES.view ? '&lesion=' + LES.view : ''}` : `#site=${site + 1}&view=${viewName(lv)}${stain === 'if' ? '&stain=if' : ''}${disease ? '&disease=' + disease : ''}`;
+  function writeHash(lv) { if (!hashReady || splitOn || tour || site < 0) return; const h = MODE !== 'pancreas' ? `#mode=${MODE}${LES.view ? '&lesion=' + LES.view : ''}` : `#site=${site + 1}&view=${viewName(lv)}${stain === 'if' ? '&stain=if' : ''}${disease ? '&disease=' + disease : ''}`;
     if (location.hash !== h) try { history.replaceState(null, '', h); } catch (e) { /* a sandboxed page may refuse */ } }
   function readHash(h) { const q = new URLSearchParams((typeof h === 'string' ? h : location.hash).slice(1)), n = +q.get('site'), v = VIEW_KEYS[q.get('view')];
     if (n >= 1 && n <= SITE_LIST.length && n - 1 !== site) setSite(n - 1);
     if (q.get('stain') === 'if') document.querySelector('[data-stain=if]').click();
-    if (q.get('mode') === 'precursors') { setMode('precursors'); if (LESION_VIEWS[q.get('lesion')]) enterLesion(q.get('lesion')); return; } else if (MODE !== 'pancreas') setMode('pancreas');
+    if (MODE_PARTS[q.get('mode')]) { setMode(q.get('mode')); if (LESION_VIEWS[q.get('lesion')]) enterLesion(q.get('lesion')); return; } else if (MODE !== 'pancreas') setMode('pancreas');
     if (q.get('disease')) setDisease(q.get('disease'));
     if (v && v[0] !== 'organ') { const [lvl, br, kind] = v; setIsletKind(kind); if (br) document.querySelectorAll('[data-branch]').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.branch === br))); flyTo(stopFor(lvl, br), br, MODE_OF[lvl]); } }
   matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => location.reload());
