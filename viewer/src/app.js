@@ -1307,6 +1307,8 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
   ];
   const HISTO = {
     panin: { title: 'Pancreatic intraepithelial neoplasia (PanIN)', lead: 'A microscopic change in the lining of small ducts. As the grade rises, the cells go from low cuboidal to tall columnar with mucin, the lining folds into papillae, and the nuclei crowd, enlarge and lose their place at the base.',
+      drawing: { w: 1000, h: 400, credit: 'Drawing for this site (schematic, not to scale), after the descriptions in Koorstra et al. 2008 and Beger et al. 4th ed., ch. 126, and the progression figure of Hackeng et al. 2016.',
+        marks: [[0.052, 0.4375, 'Normal duct: low cuboidal cells'], [0.295, 0.63, 'Tall columnar cells, basal nuclei'], [0.295, 0.265, 'Pale apical mucin'], [0.565, 0.4375, 'Micropapillary folds'], [0.7, 0.62, 'Papillae; crowded, stratified nuclei'], [0.9, 0.4375, 'Budding, loss of polarity, marked atypia'], [0.165, 0.81, 'KRAS and telomere shortening first']] },
       figures: [{ img: 'panin', w: 974, h: 344, credit: 'Hackeng WM, Hruban RH, Offerhaus GJ, Brosens LA. Diagn Pathol 2016;11:47, doi:10.1186/s13000-016-0497-z (CC BY 4.0); arranged by M. Häggström, via Wikimedia Commons.',
         marks: [[0.105, 0.50, 'Normal duct: low cuboidal cells', 1], [0.215, 0.62, 'Tall columnar cells', -1], [0.395, 0.34, 'Pale apical mucin', 1], [0.46, 0.63, 'Micropapillary folds', 1], [0.6, 0.47, 'Papillae; crowded, stratified nuclei', 1], [0.88, 0.16, 'Budding, loss of polarity, marked atypia', -1], [0.33, 0.88, 'KRAS and telomere shortening first', 1]] }],
       key: ['Normal duct: a single layer of low cuboidal cells with little mucin.', 'PanIN-1A (low grade): flat, tall columnar cells with small, round nuclei at the base.', 'Abundant pale mucin fills the top of each cell (gastric-foveolar type).', 'PanIN-1B (low grade): the lining folds into micropapillae; nuclei still basal.', 'PanIN-2 (now low grade): more complex papillae; nuclei crowded, enlarged, darker and stratified, beginning to lose polarity; mitoses rare.', 'PanIN-3 (high grade, carcinoma in situ): widespread loss of polarity, marked atypia, frequent mitoses, cells budding into the lumen, yet still within the basement membrane; found almost only beside invasive cancer.', 'Genetic progression: telomere shortening and KRAS in over 90% from the start; CDKN2A (p16) loss, then TP53 and SMAD4 late.'],
@@ -1333,18 +1335,69 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
       unique: ['Ovarian-type stroma, which neither PanIN nor IPMN has.', 'No connection with the duct system (IPMN connects).', 'Almost only in women (10–20 : 1), around 45–48 years; over 90% in the body or tail.', 'No GNAS mutation (unlike IPMN).'],
       sources: 'Beger HG et al., The Pancreas, 4th ed., 2023, ch. 81, 86, 126; Robbins and Cotran, 9th ed., ch. 19; Hingorani 2007.' },
   };
-  function markSvg(F, n0) {
+  function markSvg(F, n0) {   // numbered pins only; each feature is described in the list below (and on hover)
     const W = 1000, H = Math.round(1000 * F.h / F.w);
-    return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">` + F.marks.map(([x, y, label, side], k) => {
-      const cx = x * W, cy = y * H, n = n0 + k, tw = label.length * 8.4 + 16, lx = side > 0 ? cx + 22 : cx - 22 - tw, ly = cy - 13;
-      const fx = Math.max(4, Math.min(W - tw - 4, lx));
-      return `<g class="mk"><line x1="${cx}" y1="${cy}" x2="${side > 0 ? fx : fx + tw}" y2="${cy}"/><rect x="${fx}" y="${ly}" width="${tw}" height="26" rx="5"/><text x="${fx + 8}" y="${cy + 5}">${esc(label)}</text><circle cx="${cx}" cy="${cy}" r="15"/><text class="n" x="${cx}" y="${cy + 6}">${n}</text></g>`; }).join('') + '</svg>';
+    return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">` + F.marks.map(([x, y, label], k) =>
+      `<g class="mk"><title>${n0 + k}. ${esc(label)}</title><circle cx="${x * W}" cy="${y * H}" r="15"/><text class="n" x="${x * W}" y="${y * H + 6}">${n0 + k}</text></g>`).join('') + '</svg>';
   }
+  // ---------- drawings: schematic sections in H&E colours, drawn here, showing only the features that matter (not to scale).
+  const HE = { stroma: '#f5d9e5', collagen: '#e7b6ca', fibro: '#7a5aa6', acinus: '#6e4199', apex: '#e47f9c', nucleus: '#3a2470', dark: '#22114b', cyto: '#f2d1e2', columnar: '#efd7e8', mucin: '#f1f3fa', mucinEdge: '#c3c9e3', lumen: '#fcf8fc', edge: '#c39cc1' };
+  const pol = (pts, fill, stroke, sw) => `<polygon points="${pts.map((p) => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ')}" fill="${fill}"${stroke ? ` stroke="${stroke}" stroke-width="${sw || 0.8}"` : ''}/>`;
+  const ell = (x, y, rx, ry, deg, fill, op) => `<ellipse cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" rx="${rx.toFixed(1)}" ry="${ry.toFixed(1)}" transform="rotate(${deg.toFixed(0)} ${x.toFixed(1)} ${y.toFixed(1)})" fill="${fill}"${op ? ` opacity="${op}"` : ''}/>`;
+  function drawStroma(R, W, H, out, n) {
+    out.push(`<rect width="${W}" height="${H}" fill="${HE.stroma}"/>`);
+    for (let k = 0; k < n; k++) { const x = R() * W, y = R() * H, dx = 20 + 30 * R(), dy = (R() - 0.5) * 10; out.push(`<path d="M${x.toFixed(0)} ${y.toFixed(0)} q${(dx / 2).toFixed(0)} ${dy.toFixed(0)} ${dx.toFixed(0)} 0" stroke="${HE.collagen}" stroke-width="1.3" fill="none" opacity="0.8"/>`); }
+    for (let k = 0; k < n * 0.8; k++) out.push(ell(R() * W, R() * H, 4.2, 1.3, R() * 180, HE.fibro, 0.75));   // spindle nuclei of fibroblasts
+  }
+  function drawAcinus(x, y, r, R, out) {   // a rosette of wedge-shaped cells: purple bases, pink apical granules, nuclei toward the base
+    const n = 7 + Math.floor(R() * 3), a0 = R() * 6.28;
+    for (let j = 0; j < n; j++) { const a = a0 + j / n * 6.283, b = a + 6.283 / n * 0.92, P = (ang, rr) => [x + Math.cos(ang) * rr, y + Math.sin(ang) * rr];
+      out.push(pol([P(a, r * 0.12), P(a, r), P((a + b) / 2, r * 1.04), P(b, r), P(b, r * 0.12)], HE.acinus, '#5a3384', 0.6));
+      out.push(pol([P(a, r * 0.12), P(a, r * 0.48), P(b, r * 0.48), P(b, r * 0.12)], HE.apex));
+      const m = P((a + b) / 2, r * 0.74); out.push(ell(m[0], m[1], r * 0.14, r * 0.12, 0, HE.dark)); }
+  }
+  function drawPanIN() {
+    const R = rng(4242), W = 1000, H = 400, cy = 175, out = [];
+    drawStroma(R, W, H, out, 160);
+    const ducts = [{ x: 100, r: 36, g: 0, name: 'Normal duct' }, { x: 295, r: 50, g: 1, name: 'PanIN-1A' }, { x: 495, r: 54, g: 2, name: 'PanIN-1B' }, { x: 700, r: 58, g: 3, name: 'PanIN-2' }, { x: 900, r: 62, g: 4, name: 'PanIN-3' }];
+    const acini = []; for (let t = 0; t < 900 && acini.length < 70; t++) { const x = 15 + R() * (W - 30), y = 15 + R() * 285, r = 17 + 6 * R();
+      if (ducts.some((d) => Math.hypot(x - d.x, y - cy) < d.r + 44 + r) || acini.some((a) => Math.hypot(a.x - x, a.y - y) < a.r + r + 6)) continue; acini.push({ x, y, r }); }
+    acini.forEach((a) => drawAcinus(a.x, a.y, a.r, R, out));
+    ducts.forEach((d) => {
+      const g = d.g, hb = g === 0 ? 11 : 31, N = Math.round(2 * Math.PI * d.r / (g === 0 ? 12 : 9)), ph = R() * 6.28;
+      const bump = (t) => (g === 2 ? 6 * Math.max(0, Math.sin(9 * t + ph)) : g === 3 ? 19 * Math.pow(Math.max(0, Math.sin(6 * t + ph)), 2) : g === 4 ? 30 * Math.pow(Math.max(0, Math.sin(7 * t + ph)), 1.4) + 7 * Math.max(0, Math.sin(19 * t)) : 0);
+      const hgt = (k) => (g === 0 ? 10 : g === 4 ? 24 + 7 * R() : g === 3 ? 27 + 4 * R() : 30);
+      const P = (t, rr) => [d.x + Math.cos(t) * rr, cy + Math.sin(t) * rr], rb = (t) => d.r - bump(t);
+      out.push(pol(Array.from({ length: 120 }, (_, i) => P(i / 120 * 6.283, rb(i / 120 * 6.283) + 0.5)), HE.lumen));   // the lumen
+      out.push(`<circle cx="${d.x}" cy="${cy}" r="${d.r + hb + 1.5}" fill="none" stroke="${HE.edge}" stroke-width="1.2"/>`);   // basement membrane
+      for (let k = 0; k < N; k++) { const t0 = k / N * 6.283, t1 = (k + 1) / N * 6.283, tm = (t0 + t1) / 2, h = hgt(k), a = rb(t0), b = rb(t1), m = rb(tm);
+        out.push(pol([P(t0, a), P(t1, b), P(t1, b + h), P(t0, a + h)], g === 0 ? HE.cyto : HE.columnar, HE.edge, 0.7));
+        const mf = g === 1 || g === 2 ? 0.55 : g === 3 ? 0.3 : R() < 0.4 ? 0.15 : 0;
+        if (mf) out.push(pol([P(t0, a), P(t1, b), P(t1, b + h * mf), P(t0, a + h * mf)], HE.mucin, HE.mucinEdge, 0.5));   // apical mucin
+        const f = g === 0 ? 0.5 : g < 3 ? 0.82 : g === 3 ? 0.45 + 0.4 * R() : 0.25 + 0.6 * R(), c = P(tm, m + h * f), deg = tm * 57.3;
+        if (g === 0) out.push(ell(c[0], c[1], 3.3, 3.0, 0, HE.nucleus));
+        else if (g < 3) out.push(ell(c[0], c[1], 3.6, 2.1, deg, HE.nucleus));
+        else if (g === 3) out.push(ell(c[0], c[1], 4.2, 2.8, deg + (R() - 0.5) * 40, HE.nucleus));
+        else { out.push(ell(c[0], c[1], 4.4 + 1.6 * R(), 3.2 + 1.2 * R(), deg + (R() - 0.5) * 120, HE.dark)); if (R() < 0.06) out.push(`<path d="M${c[0] - 3} ${c[1]}h6M${c[0]} ${c[1] - 3}v6" stroke="${HE.dark}" stroke-width="2"/>`); } }
+      if (g === 4) for (let k = 0; k < 4; k++) { const t = R() * 6.28, rr = 8 + R() * 16, x = d.x + Math.cos(t) * rr, y = cy + Math.sin(t) * rr;   // cells budding into the lumen
+        for (let j = 0; j < 3; j++) { const xx = x + (R() - 0.5) * 10, yy = y + (R() - 0.5) * 10; out.push(`<circle cx="${xx.toFixed(1)}" cy="${yy.toFixed(1)}" r="5" fill="${HE.columnar}" stroke="${HE.edge}" stroke-width="0.6"/>`, ell(xx, yy, 3, 2.4, R() * 180, HE.dark)); } }
+      out.push(`<text x="${d.x}" y="${cy - d.r - hb - 14}" class="dl">${d.name}</text>`); });
+    // Genetic progression along the bottom (Koorstra 2008; Hackeng 2016; Beger 4th ed. ch. 126).
+    const band = (x0, y, label, fill) => { out.push(pol([[x0, y + 14], [990, y], [990, y + 28], [x0, y + 14]], fill), `<text x="${x0 + 14}" y="${y + 19}" class="gl">${label}</text>`); };
+    band(190, 312, 'Telomere shortening, KRAS mutation', '#d9cde6'); band(560, 340, 'CDKN2A (p16) loss', '#cdbfe0'); band(760, 366, 'TP53, SMAD4 loss', '#c1b2da');
+    return { svg: `<svg viewBox="0 0 ${W} ${H}" class="drawing" role="img" aria-label="Drawing: a normal pancreatic duct and PanIN-1A, 1B, 2 and 3 among acini and stroma, with the genetic changes along the bottom">${out.join('')}</svg>`, w: W, h: H };
+  }
+  const DRAWINGS = { panin: drawPanIN };
+  let figMode = 'draw';   // drawing first where there is one; the micrograph is a click away
   function renderHisto(key) {
     const box = $('histopanel'), Hd = HISTO[key]; if (!Hd) { box.hidden = true; return; } box.hidden = false;
+    const drawn = Hd.drawing && DRAWINGS[key] ? DRAWINGS[key]() : null;
+    const drawFig = drawn ? `<figure><div class="frame" style="aspect-ratio:${drawn.w}/${drawn.h}">${drawn.svg}${markSvg(Hd.drawing, 1)}</div><figcaption>${esc(Hd.drawing.credit)}</figcaption></figure>` : '';
     let n = 1; const figs = Hd.figures.map((F) => { const html = `<figure><div class="frame" style="aspect-ratio:${F.w}/${F.h}"><img src="${HISTO_IMG[F.img]}" alt="${esc(Hd.title)}: H&amp;E micrograph"/>${markSvg(F, n)}</div><figcaption>${esc(F.credit)}</figcaption></figure>`; n += F.marks.length; return html; }).join('');
     const col = { panin: 1, ipmn: 2, mcn: 3 }[key];
-    box.innerHTML = `<div class="hhead"><h2>${esc(Hd.title)}</h2><button type="button" class="hclose" data-lesion="overview">‹ All precursors</button></div><p class="lead">${esc(Hd.lead)}</p>${figs}`
+    const tabs = drawn ? `<div class="seg figtabs" role="group" aria-label="Drawing or micrograph"><button type="button" data-fig="draw" aria-pressed="${figMode === 'draw'}">Drawing</button><button type="button" data-fig="photo" aria-pressed="${figMode !== 'draw'}">Micrograph</button></div>` : '';
+    box.innerHTML = `<div class="hhead"><h2>${esc(Hd.title)}</h2><button type="button" class="hclose" data-lesion="overview">‹ All precursors</button></div><p class="lead">${esc(Hd.lead)}</p>${tabs}`
+      + (drawn ? `<div class="figset" data-set="draw"${figMode === 'draw' ? '' : ' hidden'}>${drawFig}</div><div class="figset" data-set="photo"${figMode === 'draw' ? ' hidden' : ''}>${figs}</div>` : figs)
       + `<div class="hcols"><div><h3>Marked features</h3><ol>${Hd.key.map((t) => `<li>${esc(t)}</li>`).join('')}</ol></div><div class="apart"><h3>What sets it apart</h3><ul>${Hd.unique.map((t) => `<li>${esc(t)}</li>`).join('')}</ul></div></div>`
       + (Hd.chart ? `<h3>${esc(Hd.chart.title)}</h3><div class="tablewrap"><table class="prog"><thead><tr><th></th>${Hd.chart.cols.map((c) => `<th>${esc(c)}</th>`).join('')}</tr></thead><tbody>`
         + Hd.chart.rows.map((r) => { const mx = Math.max(...r.vals.filter((v) => v !== null)); return `<tr><th>${esc(r.label)}<small>${esc(r.src)}</small></th>${r.vals.map((v) => v === null ? '<td class="na">–</td>' : `<td><span class="bar" style="width:${Math.max(3, 100 * v / mx)}%"></span><span class="v">${v}${r.unit}</span></td>`).join('')}</tr>`; }).join('')
@@ -1353,6 +1406,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
       + COMPARE_ROWS.map((r) => `<tr><th>${esc(r[0])}</th>${r.slice(1).map((c, i) => `<td${i + 1 === col ? ' class="on"' : ''}>${esc(c)}</td>`).join('')}</tr>`).join('') + '</tbody></table></div>'
       + `<p class="src">Sources: ${esc(Hd.sources)} Comparison: Beger 4th ed. ch. 81, 86, 126; Hingorani 2007. Text in our own words. Images keep their own licences.</p>`;
     box.querySelector('.hclose').addEventListener('click', () => exitLesion()); box.scrollTop = 0;
+    box.querySelectorAll('[data-fig]').forEach((b) => b.addEventListener('click', () => { figMode = b.dataset.fig; box.querySelectorAll('[data-fig]').forEach((x) => x.setAttribute('aria-pressed', String(x === b))); box.querySelectorAll('.figset').forEach((f) => { f.hidden = f.dataset.set !== figMode; }); }));
   }
   function setMode(m) {
     if (m === MODE || !['pancreas', 'precursors'].includes(m)) return;
@@ -1382,7 +1436,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
       + (detailed ? `<p><strong>Where:</strong> ${esc(L.where)}</p><p><strong>Size:</strong> ${esc(L.size)}</p><p>${esc(L.text)}</p><p><strong>Prognosis:</strong> ${esc(L.survival)}</p>` : `<p>${esc(L.where)}.</p>`); }).join('') + `<p class="src">${esc(LESION_SOURCE)}</p>`;
   }
   // Insets beside the organ, each a live view of one lesion's architecture, joined by a line to where it arises.
-  const INSETS = [{ key: 'mcn', pos: { right: 16, top: 70 } }, { key: 'ipmn', pos: { right: 16, bottom: 70 } }, { key: 'panin', pos: { left: 16, bottom: 70 } }];
+  const INSETS = [{ key: 'mcn', pos: { right: 16, top: 70 } }, { key: 'panin', pos: { right: 16, bottom: 70 } }, { key: 'ipmn', pos: { left: 16, bottom: 70 } }];
   const INSET_CROP = { panin: '45% 50%', ipmn: '62% 12%', mcn: '50% 40%' }, INSET_IMG = { panin: 'panin', ipmn: 'ipmn', mcn: 'mcn-low' };
   function insetDom() {
     const box = $('insets'); if (box.dataset.built) return; box.dataset.built = '1';
