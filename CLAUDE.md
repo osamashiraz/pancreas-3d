@@ -5,7 +5,7 @@ You are continuing a project that builds a source-grounded 3D model of the human
 ## Layout
 
 - `repo/` — files to copy into a MouseBio_3D checkout, at the same paths. They are the tested module: inventory, generators, loader, tests, Python builders, model data.
-- `viewer/` — the standalone zoom viewer: `template.html`, `src/app.js`, `src/generator.js` (compiled from the TypeScript generator), `build_viewer.py`, `compile_generator.mjs`, `test/smoke.py`, and earlier pages in `legacy/`.
+- `viewer/` — the standalone zoom viewer: `template.html`, `src/app.js`, `src/generator.js` (compiled from the TypeScript generator), `build_viewer.py`, `compile_generator.mjs`, `test/smoke.py`, `test/profile.py` (draw calls, triangles and frame times per stage; `--dpr2` for Retina), and earlier pages in `legacy/`.
 - `dist/pancreas-organ-to-cell.html` — the current built viewer (identical to the published version).
 - `docs/` — specification, backlog, change history, sources; `docs/images/` holds the README screenshots.
 - `.github/workflows/pages.yml` — publishes `dist/pancreas-organ-to-cell.html` as the GitHub Pages site (`index.html`) on every push to `main` that changes `dist/`.
@@ -48,5 +48,6 @@ After any builder run, copy the new byte counts and SHA-256 values into the regi
 - `Box3.setFromObject` on an InstancedMesh only covers the prototype in r147: frame instanced content by known size.
 - HRA region meshes are open surfaces: no volumes from them. The whole organ (union of regions) closes and is voxelized for volumes.
 - The layered openings are discards in the fragment shader (`layered()` in `viewer/src/app.js`). Raycasts and labels do not see them, so picking and names test `inCore()` or the group's layer frame; keep them in step with the shader.
+- Performance: the layered openings discard in the fragment shader, so anything outside a layer still costs vertices and overdraw. Build only what can be seen (the block keeps only what can lie in the core); check `profile.py --dpr2` after adding geometry.
 - `pkill -f <name>` kills your own shell if the name appears in the command line.
 - Headless Chromium renders WebGL in software: viewer tests take minutes; drive UI through `window.__zoom` and `element.click()` from `evaluate`, not Playwright clicks.

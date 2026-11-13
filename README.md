@@ -85,7 +85,7 @@ The switch at the top left chooses what to show: **Pancreas** (organ to cell), *
 | Main-duct IPMN | main duct > 5 mm (≥ 10 mm high-risk) | head | centre: main duct |
 | Branch-duct IPMN | grape-like cysts > 10 mm | head, neck, uncinate | major side branches |
 
-Clicking a lesion or its inset, or zooming into it, opens its **histology**: a drawing in H&E colours of its key architecture, then real H&E micrographs (open-licensed, credited) with the same features numbered alike and explained below, then high-power views of the cells themselves (objective ×20 to ×40, from Distler et al. 2014, CC BY), links to more real examples at Johns Hopkins, what sets the lesion apart, and a table comparing PanIN, IPMN and MCN:
+Clicking a lesion or its inset, or zooming into it, opens its **histology**: a drawing in H&E colours of its key architecture, then real H&E micrographs (open-licensed, credited) with the same features numbered alike and explained below, then high-power views of the cells themselves (up to ×400, i.e. a ×40 objective; openly licensed figures from Distler 2014, Chen 2023, Aloraini 2023, Mihoc 2024 and Chekmareva 2025, credited in place), links to more real examples at Johns Hopkins, what sets the lesion apart, and a table comparing PanIN, IPMN and MCN:
 
 | PanIN | IPMN | MCN |
 |---|---|---|
