@@ -116,7 +116,7 @@ A table compares normal pancreas, acute and chronic pancreatitis (lobules, infla
 
 ### The organs round the pancreas
 
-The liver, gallbladder, kidneys and their vessels, aorta, inferior vena cava and transverse colon are extracted unchanged from the same HRA body model (`repo/scripts/human/extract_neighbours.py`), shown faintly round the pancreas with their names, and can be hidden. The HRA v2.0 body model has no stomach or adrenal glands, so they are not shown.
+The liver, gallbladder, kidneys and their vessels, aorta, inferior vena cava and transverse colon are extracted unchanged from the same HRA body model (`repo/scripts/human/extract_neighbours.py`), shown faintly round the pancreas with their names when “Show the organs round the pancreas” is ticked (off by default). The HRA v2.0 body model has no stomach or adrenal glands, so they are not shown.
 
 ## Datasets and sources
 

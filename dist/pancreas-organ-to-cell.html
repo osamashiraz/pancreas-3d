@@ -23,6 +23,7 @@ body[data-stain="if"] .stage{background:radial-gradient(ellipse at 50% 38%,#2a25
 .status{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);padding:24px;text-align:center}
 .view{position:absolute;top:0;bottom:0;left:0;width:100%;z-index:1;outline:none;touch-action:none}
 .view .levelname{left:auto;right:12px;transform:none}
+.hovername{position:absolute;right:12px;top:52px;max-width:46%;font:500 13.5px/1.3 "Public Sans",system-ui,sans-serif;color:var(--ink);background:color-mix(in srgb,var(--panel) 88%,transparent);border:1px solid var(--rule);padding:4px 10px;border-radius:8px;pointer-events:none;z-index:5;text-align:right}
 .view.focused{box-shadow:inset 0 0 0 2px var(--accent)}
 .view:focus-visible{box-shadow:inset 0 0 0 3px var(--accent)}
 .ladder,.reset,.caption,.status{z-index:5}
@@ -180,7 +181,7 @@ ol{font-size:12.5px;color:var(--muted);padding-left:18px}ol li{margin-bottom:5px
    <li><span class="sw" style="background:var(--intralobular)"></span><span>Interlobular ducts, with an artery (red) and vein (blue), in the septa</span></li>
   </ul>
   <div class="markers lesions" id="lesioncard" hidden></div>
-  <label class="toggle" data-for="organ pancreatitis pda precursors"><input type="checkbox" id="neighbours" checked> Show the organs round the pancreas (liver, gallbladder, kidneys, colon, great vessels)</label>
+  <label class="toggle" data-for="organ pancreatitis pda precursors"><input type="checkbox" id="neighbours"> Show the organs round the pancreas (liver, gallbladder, kidneys, colon, great vessels)</label>
   <label class="toggle" data-for="organ"><input type="checkbox" id="islets"> Show the islets (one point per 100)</label>
   <div data-for="tissue detail cells cell"><span style="font-size:14px">Zoom into</span><br>
    <div class="seg" role="group" aria-label="What to zoom into"><button type="button" data-branch="acinus" aria-pressed="true">An acinus</button><button type="button" data-branch="islet" aria-pressed="false">The islet</button><button type="button" data-branch="duct" aria-pressed="false">A duct</button></div></div>
@@ -1022,12 +1023,12 @@ ol{font-size:12.5px;color:var(--muted);padding-left:18px}ol li{margin-bottom:5px
   function onViews(ev, fn, opts) { VIEW_LISTENERS.push([ev, fn, opts]); VIEWS.forEach((v) => attach(v, ev, fn, opts)); }
   function makeView(i, cam) {
     const el = document.createElement('div'); el.className = 'view'; el.tabIndex = 0; el.setAttribute('aria-label', `View ${i + 1}: drag to turn, scroll or pinch to zoom.`);
-    el.innerHTML = '<div class="labels" aria-hidden="true"></div><div class="levelname" aria-live="polite"></div><div class="scale"><div class="bar"></div><span class="barlabel"></span></div>';
+    el.innerHTML = '<div class="labels" aria-hidden="true"></div><div class="levelname" aria-live="polite"></div><div class="hovername" hidden aria-live="polite"></div><div class="scale"><div class="bar"></div><span class="barlabel"></span></div>';
     stage.appendChild(el);
     const c = cam || new THREE.PerspectiveCamera(32, 1, 1, 1e7), ctr = new THREE.OrbitControls(c, el);
     ctr.enableDamping = !reduced; ctr.minDistance = 4; ctr.maxDistance = 6.5e5; ctr.zoomSpeed = 0.9; ctr.enablePan = false;
     const v = { i, el, camera: c, controls: ctr, STAGE: { mode: 'tissue', detail: 0, explode: 0, cell: 0, last: 0, anchor: new THREE.Vector3(), locked: false }, branch: 'acinus', flight: null, lastLevel: '',
-      ui: { labels: el.querySelector('.labels'), pool: [], levelname: el.querySelector('.levelname'), bar: el.querySelector('.bar'), barlabel: el.querySelector('.barlabel'), x: 0, w: 1, h: 1 } };
+      ui: { labels: el.querySelector('.labels'), pool: [], levelname: el.querySelector('.levelname'), hover: el.querySelector('.hovername'), bar: el.querySelector('.bar'), barlabel: el.querySelector('.barlabel'), x: 0, w: 1, h: 1 } };
     VIEWS.push(v); VIEW_LISTENERS.forEach(([ev, fn, o]) => attach(v, ev, fn, o)); return v;
   }
   const controls0 = makeView(0, camera).controls; let controls = controls0; UI = VIEWS[0].ui;
@@ -1095,6 +1096,7 @@ ol{font-size:12.5px;color:var(--muted);padding-left:18px}ol li{margin-bottom:5px
     const he = extra.he === undefined ? [0.9, 0.16] : extra.he, layer = extra.layer; delete extra.he; delete extra.layer;
     const m = new Ctor(Object.assign({ color: color.startsWith('--') ? col(color) : new THREE.Color(color), roughness: 0.55, clippingPlanes: planes || [] }, extra));
     m.envMapIntensity = 0.22;   // a matte, evenly lit look, like light through a slide
+    m.userData.colorKey = color;
     if (he && !m.transparent) heify(m, he[0], he[1]);
     if (layer) layered(m, layer[0], layer[1]);
     m.userData.base = m.transparent ? m.opacity : 1; m.userData.baseDepth = m.depthWrite;
@@ -1628,7 +1630,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
     const NEIGH = { liver_capsule: ['Liver', '#9c4f45'], gallbladder: ['Gallbladder', '#5f8a3a'], kidney_capsule_L: ['Left kidney', '#8e5466'], kidney_capsule_R: ['Right kidney', '#8e5466'],
       renal_vein_L: [null, '--vein'], renal_vein_R: [null, '--vein'], left_renal_artery: [null, '--artery'], right_renal_artery: [null, '--artery'], descending_aorta_a: ['Aorta', '--artery'], descending_aorta_b: [null, '--artery'],
       inferior_vena_cava_a: ['Inferior vena cava', '--vein'], inferior_vena_cava_b: [null, '--vein'], transverse_colon: ['Transverse colon', '#b98e7c'], hepatic_flexure_of_colon: [null, '#b98e7c'], splenic_flexure_of_colon: [null, '#b98e7c'] };
-    const ng = await parse(bytesOf('glb-neighbours')); ng.scene.updateMatrixWorld(true); const neigh = new THREE.Group(); neigh.name = 'neighbours'; inner.add(neigh); grp.userData.neighbours = neigh;
+    const ng = await parse(bytesOf('glb-neighbours')); ng.scene.updateMatrixWorld(true); const neigh = new THREE.Group(); neigh.name = 'neighbours'; neigh.visible = $('neighbours').checked; inner.add(neigh); grp.userData.neighbours = neigh;   // hidden until asked for
     ng.scene.traverse((o) => { if (!o.isMesh) return; const n = o.name.slice(5), info = NEIGH[n]; if (!info) return; const solid = /aorta|vena|renal_(vein|artery)|renal_artery/.test(n);
       const geo = o.geometry.clone().applyMatrix4(o.matrixWorld).scale(1e6, 1e6, 1e6), m = new THREE.Mesh(geo, M(grp, info[1], null, { transparent: true, opacity: solid ? 0.5 : 0.12, depthWrite: false, side: THREE.DoubleSide, roughness: 0.65, he: false, layer: [0, ORG_TOL] }));
       m.name = n; m.userData = { kind: 'neighbour' }; neigh.add(m); if (info[0]) { geo.computeBoundingBox(); tag('organ', neigh, info[0], geo.boundingBox.getCenter(new THREE.Vector3())); } });
@@ -2198,6 +2200,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
     VIEWS.forEach((v) => v.el.classList.toggle('focused', splitOn && v.i === focus));
     document.querySelectorAll('[data-branch]').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.branch === branch))); }
   function frame(now) {
+    updateHover(now);
     save(VIEWS[focus]);   // anything the panel changed since the last frame belongs to the focused view
     { const inner = groups.organ.userData.inner; if (inner) { const goal = organLocal.clone().negate(); if (inner.position.distanceTo(goal) > 1) { inner.position.lerp(goal, reduced ? 1 : 0.08); if (SLICE.organ) { scene.remove(SLICE.organ); SLICE.organ = null; } } } }
     renderer.setScissorTest(true); renderer.setClearColor(0x000000, 0); renderer.setScissor(0, 0, stage.clientWidth, stage.clientHeight); renderer.clear();
@@ -2730,6 +2733,49 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
   matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => location.reload());
   buildOrgan().then(() => { camera.position.set(0, 0.25, 1).normalize().multiplyScalar(STOPS.organ); controls.target.set(0, 0, 0); controls.update(); $('status').style.display = 'none'; renderer.setAnimationLoop(frame); readHash(START_HASH); hashReady = true; window.addEventListener('hashchange', () => readHash()); })
     .catch((e) => { $('status').textContent = 'The organ could not be read: ' + e; });
+  // ---------- the name of what is under the pointer, in a box below the level's name (top right of the view)
+  const PART_NAMES = { lobule: 'Lobule (cut)', lobuleHull: 'Lobule', septa: 'Septum (connective tissue)', mainDuct: 'Large interlobular duct', interlobularDuct: 'Interlobular duct', intralobularDuct: 'Intralobular duct',
+    terminalDuct: 'Terminal (intercalated) duct', joint: 'Duct', grossAcinus: 'Acini (cluster)', grossIslet: 'Islet of Langerhans', vein: 'Vein', artery: 'Artery', papillaCore: 'Papilla core', secretoryCore: 'Secretory granule', secretoryHalo: 'Granule halo',
+    insulin: 'Insulin (released)', glucagon: 'Glucagon (released)', somatostatin: 'Somatostatin (released)', glucose: 'Glucose (entering)', enzyme: 'Digestive enzymes (released)', bicarbonate: 'Bicarbonate (secreted)' };
+  const COLOR_NAMES = { '--nucleus': 'Nucleus', '--nucleolus': 'Nucleolus', '--rer': 'Rough endoplasmic reticulum', '--golgi': 'Golgi apparatus', '--mito': 'Mitochondrion', '--granule': 'Zymogen granule',
+    '--insulincore': 'Insulin granule', '--insulinhalo': 'Insulin granule (halo)', '--glucagoncore': 'Glucagon granule', '--somatostatincore': 'Somatostatin granule', '--cilium': 'Primary cilium', '--microvilli': 'Microvilli',
+    '--tightjunction': 'Tight junction', '--cftr': 'CFTR (chloride channel)', '--slc26': 'SLC26A6 (chloride–bicarbonate exchanger)', '--basement': 'Basement membrane', '--capillary': 'Capillary', '--beta': 'Beta cell', '--alpha': 'Alpha cell',
+    '--delta': 'Delta cell', '--pp': 'PP cell', '--intralobular': 'Duct cell', '--intercalated': 'Intercalated duct cell', '--cac': 'Centroacinar cell', '--ductnucleus': 'Duct cell nucleus', '--collagen': 'Collagen', '--organ': 'Pancreas',
+    '--organduct': 'Duct', '--artery': 'Artery', '--vein': 'Vein', '--neighbour': 'Neighbouring organ', '--parenchyma': 'Pancreatic tissue', '--isletgross': 'Islet of Langerhans', '--grossduct': 'Duct', '--grossartery': 'Artery', '--grossvein': 'Vein' };
+  const humanize = (n) => n.replace(/^VH_[MF]_/, '').replace(/_[LR]$/, (m) => (m === '_L' ? ' (left)' : ' (right)')).replace(/_/g, ' ').replace(/^./, (c) => c.toUpperCase());
+  function hoverName(o) {
+    for (let q = o; q; q = q.parent) { if (lesionGroup && q.parent === lesionGroup && LESIONS[q.name]) return LESIONS[q.name].full; }
+    if (KINDS[o.name]) return KINDS[o.name][0];
+    if (PART_NAMES[o.name]) return PART_NAMES[o.name];
+    if (o.userData && o.userData.kind === 'neighbour') return humanize(o.name.replace(/_capsule/, ''));
+    if (o.userData && o.userData.kind && o.name) { const map = { head_of_pancreas: 'Head of the pancreas', uncinate_process_of_the_pancreas: 'Uncinate process', ucinate_process1: 'Uncinate process', neck_of_pancreas: 'Neck of the pancreas', body_of_pancreas: 'Body of the pancreas', tail_of_pancreas: 'Tail of the pancreas', ventral_pancreatic_duct: 'Main pancreatic duct', dorsal_pancreatic_duct: 'Accessory (dorsal) pancreatic duct',
+      duodenal_ampulla: 'Duodenal bulb (first part of the duodenum)', duodenum_superior: 'Duodenum, first part', duodenum_descending: 'Duodenum, second (descending) part', duodenum_horizonal: 'Duodenum, third (horizontal) part', duodenum_horizontal: 'Duodenum, third (horizontal) part', duodenum_ascending: 'Duodenum, fourth (ascending) part',
+      hepatopancreatic_ampulla: 'Ampulla of Vater (hepatopancreatic ampulla)', sphincter_of_hepatopancreatic_ampulla: 'Sphincter of Oddi', sphincter_of_heptopancreatic_ampulla: 'Sphincter of Oddi', celiac_trunk: 'Coeliac trunk', hepatic_portal_vein: 'Portal vein' };
+      return map[o.name] || (/surface_of_spleen|hilum_of_spleen/.test(o.name) ? 'Spleen' : humanize(o.name)); }
+    const ck = o.material && o.material.userData && o.material.userData.colorKey; return (ck && COLOR_NAMES[ck]) || null;
+  }
+  const HOVER = { x: 0, y: 0, at: 0, done: true, view: 0 };
+  onViews('pointermove', (e) => { const r = VIEWS[focus].el.getBoundingClientRect(); HOVER.x = (e.clientX - r.left) / r.width * 2 - 1; HOVER.y = -(e.clientY - r.top) / r.height * 2 + 1; HOVER.at = performance.now(); HOVER.done = false; HOVER.view = focus; });
+  onViews('pointerleave', () => { VIEWS.forEach((v) => { v.ui.hover.hidden = true; }); });
+  // Raycast once the pointer has rested a moment, against what the current level shows.
+  function hoverCandidates() {
+    if (LES.view) return []; const d = camera.position.distanceTo(controls.target), lv = levelAt(d), b = BRANCHES[branch];
+    if (lv === 'organ' || lv === 'compare' || MODE !== 'pancreas') return [groups.organ.userData.inner].filter(Boolean);
+    if (lv === 'gross') return [GROSS[site]].filter(Boolean);
+    if (lv === 'tissue') return [groups.block].filter(Boolean);
+    if (lv === 'cell') return [b.cellGroup].filter(Boolean);
+    return [b.detail].filter(Boolean);
+  }
+  function updateHover(now) {
+    if (HOVER.done || now - HOVER.at < 140 || HOVER.view !== focus) return; HOVER.done = true; const box = VIEWS[focus].ui.hover;
+    ray.setFromCamera(ptr.set(HOVER.x, HOVER.y), camera);
+    const hits = ray.intersectObjects(hoverCandidates(), true).filter((h) => { const o = h.object; if (!o.visible || (o.parent && !o.parent.visible) || o.isPoints) return false;
+      if (o.material && o.material.transparent && o.material.opacity < 0.08) return false;
+      if (o.material && o.material.clippingPlanes && !o.material.clippingPlanes.every((pl) => pl.distanceToPoint(h.point) >= 0)) return false;
+      if (o.parent === groups.block && !inCore(h.point)) return false;   // the core's shape is cut in the shader
+      return !!hoverName(o); });
+    const name = hits.length ? hoverName(hits[0].object) : null; box.hidden = !name; if (name) box.textContent = name;
+  }
   window.__zoom = { split: setSplit, focus: setFocus, views: () => VIEWS.map((v) => [v.STAGE.mode, v.branch, Math.round(v.camera.position.distanceTo(v.controls.target))]), stage: () => STAGE.mode, flyTo, setBranch: (k) => { branch = k; }, distance: () => camera.position.distanceTo(controls.target) };
 })();
 
