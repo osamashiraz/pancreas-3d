@@ -48,7 +48,7 @@ body[data-mode="precursors"] .ladder-pancreas{display:none}body:not([data-mode="
 .histo figcaption{font-size:11.5px;color:var(--muted);margin-top:4px}
 .histo .frame svg.drawing{display:block}.mk{pointer-events:auto;cursor:help}.mk circle{fill:#ffd23f;stroke:#1d1f2a;stroke-width:2.5}.mk text.n{fill:#1d1f2a;text-anchor:middle;font:700 16px "Public Sans",system-ui,sans-serif}
 .drawing .dl{font:700 17px "Public Sans",system-ui,sans-serif;fill:#2a1d3a;text-anchor:middle;paint-order:stroke;stroke:#fbeef5;stroke-width:4px}.drawing .gl{font:600 12.5px "Public Sans",system-ui,sans-serif;fill:#2a1d3a}
-.histo .figtabs{margin:2px 0 8px}
+.histo .more{font-size:13px;margin:4px 0 12px;max-width:1100px}.histo .more a{color:var(--accent)}.histo .more span{color:var(--muted);font-size:11.5px}
 .histo .hcols{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:1100px}.histo ol,.histo ul{margin:0;padding-left:20px;font-size:14px}.histo li{margin:3px 0}.histo .apart{border-left:3px solid var(--accent);padding-left:14px}
 .histo .tablewrap{overflow-x:auto;max-width:1100px}.histo table{border-collapse:collapse;font-size:13px;width:100%}.histo th,.histo td{border-bottom:1px solid var(--rule);padding:6px 8px;text-align:left;vertical-align:top}.histo thead th{font-weight:600}.histo .on{background:color-mix(in srgb,var(--accent) 12%,transparent)}
 .histo .src{font-size:11.5px;color:var(--muted)}
@@ -2741,6 +2741,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
   ];
   const HISTO = {
     panin: { title: 'Pancreatic intraepithelial neoplasia (PanIN)', lead: 'A microscopic change in the lining of small ducts. As the grade rises, the cells go from low cuboidal to tall columnar with mucin, the lining folds into papillae, and the nuclei crowd, enlarge and lose their place at the base.',
+      more: [['Johns Hopkins: mimickers of PanIN', 'https://pathology.jhu.edu/pancreas/medical-professionals/duct-lesions/mimickers-of-panin'], ['Johns Hopkins: pancreas cysts and precursors', 'https://pathology.jhu.edu/pancreas/ipmn/pancreas-cysts']],
       drawing: { w: 1000, h: 400, credit: 'Drawing for this site (schematic, not to scale), after the descriptions in Koorstra et al. 2008 and Beger et al. 4th ed., ch. 126, and the progression figure of Hackeng et al. 2016.',
         marks: [[0.052, 0.4375, 'Normal duct: low cuboidal cells'], [0.295, 0.63, 'Tall columnar cells, basal nuclei'], [0.295, 0.265, 'Pale apical mucin'], [0.565, 0.4375, 'Micropapillary folds'], [0.7, 0.62, 'Papillae; crowded, stratified nuclei'], [0.9, 0.4375, 'Budding, loss of polarity, marked atypia'], [0.165, 0.81, 'KRAS and telomere shortening first']] },
       figures: [{ img: 'panin', w: 974, h: 344, credit: 'Hackeng WM, Hruban RH, Offerhaus GJ, Brosens LA. Diagn Pathol 2016;11:47, doi:10.1186/s13000-016-0497-z (CC BY 4.0); arranged by M. Häggström, via Wikimedia Commons.',
@@ -2754,13 +2755,19 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
           { label: 'Cyclin D1, nuclear', unit: '%', vals: [0, 0, 0, 29, 57, null], src: 'as reviewed in Koorstra et al. 2008' }],
         note: 'Proliferation rises steeply from PanIN-2 on. Older assays found KRAS in 36–87% of PanINs by grade; newer sequencing finds it in over 90%, even at low grade (Beger 4th ed., ch. 126). PanINs in chronic pancreatitis carry KRAS less often (about 10%).' },
       sources: 'Beger HG et al., The Pancreas, 4th ed., 2023, ch. 126; Robbins and Cotran, 9th ed., ch. 19; Hingorani 2007; Klein WM, Hruban RH, Klein-Szanto AJP, Wilentz RE. Mod Pathol 2002;15:441-7, doi:10.1038/modpathol.3880544; Koorstra JBM, Feldmann G, Habbe N, Maitra A. Langenbecks Arch Surg 2008;393:561-70, doi:10.1007/s00423-008-0282-x.' },
-    ipmn: { title: 'Intraductal papillary mucinous neoplasm (IPMN)', lead: 'A mucin-making tumour that grows inside the duct system, either the main duct (which dilates) or its branches (which swell into grape-like cysts). Unlike PanIN it is visible to the eye; unlike MCN it connects with the ducts and has no ovarian-type stroma.',
+    ipmn: { drawing: { w: 1000, h: 420, credit: 'Drawing for this site (schematic, not to scale), after the descriptions in Beger et al. 4th ed., ch. 125 and 126, and Hingorani 2007.',
+        marks: [[0.045, 0.57, 'Main duct, dilated'], [0.667, 0.455, 'Branch opening into the duct'], [0.6, 0.56, 'Mucin'], [0.33, 0.55, 'Finger-like papillae of mucinous cells'], [0.115, 0.6, 'Complex papillae, atypical nuclei'], [0.79, 0.085, 'Flat mucinous lining of a cyst'], [0.96, 0.5, 'Ordinary stroma, no ovarian stroma']] },
+      more: [['Johns Hopkins: IPMN', 'https://pathology.jhu.edu/pancreas/ipmn'], ['Johns Hopkins: pancreas cysts', 'https://pathology.jhu.edu/pancreas/ipmn/pancreas-cysts'], ['Johns Hopkins: cyst classification tool', 'https://pathology.jhu.edu/pancreas/medical-professionals/cyst-classification-tool']],
+      title: 'Intraductal papillary mucinous neoplasm (IPMN)', lead: 'A mucin-making tumour that grows inside the duct system, either the main duct (which dilates) or its branches (which swell into grape-like cysts). Unlike PanIN it is visible to the eye; unlike MCN it connects with the ducts and has no ovarian-type stroma.',
       figures: [{ img: 'ipmn', w: 1400, h: 1268, credit: 'Shibata H, Ohike N, Norose T, et al. Clin J Gastroenterol 2017;10:274-8, doi:10.1007/s12328-017-0728-1 (CC BY 4.0), via Wikimedia Commons. a, b, d, e: H&E; c: resected pancreas.',
         marks: [[0.2, 0.395, 'Main duct, dilated, with tumour (arrowheads)', 1], [0.525, 0.505, 'Branch-duct cyst opening off the duct', 1], [0.115, 0.49, 'Mucin in the cyst', 1], [0.62, 0.15, 'Tall papillae of mucinous cells', 1], [0.13, 0.17, 'Pancreatobiliary type: complex papillae, atypical nuclei', 1], [0.66, 0.655, 'Flat mucinous lining', 1], [0.7, 0.705, 'No ovarian stroma', 1]] }],
       key: ['Main-duct IPMN: the main duct is dilated (over 5 mm; 10 mm or more is a high-risk sign) and lined by tumour.', 'Branch-duct IPMN: side branches swell into cysts (over 10 mm) that open into the duct.', 'Thick mucin fills the ducts and cysts; it may extrude from the duodenal papilla.', 'Gastric type: tall columnar cells with abundant mucin on finger-like papillae; mostly low grade.', 'Pancreatobiliary type: complex, branching papillae of mucin-poor cells with atypical nuclei; usually high grade.', 'In a branch-duct cyst the lining can be a single flat layer of gastric-type mucinous cells.', 'Beneath it: ordinary fibrous stroma and pancreatic acini, with no ovarian-type stroma (which defines MCN).'],
       unique: ['Grows inside the duct system and stays connected with it: the key difference from MCN.', 'Macroscopic (usually 1 cm or more), with papillae and abundant mucin: the difference from PanIN.', 'Epithelial types (gastric, intestinal, pancreatobiliary; MUC2, MUC5AC, MUC1) that predict behaviour: intestinal type gives colloid carcinoma.', 'GNAS mutations in 50–80%, absent from MCN.', 'Main-duct IPMN is the more dangerous: invasive carcinoma in 43.6% against 16.6% for branch-duct IPMN.'],
       sources: 'Beger HG et al., The Pancreas, 4th ed., 2023, ch. 84, 86, 125, 126; Hingorani 2007; Rodriguez et al. 2007.' },
-    mcn: { title: 'Mucinous cystic neoplasm (MCN)', lead: 'A cyst behind a thick fibrous capsule, lined by mucinous cells over a dense, cellular “ovarian-type” stroma, which the diagnosis requires. It does not connect with the ducts, and occurs almost only in women, in the body or tail.',
+    mcn: { drawing: { w: 1000, h: 420, credit: 'Drawing for this site (schematic, not to scale), after the descriptions in Beger et al. 4th ed., ch. 81 and 126, and Hingorani 2007.',
+        marks: [[0.08, 0.1, 'Normal pancreas'], [0.264, 0.5, 'Fibrous capsule'], [0.35, 0.72, 'Ovarian-type stroma'], [0.7, 0.24, 'Cyst with mucin'], [0.78, 0.47, 'Septum: cyst within the cyst'], [0.43, 0.36, 'Tall columnar cells, apical mucin'], [0.34, 0.2, 'Dense spindle cells, wavy nuclei']] },
+      more: [['Johns Hopkins: pancreas cysts', 'https://pathology.jhu.edu/pancreas/ipmn/pancreas-cysts'], ['Johns Hopkins: cyst classification tool', 'https://pathology.jhu.edu/pancreas/medical-professionals/cyst-classification-tool']],
+      title: 'Mucinous cystic neoplasm (MCN)', lead: 'A cyst behind a thick fibrous capsule, lined by mucinous cells over a dense, cellular “ovarian-type” stroma, which the diagnosis requires. It does not connect with the ducts, and occurs almost only in women, in the body or tail.',
       figures: [{ img: 'mcn-low', w: 1400, h: 933, credit: 'Nephron, via Wikimedia Commons (CC BY-SA 3.0): benign pancreatic mucinous cystic neoplasm, very low magnification.',
         marks: [[0.14, 0.45, 'Normal pancreas (acini)', 1], [0.31, 0.55, 'Fibrous capsule', 1], [0.5, 0.26, 'Dense, cellular ovarian-type stroma', 1], [0.8, 0.62, 'Cyst (locule) with mucin', -1], [0.43, 0.78, 'Mucinous lining, folded', 1]] },
         { img: 'mcn-wall', w: 672, h: 428, credit: 'Humpath, via Wikimedia Commons (CC BY-SA 3.0): mucinous cystadenoma of the pancreas.',
@@ -2821,17 +2828,100 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
     band(190, 312, 'Telomere shortening, KRAS mutation', '#d9cde6'); band(560, 340, 'CDKN2A (p16) loss', '#cdbfe0'); band(760, 366, 'TP53, SMAD4 loss', '#c1b2da');
     return { svg: `<svg viewBox="0 0 ${W} ${H}" class="drawing" role="img" aria-label="Drawing: a normal pancreatic duct and PanIN-1A, 1B, 2 and 3 among acini and stroma, with the genetic changes along the bottom">${out.join('')}</svg>`, w: W, h: H };
   }
-  const DRAWINGS = { panin: drawPanIN };
-  let figMode = 'draw';   // drawing first where there is one; the micrograph is a click away
+  // A lining of cells along a polyline: bases on the line, apices toward `dir(x, y)` (the lumen side). o: w (cell width),
+  // h (height), hj (height jitter), mucin (share of the cell, from the apex), nuc ('basal', 'central' or 'random'), dark, fill.
+  function lining(pts, dir, o, out, R) {
+    let carry = 0;
+    for (let i = 0; i + 1 < pts.length; i++) { const a = pts[i], b = pts[i + 1], L = Math.hypot(b[0] - a[0], b[1] - a[1]); if (L < 1e-6) continue; const tx = (b[0] - a[0]) / L, ty = (b[1] - a[1]) / L; let d = carry;
+      for (; d < L; d += o.w) { const x = a[0] + tx * d, y = a[1] + ty * d, pref = dir(x, y); let nx = -ty, ny = tx; if (nx * pref[0] + ny * pref[1] < 0) { nx = -nx; ny = -ny; }
+        const h = o.h + (o.hj || 0) * (R() - 0.5) * 2, hw = o.w / 2 * 0.97, b1 = [x - tx * hw, y - ty * hw], b2 = [x + tx * hw, y + ty * hw], ap = (p, f) => [p[0] + nx * h * f, p[1] + ny * h * f];
+        out.push(pol([b1, b2, ap(b2, 1), ap(b1, 1)], o.fill || HE.columnar, HE.edge, 0.6));
+        if (o.mucin) out.push(pol([ap(b1, 1 - o.mucin), ap(b2, 1 - o.mucin), ap(b2, 1), ap(b1, 1)], HE.mucin, HE.mucinEdge, 0.4));
+        const f = o.nuc === 'central' ? 0.5 : o.nuc === 'random' ? 0.2 + 0.55 * R() : 0.2, c = [x + nx * h * f, y + ny * h * f], deg = Math.atan2(ny, nx) * 57.3;
+        if (o.dark) out.push(ell(c[0], c[1], 3.8 + 1.4 * R(), 2.8 + R(), deg + (R() - 0.5) * 90, HE.dark)); else out.push(ell(c[0], c[1], o.nuc === 'central' ? 3 : 3.4, o.nuc === 'central' ? 2.8 : 2, deg, HE.nucleus)); }
+      carry = d - L; }
+  }
+  // A papilla: a finger of stroma with a capillary in its core, lined by cells whose apices face outward.
+  function papilla(base, tip, wb, R, out, o) {
+    const n = 14, C = [], bend = (R() - 0.5) * 0.5, dx = tip[0] - base[0], dy = tip[1] - base[1], L = Math.hypot(dx, dy), ux = dx / L, uy = dy / L, px = -uy, py = ux;
+    for (let i = 0; i <= n; i++) { const t = i / n, off = Math.sin(t * Math.PI) * bend * L * 0.3; C.push([base[0] + dx * t + px * off, base[1] + dy * t + py * off, wb * (1 - 0.55 * t)]); }
+    const left = C.map(([x, y, w]) => [x + px * w / 2, y + py * w / 2]), right = C.map(([x, y, w]) => [x - px * w / 2, y - py * w / 2]).reverse(), outline = left.concat(right);
+    out.push(pol(outline, '#f0c4d6', null), `<polyline points="${C.map((c) => c[0].toFixed(1) + ',' + c[1].toFixed(1)).join(' ')}" fill="none" stroke="#d5465c" stroke-width="2.2" opacity="0.85"/>`);
+    const near = (x, y) => C.reduce((b, c) => (Math.hypot(c[0] - x, c[1] - y) < Math.hypot(b[0] - x, b[1] - y) ? c : b));
+    lining(outline, (x, y) => { const c = near(x, y); return [x - c[0], y - c[1]]; }, o, out, R);
+  }
+  function drawIPMN() {
+    const R = rng(1789), W = 1000, H = 420, out = [], top = 168, bot = 318, x0 = 20, x1 = 640;
+    drawStroma(R, W, H, out, 150);
+    const acini = []; for (let t = 0; t < 900 && acini.length < 40; t++) { const x = 15 + R() * (W - 30), y = 15 + R() * (H - 30), r = 17 + 6 * R();
+      if ((y > top - 46 - r && y < bot + 46 + r && x < x1 + 40) || Math.hypot(x - 830, y - 150) < 190 + r || acini.some((a) => Math.hypot(a.x - x, a.y - y) < a.r + r + 6)) continue; acini.push({ x, y, r }); }
+    acini.forEach((a) => drawAcinus(a.x, a.y, a.r, R, out));
+    // Lumens: the dilated main duct, a branch leaving it, and grape-like cysts at the branch's end, all one continuous space.
+    const cysts = [[790, 95, 62], [905, 120, 52], [850, 225, 58], [745, 205, 44], [935, 270, 38]];
+    out.push(`<rect x="${x0}" y="${top}" width="${x1 - x0}" height="${bot - top}" fill="${HE.mucin}"/>`);
+    const br = [[612, top + 6], [722, 214]], bw = 30, bdx = br[1][0] - br[0][0], bdy = br[1][1] - br[0][1], bl = Math.hypot(bdx, bdy), bnx = -bdy / bl * bw / 2, bny = bdx / bl * bw / 2;
+    const bA = [[br[0][0] + bnx, br[0][1] + bny], [br[1][0] + bnx, br[1][1] + bny]], bB = [[br[0][0] - bnx, br[0][1] - bny], [br[1][0] - bnx, br[1][1] - bny]];
+    out.push(pol([bA[0], bA[1], bB[1], bB[0]], HE.mucin));
+    cysts.forEach(([x, y, r]) => out.push(`<circle cx="${x}" cy="${y}" r="${r}" fill="${HE.mucin}"/>`));
+    for (let k = 0; k < 26; k++) { const x = x0 + R() * (x1 - x0 - 30), y = top + 20 + R() * (bot - top - 40); out.push(`<path d="M${x.toFixed(0)} ${y.toFixed(0)} q12 ${((R() - 0.5) * 10).toFixed(0)} 26 0" stroke="#c9d1ea" stroke-width="1.4" fill="none"/>`); }   // strands of mucin
+    // Walls of the main duct, lined by tall columnar mucinous cells (gastric type).
+    const gastric = { w: 8, h: 26, hj: 3, mucin: 0.55, nuc: 'basal' };
+    lining([[x0, top], [590, top]], (x, y) => [0, 1], gastric, out, R); lining([[x0, bot], [x1, bot]], (x, y) => [0, -1], gastric, out, R);
+    lining([[640, top], [x1, bot]], (x, y) => [-1, 0], gastric, out, R);
+    // Finger-like papillae from both walls; one, at the left, of pancreatobiliary type: branching, with atypical nuclei.
+    for (let k = 0; k < 9; k++) { const x = 90 + k * 60 + (R() - 0.5) * 16, fromTop = k % 2 === 0, len = 70 + 30 * R();
+      if (k === 0) { papilla([x, bot], [x + 6, bot - 92], 30, R, out, { w: 7, h: 18, hj: 3, mucin: 0.12, nuc: 'random', dark: true }); papilla([x + 4, bot - 40], [x + 40, bot - 86], 18, R, out, { w: 7, h: 16, hj: 3, mucin: 0, nuc: 'random', dark: true }); continue; }
+      papilla(fromTop ? [x, top + 26] : [x, bot - 26], fromTop ? [x + (R() - 0.5) * 20, top + 26 + len] : [x + (R() - 0.5) * 20, bot - 26 - len], 30, R, out, { w: 8, h: 22, hj: 3, mucin: 0.55, nuc: 'basal' }); }
+    // The branch and its cysts: a flatter mucinous lining; ordinary stroma round them.
+    const flat = { w: 9, h: 14, hj: 2, mucin: 0.45, nuc: 'basal' };
+    const toAxis = (x, y) => { const t = Math.max(0, Math.min(1, ((x - br[0][0]) * bdx + (y - br[0][1]) * bdy) / (bl * bl))); return [br[0][0] + bdx * t - x, br[0][1] + bdy * t - y]; };
+    lining(bA, toAxis, flat, out, R); lining(bB, toAxis, flat, out, R);
+    cysts.forEach(([cx, cy, r]) => { const ring = Array.from({ length: 49 }, (_, i) => [cx + Math.cos(i / 48 * 6.283) * r, cy + Math.sin(i / 48 * 6.283) * r]); lining(ring, (x, y) => [cx - x, cy - y], flat, out, R); });
+    out.push(`<text x="330" y="${top - 52}" class="dl">Main duct, dilated (main-duct IPMN)</text>`, `<text x="850" y="345" class="dl">Branch-duct cysts</text>`, `<text x="850" y="365" class="gl" text-anchor="middle">open into the duct</text>`);
+    return { svg: `<svg viewBox="0 0 ${W} ${H}" class="drawing" role="img" aria-label="Drawing: a dilated main pancreatic duct filled with mucin, with finger-like mucinous papillae on its walls, and a side branch swollen into grape-like cysts that open into it">${out.join('')}</svg>`, w: W, h: H };
+  }
+  function drawMCN() {
+    const R = rng(4500), W = 1000, H = 420, out = [];
+    drawStroma(R, W, H, out, 90);
+    // Normal pancreas at the left, with a small duct that has no connection with the cyst.
+    const acini = []; for (let t = 0; t < 700 && acini.length < 26; t++) { const x = 15 + R() * 190, y = 15 + R() * (H - 30), r = 17 + 5 * R();
+      if (Math.hypot(x - 105, y - 300) < 50 + r || acini.some((a) => Math.hypot(a.x - x, a.y - y) < a.r + r + 6)) continue; acini.push({ x, y, r }); }
+    acini.forEach((a) => drawAcinus(a.x, a.y, a.r, R, out));
+    out.push(`<circle cx="105" cy="300" r="20" fill="${HE.lumen}"/>`); lining(Array.from({ length: 33 }, (_, i) => [105 + Math.cos(i / 32 * 6.283) * 20, 300 + Math.sin(i / 32 * 6.283) * 20]), (x, y) => [105 - x, 300 - y], { w: 10, h: 9, nuc: 'central', fill: HE.cyto }, out, R);
+    // The capsule: a thick band of dense collagen with few cells.
+    const wave = (x, amp, ph) => Array.from({ length: 43 }, (_, i) => [x + amp * Math.sin(i / 42 * 6.283 * 1.5 + ph), i / 42 * H]);
+    out.push(pol(wave(228, 8, 0).concat(wave(300, 8, 0.4).reverse()), '#f2b9cc'));
+    for (let k = 0; k < 70; k++) { const y = R() * H, x = 232 + R() * 62; out.push(`<path d="M${(x - 12).toFixed(0)} ${y.toFixed(0)} q12 ${((R() - 0.5) * 6).toFixed(0)} 24 0" stroke="#e19ab4" stroke-width="1.4" fill="none"/>`); if (k % 4 === 0) out.push(ell(x, y, 5, 1.2, (R() - 0.5) * 20, HE.fibro, 0.8)); }
+    // Ovarian-type stroma: densely packed spindle cells with wavy nuclei, beneath the lining and in the septum.
+    const ovarian = (pts) => { out.push(pol(pts, '#e6b3d0')); const xs = pts.map((p) => p[0]), ys = pts.map((p) => p[1]), inside = (x, y) => { let c = false; for (let i = 0, j = pts.length - 1; i < pts.length; j = i++) { const [xi, yi] = pts[i], [xj, yj] = pts[j]; if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) c = !c; } return c; };
+      for (let k = 0; k < 900; k++) { const x = Math.min(...xs) + R() * (Math.max(...xs) - Math.min(...xs)), y = Math.min(...ys) + R() * (Math.max(...ys) - Math.min(...ys)); if (!inside(x, y)) continue;
+        const a = Math.sin(y / 18 + x / 40) * 35; out.push(`<path d="M${(x - 5).toFixed(1)} ${y.toFixed(1)} q2.5 -2.2 5 0 t5 0" transform="rotate(${a.toFixed(0)} ${x.toFixed(1)} ${y.toFixed(1)})" stroke="#4b2d82" stroke-width="2" fill="none" stroke-linecap="round"/>`); } };
+    const wall = wave(300, 8, 0.4), inner = Array.from({ length: 43 }, (_, i) => [395 + 22 * Math.sin(i / 42 * 6.283 * 2.2 + 1) + 10 * Math.sin(i / 42 * 30), i / 42 * H]);
+    ovarian(wall.concat(inner.slice().reverse()));
+    // The cyst: mucin, lined by tall columnar mucinous cells; a septum makes a second locule (cyst within the cyst).
+    out.push(pol(inner.concat([[W, H], [W, 0]]), HE.mucin));
+    for (let k = 0; k < 30; k++) { const x = 440 + R() * 540, y = 15 + R() * (H - 30); out.push(`<path d="M${x.toFixed(0)} ${y.toFixed(0)} q14 ${((R() - 0.5) * 12).toFixed(0)} 30 0" stroke="#c9d1ea" stroke-width="1.4" fill="none"/>`); }
+    const sept = Array.from({ length: 30 }, (_, i) => { const t = i / 29; return [520 + t * 380 + 18 * Math.sin(t * 9), 330 - 260 * t * t + 12 * Math.sin(t * 13)]; }), sw = 34;
+    const sL = sept.map(([x, y], i) => { const j = Math.min(i + 1, 29), k = Math.max(i - 1, 0), tx = sept[j][0] - sept[k][0], ty = sept[j][1] - sept[k][1], L = Math.hypot(tx, ty); return [x - ty / L * sw / 2, y + tx / L * sw / 2]; });
+    const sR = sept.map(([x, y], i) => { const j = Math.min(i + 1, 29), k = Math.max(i - 1, 0), tx = sept[j][0] - sept[k][0], ty = sept[j][1] - sept[k][1], L = Math.hypot(tx, ty); return [x + ty / L * sw / 2, y - tx / L * sw / 2]; });
+    ovarian(sL.concat(sR.slice().reverse()));
+    const mcnCells = { w: 8, h: 26, hj: 3, mucin: 0.55, nuc: 'basal' };
+    lining(inner, (x, y) => [1, 0], mcnCells, out, R);
+    const mid = (x, y) => { const c = sept.reduce((b, p) => (Math.hypot(p[0] - x, p[1] - y) < Math.hypot(b[0] - x, b[1] - y) ? p : b)); return [x - c[0], y - c[1]]; };
+    lining(sL, mid, mcnCells, out, R); lining(sR, mid, mcnCells, out, R);
+    out.push(`<text x="105" y="345" class="dl">Duct: no connection</text>`, `<text x="264" y="24" class="dl">Capsule</text>`, `<text x="720" y="60" class="dl">Locule with mucin</text>`, `<text x="880" y="380" class="dl">Second locule</text>`);
+    return { svg: `<svg viewBox="0 0 ${W} ${H}" class="drawing" role="img" aria-label="Drawing: normal pancreas, a thick fibrous capsule, dense wavy ovarian-type stroma, and a cyst lined by tall columnar mucinous cells and filled with mucin, with a septum forming a second locule; a nearby duct is not connected">${out.join('')}</svg>`, w: W, h: H };
+  }
+  const DRAWINGS = { panin: drawPanIN, ipmn: drawIPMN, mcn: drawMCN };
   function renderHisto(key) {
     const box = $('histopanel'), Hd = HISTO[key]; if (!Hd) { box.hidden = true; return; } box.hidden = false;
     const drawn = Hd.drawing && DRAWINGS[key] ? DRAWINGS[key]() : null;
     const drawFig = drawn ? `<figure><div class="frame" style="aspect-ratio:${drawn.w}/${drawn.h}">${drawn.svg}${markSvg(Hd.drawing, 1)}</div><figcaption>${esc(Hd.drawing.credit)}</figcaption></figure>` : '';
     let n = 1; const figs = Hd.figures.map((F) => { const html = `<figure><div class="frame" style="aspect-ratio:${F.w}/${F.h}"><img src="${HISTO_IMG[F.img]}" alt="${esc(Hd.title)}: H&amp;E micrograph"/>${markSvg(F, n)}</div><figcaption>${esc(F.credit)}</figcaption></figure>`; n += F.marks.length; return html; }).join('');
     const col = { panin: 1, ipmn: 2, mcn: 3 }[key];
-    const tabs = drawn ? `<div class="seg figtabs" role="group" aria-label="Drawing or micrograph"><button type="button" data-fig="draw" aria-pressed="${figMode === 'draw'}">Drawing</button><button type="button" data-fig="photo" aria-pressed="${figMode !== 'draw'}">Micrograph</button></div>` : '';
-    box.innerHTML = `<div class="hhead"><h2>${esc(Hd.title)}</h2><button type="button" class="hclose" data-lesion="overview">‹ All precursors</button></div><p class="lead">${esc(Hd.lead)}</p>${tabs}`
-      + (drawn ? `<div class="figset" data-set="draw"${figMode === 'draw' ? '' : ' hidden'}>${drawFig}</div><div class="figset" data-set="photo"${figMode === 'draw' ? ' hidden' : ''}>${figs}</div>` : figs)
+    const more = Hd.more ? `<p class="more">More real examples: ${Hd.more.map(([t, u]) => `<a href="${u}" target="_blank" rel="noopener">${esc(t)} ↗</a>`).join(' · ')} <span>(external; images © Johns Hopkins, not reproduced here)</span></p>` : '';
+    box.innerHTML = `<div class="hhead"><h2>${esc(Hd.title)}</h2><button type="button" class="hclose" data-lesion="overview">‹ All precursors</button></div><p class="lead">${esc(Hd.lead)}</p>`
+      + (drawn ? `${drawFig}<h3>Real H&amp;E: the same features, numbered alike</h3>` : '') + figs + more
       + `<div class="hcols"><div><h3>Marked features</h3><ol>${Hd.key.map((t) => `<li>${esc(t)}</li>`).join('')}</ol></div><div class="apart"><h3>What sets it apart</h3><ul>${Hd.unique.map((t) => `<li>${esc(t)}</li>`).join('')}</ul></div></div>`
       + (Hd.chart ? `<h3>${esc(Hd.chart.title)}</h3><div class="tablewrap"><table class="prog"><thead><tr><th></th>${Hd.chart.cols.map((c) => `<th>${esc(c)}</th>`).join('')}</tr></thead><tbody>`
         + Hd.chart.rows.map((r) => { const mx = Math.max(...r.vals.filter((v) => v !== null)); return `<tr><th>${esc(r.label)}<small>${esc(r.src)}</small></th>${r.vals.map((v) => v === null ? '<td class="na">–</td>' : `<td><span class="bar" style="width:${Math.max(3, 100 * v / mx)}%"></span><span class="v">${v}${r.unit}</span></td>`).join('')}</tr>`; }).join('')
@@ -2840,7 +2930,6 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
       + COMPARE_ROWS.map((r) => `<tr><th>${esc(r[0])}</th>${r.slice(1).map((c, i) => `<td${i + 1 === col ? ' class="on"' : ''}>${esc(c)}</td>`).join('')}</tr>`).join('') + '</tbody></table></div>'
       + `<p class="src">Sources: ${esc(Hd.sources)} Comparison: Beger 4th ed. ch. 81, 86, 126; Hingorani 2007. Text in our own words. Images keep their own licences.</p>`;
     box.querySelector('.hclose').addEventListener('click', () => exitLesion()); box.scrollTop = 0;
-    box.querySelectorAll('[data-fig]').forEach((b) => b.addEventListener('click', () => { figMode = b.dataset.fig; box.querySelectorAll('[data-fig]').forEach((x) => x.setAttribute('aria-pressed', String(x === b))); box.querySelectorAll('.figset').forEach((f) => { f.hidden = f.dataset.set !== figMode; }); }));
   }
   function setMode(m) {
     if (m === MODE || !['pancreas', 'precursors'].includes(m)) return;
