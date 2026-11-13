@@ -63,7 +63,7 @@ async def main(page_path, chrome):
             await pg.screenshot(path=str(out / f'{name}.png'), timeout=240000)
         # A link to a view opens the page there.
         await pg.goto('about:blank'); await pg.goto(tmp.as_uri() + '#site=9&view=islet', wait_until='commit'); await pg.wait_for_function('window.__zoom', timeout=240000)
-        try: await pg.wait_for_function("window.__zoom.views()[0][0] === 'structure' && window.__zoom.views()[0][1] === 'islet'", timeout=WAIT * 12, polling=500)
+        try: await pg.wait_for_function("window.__zoom.views()[0][0] === 'structure' && window.__zoom.views()[0][1] === 'islet' && window.__zoom.distance() < 2000", timeout=WAIT * 12, polling=500)
         except Exception: pass
         v = (await pg.evaluate('window.__zoom.views()'))[0]; s = await site(); ok = v[0] == 'structure' and v[1] == 'islet' and s.startswith('Site 9 ')
         print(('ok  ' if ok else 'FAIL'), 'link #site=9&view=islet', v, s, await pg.evaluate('location.hash'))
