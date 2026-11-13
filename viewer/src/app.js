@@ -5,9 +5,8 @@
   // One tissue block per region of the gland, each built independently (scripts/human/build_tissue_block.py <region>).
   const BLOCKS = { body: JSON.parse(document.getElementById('block').textContent), head: JSON.parse(document.getElementById('block-head').textContent), tail: JSON.parse(document.getElementById('block-tail').textContent) };
   let B = BLOCKS.body, blockRegion = 'body';
-  // Sixty tissue sites through the gland. The first in each region uses the block built and tested in the repo; the rest
-  // are generated here, on demand, from their seeds by the repo's generator (src/domain/human-pancreas-generator.ts).
-  const SITE_LIST = [], GEN = new Map(); let site = -1;
+  // Thirty tissue sites through the gland, ten per region, each showing its region's tested block (see blockOf).
+  const SITE_LIST = []; let site = -1;
   const PICK = { acinus: 0, duct: 0 }, PICKS = { acinus: [], duct: [], of: null };
   function makePicks() {   // 25 acini and 25 ducts spread through the block, by farthest-point sampling
     if (PICKS.of === B) return; PICKS.of = B; PICK.acinus = 0; PICK.duct = 0;
@@ -533,8 +532,16 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
     ['tissue', 'acinus', 'islet', 'duct', 'acinusCells', 'isletCells', 'ductCells', 'acinusCell', 'isletCell', 'alphaCell', 'deltaCell', 'ductCell'].forEach((k) => { delete LABELS[k]; });
     computeFocal(); makeBranches(); makeBlockLabels(); scaleIsletStages(); if (typeof selected !== 'undefined') { selected = null; showSelection(); } updatePickers();
   }
-  function blockOf(i) { const S0 = SITE_LIST[i]; if (S0.verified) return BLOCKS[S0.region];
-    if (!GEN.has(i)) { GEN.set(i, HPGen.generateBlock(S0.seed, S0.region)); if (GEN.size > 6) GEN.delete(GEN.keys().next().value); } return GEN.get(i); }
+  // Each site shows its region's tested block. In the uncinate process (ventral bud) the islet is PP-rich: PP cells 54–94% of
+  // islet volume, displacing most alpha and some beta cells (Gorelick and Williams 2021, ch. 1, Longnecker). Drawn as PP 60%,
+  // beta 30%, alpha 5%, delta 5% of cells; the split within that range is an assumption.
+  const PP_RICH = { pp: 0.6, beta: 0.3, alpha: 0.05, delta: 0.05 }, VARIANT = {};
+  function ppRich(B0) {
+    if (VARIANT.uncinate) return VARIANT.uncinate; const R = rng(4807), n = B0.islet.cells.length, order = B0.islet.cells.map((c, i) => [R(), i]).sort((a, b) => a[0] - b[0]).map((x) => x[1]), type = new Array(n);
+    let k = 0; for (const [t, f] of Object.entries(PP_RICH)) { const m = t === 'delta' ? n - k : Math.round(f * n); for (let j = 0; j < m && k < n; j++) type[order[k++]] = t; }
+    return (VARIANT.uncinate = Object.assign({}, B0, { islet: Object.assign({}, B0.islet, { cells: B0.islet.cells.map((c, i) => [type[i]].concat(c.slice(1))), composition: 'PP-rich (uncinate process)' }) }));
+  }
+  function blockOf(i) { const S0 = SITE_LIST[i], B0 = BLOCKS[S0.region]; return S0.sub === 'uncinate process' ? ppRich(B0) : B0; }
   function switchSite(i) {
     if (i === site) return; site = i; blockRegion = SITE_LIST[i].region; B = blockOf(i);
     const drop = (g) => { if (g) scene.remove(g); };
@@ -646,22 +653,22 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
     const dot = new THREE.Mesh(new THREE.SphereGeometry(2500, 20, 14), new THREE.MeshBasicMaterial({ color: '#2a1060', depthTest: false, transparent: true })); dot.renderOrder = 9;
     const ring = new THREE.Mesh(new THREE.TorusGeometry(6000, 900, 8, 40), new THREE.MeshBasicMaterial({ color: '#ff3d7f', depthTest: false, transparent: true })); ring.renderOrder = 9;
     marker.add(dot, ring); grp.add(marker);   // the marker stays at the origin: the zoom point
-    // Sites: the first of each region at its middle (the tested block), the rest spread through the region by seed.
+    // Sites: ten per region, scattered at random through it (the first at its middle). Every site shows its region's tested
+    // tissue block, so moving between sites is instant; each site's line going in cuts that block differently. A site in the
+    // uncinate process (from the ventral bud) has a PP-rich islet.
     const MEMBERS = { head: ['head', 'uncinate process'], body: ['neck', 'body'], tail: ['tail'] };
-    ['head', 'body', 'tail'].forEach((rk, ri) => { const pool = []; pancreasMeshes.filter((m) => MEMBERS[rk].includes(m.userData.region)).forEach((m) => { const p = m.geometry.getAttribute('position'); for (let v = 0; v < p.count; v += 7) pool.push(new THREE.Vector3().fromBufferAttribute(p, v)); });
+    ['head', 'body', 'tail'].forEach((rk, ri) => { const pool = []; pancreasMeshes.filter((m) => MEMBERS[rk].includes(m.userData.region)).forEach((m) => { const p = m.geometry.getAttribute('position'); for (let v = 0; v < p.count; v += 7) pool.push({ v: new THREE.Vector3().fromBufferAttribute(p, v), sub: m.userData.region }); });
       const centre = SITES[rk], R2 = rng(9001 + ri);
-      for (let k = 0; k < 20; k++) { const local = k === 0 ? centre.clone() : centre.clone().lerp(pool[Math.floor(R2() * pool.length)], 0.25 + 0.45 * R2());
-        SITE_LIST.push({ i: SITE_LIST.length, region: rk, local, seed: 2000 + SITE_LIST.length, verified: k === 0 }); } });
+      for (let k = 0; k < 10; k++) { const pick = pool[Math.floor(R2() * pool.length)], local = k === 0 ? centre.clone() : centre.clone().lerp(pick.v, 0.3 + 0.45 * R2());
+        SITE_LIST.push({ i: SITE_LIST.length, region: rk, sub: k === 0 ? rk : pick.sub, local, seed: 2000 + SITE_LIST.length, verified: k === 0 }); } });   // seed: for the site's lobules
     setSite(SITE_LIST.findIndex((S0) => S0.region === 'body' && S0.verified), true); groups.organ.userData.inner.position.copy(organLocal).negate();
     scene.add(grp);
   }
   function setSite(i, now) {
     const S0 = SITE_LIST[i]; VIEWS[focus].turned = false; if (SLICE.organ) { scene.remove(SLICE.organ); SLICE.organ = null; } organLocal.copy(S0.local); region = S0.region;
     document.querySelectorAll('[data-region]').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.region === S0.region)));
-    const finish = () => { switchSite(i); $('status').style.display = 'none'; updatePickers(); };
-    if (now || S0.verified || GEN.has(i)) finish();
-    else { $('status').style.display = 'grid'; $('status').textContent = `Building the tissue of site ${i + 1} (${S0.region}) from seed ${S0.seed}…`; setTimeout(finish, 40); }
-    $('target').innerHTML = `Tissue site <strong>${i + 1} of ${SITE_LIST.length}</strong>, in the <strong>${S0.region}</strong>, where the model places about ${Math.round(ORG.densities[KEY_OF[S0.region]])} islets per mm³. ${S0.verified ? 'Its block is the one built and tested in the repo.' : `Its block is generated in your browser from seed ${S0.seed}, by the same rules.`} Zoom in on any part of the organ to open it at a site nearby, chosen at random, or use the arrows.`;
+    switchSite(i); $('status').style.display = 'none'; updatePickers();
+    $('target').innerHTML = `Tissue site <strong>${i + 1} of ${SITE_LIST.length}</strong>, in the <strong>${S0.sub}</strong>, where the model places about ${Math.round(ORG.densities[KEY_OF[S0.region]])} islets per mm³ (twice as dense in the tail; Wang 2013). It shows the tissue block built and tested for the ${S0.region}${S0.sub === 'uncinate process' ? ', with a PP-rich islet: in the uncinate process PP cells make up most of the islet (54–94% of its volume), displacing most alpha cells and some beta cells (Gorelick and Williams 2021, ch. 1)' : ''}. Zoom in on any part of the organ to open it at a site nearby, chosen at random, or use the arrows.`;
   }
   // The line going in at a site: of 160 directions, the shortest way out of the gland, leaning towards the front of the
   // body; and how deep the site lies along it.
@@ -819,7 +826,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
   // ---------- pickers: step through sites, and through the acini, ducts and islets
   function updatePickers() {
     if (!SITE_LIST.length || site < 0) return; const S0 = SITE_LIST[site];
-    $('sitelabel').textContent = `Site ${site + 1} of ${SITE_LIST.length} · ${S0.region} · ${S0.verified ? 'tested block' : 'seed ' + S0.seed}`;
+    $('sitelabel').textContent = `Site ${site + 1} of ${SITE_LIST.length} · ${S0.sub}`;
     const a = B.acini[fa], d = B.ducts[fdu];
     const txt = branch === 'acinus' ? `Acinus ${PICK.acinus + 1} of ${PICKS.acinus.length} · ${Math.round(a.r * 2)} µm across, ${a.cells} cells`
       : branch === 'duct' ? `Duct ${PICK.duct + 1} of ${PICKS.duct.length} · ${Math.round(new THREE.Vector3(...d.a).distanceTo(new THREE.Vector3(...d.b)))} µm long, ${Math.round(d.r * 2)} µm across`
@@ -1171,7 +1178,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
         : st(site) ? `Site ${site + 1}, in the ${blockRegion}: round the line going in, ${st(site).lobules} lobules are opened to their ducts, with ${st(site).count.toLocaleString('en')} islets in ${Math.round(st(site).volume)} mm³ (${Math.round(st(site).density)} per mm³).` : '';
       $('grossstats').textContent = txt; }
     if (key !== lastLevel) { lastLevel = key; UI.levelname.textContent = LEVEL_NAMES(key);
-     if (v.i === focus) { writeHash(lv); showMarkers(selected ? MARKER_OF[selected] : MARKER_VIEW[key]); $('info').textContent = INFO[key];
+     if (v.i === focus) { writeHash(lv); showMarkers(selected ? MARKER_OF[selected] : MARKER_VIEW[key]); $('info').textContent = INFO[key] + (/^islet/.test(key) && SITE_LIST[site] && SITE_LIST[site].sub === 'uncinate process' ? ' This site lies in the uncinate process, where PP cells (amber in Cell types) make up most of the islet (Gorelick and Williams 2021).' : '');
       applyDataFor(key, MODE === 'precursors' ? key : lv);
       updatePickers();
       document.querySelectorAll('.ladder button[data-go]').forEach((b) => { const [l, br] = b.dataset.go.split(':'); b.setAttribute('aria-current', String(l === lv && (!br || br === branch) && (!b.dataset.kind || b.dataset.kind === isletKind))); }); } }

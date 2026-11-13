@@ -3,13 +3,13 @@
 
   python3 viewer/build_viewer.py <path to MouseBio_3D checkout with the module installed> [out.html]
 
-Inputs:  viewer/template.html, viewer/src/generator.js, viewer/src/app.js, and from the repo
+Inputs:  viewer/template.html, viewer/src/app.js, and from the repo
          public/atlas-human/{tissue-block.json, tissue-block-head.json, tissue-block-tail.json, pancreas-region-male.glb,
          islets-male.glb, islets.manifest.json}, and data/human-pancreas-markers.json
 Output:  dist/pancreas-organ-to-cell.html (about 8 MB; the published page must stay under 16 MB)
 
-viewer/src/generator.js is src/domain/human-pancreas-generator.ts compiled to plain JavaScript and wrapped as window.HPGen;
-regenerate it with viewer/compile_generator.mjs after changing the TypeScript.
+The viewer no longer generates blocks in the browser (each site shows its region's tested block). viewer/src/generator.js, the
+TypeScript generator compiled by viewer/compile_generator.mjs, is kept for other uses but is not embedded.
 """
 import base64, json, sys
 from pathlib import Path
@@ -27,7 +27,6 @@ def main():
     male = next(r for r in islets['references'] if r['sex'] == 'male')
     organ = {'densities': {k: v['densityPerMm3'] for k, v in male['regions'].items()}}
     parts = {
-        '__GENERATOR_JS__': (HERE / 'src' / 'generator.js').read_text(),
         '__APP_JS__': (HERE / 'src' / 'app.js').read_text(),
         '__BLOCK_BODY__': esc((atlas / 'tissue-block.json').read_text()),
         '__BLOCK_HEAD__': esc((atlas / 'tissue-block-head.json').read_text()),
