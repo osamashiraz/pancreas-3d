@@ -6,7 +6,8 @@ You are continuing a project that builds a source-grounded 3D model of the human
 
 - `repo/` — files to copy into a MouseBio_3D checkout, at the same paths. They are the tested module: inventory, generators, loader, tests, Python builders, model data.
 - `viewer/` — the standalone zoom viewer: `template.html`, `src/app.js`, `src/generator.js` (compiled from the TypeScript generator), `build_viewer.py`, `compile_generator.mjs`, `test/smoke.py`, `test/profile.py` (draw calls, triangles and frame times per stage; `--dpr2` for Retina), and earlier pages in `legacy/`.
-- `dist/pancreas-organ-to-cell.html` — the current built viewer (identical to the published version).
+- `viewer/src/atlas.json` — the atlas (gallery) entries: text in our own words with sources and pages, and each image's credit and licence. `viewer/assets/atlas/` holds its images (copied to `dist/atlas/` by the build, loaded lazily); `viewer/test/atlas_check.py` enforces sources, credits and open licences. Facts come from `docs/book-notes/atlas-facts.json`.
+- `dist/pancreas-organ-to-cell.html` — the current built viewer (identical to the published version), with `dist/atlas/` beside it.
 - `docs/` — specification, backlog, change history, sources; `docs/images/` holds the README screenshots.
 - `.github/workflows/pages.yml` — publishes `dist/pancreas-organ-to-cell.html` as the GitHub Pages site (`index.html`) on every push to `main` that changes `dist/`.
 - `scripts/install_into_mousebio.sh` — copies `repo/` into a checkout and runs the checks.
@@ -37,7 +38,7 @@ After any builder run, copy the new byte counts and SHA-256 values into the regi
 3. Ontology terms are copied from HRA files (crosswalk, ASCT+B), never typed from memory. Known errors in HRA files are listed in `data/human-pancreas-ontology-candidates.json` and not silently fixed.
 4. Model files are checksum-registered and loaded through MouseBio_3D's bounded fetch (`fetchBoundGlb`). Builders are deterministic: same seed, same bytes.
 5. Rules for tissue are checked by tests: one intercalated duct per acinus ending at it; no acini overlapping or inside the islet; every acinar cell's reach between its acinus radius and twice it; packing above 45%; capillary within reach of every acinus; islet composition and size statistics.
-6. Narration and on-page text are written in our own words, paraphrased from open sources (StatPearls CC BY 4.0, university histology notes, HPA), with credit. Do not reproduce copyrighted textbook text.
+6. Images shown on the site must be openly licensed (CC BY, CC BY-SA, CC0, public domain) with the licence read on the source page; never textbook, journal-copyright or Johns Hopkins figures, including those in the user's reference spreadsheet. Narration and on-page text are written in our own words, paraphrased from open sources (StatPearls CC BY 4.0, university histology notes, HPA), with credit. Do not reproduce copyrighted textbook text.
 7. Report honestly: when a number looked good because of a bug (the 66% packing that came from overlapping acini), say so and fix the test.
 
 ## Gotchas

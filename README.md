@@ -115,6 +115,19 @@ A table compares normal pancreas, acute and chronic pancreatitis (lobules, infla
 |---|---|
 | ![PDA on the organ](docs/images/pda.jpg) | ![PDA histology](docs/images/pda-histology.jpg) |
 
+### Atlas: the pancreas under the microscope
+
+The **Atlas** mode is a gallery for learning and teaching: 41 entries in nine groups (normal pancreas; injury and repair; pancreatitis; cysts; precursor lesions; ductal adenocarcinoma by grade; its variants; how it spreads; and the other tumours it is mistaken for). Each entry is simple at first glance and opens up on request:
+
+- one openly licensed micrograph (click to enlarge), a one-line description, two to four things to look for, and one line to remember;
+- folds for the features under the microscope (architecture, cells, nuclei, mitoses, mucin, stroma), look-alikes and how to tell them apart, where/size/who/outlook, and sources with page numbers;
+- **side by side**: any entry beside one of its look-alikes, image to image and feature to feature;
+- **features table**: every entry by the same six features;
+- **quiz**: an image and four choices, then the line to remember;
+- links such as [`#atlas=pda-poor`](https://osamashiraz.github.io/pancreas-3d/#atlas=pda-poor), and from entries into the 3D views.
+
+The text is in our own words from page-referenced notes on Robbins and Cotran (9th ed.), Beger et al. (4th ed.), Hruban 2001, Basturk 2015, Kardon 2001, Kleeff 2016 and Gorelick and Williams 2021 (`docs/book-notes/atlas-facts.json`). Images come from Wikimedia Commons and open-access papers (CC BY, CC BY-SA, CC0 or public domain), each credited under the picture and in `viewer/assets/atlas/CREDITS.md`. Seven entries have no image yet because no openly licensed micrograph was found (centroacinar cells, reactive duct, squamous metaplasia, acute interstitial pancreatitis, cancerization of ducts, neuroendocrine carcinoma, pancreatoblastoma); several others are small or carry the source figure's arrows, as their captions say. Textbook and journal figures under copyright are not reproduced.
+
 ### The organs round the pancreas
 
 The liver, gallbladder, kidneys and their vessels, aorta, inferior vena cava and transverse colon are extracted unchanged from the same HRA body model (`repo/scripts/human/extract_neighbours.py`), shown faintly round the pancreas with their names when “Show the organs round the pancreas” is ticked (off by default). The HRA v2.0 body model has no stomach or adrenal glands, so they are not shown.
@@ -153,7 +166,8 @@ Full references with DOIs: [`docs/SOURCES.md`](docs/SOURCES.md). Values still aw
 | Path | What |
 |---|---|
 | `dist/pancreas-organ-to-cell.html` | The built viewer (published to GitHub Pages) |
-| `viewer/` | Viewer sources (`template.html`, `src/app.js`, `src/generator.js`), build script, smoke test, earlier versions in `legacy/` |
+| `dist/atlas/` | The atlas images, loaded by the page only when the atlas is opened |
+| `viewer/` | Viewer sources (`template.html`, `src/app.js`, `src/atlas.json`, `src/generator.js`), images (`assets/`), build script, tests (`test/smoke.py`, `test/atlas_check.py`, `test/profile.py`), earlier versions in `legacy/` |
 | `repo/` | Model data and the code that builds and tests it: inventory, generators, loader, tests, Python builders |
 | `docs/` | Specification, backlog, change history, sources, README images |
 | `scripts/install_into_mousebio.sh` | Copies `repo/` into a MouseBio_3D checkout and runs its checks |

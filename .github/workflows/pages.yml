@@ -29,6 +29,8 @@ jobs:
         run: |
           pip install playwright==1.48.0
           python -m playwright install --with-deps chromium
+      - name: Check the atlas data
+        run: python viewer/test/atlas_check.py
       - name: Smoke test
         env:
           SMOKE_WAIT: '8000'
@@ -53,6 +55,7 @@ jobs:
           mkdir -p _site
           cp dist/pancreas-organ-to-cell.html _site/index.html
           cp dist/pancreas-organ-to-cell.html _site/pancreas-organ-to-cell.html
+          cp -r dist/atlas _site/atlas
           touch _site/.nojekyll
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

@@ -1,0 +1,2810 @@
+{
+ "_sources": {
+  "Hruban 2001": {
+   "authors": "Hruban RH, Adsay NV, Albores-Saavedra J, Compton C, Garrett ES, Goodman SN, Kern SE, Klimstra DS, Kloppel G, Longnecker DS, Luttges J, Offerhaus GJA",
+   "title": "Pancreatic Intraepithelial Neoplasia: A New Nomenclature and Classification System for Pancreatic Duct Lesions",
+   "journal": "The American Journal of Surgical Pathology",
+   "year": 2001,
+   "volume": "25(5)",
+   "pages": "579-586",
+   "doi": "not shown in the document",
+   "file": "literature/Public_References/2001-pancreatic_intraepithelial_neoplasia__a_new.3.pdf",
+   "pageMapping": "pdfPage n = printed page 578+n (8 pages)"
+  },
+  "Kardon 2001": {
+   "authors": "Kardon DE, Thompson LDR, Przygodzki RM, Heffess CS",
+   "title": "Adenosquamous Carcinoma of the Pancreas: A Clinicopathologic Series of 25 Cases",
+   "journal": "Modern Pathology",
+   "year": 2001,
+   "volume": "14(5)",
+   "pages": "443-451",
+   "doi": "not shown in the document",
+   "file": "literature/Public_References/2001-Adenosquamous.pdf",
+   "pageMapping": "pdfPage n = printed page 442+n (9 pages)"
+  },
+  "Basturk 2015": {
+   "authors": "Basturk O, Hong S-M, Wood LD, Adsay NV, Albores-Saavedra J, Biankin AV, Brosens LAA, Fukushima N, Goggins M, Hruban RH, Kato Y, Klimstra DS, Kloppel G, Krasinskas A, Longnecker DS, Matthaei H, Offerhaus GJA, Shimizu M, Takaori K, Terris B, Yachida S, Esposito I, Furukawa T (Baltimore Consensus Meeting)",
+   "title": "A Revised Classification System and Recommendations From the Baltimore Consensus Meeting for Neoplastic Precursor Lesions in the Pancreas",
+   "journal": "The American Journal of Surgical Pathology",
+   "year": 2015,
+   "volume": "39(12)",
+   "pages": "1730-1741",
+   "doi": "not shown in the document",
+   "file": "literature/Public_References/2015 - PanIN PDA classification.pdf",
+   "pageMapping": "pdfPage n = printed page 1729+n"
+  },
+  "Kleeff 2016": {
+   "authors": "Kleeff J, Korc M, Apte M, La Vecchia C, Johnson CD, Biankin AV, Neale RE, Tempero M, Tuveson DA, Hruban RH, Neoptolemos JP",
+   "title": "Pancreatic cancer (Primer)",
+   "journal": "Nature Reviews Disease Primers",
+   "year": 2016,
+   "volume": "2",
+   "pages": "article 16022 (printed page numbers 1-22)",
+   "doi": "10.1038/nrdp.2016.22",
+   "file": "literature/Public_References/2016 Kleef et al - PC Review Disease Primer.pdf",
+   "pageMapping": "pdfPage = printed page"
+  },
+  "Classification of Duct Lesions in the Pancreas (docx)": {
+   "authors": "Johns Hopkins pathology web text (no author shown in extracted text)",
+   "title": "Classification of Duct Lesions in the Pancreas",
+   "journal": "Word document in literature/Public_References; reproduces Hruban 2001 Tables 1-3 and cites Hruban 2001 and Basturk 2015",
+   "year": "not shown",
+   "file": "literature/Public_References/Classification of Duct Lesions in the Pancreas.docx",
+   "use": "read for cross-checking only; no page numbers; no separate facts taken from it"
+  },
+  "Robbins 9e ch.19": {
+   "authors": "Kumar V, Abbas AK, Aster JC (illustrations Perkins JA)",
+   "title": "Robbins and Cotran Pathologic Basis of Disease, 9th edition, Chapter 19 The Pancreas",
+   "journal": "Saunders (Elsevier)",
+   "year": 2015,
+   "volume": "",
+   "pages": "ch.19 printed pp. 883-896",
+   "doi": "ISBN 978-1-4557-2613-4",
+   "file": "literature/Robbins and Cotran Pathologic Basis of Disease (Vinay Kumar, Abul K. Abbas, Jon C. Aster).pdf",
+   "pageMapping": "printed = pdfPage - 15"
+  },
+  "Robbins 9e ch.24": {
+   "authors": "Kumar V, Abbas AK, Aster JC",
+   "title": "Robbins and Cotran Pathologic Basis of Disease, 9th edition, Chapter 24 The Endocrine System (pancreatic neuroendocrine tumors, p.1121)",
+   "journal": "Saunders (Elsevier)",
+   "year": 2015,
+   "doi": "ISBN 978-1-4557-2613-4",
+   "file": "same PDF as ch.19",
+   "pageMapping": "printed = pdfPage - 15"
+  },
+  "Beger 2023": {
+   "authors": "Beger HG, Buchler MW, Hruban RH, Mayerle J, Neoptolemos JP, Shimosegawa T, Warshaw AL, Whitcomb DC, Zhao Y (eds)",
+   "title": "The Pancreas: An Integrated Textbook of Basic Science, Medicine, and Surgery, Fourth Edition",
+   "journal": "John Wiley & Sons Ltd (Wiley Blackwell)",
+   "year": 2023,
+   "doi": "companion site www.wiley.com/go/beger/thepancreas4e (ISBN not shown on the pages read)",
+   "chapters_used": {
+    "ch.17": "Kloppel G. Histopathology of Acute Pancreatitis, pp.164-169",
+    "ch.38": "Definition and Classification of Chronic Pancreatitis, p.317ff",
+    "ch.52": "Structural Complications: Strictures, Stones, Pseudocysts, and Vascular Complications, p.424ff",
+    "ch.69": "Molecular Immunology and Pathogenesis of Autoimmune Pancreatitis, p.540ff",
+    "ch.70": "Shimosegawa T. Clinical Manifestation of Type 1 Autoimmune Pancreatitis, pp.546-553",
+    "ch.80": "Epidemiology of Cystic Neoplasms of the Pancreas, pp.617-622",
+    "ch.81": "Histologic Classification and Staging of Cystic Neoplasms, p.623ff",
+    "ch.86": "Natural History of Cystic Neoplasms: IPMN, MCN, SCN, and SPN, p.666ff",
+    "ch.99": "Kasajima A, Sasano H. Pathology of Neuroendocrine Neoplasms, pp.763-768",
+    "ch.120": "Kong B, Thoma E, Michalski CW. From Tissue Turnover to the Cell of Origin of Pancreatic Cancer: An Updated View, p.921ff",
+    "ch.125": "Pittman ME, Hruban RH. Pathology of Exocrine Pancreatic Tumors, pp.957-965",
+    "ch.126": "Pfluger MJ, Noe M, Brosens LAA. Pancreatic Cancer: Precancerous Lesions, pp.969-978",
+    "ch.150": "Immunotherapy for Pancreatic Cancer: Checkpoint Blockade and Vaccine Therapy, p.1164ff"
+   },
+   "file": "literature/The Pancreas An Integrated Textbook ....pdf",
+   "pageMapping": "printed = pdfPage minus 7 (ch.120, 125, 126, 150), 8 (ch.99), 10 (ch.80, 81, 86), 11 (ch.69, 70), 12 (ch.38, 52), 13 (ch.17)"
+  },
+  "Gorelick & Williams 2021 ch.1 (Longnecker)": {
+   "authors": "Longnecker DS (chapter), in Gorelick FS, Williams JA (eds)",
+   "title": "Anatomy and histology of the pancreas, in The Pancreas: Biology and Physiology",
+   "journal": "Michigan Publishing (American Pancreatic Association), CC BY-NC-ND 4.0",
+   "year": 2021,
+   "doi": "ISBN 978-1-60785-716-7",
+   "file": "literature/Public_References/Pancreas Histology, Biology, Development.pdf",
+   "pageMapping": "printed (chapter) = pdfPage - 11"
+  }
+ },
+ "normal-acini": {
+  "facts": [
+   {
+    "aspect": "architecture",
+    "fact": "Acini are not grape-like clusters at the ends of a branching duct tree; they form an anastomosing tubular network that ends in classic acini at some tips.",
+    "value": "anastomosing tubular network",
+    "source": "Gorelick & Williams 2021 ch.1 (Longnecker)",
+    "pdfPage": "19",
+    "printedPage": "8",
+    "confidence": "high"
+   },
+   {
+    "aspect": "cytology",
+    "fact": "On H&E acinar cells are blue at the base (RNA-rich cytoplasm and the nucleus) and pink at the lumen-facing apex where zymogen proteins are stored.",
+    "value": "basophilic base, eosinophilic apex",
+    "source": "Gorelick & Williams 2021 ch.1 (Longnecker)",
+    "pdfPage": "20",
+    "printedPage": "9",
+    "confidence": "high"
+   },
+   {
+    "aspect": "nuclei",
+    "fact": "Acinar nuclei, with nucleoli, sit in the basal part of the cell; the Golgi lies at the border between basal and apical parts.",
+    "value": "basal nucleus with nucleolus",
+    "source": "Gorelick & Williams 2021 ch.1 (Longnecker)",
+    "pdfPage": "20",
+    "printedPage": "9",
+    "confidence": "high"
+   },
+   {
+    "aspect": "cytology",
+    "fact": "Zymogen granules filling the apical cytoplasm are about 1 micrometre across, with a range of 0.5 to 1.4 micrometres.",
+    "value": "0.5-1.4 um; typically ~1 um",
+    "source": "Gorelick & Williams 2021 ch.1 (Longnecker)",
+    "pdfPage": "21",
+    "printedPage": "10",
+    "confidence": "high"
+   },
+   {
+    "aspect": "epidemiology",
+    "fact": "Acinar cells form the bulk of the gland (about 70% of all pancreatic cells; ductal cells about 18.5%), yet most pancreatic neoplasms show ductal differentiation.",
+    "value": "~70% acinar, 18.5% ductal of cells",
+    "source": "Beger 2023 ch.120",
+    "pdfPage": "928",
+    "printedPage": "921",
+    "confidence": "high"
+   },
+   {
+    "aspect": "remember",
+    "fact": "The bulk of normal pancreas is acinar tissue, yet most pancreatic tumours are ductal in phenotype.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "964",
+    "printedPage": "957",
+    "confidence": "high"
+   },
+   {
+    "aspect": "mucin",
+    "fact": "Acinar cells carry no mucin; the apical cytoplasm contains zymogen (digestive enzyme) granules. Mucin in a duct-like cell is therefore an abnormal finding (see PanIN).",
+    "value": "absent",
+    "source": "Hruban 2001",
+    "pdfPage": "2",
+    "printedPage": "580",
+    "confidence": "medium"
+   }
+  ]
+ },
+ "normal-centroacinar": {
+  "facts": [
+   {
+    "aspect": "location",
+    "fact": "Centroacinar cells sit at the junction of an acinus or acinar tubule with a small ductule, and may also lie scattered within an acinar tubule.",
+    "value": "",
+    "source": "Gorelick & Williams 2021 ch.1 (Longnecker)",
+    "pdfPage": "19",
+    "printedPage": "8",
+    "confidence": "high"
+   },
+   {
+    "aspect": "cytology",
+    "fact": "Compared with acinar cells, centroacinar cells are smaller, have less rough endoplasmic reticulum, no secretory granules and paler cytoplasm.",
+    "value": "smaller than acinar cells",
+    "source": "Gorelick & Williams 2021 ch.1 (Longnecker)",
+    "pdfPage": "20",
+    "printedPage": "9",
+    "confidence": "high"
+   },
+   {
+    "aspect": "cytology",
+    "fact": "By electron microscopy centroacinar cells have many mitochondria and microvilli facing the lumen, and form part of the acinar lumen wall.",
+    "value": "",
+    "source": "Gorelick & Williams 2021 ch.1 (Longnecker)",
+    "pdfPage": "21",
+    "printedPage": "10",
+    "confidence": "high"
+   },
+   {
+    "aspect": "definition",
+    "fact": "Kleeff and colleagues describe centroacinar cells as the geographic transition between acinar and ductal cells.",
+    "value": "",
+    "source": "Kleeff 2016",
+    "pdfPage": "1",
+    "printedPage": "1",
+    "confidence": "medium"
+   }
+  ]
+ },
+ "normal-intralobular-duct": {
+  "facts": [
+   {
+    "aspect": "cytology",
+    "fact": "Normal small ducts and ductules have a cuboidal to low-columnar epithelium with amphophilic cytoplasm; mucin, nuclear crowding and atypia are absent.",
+    "value": "amphophilic cytoplasm; no mucin",
+    "source": "Hruban 2001",
+    "pdfPage": "2",
+    "printedPage": "580",
+    "confidence": "high"
+   },
+   {
+    "aspect": "stroma",
+    "fact": "An intralobular duct has a modest collagenous wall, while the terminal ductule is nearly devoid of collagen and is a single layer of cuboidal cells; the lumen holds pink protein-rich juice.",
+    "value": "single cuboidal layer",
+    "source": "Gorelick & Williams 2021 ch.1 (Longnecker)",
+    "pdfPage": "23",
+    "printedPage": "12",
+    "confidence": "high"
+   },
+   {
+    "aspect": "location",
+    "fact": "PanIN arises in the small (intralobular) ducts and ductules, which is why their normal histology is the reference for grading.",
+    "value": "",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "907",
+    "printedPage": "892",
+    "confidence": "high"
+   },
+   {
+    "aspect": "architecture",
+    "fact": "The duct system is lined by a continuous epithelium; intercellular tight junctions between duct cells, centroacinar cells and acinar cells keep enzymes from leaking into the interstitium.",
+    "value": "",
+    "source": "Gorelick & Williams 2021 ch.1 (Longnecker)",
+    "pdfPage": "19",
+    "printedPage": "8",
+    "confidence": "high"
+   }
+  ]
+ },
+ "normal-interlobular-duct": {
+  "facts": [
+   {
+    "aspect": "stroma",
+    "fact": "Main and interlobular ducts have thick, dense collagenous walls; the wall gets thinner as ducts branch and narrow.",
+    "value": "thick collagen wall",
+    "source": "Gorelick & Williams 2021 ch.1 (Longnecker)",
+    "pdfPage": "19",
+    "printedPage": "8",
+    "confidence": "high"
+   },
+   {
+    "aspect": "cytology",
+    "fact": "The interlobular duct lumen is lined by a single layer of duct cells; its collagenous wall is conspicuous but thinner than that of the main duct.",
+    "value": "single layer",
+    "source": "Gorelick & Williams 2021 ch.1 (Longnecker)",
+    "pdfPage": "22",
+    "printedPage": "11",
+    "confidence": "high"
+   },
+   {
+    "aspect": "location",
+    "fact": "Larger islets tend to lie along the main and interlobular ducts, so islets are a landmark next to these ducts.",
+    "value": "",
+    "source": "Gorelick & Williams 2021 ch.1 (Longnecker)",
+    "pdfPage": "22",
+    "printedPage": "11",
+    "confidence": "high"
+   },
+   {
+    "aspect": "mimickers",
+    "fact": "IPMN involves the main duct or its major branches and is large enough to see grossly or on imaging, whereas PanIN is the small-duct lesion; IPMN can extend into small ducts, so step sections may be needed.",
+    "value": "",
+    "source": "Hruban 2001",
+    "pdfPage": "3",
+    "printedPage": "581",
+    "confidence": "high"
+   }
+  ]
+ },
+ "normal-islet": {
+  "facts": [
+   {
+    "aspect": "size",
+    "fact": "About 70% of human islets are 50 to 250 micrometres across, averaging 100 to 150 micrometres; small ones lie scattered among acini, larger ones along main and interlobular ducts.",
+    "value": "70% 50-250 um; mean 100-150 um",
+    "source": "Gorelick & Williams 2021 ch.1 (Longnecker)",
+    "pdfPage": "22",
+    "printedPage": "11",
+    "confidence": "high"
+   },
+   {
+    "aspect": "architecture",
+    "fact": "An adult human pancreas holds roughly half a million to a million islets, which make up 1-2% of the gland.",
+    "value": "0.5-1 million islets; 1-2% of pancreas",
+    "source": "Gorelick & Williams 2021 ch.1 (Longnecker)",
+    "pdfPage": "23",
+    "printedPage": "12",
+    "confidence": "high"
+   },
+   {
+    "aspect": "cytology",
+    "fact": "Islet cells are smaller than neighbouring acinar cells and have paler cytoplasm; alpha and delta cells sit mainly at the edges of beta-cell groups.",
+    "value": "",
+    "source": "Gorelick & Williams 2021 ch.1 (Longnecker)",
+    "pdfPage": "23",
+    "printedPage": "12",
+    "confidence": "high"
+   },
+   {
+    "aspect": "cytology",
+    "fact": "In the dorsal-anlage part of the gland beta cells are 75-80% of islet cells, alpha about 15%, delta about 5%, with few PP cells; the uncinate process is PP-rich.",
+    "value": "beta 75-80%, alpha ~15%, delta ~5%",
+    "source": "Gorelick & Williams 2021 ch.1 (Longnecker)",
+    "pdfPage": "24",
+    "printedPage": "13",
+    "confidence": "high"
+   },
+   {
+    "aspect": "stroma",
+    "fact": "Pancreatic neuroendocrine tumours often look like giant islets, keeping regular cords of monotonous cells aligned to the vasculature.",
+    "value": "",
+    "source": "Robbins 9e ch.24",
+    "pdfPage": "1136",
+    "printedPage": "1121",
+    "confidence": "medium"
+   }
+  ]
+ },
+ "reactive-duct": {
+  "facts": [
+   {
+    "aspect": "definition",
+    "fact": "Reactive duct change is a benign response to inflammation or injury that can mimic PanIN.",
+    "value": "",
+    "source": "Hruban 2001",
+    "pdfPage": "3",
+    "printedPage": "581",
+    "confidence": "high"
+   },
+   {
+    "aspect": "nuclei",
+    "fact": "Reactive ducts may show enlarged nuclei and prominent nucleoli, but the nuclei keep smooth contours and finely dispersed chromatin.",
+    "value": "prominent nucleoli, smooth contours",
+    "source": "Hruban 2001",
+    "pdfPage": "3",
+    "printedPage": "581",
+    "confidence": "high"
+   },
+   {
+    "aspect": "stroma",
+    "fact": "A significant inflammatory infiltrate, especially neutrophils within the epithelium, points to a reactive process.",
+    "value": "neutrophils in epithelium",
+    "source": "Hruban 2001",
+    "pdfPage": "3",
+    "printedPage": "581",
+    "confidence": "high"
+   },
+   {
+    "aspect": "architecture",
+    "fact": "Reactive ducts typically lack the architectural changes (papillae, micropapillae) that PanIN shows.",
+    "value": "",
+    "source": "Hruban 2001",
+    "pdfPage": "3",
+    "printedPage": "581",
+    "confidence": "high"
+   },
+   {
+    "aspect": "mimickers",
+    "fact": "In chronic pancreatitis, duct epithelium may be atrophic, hyperplastic or squamous-metaplastic; well-differentiated PDAC is told from reactive glands by architecture (lost lobular layout, incomplete glands, ducts beside muscular arteries).",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "965",
+    "printedPage": "958",
+    "confidence": "high"
+   }
+  ]
+ },
+ "adm": {
+  "facts": [
+   {
+    "aspect": "definition",
+    "fact": "ADM is progressive replacement of acini by ductular (tubular) structures; the cells lose acinar markers and gain ductal markers.",
+    "value": "acinar to ductal",
+    "source": "Basturk 2015",
+    "pdfPage": "8",
+    "printedPage": "1737",
+    "confidence": "high"
+   },
+   {
+    "aspect": "mucin",
+    "fact": "ADM ductules can show intracytoplasmic mucin, which makes them resemble low-grade PanIN.",
+    "value": "",
+    "source": "Basturk 2015",
+    "pdfPage": "8",
+    "printedPage": "1737",
+    "confidence": "high"
+   },
+   {
+    "aspect": "stroma",
+    "fact": "ADM lesions are usually accompanied by fibrosis and inflammation.",
+    "value": "",
+    "source": "Basturk 2015",
+    "pdfPage": "8",
+    "printedPage": "1737",
+    "confidence": "high"
+   },
+   {
+    "aspect": "epidemiology",
+    "fact": "ADM is common in resection specimens for both inflammatory and neoplastic disease and can carry KRAS mutations; its biological meaning in humans is unclear and it need not be reported clinically.",
+    "value": "common; KRAS possible",
+    "source": "Basturk 2015",
+    "pdfPage": "8-9",
+    "printedPage": "1737-1738",
+    "confidence": "high"
+   },
+   {
+    "aspect": "molecular",
+    "fact": "In some cases a KRAS mutation is found in a PanIN but not in its neighbouring ADM, so the two are not always genetically linked.",
+    "value": "",
+    "source": "Basturk 2015",
+    "pdfPage": "8",
+    "printedPage": "1737",
+    "confidence": "high"
+   },
+   {
+    "aspect": "location",
+    "fact": "ADM is an intralobular change: acini inside a lobule are replaced by small tubes, and in chronic pancreatitis acinar cells are replaced by duct-type cells.",
+    "value": "",
+    "source": "Gorelick & Williams 2021 ch.1 (Longnecker)",
+    "pdfPage": "19",
+    "printedPage": "8",
+    "confidence": "high"
+   },
+   {
+    "aspect": "mouse",
+    "fact": "In mouse models, KRAS targeting of acinar cells leads to ADM, PanIN and invasive carcinoma, whereas targeting mature duct cells produces little change.",
+    "value": "",
+    "source": "Basturk 2015",
+    "pdfPage": "8",
+    "printedPage": "1737",
+    "confidence": "medium"
+   },
+   {
+    "aspect": "mouse",
+    "fact": "ADM is normally a reversible, default response; with oncogenic Kras plus inflammation the metaplasia becomes irreversible and progresses through PanIN to PDAC.",
+    "value": "reversible -> irreversible",
+    "source": "Beger 2023 ch.120",
+    "pdfPage": "929",
+    "printedPage": "922",
+    "confidence": "high"
+   },
+   {
+    "aspect": "mimickers",
+    "fact": "Atypical flat lesions (AFL) are intralobular clusters of small ducts under 0.5 cm with cytologic atypia and a cellular, whorled stroma; atypia and stroma distinguish them from ADM.",
+    "value": "AFL <0.5 cm",
+    "source": "Basturk 2015",
+    "pdfPage": "8",
+    "printedPage": "1737",
+    "confidence": "high"
+   }
+  ]
+ },
+ "squamous-metaplasia": {
+  "facts": [
+   {
+    "aspect": "definition",
+    "fact": "Normal cuboidal duct epithelium is replaced by mature stratified squamous or pseudostratified transitional epithelium without atypia.",
+    "value": "",
+    "source": "Hruban 2001",
+    "pdfPage": "2",
+    "printedPage": "580",
+    "confidence": "high"
+   },
+   {
+    "aspect": "epidemiology",
+    "fact": "Squamous metaplasia of ducts is seen mostly in chronic pancreatitis and in only about 4% of adenocarcinomas (adjacent ducts); no step from metaplasia to squamous carcinoma was shown.",
+    "value": "~4% of adenocarcinomas",
+    "source": "Kardon 2001",
+    "pdfPage": "7",
+    "printedPage": "449",
+    "confidence": "high"
+   },
+   {
+    "aspect": "definition",
+    "fact": "Older names for the same change are epidermoid metaplasia and multilayered metaplasia.",
+    "value": "",
+    "source": "Hruban 2001",
+    "pdfPage": "6",
+    "printedPage": "584",
+    "confidence": "high"
+   },
+   {
+    "aspect": "location",
+    "fact": "In chronic pancreatitis the duct epithelium can be atrophic, hyperplastic or squamous-metaplastic.",
+    "value": "",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "903",
+    "printedPage": "888",
+    "confidence": "high"
+   },
+   {
+    "aspect": "mimickers",
+    "fact": "The metaplastic squamous cells are bland and orderly; adenosquamous carcinoma is the malignant mimic, with infiltrating squamous nests and a glandular component.",
+    "value": "",
+    "source": "Kardon 2001",
+    "pdfPage": "3",
+    "printedPage": "445",
+    "confidence": "medium"
+   }
+  ]
+ },
+ "acute-interstitial": {
+  "facts": [
+   {
+    "aspect": "definition",
+    "fact": "The mild form: histology is limited to mild inflammation, interstitial oedema and small foci of fat necrosis in the gland and the surrounding fat.",
+    "value": "mild inflammation + edema + focal fat necrosis",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "902",
+    "printedPage": "887",
+    "confidence": "high"
+   },
+   {
+    "aspect": "epidemiology",
+    "fact": "Acute interstitial oedematous pancreatitis accounts for 90-95% of acute pancreatitis; the necrotizing form is only 5-10%.",
+    "value": "90-95% interstitial; 5-10% necrotizing",
+    "source": "Beger 2023 ch.17",
+    "pdfPage": "177",
+    "printedPage": "164",
+    "confidence": "high"
+   },
+   {
+    "aspect": "gross",
+    "fact": "The gland may be swollen with oedema or normal in size, with tiny white spots of fat necrosis on its surface and in the interlobular fat.",
+    "value": "",
+    "source": "Beger 2023 ch.17",
+    "pdfPage": "177",
+    "printedPage": "164",
+    "confidence": "high"
+   },
+   {
+    "aspect": "architecture",
+    "fact": "Tiny fat necroses lie in the interlobular fat; acinar cells next to them stay intact, so lobules look largely preserved.",
+    "value": "",
+    "source": "Beger 2023 ch.17",
+    "pdfPage": "179",
+    "printedPage": "166",
+    "confidence": "high"
+   },
+   {
+    "aspect": "stroma",
+    "fact": "Fat necrosis is a saponification: lipase-released fatty acids combine with calcium to form insoluble salts that look granular blue on H&E.",
+    "value": "granular blue fat cells",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "902",
+    "printedPage": "887",
+    "confidence": "high"
+   },
+   {
+    "aspect": "size",
+    "fact": "These fat necroses are usually under 10 mm, barely detectable by imaging, and resolve after macrophages clear the oedema; nothing is left behind.",
+    "value": "<10 mm",
+    "source": "Beger 2023 ch.17",
+    "pdfPage": "179",
+    "printedPage": "166",
+    "confidence": "high"
+   },
+   {
+    "aspect": "epidemiology",
+    "fact": "Biliary disease and alcohol cause about 80% of acute pancreatitis in Western countries; incidence is 10-20 per 100,000 per year; gallstones are present in 35-60%.",
+    "value": "10-20/100,000/yr; ~80% biliary+alcohol",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "899",
+    "printedPage": "884",
+    "confidence": "high"
+   },
+   {
+    "aspect": "remember",
+    "fact": "Fat necrosis is the key lesion: it comes first and sets the severity, while the acini beside it remain well preserved.",
+    "value": "",
+    "source": "Beger 2023 ch.17",
+    "pdfPage": "178",
+    "printedPage": "165",
+    "confidence": "high"
+   }
+  ]
+ },
+ "acute-necrotizing": {
+  "facts": [
+   {
+    "aspect": "definition",
+    "fact": "The severe form adds necrosis of acinar and duct tissue and of islets, with haemorrhage from vessel injury.",
+    "value": "",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "902",
+    "printedPage": "887",
+    "confidence": "high"
+   },
+   {
+    "aspect": "gross",
+    "fact": "The gland is red-black from haemorrhage with scattered yellow-white chalky foci of fat necrosis; fat necrosis can also appear in omentum, mesentery and even subcutaneous fat.",
+    "value": "red-black + chalky white foci",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "902",
+    "printedPage": "887",
+    "confidence": "high"
+   },
+   {
+    "aspect": "architecture",
+    "fact": "Necrotizing pancreatitis shows large confluent fat necroses extending into peripancreatic tissue; parenchymal necrosis is usually much less extensive than the fat necrosis.",
+    "value": "",
+    "source": "Beger 2023 ch.17",
+    "pdfPage": "178",
+    "printedPage": "165",
+    "confidence": "high"
+   },
+   {
+    "aspect": "stroma",
+    "fact": "Where large fat necrosis involves vessels, especially veins, it becomes haemorrhagic through wall damage and thrombosis; thick-walled arteries resist longer.",
+    "value": "",
+    "source": "Beger 2023 ch.17",
+    "pdfPage": "178",
+    "printedPage": "165",
+    "confidence": "high"
+   },
+   {
+    "aspect": "cytology",
+    "fact": "Islets are spared unless they lie in lobules that are largely or entirely necrotic.",
+    "value": "",
+    "source": "Beger 2023 ch.17",
+    "pdfPage": "178",
+    "printedPage": "165",
+    "confidence": "high"
+   },
+   {
+    "aspect": "mimickers",
+    "fact": "Besides the common fat-necrosis pattern, two rare patterns exist: duct-epithelium necrosis with neutrophil plugs in interlobular ducts, and scattered intralobular acinar-cell necrosis (seen with infection), where fat and duct necrosis are absent.",
+    "value": "3 patterns",
+    "source": "Beger 2023 ch.17",
+    "pdfPage": "180",
+    "printedPage": "167",
+    "confidence": "high"
+   },
+   {
+    "aspect": "prognosis",
+    "fact": "Necrosis over 5 cm often fails to resolve; a granulation wall forms in 10-20 days and fibrosis from 20-30 days, giving walled-off necrosis.",
+    "value": ">5 cm; 10-20 d granulation; 20-30 d fibrosis",
+    "source": "Beger 2023 ch.17",
+    "pdfPage": "179",
+    "printedPage": "166",
+    "confidence": "high"
+   },
+   {
+    "aspect": "prognosis",
+    "fact": "About 5% of severe cases die in the first week, and 40-60% of necrotic debris becomes infected, usually by gut bacteria.",
+    "value": "5% die in week 1; 40-60% infected",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "902",
+    "printedPage": "887",
+    "confidence": "high"
+   },
+   {
+    "aspect": "remember",
+    "fact": "Repeated necrosis followed by interlobular fibrosis can turn relapsing acute pancreatitis into chronic pancreatitis.",
+    "value": "",
+    "source": "Beger 2023 ch.17",
+    "pdfPage": "179",
+    "printedPage": "166",
+    "confidence": "high"
+   }
+  ]
+ },
+ "chronic-pancreatitis": {
+  "facts": [
+   {
+    "aspect": "definition",
+    "fact": "Chronic pancreatitis is prolonged inflammation with irreversible loss of exocrine parenchyma, fibrosis and, late, loss of endocrine tissue.",
+    "value": "",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "903",
+    "printedPage": "888",
+    "confidence": "high"
+   },
+   {
+    "aspect": "architecture",
+    "fact": "Hallmarks are fibrosis, atrophy and dropout of acini, and variable duct dilation, with chronic inflammation around lobules and ducts.",
+    "value": "",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "903",
+    "printedPage": "888",
+    "confidence": "high"
+   },
+   {
+    "aspect": "cytology",
+    "fact": "Islets are relatively spared and become embedded in scar (they may fuse and look enlarged); in advanced disease they are lost too.",
+    "value": "",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "903",
+    "printedPage": "888",
+    "confidence": "high"
+   },
+   {
+    "aspect": "gross",
+    "fact": "The gland is hard, sometimes with visibly dilated ducts holding calcified concretions; alcoholic disease has intraluminal protein plugs and calcifications.",
+    "value": "",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "903",
+    "printedPage": "888",
+    "confidence": "high"
+   },
+   {
+    "aspect": "stroma",
+    "fact": "Pancreatic stellate (periacinar myofibroblast) cells, driven by TGF-beta and PDGF, deposit collagen and cause the fibrosis; the same cells are active in PDAC.",
+    "value": "",
+    "source": "Gorelick & Williams 2021 ch.1 (Longnecker)",
+    "pdfPage": "22",
+    "printedPage": "11",
+    "confidence": "high"
+   },
+   {
+    "aspect": "epidemiology",
+    "fact": "Alcohol is by far the commonest cause; prevalence is 0.04-5%, mostly middle-aged men; up to 25% have a genetic basis.",
+    "value": "prevalence 0.04-5%; <=25% genetic",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "903",
+    "printedPage": "888",
+    "confidence": "high"
+   },
+   {
+    "aspect": "size",
+    "fact": "Duct stones occur in about half of chronic pancreatitis cases, with prevalence rising over time to nearly 100% after 14 years.",
+    "value": "~50%; ~100% at 14 y",
+    "source": "Beger 2023 ch.52",
+    "pdfPage": "437",
+    "printedPage": "425",
+    "confidence": "high"
+   },
+   {
+    "aspect": "prognosis",
+    "fact": "Long-term outlook is poor, with a 20-25-year mortality of 50%; pseudocysts develop in about 10%; hereditary pancreatitis carries a 40% lifetime pancreatic cancer risk.",
+    "value": "50% mortality at 20-25 y; 10% pseudocyst; 40% cancer (hereditary)",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "904",
+    "printedPage": "889",
+    "confidence": "high"
+   },
+   {
+    "aspect": "definition",
+    "fact": "The mechanistic definition calls it a pathologic fibro-inflammatory syndrome in people with risk factors who develop persistent responses to injury; tissue alone cannot establish the diagnosis.",
+    "value": "",
+    "source": "Beger 2023 ch.38",
+    "pdfPage": "330",
+    "printedPage": "318",
+    "confidence": "medium"
+   },
+   {
+    "aspect": "mimickers",
+    "fact": "Mass-forming chronic pancreatitis and PDAC can look alike; in tissue, well-differentiated PDAC shows lost lobular architecture, incomplete glands, ducts beside muscular arteries, luminal necrosis and perineural invasion.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "965",
+    "printedPage": "958",
+    "confidence": "high"
+   }
+  ]
+ },
+ "autoimmune-pancreatitis": {
+  "facts": [
+   {
+    "aspect": "definition",
+    "fact": "Autoimmune pancreatitis is a distinct form of chronic pancreatitis with IgG4-secreting plasma cells; it can mimic pancreatic cancer clinically but responds to steroids.",
+    "value": "",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "903",
+    "printedPage": "888",
+    "confidence": "high"
+   },
+   {
+    "aspect": "nuclei",
+    "fact": "Type 1 (lymphoplasmacytic sclerosing pancreatitis) has dense lymphocytes and IgG4-positive plasma cells around medium and small ducts that compress them while the epithelium stays intact.",
+    "value": "type 1 = LPSP",
+    "source": "Beger 2023 ch.70",
+    "pdfPage": "559",
+    "printedPage": "548",
+    "confidence": "high"
+   },
+   {
+    "aspect": "stroma",
+    "fact": "Type 1 shows storiform fibrosis and obliterative phlebitis; storiform fibrosis is macrophage-rich and fibroblast-poor, which may explain the steroid response despite the fibrotic look.",
+    "value": "storiform fibrosis; obliterative phlebitis",
+    "source": "Beger 2023 ch.69",
+    "pdfPage": "554",
+    "printedPage": "543",
+    "confidence": "high"
+   },
+   {
+    "aspect": "architecture",
+    "fact": "Type 2 (idiopathic duct-centric pancreatitis / granulocytic epithelial lesion) has neutrophils in and around ducts and acini, in the duct lumen and in the epithelium, destroying it; findings are more specific near interlobular ducts.",
+    "value": "type 2 = IDCP/GEL",
+    "source": "Beger 2023 ch.70",
+    "pdfPage": "559",
+    "printedPage": "548",
+    "confidence": "high"
+   },
+   {
+    "aspect": "epidemiology",
+    "fact": "Type 1 occurs mostly in elderly men with painless jaundice and is dominant in East Asia; type 2 occurs in younger patients with no sex preference and is commoner in the West.",
+    "value": "type 1 elderly male; type 2 younger, no sex bias",
+    "source": "Beger 2023 ch.70",
+    "pdfPage": "557",
+    "printedPage": "546",
+    "confidence": "high"
+   },
+   {
+    "aspect": "epidemiology",
+    "fact": "About one-third of type 2 patients have inflammatory bowel disease (ulcerative colitis); type 1 is part of systemic IgG4-related disease.",
+    "value": "~30% IBD in type 2",
+    "source": "Beger 2023 ch.69",
+    "pdfPage": "554",
+    "printedPage": "543",
+    "confidence": "high"
+   },
+   {
+    "aspect": "mimickers",
+    "fact": "Unlike the short, severe stricture of pancreatic cancer, AIP gives long-segment irregular narrowing of the main duct with only slight upstream dilatation.",
+    "value": "",
+    "source": "Beger 2023 ch.70",
+    "pdfPage": "558",
+    "printedPage": "547",
+    "confidence": "high"
+   },
+   {
+    "aspect": "remember",
+    "fact": "Recognise it because it is steroid-responsive and can masquerade as a pancreatic cancer.",
+    "value": "",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "903",
+    "printedPage": "888",
+    "confidence": "high"
+   }
+  ]
+ },
+ "pseudocyst": {
+  "facts": [
+   {
+    "aspect": "definition",
+    "fact": "A pseudocyst is a collection of necrotic, haemorrhagic, enzyme-rich material with no epithelial lining.",
+    "value": "no epithelium",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "904",
+    "printedPage": "889",
+    "confidence": "high"
+   },
+   {
+    "aspect": "epidemiology",
+    "fact": "Pseudocysts make up about 75% of pancreatic cysts and usually follow acute pancreatitis, especially on chronic alcoholic disease; trauma can also cause them.",
+    "value": "~75% of pancreatic cysts",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "904",
+    "printedPage": "889",
+    "confidence": "high"
+   },
+   {
+    "aspect": "size",
+    "fact": "They range from 2 to 30 cm, are usually solitary, and lie in the gland or more often in the lesser sac or retroperitoneum.",
+    "value": "2-30 cm",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "905",
+    "printedPage": "890",
+    "confidence": "high"
+   },
+   {
+    "aspect": "architecture",
+    "fact": "Wall is fibrin, granulation tissue and fibrous tissue with no epithelium; the gross wall can be necrotic brown-black.",
+    "value": "",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "905",
+    "printedPage": "890",
+    "confidence": "high"
+   },
+   {
+    "aspect": "definition",
+    "fact": "Walled-off necrosis is a fully demarcated necrosis (fibrous wall after 20-30 days); it replaces the old term pseudocyst associated with necrosis, and is mostly found outside the gland near the head.",
+    "value": "WON",
+    "source": "Beger 2023 ch.17",
+    "pdfPage": "179",
+    "printedPage": "166",
+    "confidence": "high"
+   },
+   {
+    "aspect": "epidemiology",
+    "fact": "Pseudocysts complicate 20-40% of chronic pancreatitis; they contain amylase-rich fluid, usually from a ruptured duct, and about 40% resolve by 6 weeks.",
+    "value": "20-40% of CP; 40% resolve by 6 wk",
+    "source": "Beger 2023 ch.52",
+    "pdfPage": "438",
+    "printedPage": "426",
+    "confidence": "high"
+   },
+   {
+    "aspect": "mimickers",
+    "fact": "Only 5-15% of pancreatic cysts are neoplastic; a cyst with epithelial lining and ovarian stroma or duct connection points to MCN or IPMN rather than pseudocyst.",
+    "value": "neoplastic cysts 5-15%",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "905",
+    "printedPage": "890",
+    "confidence": "high"
+   }
+  ]
+ },
+ "serous-cystadenoma": {
+  "facts": [
+   {
+    "aspect": "gross",
+    "fact": "Microcystic serous cystadenoma is a sponge-like mass of innumerable millimetre cysts, often around a central scar; the macrocystic variant has one or a few large cysts.",
+    "value": "cysts 1-3 mm (Robbins)",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "970",
+    "printedPage": "963",
+    "confidence": "high"
+   },
+   {
+    "aspect": "cytology",
+    "fact": "Cysts are lined by a single layer of cuboidal cells with clear, glycogen-rich cytoplasm and small, central, uniform round nuclei; the fluid is watery and straw-coloured.",
+    "value": "cysts 1-3 mm",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "905",
+    "printedPage": "890",
+    "confidence": "high"
+   },
+   {
+    "aspect": "nuclei",
+    "fact": "The nuclei are small, uniform and centrally placed (Beger); Robbins describes cuboidal epithelium without atypia. Mitotic counts are not given.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "970",
+    "printedPage": "963",
+    "confidence": "high"
+   },
+   {
+    "aspect": "location",
+    "fact": "Robbins places serous cystic neoplasms usually in the pancreatic tail; the Beger pages read do not give a site for them (not found).",
+    "value": "tail (Robbins)",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "905",
+    "printedPage": "890",
+    "confidence": "high"
+   },
+   {
+    "aspect": "epidemiology",
+    "fact": "About 25% of cystic neoplasms; twice as common in women; sixth to seventh decade. Beger gives 70-75% women and mean age 58-60.",
+    "value": "F:M ~2:1 to 7:3; age 58-60",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "905",
+    "printedPage": "890",
+    "confidence": "high"
+   },
+   {
+    "aspect": "epidemiology",
+    "fact": "In another Beger chapter serous cystic neoplasms are 70% female with mean age 60; about 12% of von Hippel-Lindau patients have them.",
+    "value": "F:M 7:3; mean age 60; VHL 12%",
+    "source": "Beger 2023 ch.81",
+    "pdfPage": "633",
+    "printedPage": "623",
+    "confidence": "high"
+   },
+   {
+    "aspect": "molecular",
+    "fact": "Inactivation of VHL is the commonest genetic change; multiple serous cystadenomas through the gland suggest VHL syndrome.",
+    "value": "VHL",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "905",
+    "printedPage": "890",
+    "confidence": "high"
+   },
+   {
+    "aspect": "prognosis",
+    "fact": "Almost always benign; malignant transformation (serous cystadenocarcinoma, defined by metastasis) is vanishingly rare, so asymptomatic patients usually need no surgery.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "970",
+    "printedPage": "963",
+    "confidence": "high"
+   },
+   {
+    "aspect": "mimickers",
+    "fact": "The macrocystic form can mimic IPMN or MCN on imaging, and the solid serous adenoma can mimic a neuroendocrine tumour.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "970",
+    "printedPage": "963",
+    "confidence": "high"
+   }
+  ]
+ },
+ "mcn": {
+  "facts": [
+   {
+    "aspect": "definition",
+    "fact": "MCN is a mucin-producing cystic neoplasm that usually does not involve the duct system and, by definition, has ovarian-type stroma.",
+    "value": "ovarian-type stroma required",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "969",
+    "printedPage": "962",
+    "confidence": "high"
+   },
+   {
+    "aspect": "architecture",
+    "fact": "Two components: a columnar mucinous epithelium lining a cyst and an underlying cellular ovarian-type spindle-cell stroma; the cyst is well demarcated, multilocular and may be cyst-in-cyst.",
+    "value": "",
+    "source": "Beger 2023 ch.126",
+    "pdfPage": "983",
+    "printedPage": "976",
+    "confidence": "high"
+   },
+   {
+    "aspect": "stroma",
+    "fact": "Ovarian-type stroma is mandatory for the diagnosis but may be focal or masked by fibrosis; its cells express progesterone and oestrogen receptor and alpha-SMA, and luteinised cells are inhibin positive.",
+    "value": "PR, ER, alpha-SMA, inhibin",
+    "source": "Beger 2023 ch.126",
+    "pdfPage": "984",
+    "printedPage": "977",
+    "confidence": "high"
+   },
+   {
+    "aspect": "location",
+    "fact": "MCN is a solitary lesion of the body or tail (more than 90%), with no or very infrequent communication with the duct system.",
+    "value": ">90% body-tail",
+    "source": "Beger 2023 ch.81",
+    "pdfPage": "634",
+    "printedPage": "624",
+    "confidence": "high"
+   },
+   {
+    "aspect": "epidemiology",
+    "fact": "Almost exclusively women (about 1:10-20 male to female, ~95% in Robbins), mean age about 45 years, perimenopausal; patients with invasive disease are about 10 years older (55 vs 44).",
+    "value": "F 90-95%; mean ~45 y",
+    "source": "Beger 2023 ch.81",
+    "pdfPage": "634",
+    "printedPage": "624",
+    "confidence": "high"
+   },
+   {
+    "aspect": "size",
+    "fact": "Round mass with a smooth inner surface and fibrous pseudocapsule with frequent calcification; size 2-35 cm in one chapter, median 3.5-5 cm (range 0.5-20) in another.",
+    "value": "2-35 cm; median 3.5-5 cm",
+    "source": "Beger 2023 ch.81",
+    "pdfPage": "634",
+    "printedPage": "624",
+    "confidence": "high"
+   },
+   {
+    "aspect": "gross",
+    "fact": "Cysts are large, filled with tenacious mucin, and do not communicate grossly with the duct; papillary projections or a mural nodule suggest high-grade dysplasia or invasion.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "969",
+    "printedPage": "962",
+    "confidence": "high"
+   },
+   {
+    "aspect": "mucin",
+    "fact": "Epithelium ranges from flat cuboidal with little mucin to tall columnar with abundant supranuclear mucin; low- and high-grade areas often coexist, and mucin-rich epithelium is more often linked to high-grade change or invasion.",
+    "value": "",
+    "source": "Beger 2023 ch.126",
+    "pdfPage": "984",
+    "printedPage": "977",
+    "confidence": "high"
+   },
+   {
+    "aspect": "molecular",
+    "fact": "KRAS hotspot mutations are common (up to 100% in high-grade or invasive lesions); RNF43 changes occur; TP53 and CDKN2A are altered in about half of high-grade or invasive MCN; GNAS mutations are absent.",
+    "value": "GNAS absent",
+    "source": "Beger 2023 ch.126",
+    "pdfPage": "985",
+    "printedPage": "978",
+    "confidence": "high"
+   },
+   {
+    "aspect": "prognosis",
+    "fact": "Resection of non-invasive MCN is curative; an associated invasive carcinoma is reported in 6-25% (up to one third in Robbins, up to 30% in ch.125), usually a typical tubular PDAC.",
+    "value": "6-25%; up to 30-33%",
+    "source": "Beger 2023 ch.126",
+    "pdfPage": "983",
+    "printedPage": "976",
+    "confidence": "high"
+   },
+   {
+    "aspect": "mimickers",
+    "fact": "Ovarian stroma plus no duct connection and larger size separate MCN from PanIN; absence of ovarian-type stroma separates IPMN, and a flat-lined gastric cyst without ovarian stroma is a simple mucinous cyst.",
+    "value": "",
+    "source": "Hruban 2001",
+    "pdfPage": "3",
+    "printedPage": "581",
+    "confidence": "high"
+   },
+   {
+    "aspect": "mimickers",
+    "fact": "Simple mucinous cysts have flat gastric-type lining, at most minimal atypia and no ovarian-type stroma, and are benign.",
+    "value": ">1 cm",
+    "source": "Basturk 2015",
+    "pdfPage": "7",
+    "printedPage": "1736",
+    "confidence": "high"
+   },
+   {
+    "aspect": "remember",
+    "fact": "Ovarian-type stroma is the defining feature of MCN, and not found in IPMN.",
+    "value": "",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "906",
+    "printedPage": "891",
+    "confidence": "high"
+   }
+  ]
+ },
+ "ipmn": {
+  "facts": [
+   {
+    "aspect": "definition",
+    "fact": "IPMN is a grossly visible, usually papillary, non-invasive mucin-producing neoplasm arising in the main or a branch pancreatic duct, usually 1 cm or more.",
+    "value": ">=1.0 cm",
+    "source": "Beger 2023 ch.126",
+    "pdfPage": "979",
+    "printedPage": "972",
+    "confidence": "high"
+   },
+   {
+    "aspect": "size",
+    "fact": "PanIN is usually under 0.5 cm and IPMN 1.0 cm or more; lesions of 0.5-1.0 cm are large PanIN or small IPMN, and long finger-like papillae, intestinal/oncocytic differentiation or GNAS mutation make it an incipient IPMN.",
+    "value": "0.5-1.0 cm grey zone",
+    "source": "Basturk 2015",
+    "pdfPage": "6",
+    "printedPage": "1735",
+    "confidence": "high"
+   },
+   {
+    "aspect": "location",
+    "fact": "Mostly in the pancreatic head and uncinate process; main-duct IPMN dilates the main duct with thick mucus and long papillae, branch-duct IPMN is a cluster of cysts like grapes beside the main duct.",
+    "value": "head/uncinate",
+    "source": "Beger 2023 ch.126",
+    "pdfPage": "979",
+    "printedPage": "972",
+    "confidence": "high"
+   },
+   {
+    "aspect": "gross",
+    "fact": "Main-duct IPMN dilates the duct diffusely, with long finger-like papillae and thick tenacious mucin; branch-duct IPMN appears as a small group of cysts compared to a bunch of grapes.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "968",
+    "printedPage": "961",
+    "confidence": "high"
+   },
+   {
+    "aspect": "cytology",
+    "fact": "Gastric type (the commonest) has foveolar-like cells with basal small nuclei and a mucin cap, usually low grade, mainly in branch ducts, MUC5AC positive.",
+    "value": "gastric = commonest",
+    "source": "Beger 2023 ch.126",
+    "pdfPage": "979",
+    "printedPage": "972",
+    "confidence": "high"
+   },
+   {
+    "aspect": "cytology",
+    "fact": "Intestinal type resembles a colonic villous adenoma: long papillae, hyperchromatic elongated cigar-shaped pseudostratified nuclei, goblet cells; main duct, often high grade; MUC2, CDX2 positive; leads to colloid carcinoma.",
+    "value": "MUC2, CDX2, MUC5AC",
+    "source": "Beger 2023 ch.126",
+    "pdfPage": "981",
+    "printedPage": "974",
+    "confidence": "high"
+   },
+   {
+    "aspect": "cytology",
+    "fact": "Pancreatobiliary type is least frequent: mucin-depleted cells with irregular nuclei of marked size variation and prominent nucleoli; mostly high grade, most often with invasion; MUC1 positive.",
+    "value": "MUC1",
+    "source": "Beger 2023 ch.126",
+    "pdfPage": "981",
+    "printedPage": "974",
+    "confidence": "high"
+   },
+   {
+    "aspect": "nuclei",
+    "fact": "Low-grade IPMN is a single layer of cells with small uniform nuclei along well-formed papillae; high grade shows loss of nuclear polarity, hyperchromasia, pleomorphism, irregular papillae and cribriform growth.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "969",
+    "printedPage": "962",
+    "confidence": "high"
+   },
+   {
+    "aspect": "prognosis",
+    "fact": "Pooled series: invasive carcinoma in 43.6% of main-duct, 16.6% of branch-duct and 45.3% of mixed IPMNs; about one third of resected IPMNs have invasive PDAC; 5-yr survival after resection 94% for high-grade IPMN vs 31% for invasive IPMN.",
+    "value": "43.6/16.6/45.3%; 94% vs 31%",
+    "source": "Beger 2023 ch.126",
+    "pdfPage": "979",
+    "printedPage": "972",
+    "confidence": "high"
+   },
+   {
+    "aspect": "epidemiology",
+    "fact": "Usually diagnosed in the mid-60s; main-duct IPMN affects more men worldwide, branch-duct affects more women in the West; 10-20% are multifocal (Robbins), 20-40% in ch.81; cysts are found in >2% of imaged adults, 12.2% IPMN over age 80.",
+    "value": "mid-60s; multifocal 10-40%",
+    "source": "Beger 2023 ch.126",
+    "pdfPage": "978-979",
+    "printedPage": "971-972",
+    "confidence": "high"
+   },
+   {
+    "aspect": "molecular",
+    "fact": "KRAS and GNAS are each mutated in 50-80% of IPMNs, RNF43 in 14-75%; TP53 occurs in high grade, SMAD4 usually only with invasion; MUC5AC is positive in all subtypes.",
+    "value": "KRAS, GNAS 50-80%",
+    "source": "Beger 2023 ch.126",
+    "pdfPage": "981",
+    "printedPage": "974",
+    "confidence": "high"
+   },
+   {
+    "aspect": "mimickers",
+    "fact": "IPMN differs from MCN by involving a duct and lacking ovarian stroma, and from PanIN by size and by intestinal/oncocytic phenotype or GNAS mutation; spread of invasive cancer along ducts can mimic it.",
+    "value": "",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "906",
+    "printedPage": "891",
+    "confidence": "high"
+   },
+   {
+    "aspect": "remember",
+    "fact": "IPMN is a large mucinous papillary lesion that involves a duct and lacks ovarian stroma; GNAS and KRAS are frequently mutated.",
+    "value": "",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "906",
+    "printedPage": "891",
+    "confidence": "high"
+   }
+  ]
+ },
+ "iopn": {
+  "facts": [
+   {
+    "aspect": "definition",
+    "fact": "IOPN is an intraductal papillary neoplasm of oncocytic cells, now classified as a separate entity from IPMN.",
+    "value": "separate entity",
+    "source": "Beger 2023 ch.126",
+    "pdfPage": "982",
+    "printedPage": "975",
+    "confidence": "high"
+   },
+   {
+    "aspect": "architecture",
+    "fact": "Arborizing papillae lined by 1-5 layers of cuboidal cells with punched-out spaces within the epithelium; regarded as high grade because of complexity and nuclear atypia.",
+    "value": "1-5 layers",
+    "source": "Beger 2023 ch.126",
+    "pdfPage": "982",
+    "printedPage": "975",
+    "confidence": "high"
+   },
+   {
+    "aspect": "cytology",
+    "fact": "Abundant eosinophilic cytoplasm from mitochondrial accumulation, large nuclei with a single, prominent, eccentric nucleolus.",
+    "value": "",
+    "source": "Beger 2023 ch.126",
+    "pdfPage": "982",
+    "printedPage": "975",
+    "confidence": "high"
+   },
+   {
+    "aspect": "size",
+    "fact": "Relatively large, reported mean 4.6-6 cm.",
+    "value": "mean 4.6-6 cm",
+    "source": "Beger 2023 ch.126",
+    "pdfPage": "982",
+    "printedPage": "975",
+    "confidence": "high"
+   },
+   {
+    "aspect": "epidemiology",
+    "fact": "Equal in men and women; about two-thirds are in the head; about half are asymptomatic.",
+    "value": "~2/3 head",
+    "source": "Beger 2023 ch.126",
+    "pdfPage": "982",
+    "printedPage": "975",
+    "confidence": "high"
+   },
+   {
+    "aspect": "molecular",
+    "fact": "No KRAS or GNAS mutations; recurrent PRKACA/PRKACB gene fusions; MUC5AC, MUC6 and HepPar-1 positive.",
+    "value": "PRKACA/PRKACB fusions",
+    "source": "Beger 2023 ch.126",
+    "pdfPage": "982",
+    "printedPage": "975",
+    "confidence": "high"
+   },
+   {
+    "aspect": "prognosis",
+    "fact": "Despite marked atypia, invasive carcinoma is not common and the outcome is excellent; invasion rates of 12-61% reported partly reflect mimicry by tangential cuts.",
+    "value": "invasion 12-61% reported",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "969",
+    "printedPage": "962",
+    "confidence": "high"
+   }
+  ]
+ },
+ "panin-low": {
+  "facts": [
+   {
+    "aspect": "definition",
+    "fact": "Low-grade PanIN is microscopic (usually <0.5 cm), non-invasive duct epithelium of cuboidal to columnar cells with apical mucin; since 2015 it combines former PanIN-1A, 1B and 2.",
+    "value": "<0.5 cm; 1A+1B+2",
+    "source": "Beger 2023 ch.126",
+    "pdfPage": "976",
+    "printedPage": "969",
+    "confidence": "high"
+   },
+   {
+    "aspect": "cytology",
+    "fact": "PanIN-1A is flat: tall columnar cells with basal nuclei and abundant supranuclear mucin; nuclei small, round to oval, oriented perpendicular to the basement membrane.",
+    "value": "",
+    "source": "Hruban 2001",
+    "pdfPage": "2",
+    "printedPage": "580",
+    "confidence": "high"
+   },
+   {
+    "aspect": "architecture",
+    "fact": "PanIN-1B is identical to 1A in cytology but has papillary, micropapillary or basally pseudostratified architecture.",
+    "value": "",
+    "source": "Hruban 2001",
+    "pdfPage": "2",
+    "printedPage": "580",
+    "confidence": "high"
+   },
+   {
+    "aspect": "nuclei",
+    "fact": "PanIN-2 must have some nuclear abnormality: some loss of polarity, crowding, enlargement, pseudostratification, hyperchromasia. Mitoses are rare, non-luminal and not atypical. PanIN-1 has no mitoses and inconspicuous nucleoli.",
+    "value": "mitoses rare, nonluminal",
+    "source": "Hruban 2001",
+    "pdfPage": "2",
+    "printedPage": "580",
+    "confidence": "high"
+   },
+   {
+    "aspect": "mucin",
+    "fact": "PanIN usually lacks MUC2 but expresses MUC1/EMA, MUC4 and MUC5AC; the epithelium is almost always gastric-foveolar.",
+    "value": "MUC5AC+, MUC2-",
+    "source": "Beger 2023 ch.126",
+    "pdfPage": "978",
+    "printedPage": "971",
+    "confidence": "high"
+   },
+   {
+    "aspect": "epidemiology",
+    "fact": "PanIN is found in 82% of pancreata with PDAC, 60% with chronic pancreatitis and 16% of normal pancreata; both sexes equal; more in head than tail; invisible on imaging.",
+    "value": "82% / 60% / 16%",
+    "source": "Beger 2023 ch.126",
+    "pdfPage": "976",
+    "printedPage": "969",
+    "confidence": "high"
+   },
+   {
+    "aspect": "molecular",
+    "fact": "KRAS is mutated in over 90% of both low- and high-grade PanIN; telomere shortening is almost universal, even in PanIN-1A; CDKN2A loss follows.",
+    "value": "KRAS >90%",
+    "source": "Beger 2023 ch.126",
+    "pdfPage": "978",
+    "printedPage": "971",
+    "confidence": "high"
+   },
+   {
+    "aspect": "prognosis",
+    "fact": "Low-grade PanIN is common and of no proven clinical significance, so need not be reported; at a resection margin PanIN of any grade does not alter survival.",
+    "value": "",
+    "source": "Basturk 2015",
+    "pdfPage": "4-5",
+    "printedPage": "1733-1734",
+    "confidence": "high"
+   },
+   {
+    "aspect": "mimickers",
+    "fact": "Agreement was poor for PanIN-2 (kappa 0.14) vs 0.43 for PanIN-1 and 0.42 for PanIN-3, which is why 1/2 were merged; reactive ducts, ADM and IPMN are the mimics.",
+    "value": "kappa 0.43/0.14/0.42",
+    "source": "Hruban 2001",
+    "pdfPage": "1",
+    "printedPage": "579",
+    "confidence": "high"
+   }
+  ]
+ },
+ "panin-high": {
+  "facts": [
+   {
+    "aspect": "definition",
+    "fact": "High-grade PanIN (former PanIN-3, carcinoma in situ) is reserved for the uppermost end of the dysplasia spectrum.",
+    "value": "=PanIN-3 / CIS",
+    "source": "Basturk 2015",
+    "pdfPage": "3",
+    "printedPage": "1732",
+    "confidence": "high"
+   },
+   {
+    "aspect": "architecture",
+    "fact": "Usually papillary or micropapillary, rarely flat; true cribriforming, budding of small cell clusters into the lumen and luminal necrosis point to PanIN-3.",
+    "value": "",
+    "source": "Hruban 2001",
+    "pdfPage": "2",
+    "printedPage": "580",
+    "confidence": "high"
+   },
+   {
+    "aspect": "nuclei",
+    "fact": "Loss of nuclear polarity, nuclear irregularity, prominent (macro) nucleoli, occasionally abnormal mitoses, and dystrophic goblet cells (nuclei toward the lumen, mucin toward the basement membrane). Looks like carcinoma cytologically but no invasion.",
+    "value": "",
+    "source": "Hruban 2001",
+    "pdfPage": "2",
+    "printedPage": "580",
+    "confidence": "high"
+   },
+   {
+    "aspect": "epidemiology",
+    "fact": "High-grade PanIN is almost exclusively found with invasive PDAC; when isolated it raises suspicion of invasion elsewhere in the gland.",
+    "value": "",
+    "source": "Beger 2023 ch.126",
+    "pdfPage": "977",
+    "printedPage": "970",
+    "confidence": "high"
+   },
+   {
+    "aspect": "molecular",
+    "fact": "TP53, SMAD4 and BRCA2 inactivation are postulated to arise in PanIN-3, though SMAD4 loss may appear only after invasion.",
+    "value": "TP53, SMAD4 late",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "907",
+    "printedPage": "892",
+    "confidence": "high"
+   },
+   {
+    "aspect": "mimickers",
+    "fact": "Hard to tell from cancerization (intraductal spread of invasive carcinoma); an abrupt normal-to-malignant transition within a duct beside invasive carcinoma suggests cancerization.",
+    "value": "",
+    "source": "Beger 2023 ch.126",
+    "pdfPage": "977-978",
+    "printedPage": "970-971",
+    "confidence": "high"
+   }
+  ]
+ },
+ "cancerization-of-ducts": {
+  "facts": [
+   {
+    "aspect": "definition",
+    "fact": "Invasive carcinoma extends along pre-existing ducts and ductules, imitating PanIN-3 or IPMN; the 2015 consensus renamed it intraductal spread of invasive carcinoma.",
+    "value": "",
+    "source": "Basturk 2015",
+    "pdfPage": "7",
+    "printedPage": "1736",
+    "confidence": "high"
+   },
+   {
+    "aspect": "architecture",
+    "fact": "Clues: invasive carcinoma right next to the duct lesion and an abrupt transition from highly atypical epithelium to normal duct epithelium within the same duct (a front).",
+    "value": "abrupt transition",
+    "source": "Hruban 2001",
+    "pdfPage": "3",
+    "printedPage": "581",
+    "confidence": "high"
+   },
+   {
+    "aspect": "epidemiology",
+    "fact": "Common: reported in as many as 70% of resections for invasive pancreatic cancer.",
+    "value": "up to 70%",
+    "source": "Basturk 2015",
+    "pdfPage": "7",
+    "printedPage": "1736",
+    "confidence": "high"
+   },
+   {
+    "aspect": "immunostain",
+    "fact": "SMAD4 or TP53 immunostaining may help separate cancerization from high-grade PanIN; serial step sections help define the relationship to the infiltrating carcinoma.",
+    "value": "SMAD4/TP53 IHC",
+    "source": "Beger 2023 ch.126",
+    "pdfPage": "978",
+    "printedPage": "971",
+    "confidence": "high"
+   },
+   {
+    "aspect": "prognosis",
+    "fact": "It matters at the margin: intraductal PDAC at the resection margin may change outcome, whereas PanIN of any grade at the margin does not.",
+    "value": "",
+    "source": "Beger 2023 ch.126",
+    "pdfPage": "978",
+    "printedPage": "971",
+    "confidence": "high"
+   },
+   {
+    "aspect": "mimickers",
+    "fact": "Venous invasion can also imitate PanIN: tumour cells replace the endothelium and line the vessel like a duct.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "966",
+    "printedPage": "959",
+    "confidence": "medium"
+   }
+  ]
+ },
+ "pda-general": {
+  "facts": [
+   {
+    "aspect": "definition",
+    "fact": "PDAC is a malignant, gland-forming epithelial neoplasm of the pancreas, commonly called pancreatic cancer.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "964",
+    "printedPage": "957",
+    "confidence": "high"
+   },
+   {
+    "aspect": "gross",
+    "fact": "White-gray, hard, ill-defined sclerotic mass that subtly infiltrates the soft yellow lobulated parenchyma; it obstructs the bile duct and/or main duct, with upstream duct dilation and fibrous atrophy.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "964",
+    "printedPage": "957",
+    "confidence": "high"
+   },
+   {
+    "aspect": "location",
+    "fact": "About 60% arise in the head, 15% in the body, 5% in the tail, and 20% involve the whole gland (Robbins); head tumours cause biliary dilation in about 50% and jaundice, body/tail tumours stay silent.",
+    "value": "head 60%, body 15%, tail 5%, diffuse 20%",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "908-909",
+    "printedPage": "893-894",
+    "confidence": "high"
+   },
+   {
+    "aspect": "architecture",
+    "fact": "Haphazardly arranged glands and duct-like structures lie in a dense desmoplastic stroma; the cells are cuboidal or columnar and often hold intracytoplasmic mucin.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "965",
+    "printedPage": "958",
+    "confidence": "high"
+   },
+   {
+    "aspect": "architecture",
+    "fact": "Most tumours are infiltrating tubular adenocarcinomas of gland-forming cells in an intensely desmoplastic stroma.",
+    "value": "",
+    "source": "Kleeff 2016",
+    "pdfPage": "11",
+    "printedPage": "11",
+    "confidence": "high"
+   },
+   {
+    "aspect": "molecular",
+    "fact": "KRAS activating mutations occur in 90-95%, CDKN2A inactivation in about 95%, TP53 in 70-75% (50-70% in the table) and SMAD4 in about 55%.",
+    "value": "KRAS 90-95%; CDKN2A 95%; TP53 70-75%; SMAD4 55%",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "907-908",
+    "printedPage": "892-893",
+    "confidence": "high"
+   },
+   {
+    "aspect": "immunostain",
+    "fact": "Diagnostic markers named: keratins 7 and 19, CEA, mesothelin and MUC1.",
+    "value": "CK7, CK19, CEA, mesothelin, MUC1",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "965",
+    "printedPage": "958",
+    "confidence": "high"
+   },
+   {
+    "aspect": "epidemiology",
+    "fact": "About 80% of cases occur at ages 60-80; cigarette smoking is believed to double the risk.",
+    "value": "80% aged 60-80",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "908",
+    "printedPage": "893",
+    "confidence": "high"
+   },
+   {
+    "aspect": "epidemiology",
+    "fact": "Adenocarcinoma makes up 75-80% of the pancreatic tumours resected at Johns Hopkins over three decades; neuroendocrine tumours are 15-20% of that series.",
+    "value": "75-80% of resected tumours (single centre)",
+    "source": "Kleeff 2016",
+    "pdfPage": "3",
+    "printedPage": "3",
+    "confidence": "high"
+   },
+   {
+    "aspect": "prognosis",
+    "fact": "Overall 5-year survival is under 7% in Kleeff (about 10% in Beger, under 5% in Robbins); after resection 15-25%; fewer than 20% are resectable at diagnosis.",
+    "value": "<7% (KL); 10% (Beger); resected 15-25%",
+    "source": "Kleeff 2016",
+    "pdfPage": "1",
+    "printedPage": "1",
+    "confidence": "high"
+   },
+   {
+    "aspect": "mimickers",
+    "fact": "Chronic pancreatitis, autoimmune pancreatitis and other tumours can mimic PDAC clinically; biopsy is the gold standard, but the stroma can be so florid that small samples miss the glands.",
+    "value": "",
+    "source": "Kleeff 2016",
+    "pdfPage": "11",
+    "printedPage": "11",
+    "confidence": "high"
+   }
+  ]
+ },
+ "pda-well": {
+  "facts": [
+   {
+    "aspect": "definition",
+    "fact": "Well-differentiated PDAC closely resembles normal pancreatic ducts.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "965",
+    "printedPage": "958",
+    "confidence": "high"
+   },
+   {
+    "aspect": "nuclei",
+    "fact": "Can be quite bland: well-formed ducts with relatively uniform nuclei. Robbins calls well-differentiated carcinomas the exception, since most PDACs are moderate to poor.",
+    "value": "uniform nuclei",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "965",
+    "printedPage": "958",
+    "confidence": "high"
+   },
+   {
+    "aspect": "architecture",
+    "fact": "Distinguished from reactive glands by architecture: loss of lobular layout, incomplete glands and ducts next to muscular arteries; luminal necrosis, perineural and vascular invasion also help.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "965",
+    "printedPage": "958",
+    "confidence": "high"
+   },
+   {
+    "aspect": "mimickers",
+    "fact": "The large-duct variant forms dilated irregular mucinous glands and mimics cystic neoplasms; clues are lost lobular organisation and large ducts dissecting through desmoplastic stroma.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "965",
+    "printedPage": "958",
+    "confidence": "high"
+   },
+   {
+    "aspect": "mucin",
+    "fact": "Glands are lined by cells that form glands and secrete mucin, recapitulating ductal epithelium to some degree.",
+    "value": "mucin present",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "909",
+    "printedPage": "894",
+    "confidence": "high"
+   },
+   {
+    "aspect": "prognosis",
+    "fact": "Overall grade is the highest-grade area in the tumour, and grade drives prognosis; poorly differentiated tumours do worse than well or moderate.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "965",
+    "printedPage": "958",
+    "confidence": "high"
+   },
+   {
+    "aspect": "remember",
+    "fact": "Grading uses architecture plus cytology (gland formation, cytologic variation, mitoses); the pages read give no mitosis count per HPF for any grade.",
+    "value": "no HPF counts given",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "965",
+    "printedPage": "958",
+    "confidence": "high"
+   }
+  ]
+ },
+ "pda-moderate": {
+  "facts": [
+   {
+    "aspect": "nuclei",
+    "fact": "Compared with well-differentiated cancer, moderately differentiated PDAC shows greater variation in cell appearance and more mitotic figures.",
+    "value": "more mitoses than well-differentiated",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "965",
+    "printedPage": "958",
+    "confidence": "high"
+   },
+   {
+    "aspect": "architecture",
+    "fact": "Robbins describes the usual PDAC as moderately to poorly differentiated, forming abortive tubules or cell clusters with a deeply infiltrative pattern.",
+    "value": "",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "909",
+    "printedPage": "894",
+    "confidence": "high"
+   },
+   {
+    "aspect": "cytology",
+    "fact": "Malignant glands are poorly formed and lined by pleomorphic cuboidal-to-columnar epithelial cells.",
+    "value": "",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "909",
+    "printedPage": "894",
+    "confidence": "high"
+   },
+   {
+    "aspect": "stroma",
+    "fact": "Dense stromal fibrosis (desmoplastic reaction) is characteristic and makes biopsies hard to read because much of the tissue is non-neoplastic.",
+    "value": "",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "909",
+    "printedPage": "894",
+    "confidence": "high"
+   }
+  ]
+ },
+ "pda-poor": {
+  "facts": [
+   {
+    "aspect": "definition",
+    "fact": "Poorly differentiated PDAC forms no glands or only poorly formed glands, growing as solid sheets and/or single cells.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "965",
+    "printedPage": "958",
+    "confidence": "high"
+   },
+   {
+    "aspect": "cytology",
+    "fact": "Cells range from small with scant cytoplasm to large bizarre cells with abundant eosinophilic cytoplasm.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "965",
+    "printedPage": "958",
+    "confidence": "high"
+   },
+   {
+    "aspect": "prognosis",
+    "fact": "Prognosis of poorly differentiated PDAC is worse than well or moderately differentiated tumours, which is why grading matters.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "965",
+    "printedPage": "958",
+    "confidence": "high"
+   },
+   {
+    "aspect": "definition",
+    "fact": "Kleeff says pathology defines tumour grade (an important prognostic factor) and type; nuclear shape, size and staining are the basis for diagnosing cancer.",
+    "value": "",
+    "source": "Kleeff 2016",
+    "pdfPage": "11",
+    "printedPage": "11",
+    "confidence": "high"
+   },
+   {
+    "aspect": "mimickers",
+    "fact": "Undifferentiated carcinoma is a separate, grade-4 category of spindled or bizarre large cells lacking any direction of differentiation.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "967",
+    "printedPage": "960",
+    "confidence": "high"
+   }
+  ]
+ },
+ "adenosquamous": {
+  "facts": [
+   {
+    "aspect": "definition",
+    "fact": "An adenocarcinoma with a significant squamous-differentiated component, given as at least 30% in Beger; if no glandular component is found, a squamous carcinoma metastasis from another organ must be considered.",
+    "value": ">=30% (Beger ch.125)",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "966",
+    "printedPage": "959",
+    "confidence": "high"
+   },
+   {
+    "aspect": "mimickers",
+    "fact": "The 30% cut-off is not universal: Kardon says it was set arbitrarily by a few authors and argues that any definite malignant squamous differentiation on routine sectioning is enough.",
+    "value": "30% threshold disputed",
+    "source": "Kardon 2001",
+    "pdfPage": "7",
+    "printedPage": "449",
+    "confidence": "high"
+   },
+   {
+    "aspect": "cytology",
+    "fact": "Squamous areas are solid nests or sheets of polygonal cells with abundant opaque eosinophilic cytoplasm, distinct borders, intercellular bridges, with or without keratin; the glandular part resembles ordinary ductal adenocarcinoma with mucin.",
+    "value": "",
+    "source": "Kardon 2001",
+    "pdfPage": "2",
+    "printedPage": "444",
+    "confidence": "high"
+   },
+   {
+    "aspect": "architecture",
+    "fact": "Biphasic: glandular and squamous areas are either topographically separate or intimately mixed; mucicarmine confirms the adenocarcinoma component in all cases; no benign squamous metaplasia was found in nearby ducts.",
+    "value": "",
+    "source": "Kardon 2001",
+    "pdfPage": "3",
+    "printedPage": "445",
+    "confidence": "high"
+   },
+   {
+    "aspect": "immunostain",
+    "fact": "CK5/6 stains the squamous component (88%), CK7 (68%) and CK20 (16%) the glandular component; CA19-9 and CEA stain mainly glandular areas; chromogranin negative.",
+    "value": "CK5/6 88%; CK7 68%; CK20 16%",
+    "source": "Kardon 2001",
+    "pdfPage": "5",
+    "printedPage": "447",
+    "confidence": "high"
+   },
+   {
+    "aspect": "epidemiology",
+    "fact": "Rare: 1-4% of exocrine pancreatic malignancies; 25 cases, 17 men and 8 women, aged 28-82 (mean 65.4); head 17, tail 9, body 4; size 2-12 cm (mean 6.3).",
+    "value": "1-4%; age mean 65.4; size mean 6.3 cm",
+    "source": "Kardon 2001",
+    "pdfPage": "1-3",
+    "printedPage": "443-445",
+    "confidence": "high"
+   },
+   {
+    "aspect": "size",
+    "fact": "Tumours measured 2 to 12 cm (mean 6.3 cm), infiltrative yellow-white to gray firm masses with softening or liquefaction.",
+    "value": "2-12 cm; mean 6.3",
+    "source": "Kardon 2001",
+    "pdfPage": "3",
+    "printedPage": "445",
+    "confidence": "high"
+   },
+   {
+    "aspect": "prognosis",
+    "fact": "More aggressive than ordinary PDAC in this series: mean survival under 6 months (range 1-33), only three of 25 patients beyond a year.",
+    "value": "mean survival <6 mo",
+    "source": "Kardon 2001",
+    "pdfPage": "8",
+    "printedPage": "450",
+    "confidence": "high"
+   },
+   {
+    "aspect": "prognosis",
+    "fact": "Beger notes adenosquamous carcinoma has a worse prognosis than PDAC but that some cases respond to platinum-containing chemotherapy.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "966",
+    "printedPage": "959",
+    "confidence": "high"
+   },
+   {
+    "aspect": "molecular",
+    "fact": "K-ras codon 12 mutations in over half of cases irrespective of squamous proportion, supporting a ductal origin for both components.",
+    "value": "KRAS >50% (7 of 13 tested)",
+    "source": "Kardon 2001",
+    "pdfPage": "7",
+    "printedPage": "449",
+    "confidence": "high"
+   },
+   {
+    "aspect": "perineural invasion",
+    "fact": "Perineural invasion was found in 20 of 25 tumours (80%); three metastases had dedifferentiated into anaplastic carcinoma.",
+    "value": "PNI 80%",
+    "source": "Kardon 2001",
+    "pdfPage": "3-4",
+    "printedPage": "445-446",
+    "confidence": "high"
+   }
+  ]
+ },
+ "undifferentiated-anaplastic": {
+  "facts": [
+   {
+    "aspect": "definition",
+    "fact": "Composed of predominantly spindled or bizarre large cells with no clear line of differentiation, often with a lower-grade conventional PDAC component, graded by the undifferentiated part.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "967",
+    "printedPage": "960",
+    "confidence": "high"
+   },
+   {
+    "aspect": "cytology",
+    "fact": "Cells are less cohesive than ordinary PDAC (loss of E-cadherin), which may contribute to the poor prognosis; rhabdoid features may signal distinct mutations.",
+    "value": "E-cadherin loss",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "967",
+    "printedPage": "960",
+    "confidence": "high"
+   },
+   {
+    "aspect": "nuclei",
+    "fact": "Anaplastic foci in Kardon metastases were loosely cohesive sheets of markedly enlarged cells with bizarre nuclei, prominent nucleoli and multinucleated forms.",
+    "value": "",
+    "source": "Kardon 2001",
+    "pdfPage": "4",
+    "printedPage": "446",
+    "confidence": "high"
+   },
+   {
+    "aspect": "prognosis",
+    "fact": "Mean survival is under one year; these and adenosquamous carcinomas are usually fast growing and often widely metastatic.",
+    "value": "mean survival <1 y",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "967",
+    "printedPage": "960",
+    "confidence": "high"
+   },
+   {
+    "aspect": "mimickers",
+    "fact": "Kardon considers adenosquamous and anaplastic carcinoma related variants of ductal adenocarcinoma differentiation.",
+    "value": "",
+    "source": "Kardon 2001",
+    "pdfPage": "8",
+    "printedPage": "450",
+    "confidence": "high"
+   }
+  ]
+ },
+ "undifferentiated-osteoclast-giant-cells": {
+  "facts": [
+   {
+    "aspect": "definition",
+    "fact": "Undifferentiated carcinoma with numerous intratumoral multinucleated osteoclast-like giant cells mixed with undifferentiated spindled or bizarre malignant cells.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "967",
+    "printedPage": "960",
+    "confidence": "high"
+   },
+   {
+    "aspect": "cytology",
+    "fact": "The giant cells are non-neoplastic and express histiocytic markers such as CD68; it is the in-between mononuclear cells that are malignant, and they often (not always) label for keratins.",
+    "value": "giant cells CD68+, non-neoplastic",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "967",
+    "printedPage": "960",
+    "confidence": "high"
+   },
+   {
+    "aspect": "prognosis",
+    "fact": "Prognosis is poor, with mean survival under one year.",
+    "value": "mean <1 y",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "967",
+    "printedPage": "960",
+    "confidence": "high"
+   },
+   {
+    "aspect": "remember",
+    "fact": "Robbins lists it as its own PDAC variant next to undifferentiated carcinoma.",
+    "value": "",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "909",
+    "printedPage": "894",
+    "confidence": "medium"
+   }
+  ]
+ },
+ "sarcomatoid": {
+  "facts": [
+   {
+    "aspect": "definition",
+    "fact": "The word sarcomatoid is not used for pancreatic carcinoma in Beger ch.125, Kleeff or Robbins ch.19; those sources describe undifferentiated carcinoma of predominantly spindled cells instead.",
+    "value": "term not found",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "967",
+    "printedPage": "960",
+    "confidence": "medium"
+   },
+   {
+    "aspect": "mimickers",
+    "fact": "Robbins lists the PDAC variants as adenosquamous, colloid, hepatoid, medullary, signet-ring, undifferentiated, and undifferentiated with osteoclast-like giant cells; no sarcomatoid entry.",
+    "value": "",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "909",
+    "printedPage": "894",
+    "confidence": "high"
+   }
+  ]
+ },
+ "colloid": {
+  "facts": [
+   {
+    "aspect": "definition",
+    "fact": "Colloid (mucinous noncystic) carcinoma has pools of mucin dissecting through the stroma, with neoplastic epithelium lining or floating in the pools.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "966",
+    "printedPage": "959",
+    "confidence": "high"
+   },
+   {
+    "aspect": "mucin",
+    "fact": "Malignant epithelium must be seen within the stromal mucin to call invasion; a ruptured cyst with extruded mucin should not be overcalled as colloid carcinoma.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "966",
+    "printedPage": "959",
+    "confidence": "high"
+   },
+   {
+    "aspect": "mimickers",
+    "fact": "It arises from intestinal-type IPMN (MUC2, CDX2, frequent GNAS mutations), not from the tubular pathway.",
+    "value": "intestinal IPMN; GNAS",
+    "source": "Beger 2023 ch.126",
+    "pdfPage": "981",
+    "printedPage": "974",
+    "confidence": "high"
+   },
+   {
+    "aspect": "epidemiology",
+    "fact": "About 2% of surgically resected pancreatic neoplasms in the Johns Hopkins series.",
+    "value": "~2%",
+    "source": "Kleeff 2016",
+    "pdfPage": "3",
+    "printedPage": "3",
+    "confidence": "high"
+   },
+   {
+    "aspect": "prognosis",
+    "fact": "Better outcome than conventional ductal adenocarcinoma, partly because it presents earlier.",
+    "value": "",
+    "source": "Kleeff 2016",
+    "pdfPage": "11",
+    "printedPage": "11",
+    "confidence": "high"
+   }
+  ]
+ },
+ "signet-ring": {
+  "facts": [
+   {
+    "aspect": "definition",
+    "fact": "Cells with intracytoplasmic mucin and indented, displaced nuclei, growing as single infiltrating cells rather than glands or sheets.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "967",
+    "printedPage": "960",
+    "confidence": "high"
+   },
+   {
+    "aspect": "mimickers",
+    "fact": "It most closely mimics lobular breast carcinoma or diffuse gastric carcinoma, which must be considered as metastases.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "967",
+    "printedPage": "960",
+    "confidence": "high"
+   },
+   {
+    "aspect": "epidemiology",
+    "fact": "Frequency of primary pancreatic signet-ring carcinoma is not given in the sources read; Kleeff lists it only among rare variants and Kardon saw rare foci inside adenosquamous tumours.",
+    "value": "frequency not found",
+    "source": "Kardon 2001",
+    "pdfPage": "3",
+    "printedPage": "445",
+    "confidence": "medium"
+   }
+  ]
+ },
+ "hepatoid": {
+  "facts": [
+   {
+    "aspect": "definition",
+    "fact": "Polygonal eosinophilic cells that mimic hepatocellular carcinoma and may stain for hepatocyte antigens (Hep-Par) and alpha-fetoprotein.",
+    "value": "Hep-Par, AFP",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "967",
+    "printedPage": "960",
+    "confidence": "high"
+   },
+   {
+    "aspect": "mimickers",
+    "fact": "Metastasis from the liver must be excluded before primary hepatoid PDAC is diagnosed; hepatoid and signet-ring variants can resemble metastases from other organs.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "967",
+    "printedPage": "960",
+    "confidence": "high"
+   }
+  ]
+ },
+ "medullary": {
+  "facts": [
+   {
+    "aspect": "definition",
+    "fact": "Syncytial growth of poorly differentiated epithelioid cells with large nuclei, with pushing (non-infiltrating) borders.",
+    "value": "syncytial; pushing borders",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "966",
+    "printedPage": "959",
+    "confidence": "high"
+   },
+   {
+    "aspect": "stroma",
+    "fact": "Brisk lymphocytic infiltrate in and around the tumour but scant fibrous stroma, unlike ordinary PDAC.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "966",
+    "printedPage": "959",
+    "confidence": "high"
+   },
+   {
+    "aspect": "prognosis",
+    "fact": "Despite poor differentiation the prognosis is good; more often microsatellite unstable (mismatch repair deficient), possibly Lynch syndrome, and PD-1 inhibitors may work.",
+    "value": "MSI",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "967",
+    "printedPage": "960",
+    "confidence": "high"
+   }
+  ]
+ },
+ "perineural-invasion": {
+  "facts": [
+   {
+    "aspect": "epidemiology",
+    "fact": "Perineural and intravascular invasion are present in practically all PDACs.",
+    "value": "practically all PDAC",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "965",
+    "printedPage": "958",
+    "confidence": "high"
+   },
+   {
+    "aspect": "epidemiology",
+    "fact": "In Kardon series of adenosquamous carcinoma perineural infiltration occurred in 80% of cases, higher than previously reported.",
+    "value": "80% (adenosquamous)",
+    "source": "Kardon 2001",
+    "pdfPage": "7",
+    "printedPage": "449",
+    "confidence": "high"
+   },
+   {
+    "aspect": "definition",
+    "fact": "Tumour grows along and around nerves inside and beyond the pancreas; it may explain pain and gives a path for spread beyond the gland.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "965",
+    "printedPage": "958",
+    "confidence": "high"
+   },
+   {
+    "aspect": "mimickers",
+    "fact": "Perineural invasion is a feature that helps separate well-differentiated PDAC from reactive glands of chronic pancreatitis.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "965",
+    "printedPage": "958",
+    "confidence": "high"
+   },
+   {
+    "aspect": "prognosis",
+    "fact": "In adenosquamous carcinoma perineural infiltration helps diagnosis on core biopsy but has no prognostic significance in Kardon.",
+    "value": "",
+    "source": "Kardon 2001",
+    "pdfPage": "7",
+    "printedPage": "449",
+    "confidence": "high"
+   }
+  ]
+ },
+ "vascular-invasion": {
+  "facts": [
+   {
+    "aspect": "definition",
+    "fact": "Vascular invasion is present in practically all PDAC and often leads to widespread dissemination, especially to the liver.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "965",
+    "printedPage": "958",
+    "confidence": "high"
+   },
+   {
+    "aspect": "architecture",
+    "fact": "In veins the cells often do not form a tumour thrombus; they flatten and grow along the endothelium, mimicking a duct (or PanIN).",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "965",
+    "printedPage": "958",
+    "confidence": "high"
+   },
+   {
+    "aspect": "location",
+    "fact": "Cancers invade blood vessels and retroperitoneum and may directly invade spleen, adrenals, colon and stomach; lymphatic and large-vessel invasion are common.",
+    "value": "",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "909",
+    "printedPage": "894",
+    "confidence": "high"
+   }
+  ]
+ },
+ "lymph-node-metastasis": {
+  "facts": [
+   {
+    "aspect": "location",
+    "fact": "Peripancreatic, gastric, mesenteric, omental and portohepatic nodes are often involved; distant spread is mainly to liver and lungs.",
+    "value": "",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "909",
+    "printedPage": "894",
+    "confidence": "high"
+   },
+   {
+    "aspect": "size",
+    "fact": "Adequate staging needs at least 12 pancreatic lymph nodes examined.",
+    "value": ">=12 nodes",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "965",
+    "printedPage": "958",
+    "confidence": "high"
+   },
+   {
+    "aspect": "cytology",
+    "fact": "In an adenosquamous carcinoma a nodal deposit was anaplastic: large discohesive cells with bizarre nuclei, even when the primary was glandular or squamous.",
+    "value": "",
+    "source": "Kardon 2001",
+    "pdfPage": "5",
+    "printedPage": "447",
+    "confidence": "high"
+   },
+   {
+    "aspect": "epidemiology",
+    "fact": "In invasive MCN lymph node involvement is present in only up to one third of patients, one reason its outcome is better than PDAC.",
+    "value": "MCN <=1/3",
+    "source": "Beger 2023 ch.126",
+    "pdfPage": "983",
+    "printedPage": "976",
+    "confidence": "high"
+   }
+  ]
+ },
+ "desmoplastic-stroma": {
+  "facts": [
+   {
+    "aspect": "definition",
+    "fact": "Pancreatic cancer characteristically has an abundant dense collagenous stroma (desmoplasia).",
+    "value": "",
+    "source": "Kleeff 2016",
+    "pdfPage": "5",
+    "printedPage": "5",
+    "confidence": "high"
+   },
+   {
+    "aspect": "cytology",
+    "fact": "Stellate cells make the collagen (activated ones are called cancer-associated fibroblasts); other cells include immune, endothelial and nerve cells; the immune infiltrate is suppressive even at PanIN stage.",
+    "value": "",
+    "source": "Kleeff 2016",
+    "pdfPage": "5",
+    "printedPage": "5",
+    "confidence": "high"
+   },
+   {
+    "aspect": "gross",
+    "fact": "The stroma explains the firm consistency of PDAC and is hypovascular and under high pressure, possibly impeding chemotherapy.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "965",
+    "printedPage": "958",
+    "confidence": "high"
+   },
+   {
+    "aspect": "mimickers",
+    "fact": "Desmoplasia can be so florid that small biopsies miss the neoplastic glands, so extensive sampling is needed before cancer can be excluded.",
+    "value": "",
+    "source": "Kleeff 2016",
+    "pdfPage": "11",
+    "printedPage": "11",
+    "confidence": "high"
+   },
+   {
+    "aspect": "remember",
+    "fact": "Stromal proportion (% of tumour) is not given in the sources read; medullary carcinoma and acinar cell carcinoma are the contrasts with scant or non-prominent desmoplasia.",
+    "value": "% not found",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "971",
+    "printedPage": "964",
+    "confidence": "high"
+   }
+  ]
+ },
+ "tertiary-lymphoid-structures": {
+  "facts": [
+   {
+    "aspect": "definition",
+    "fact": "In resected PDAC after GVAX vaccination, intratumoral tertiary lymphoid structures with T and B cell zones and germinal-centre-like structure were found in 85% of patients.",
+    "value": "85% after vaccine",
+    "source": "Beger 2023 ch.150",
+    "pdfPage": "1174",
+    "printedPage": "1167",
+    "confidence": "medium"
+   },
+   {
+    "aspect": "architecture",
+    "fact": "These aggregates were organised T- and B-cell zones with a germinal-centre-like structure, indicating adaptive immunity.",
+    "value": "",
+    "source": "Beger 2023 ch.150",
+    "pdfPage": "1174",
+    "printedPage": "1167",
+    "confidence": "medium"
+   },
+   {
+    "aspect": "molecular",
+    "fact": "Vaccine-induced lymphoid aggregates appeared within two weeks of one vaccination, served as sites of T-cell education and expressed PD-L1.",
+    "value": "2 weeks",
+    "source": "Beger 2023 ch.150",
+    "pdfPage": "1173",
+    "printedPage": "1166",
+    "confidence": "high"
+   },
+   {
+    "aspect": "remember",
+    "fact": "The sources read describe vaccine-induced TLS only; spontaneous TLS, CD20+ B-cell clusters and high endothelial venules are not described in them.",
+    "value": "not found",
+    "source": "Beger 2023 ch.150",
+    "pdfPage": "1174",
+    "printedPage": "1167",
+    "confidence": "low"
+   }
+  ]
+ },
+ "pannet": {
+  "facts": [
+   {
+    "aspect": "definition",
+    "fact": "Pancreatic neuroendocrine tumour (PanNET, formerly islet cell tumour) is a well-differentiated neuroendocrine neoplasm; grade G1-G3 comes from Ki-67 index and mitoses per 2 mm2.",
+    "value": "G1 <2 mitoses/2mm2, Ki-67 <3%; G2 2-20, 3-20%; G3 >20",
+    "source": "Beger 2023 ch.99",
+    "pdfPage": "771",
+    "printedPage": "763",
+    "confidence": "high"
+   },
+   {
+    "aspect": "epidemiology",
+    "fact": "Rare: about 2% of all pancreatic neoplasms (Robbins); in a Johns Hopkins resection series 15-20% (neuroendocrine tumours).",
+    "value": "2% of pancreatic neoplasms; 15-20% of resected series",
+    "source": "Robbins 9e ch.24",
+    "pdfPage": "1136",
+    "printedPage": "1121",
+    "confidence": "high"
+   },
+   {
+    "aspect": "location",
+    "fact": "Can arise anywhere along the pancreas, in the gland or in peripancreatic tissue; no head/body/tail split is given.",
+    "value": "anywhere",
+    "source": "Robbins 9e ch.24",
+    "pdfPage": "1136",
+    "printedPage": "1121",
+    "confidence": "high"
+   },
+   {
+    "aspect": "size",
+    "fact": "At surgery 0.5 to 20 cm; insulinomas usually <2 cm; nonfunctioning tumours larger.",
+    "value": "0.5-20 cm; insulinoma <2 cm",
+    "source": "Beger 2023 ch.99",
+    "pdfPage": "773",
+    "printedPage": "765",
+    "confidence": "high"
+   },
+   {
+    "aspect": "gross",
+    "fact": "Smaller tumours are well circumscribed with a monotonous whitish-tan to yellowish cut surface; larger ones are multinodular and heterogeneous, sometimes cystic.",
+    "value": "",
+    "source": "Beger 2023 ch.99",
+    "pdfPage": "772-773",
+    "printedPage": "764-765",
+    "confidence": "high"
+   },
+   {
+    "aspect": "architecture",
+    "fact": "Solid-nested and trabecular (ribbon-like) growth with a capillary or fibrocapillary stroma between nests.",
+    "value": "solid, trabecular",
+    "source": "Beger 2023 ch.99",
+    "pdfPage": "773",
+    "printedPage": "765",
+    "confidence": "high"
+   },
+   {
+    "aspect": "nuclei",
+    "fact": "Uniform cells with round to oval nuclei and coarsely granular salt-and-pepper chromatin; nucleoli inconspicuous; cytoplasm granular, slightly eosinophilic.",
+    "value": "salt-and-pepper chromatin",
+    "source": "Beger 2023 ch.99",
+    "pdfPage": "773",
+    "printedPage": "765",
+    "confidence": "high"
+   },
+   {
+    "aspect": "stroma",
+    "fact": "Amyloid deposition is characteristic of many insulinomas; benign tumours look like giant islets.",
+    "value": "",
+    "source": "Robbins 9e ch.24",
+    "pdfPage": "1136",
+    "printedPage": "1121",
+    "confidence": "high"
+   },
+   {
+    "aspect": "immunostain",
+    "fact": "Positive for the neuroendocrine markers synaptophysin and chromogranin; nested pattern and salt-and-pepper nuclei.",
+    "value": "synaptophysin, chromogranin",
+    "source": "Kleeff 2016",
+    "pdfPage": "3",
+    "printedPage": "3",
+    "confidence": "high"
+   },
+   {
+    "aspect": "prognosis",
+    "fact": "About 90% of insulin-producing tumours are benign, while 60-90% of other functioning and nonfunctioning ones are malignant; malignancy is judged by metastasis, vascular invasion or local infiltration, not cytology.",
+    "value": "insulinoma ~90% benign; others 60-90% malignant",
+    "source": "Robbins 9e ch.24",
+    "pdfPage": "1136",
+    "printedPage": "1121",
+    "confidence": "high"
+   },
+   {
+    "aspect": "molecular",
+    "fact": "Nearly half have ATRX or DAXX mutations; MEN1 and mTOR pathway genes (PTEN, TSC2) are also altered.",
+    "value": "ATRX/DAXX ~50%",
+    "source": "Robbins 9e ch.24",
+    "pdfPage": "1136",
+    "printedPage": "1121",
+    "confidence": "high"
+   },
+   {
+    "aspect": "epidemiology",
+    "fact": "Functioning tumours are under 40% of PanNETs; 30-70% of MEN1 patients develop PanNETs.",
+    "value": "functioning <40%",
+    "source": "Beger 2023 ch.99",
+    "pdfPage": "771",
+    "printedPage": "763",
+    "confidence": "high"
+   }
+  ]
+ },
+ "pannec": {
+  "facts": [
+   {
+    "aspect": "definition",
+    "fact": "Pancreatic neuroendocrine carcinoma is a poorly differentiated neuroendocrine neoplasm (large-cell or small-cell type), aggressive; mitoses and Ki-67 both above 20.",
+    "value": "mitoses >20/2mm2; Ki-67 >20% (mostly >50%)",
+    "source": "Beger 2023 ch.99",
+    "pdfPage": "772",
+    "printedPage": "764",
+    "confidence": "high"
+   },
+   {
+    "aspect": "architecture",
+    "fact": "Diffuse or solid sheet-like growth with geographic necrosis and unclear tumour borders.",
+    "value": "",
+    "source": "Beger 2023 ch.99",
+    "pdfPage": "773",
+    "printedPage": "765",
+    "confidence": "high"
+   },
+   {
+    "aspect": "nuclei",
+    "fact": "Large-cell type has marked nuclear pleomorphism, nuclear enlargement and high N:C ratio; necrosis abundant in most cases; Ki-67 mostly over 50%.",
+    "value": "Ki-67 >50%",
+    "source": "Beger 2023 ch.99",
+    "pdfPage": "773-775",
+    "printedPage": "765-767",
+    "confidence": "high"
+   },
+   {
+    "aspect": "molecular",
+    "fact": "PanNECs share the genetic background of pancreatic ductal adenocarcinoma and differ from PanNETs.",
+    "value": "",
+    "source": "Beger 2023 ch.99",
+    "pdfPage": "772",
+    "printedPage": "764",
+    "confidence": "high"
+   },
+   {
+    "aspect": "mimickers",
+    "fact": "Mixed neuroendocrine-nonneuroendocrine neoplasm (MiNEN) needs more than 30% of each component; usually ductal adenocarcinoma plus NEC.",
+    "value": ">30% each",
+    "source": "Beger 2023 ch.99",
+    "pdfPage": "772",
+    "printedPage": "764",
+    "confidence": "high"
+   },
+   {
+    "aspect": "remember",
+    "fact": "The salt-and-pepper, nested pattern and the 15-20% frequency in Kleeff Fig 1 describe neuroendocrine TUMOURS in resected series, not carcinoma.",
+    "value": "",
+    "source": "Kleeff 2016",
+    "pdfPage": "3",
+    "printedPage": "3",
+    "confidence": "high"
+   }
+  ]
+ },
+ "acinar-cell-carcinoma": {
+  "facts": [
+   {
+    "aspect": "definition",
+    "fact": "Rare malignant tumour with acinar differentiation; less than 2% of resected pancreatic neoplasms (about 1% in the Johns Hopkins series).",
+    "value": "<2%; ~1%",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "970",
+    "printedPage": "963",
+    "confidence": "high"
+   },
+   {
+    "aspect": "gross",
+    "fact": "Well-circumscribed, bulky, fleshy, often haemorrhagic; may resemble a PanNET.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "970",
+    "printedPage": "963",
+    "confidence": "high"
+   },
+   {
+    "aspect": "cytology",
+    "fact": "Monomorphic cells with granular cytoplasm, large nuclei and a single prominent nucleolus, forming acini or solid sheets.",
+    "value": "granular cytoplasm; single prominent nucleolus",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "971",
+    "printedPage": "964",
+    "confidence": "high"
+   },
+   {
+    "aspect": "stroma",
+    "fact": "Desmoplastic stroma is not prominent, unlike ordinary PDAC.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "971",
+    "printedPage": "964",
+    "confidence": "high"
+   },
+   {
+    "aspect": "immunostain",
+    "fact": "Trypsin and chymotrypsin immunostains and PAS-diastase (zymogen granules) highlight the cells; BCL-10 useful; up to one third show patchy chromogranin.",
+    "value": "trypsin, chymotrypsin, BCL-10",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "971",
+    "printedPage": "964",
+    "confidence": "high"
+   },
+   {
+    "aspect": "prognosis",
+    "fact": "Better than stage-matched PDAC, with 25-50% five-year survival.",
+    "value": "25-50% 5-y survival",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "971",
+    "printedPage": "964",
+    "confidence": "high"
+   },
+   {
+    "aspect": "epidemiology",
+    "fact": "About 15% of patients develop metastatic fat necrosis from lipase released into the circulation.",
+    "value": "15% fat necrosis syndrome",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "910",
+    "printedPage": "895",
+    "confidence": "high"
+   },
+   {
+    "aspect": "mimickers",
+    "fact": "A true mixed acinar-neuroendocrine carcinoma (MiNEN) needs at least 25-30% of cells with definite neuroendocrine differentiation.",
+    "value": ">=25-30% NE",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "971",
+    "printedPage": "964",
+    "confidence": "high"
+   }
+  ]
+ },
+ "pancreatoblastoma": {
+  "facts": [
+   {
+    "aspect": "definition",
+    "fact": "Pancreatoblastoma is one of the commonest pancreatic malignancies of childhood, though adult cases occur.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "971",
+    "printedPage": "964",
+    "confidence": "high"
+   },
+   {
+    "aspect": "architecture",
+    "fact": "Neoplastic cells with acinar differentiation admixed with squamoid nests, which separate it from pure acinar cell carcinoma.",
+    "value": "squamoid nests",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "972",
+    "printedPage": "965",
+    "confidence": "high"
+   },
+   {
+    "aspect": "gross",
+    "fact": "Fleshy lobules, fibrosis, necrosis and calcifications may all be present.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "972",
+    "printedPage": "965",
+    "confidence": "high"
+   },
+   {
+    "aspect": "epidemiology",
+    "fact": "Occurs mainly in children aged 1 to 15 years (Robbins).",
+    "value": "age 1-15 y",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "910",
+    "printedPage": "895",
+    "confidence": "high"
+   },
+   {
+    "aspect": "epidemiology",
+    "fact": "About 0.5% of tumours in the Johns Hopkins resection series (acinar differentiation with squamoid nests).",
+    "value": "~0.5%",
+    "source": "Kleeff 2016",
+    "pdfPage": "3",
+    "printedPage": "3",
+    "confidence": "high"
+   },
+   {
+    "aspect": "epidemiology",
+    "fact": "Most are nonsyndromic, but cases occur in infants with Beckwith-Wiedemann syndrome and in older children or young adults with familial adenomatous polyposis; adult cases are rarer.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "971-972",
+    "printedPage": "964-965",
+    "confidence": "high"
+   },
+   {
+    "aspect": "prognosis",
+    "fact": "Five-year survival is about 65% even with resection; surgery is first line.",
+    "value": "65% 5-y",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "972",
+    "printedPage": "965",
+    "confidence": "high"
+   },
+   {
+    "aspect": "immunostain",
+    "fact": "Reactive for PAS-D, trypsin, chymotrypsin, BCL-10; patchy nuclear beta-catenin in a subset.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "972",
+    "printedPage": "965",
+    "confidence": "high"
+   }
+  ]
+ },
+ "solid-pseudopapillary": {
+  "facts": [
+   {
+    "aspect": "definition",
+    "fact": "Neoplasm of uncertain histogenesis and low malignant potential, composed of poorly cohesive uniform cells forming pseudopapillae; classified as malignant though most are cured.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "970",
+    "printedPage": "963",
+    "confidence": "high"
+   },
+   {
+    "aspect": "epidemiology",
+    "fact": "Mostly women, median age about 30 years; about 1-2% of pancreatic tumours.",
+    "value": "median ~30 y; 1-2%",
+    "source": "Beger 2023 ch.86",
+    "pdfPage": "681",
+    "printedPage": "671",
+    "confidence": "high"
+   },
+   {
+    "aspect": "epidemiology",
+    "fact": "Primarily girls and young women aged 20-40 years, with solid and cystic areas; Kleeff gives 2% of the Johns Hopkins series.",
+    "value": "20-40 y; 2%",
+    "source": "Beger 2023 ch.81",
+    "pdfPage": "637",
+    "printedPage": "627",
+    "confidence": "high"
+   },
+   {
+    "aspect": "location",
+    "fact": "Beger ch.125 says equal frequency in head, body and tail, while ch.86 says most often in the tail: sources disagree.",
+    "value": "head=body=tail vs tail",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "970",
+    "printedPage": "963",
+    "confidence": "high"
+   },
+   {
+    "aspect": "size",
+    "fact": "Often large; mean 8-10 cm in a cytology chapter; mass is well demarcated with solid and cystic areas and haemorrhagic/necrotic debris.",
+    "value": "mean 8-10 cm",
+    "source": "Beger 2023 ch.85",
+    "pdfPage": "669",
+    "printedPage": "659",
+    "confidence": "high"
+   },
+   {
+    "aspect": "cytology",
+    "fact": "Loosely cohesive monomorphic cells with clear cytoplasm and round-to-oval grooved nuclei in pseudopapillae; hyaline globules often present in the cytoplasm.",
+    "value": "nuclear grooves; hyaline globules",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "970",
+    "printedPage": "963",
+    "confidence": "high"
+   },
+   {
+    "aspect": "immunostain",
+    "fact": "Nuclear beta-catenin (CTNNB1 mutation), LEF1 and CD10 positive; Wnt pathway virtually always activated.",
+    "value": "CTNNB1, LEF1, CD10",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "970",
+    "printedPage": "963",
+    "confidence": "high"
+   },
+   {
+    "aspect": "prognosis",
+    "fact": "Most patients are cured by resection; only about 10-15% progress aggressively, usually to liver or peritoneum.",
+    "value": "10-15% aggressive",
+    "source": "Beger 2023 ch.81",
+    "pdfPage": "638",
+    "printedPage": "628",
+    "confidence": "high"
+   },
+   {
+    "aspect": "mimickers",
+    "fact": "Poor cohesion and branching delicate vessels are seen on touch preparation.",
+    "value": "",
+    "source": "Beger 2023 ch.125",
+    "pdfPage": "971",
+    "printedPage": "964",
+    "confidence": "high"
+   },
+   {
+    "aspect": "mimickers",
+    "fact": "LEF1 (expressed in SPN) together with INSM1 (expressed in PanNET) helps tell SPN from a neuroendocrine tumour.",
+    "value": "LEF1+, INSM1-",
+    "source": "Beger 2023 ch.82",
+    "pdfPage": "644",
+    "printedPage": "634",
+    "confidence": "high"
+   }
+  ]
+ },
+ "mouse-models": {
+  "facts": [
+   {
+    "aspect": "definition",
+    "fact": "Genetically engineered mice show that oncogenic KRAS alone is sufficient to initiate PanIN, which progresses to invasive and metastatic cancer.",
+    "value": "",
+    "source": "Kleeff 2016",
+    "pdfPage": "8",
+    "printedPage": "8",
+    "confidence": "high"
+   },
+   {
+    "aspect": "molecular",
+    "fact": "Adding CDKN2A, TP53 or SMAD4 alterations to oncogenic KRAS accelerates progression with varying histology.",
+    "value": "",
+    "source": "Kleeff 2016",
+    "pdfPage": "8",
+    "printedPage": "8",
+    "confidence": "high"
+   },
+   {
+    "aspect": "architecture",
+    "fact": "Mouse acinar and endocrine cells initiate PanIN more readily than duct cells; histologically early PanIN cells can invade locally and disseminate.",
+    "value": "",
+    "source": "Kleeff 2016",
+    "pdfPage": "8",
+    "printedPage": "8",
+    "confidence": "high"
+   },
+   {
+    "aspect": "stroma",
+    "fact": "Acinar-derived mouse tumours pass through ADM/PanIN, are less proliferative and have better organised collagen; duct-derived tumours bypass the PanIN stage.",
+    "value": "",
+    "source": "Beger 2023 ch.120",
+    "pdfPage": "929",
+    "printedPage": "922",
+    "confidence": "high"
+   },
+   {
+    "aspect": "mimickers",
+    "fact": "PanIN precedes invasive cancer in genetically engineered mouse models, supporting the human PanIN sequence; ADM and atypical flat lesions were first described in mice.",
+    "value": "",
+    "source": "Robbins 9e ch.19",
+    "pdfPage": "907",
+    "printedPage": "892",
+    "confidence": "high"
+   },
+   {
+    "aspect": "remember",
+    "fact": "The sources read do not describe KC or KPC mouse histology (mPanIN grades, murine PDA) in detail, and the names KC and KPC are not used.",
+    "value": "KC/KPC not found",
+    "source": "Basturk 2015",
+    "pdfPage": "8",
+    "printedPage": "1737",
+    "confidence": "low"
+   }
+  ]
+ }
+}

@@ -887,7 +887,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
     if (STAGE.mode === 'tissue') branch = b.dataset.branch; else flyTo(stopFor(lv, b.dataset.branch), b.dataset.branch, STAGE.mode); }));
   $('reset').addEventListener('click', () => { if (LES.view) { $('histopanel').scrollTop = 0; return; } const lv = levelAt(camera.position.distanceTo(controls.target)); flyTo(stopFor(lv) || STOPS.organ, undefined, MODE_OF[lv]); });
   // Escape steps back one stage.
-  window.addEventListener('keydown', (e) => { if (e.key !== 'Escape') return; if (LES.view) { exitLesion(); return; } const lv = levelAt(camera.position.distanceTo(controls.target));
+  window.addEventListener('keydown', (e) => { if (e.key !== 'Escape') return; if (!$('lightbox').hidden) { $('lightbox').hidden = true; return; } if (MODE === 'atlas') { if (AT.pair) atlasOpen(AT.entry); else if (AT.entry || AT.view !== 'grid') { AT.entry = null; AT.view = 'grid'; renderAtlas(); hashNow(); } return; } if (LES.view) { exitLesion(); return; } const lv = levelAt(camera.position.distanceTo(controls.target));
     const up = { cell: 'cells', cells: 'detail', detail: 'tissue', tissue: 'gross', gross: 'organ' }[lv]; if (up) flyTo(stopFor(up), undefined, MODE_OF[up]); });
   $('surround').addEventListener('change', (e) => { surroundings = e.target.checked; });
   document.querySelectorAll('[data-stain]').forEach((b) => b.addEventListener('click', () => { stain = b.dataset.stain; setTimeout(hashNow);
@@ -1106,6 +1106,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
     acinus: 'One acinus on its own, cut open: wedge-shaped acinar cells converge on the lumen like orange segments, zymogen granules at their apices, centroacinar cells lining the duct where it enters, and its intercalated duct leading back to the larger duct it drains into. Zoom on and its cells separate.',
     islet: 'The islet on its own, cut open: beta (green), alpha (magenta), delta (cyan) and PP (amber) cells intermixed along its own dense capillary bed, with no core or mantle, as in human islets (Cabrera 2006; Brissova 2005). Zoom on and its cells separate.',
     duct: 'An intralobular duct on its own, opened lengthwise: a single layer of cuboidal duct cells round the lumen. Duct cells secrete the bicarbonate-rich fluid of pancreatic juice, 2 to 3 litres a day (Ishiguro 2012; Hegyi 2015). Zoom on and its cells separate.',
+    atlas: 'A gallery of the pancreas under the microscope: normal tissue, injury and repair, pancreatitis, cysts, precursor lesions, ductal adenocarcinoma by grade and variant, how it spreads, and the tumours it is mistaken for. Choose an entry for what to look for; open the folds for detail, compare look-alikes side by side, or take the quiz. Images are openly licensed and credited; text is in our own words from the sources listed in each entry.',
     pancreatitis: 'Pancreatitis: inflammation of the pancreas. Acute pancreatitis (drawn on the body and tail): the gland swells, enzymes digest it and the fat round it, leaving chalky fat necroses, and in the severe, necrotizing form it bleeds. Chronic pancreatitis (drawn in the head): repeated injury replaces the gland with scar; the duct dilates between strictures into a chain of lakes and fills with calcified stones. In a patient they are separate conditions; both are drawn on one organ to compare. Click an inset or a change on the organ to see its histology.',
     pda: 'Pancreatic ductal adenocarcinoma: about 60% arise in the head, 15% in the body, 5% in the tail, and 20% involve the gland diffusely (Robbins). A head tumour blocks the bile duct and the main duct, which dilate behind it (the double duct sign); it spreads early to regional lymph nodes and the liver. Click the tumour or the inset to see its histology. Sizes and placement are illustrative.',
     lesionAcutepancreatitis: 'Acute pancreatitis: a drawing and real H&E of fat necrosis, with its features numbered alike. Below: what sets it apart, and normal pancreas, acute and chronic pancreatitis compared. Press Esc to return to the organ.',
@@ -1128,6 +1129,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
   const LEVEL_NAMES = (key) => ({ compare: 'Head, body and tail compared', gross: 'Lobules (' + blockRegion + ')', organ: 'Organ', tissue: 'Tissue', acinus: 'Acinus', islet: 'Islet', duct: 'Duct',
     acinusCells: 'Acinar cells, separated', isletCells: 'Islet cells, separated', ductCells: 'Duct cells, separated', precursors: 'Precursor lesions', pancreatitis: 'Pancreatitis', pda: 'Pancreatic ductal adenocarcinoma', acinusCell: 'Acinar cell', isletCell: 'Beta cell', alphaCell: 'Alpha cell', deltaCell: 'Delta cell', ductCell: 'Duct cell' }[key] || '');
   function viewFrame(now, v) {
+    if (MODE === 'atlas') { atlasFrame(now); return; }
     if (LES.view) { lesionFrame(now, v); return; }
     stepFlight(now);
     stageStep(camera.position.distanceTo(controls.target), now);
@@ -1181,7 +1183,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
         : st(site) ? `Site ${site + 1}, in the ${blockRegion}: round the line going in, ${st(site).lobules} lobules are opened to their ducts, with ${st(site).count.toLocaleString('en')} islets in ${Math.round(st(site).volume)} mm³ (${Math.round(st(site).density)} per mm³).` : '';
       $('grossstats').textContent = txt; }
     if (key !== lastLevel) { lastLevel = key; UI.levelname.textContent = LEVEL_NAMES(key);
-     if (v.i === focus) { writeHash(lv); showMarkers(selected ? MARKER_OF[selected] : MARKER_VIEW[key]); $('info').textContent = INFO[key] + (/^islet/.test(key) && SITE_LIST[site] && SITE_LIST[site].sub === 'uncinate process' ? ' This site lies in the uncinate process, where PP cells (amber in Cell types) make up most of the islet (Gorelick and Williams 2021).' : '');
+     if (v.i === focus) { writeHash(lv); showMarkers(selected ? MARKER_OF[selected] : MARKER_VIEW[key]); setInfo(INFO[key] + (/^islet/.test(key) && SITE_LIST[site] && SITE_LIST[site].sub === 'uncinate process' ? ' This site lies in the uncinate process, where PP cells (amber in Cell types) make up most of the islet (Gorelick and Williams 2021).' : ''));
       applyDataFor(key, MODE !== 'pancreas' ? key : lv);
       updatePickers();
       document.querySelectorAll('.ladder button[data-go]').forEach((b) => { const [l, br] = b.dataset.go.split(':'); b.setAttribute('aria-current', String(l === lv && (!br || br === branch) && (!b.dataset.kind || b.dataset.kind === isletKind))); }); } }
@@ -1216,6 +1218,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
     const next = DPR.ema > 24 ? Math.max(1, DPR.cur - 0.25) : DPR.ema < 17.5 ? Math.min(DPR.max, DPR.cur + 0.25) : DPR.cur;
     if (next !== DPR.cur) { DPR.cur = next; DPR.changed = now; renderer.setPixelRatio(next); }
   }
+  ['wheel', 'pointerdown', 'keydown'].forEach((ev) => window.addEventListener(ev, () => $('hint').classList.add('gone'), { once: true, passive: true }));
   function frame(now) {
     adaptResolution(now); updateHover(now);
     save(VIEWS[focus]);   // anything the panel changed since the last frame belongs to the focused view
@@ -1473,6 +1476,9 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
         rows: [['Share of cases', 'About 60%', 'About 15%', 'About 5% (diffuse 20%)'], ['First sign', 'Painless jaundice: the bile duct is blocked', 'Pain from the coeliac plexus', 'Late; silent'], ['Over 4 cm when found', '21%', '40%', '51%'], ['Spread when found', '42%', '69%', '84%']] },
       sources: 'Robbins and Cotran, 9th ed., ch. 19 (pp. 892-894); Beger HG et al., The Pancreas, 4th ed., 2023, ch. 119, 125, 128, 130, 134, 137.' },
   };
+  // The panel's text: the first sentence at a glance, the rest folded under "More".
+  function setInfo(text) { const m = /^(.{40,}?[.!?])\s+(.+)$/s.exec(text || ''), el = $('info');
+    el.innerHTML = m ? `${esc(m[1])} <details class="src more"><summary>More</summary><p>${esc(m[2])}</p></details>` : esc(text || ''); }
   function srcFold(s) { return `<details class="src"><summary>Sources</summary><p>${s}</p></details>`; }   // citations folded, closed by default
   function markSvg(F, n0, s = 1) {   // numbered pins only; each feature is described in the list below (and on hover)
     const W = 1000, H = Math.round(1000 * F.h / F.w);
@@ -1715,14 +1721,14 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
     box.querySelector('.hclose').addEventListener('click', () => exitLesion()); box.scrollTop = 0;
   }
   function setMode(m) {
-    if (m === MODE || !['pancreas', 'precursors', 'pancreatitis', 'pda'].includes(m)) return;
+    if (m === MODE || !['pancreas', 'precursors', 'pancreatitis', 'pda', 'atlas'].includes(m)) return;
     if (LES.view) exitLesion(true);
     MODE = m; document.body.dataset.mode = m; if (splitOn) setSplit(false);
     document.querySelectorAll('[data-mode]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === m)));
     if (COMPARE.on) $('compare').click();
     setDisease(MODE_PARTS[m] ? m : null); pancreasMeshes.forEach((pm) => { pm.material.color.copy(col('--organ')); });
     if (m === 'pancreas') setSite(site);
-    flyTo(STOPS.organ, undefined, 'tissue'); lastLevel = ''; hashNow();
+    renderAtlas(); resize(); if (m !== 'atlas') flyTo(STOPS.organ, undefined, 'tissue'); lastLevel = ''; hashNow();
   }
   document.querySelectorAll('[data-mode]').forEach((b) => b.addEventListener('click', () => setMode(b.dataset.mode)));
   function enterLesion(key) {
@@ -1736,10 +1742,10 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
   function flash() { const f = $('flash'); f.style.transition = 'none'; f.style.opacity = '1'; requestAnimationFrame(() => { f.style.transition = 'opacity .45s'; f.style.opacity = '0'; }); }
   document.querySelectorAll('[data-lesion]').forEach((b) => b.addEventListener('click', () => { const k = b.dataset.lesion; if (k === 'overview') { if (LES.view) exitLesion(); else flyTo(STOPS.organ, undefined, 'tissue'); } else enterLesion(k); }));
   function renderLesionCard() {
-    const keys = (MODE === 'pancreas' ? (disease && !MODE_PARTS[disease] ? [disease] : []) : LES.view ? LESION_VIEWS[LES.view].parts : MODE_PARTS[MODE]).filter((k) => LESIONS[k]), card = $('lesioncard');
+    const keys = (MODE === 'pancreas' ? (disease && !MODE_PARTS[disease] ? [disease] : []) : LES.view ? LESION_VIEWS[LES.view].parts : MODE_PARTS[MODE] || []).filter((k) => LESIONS[k]), card = $('lesioncard');
     card.hidden = !keys.length; if (!keys.length) return; const detailed = keys.length <= 2;
     card.innerHTML = keys.map((k) => { const L = LESIONS[k]; return `<h3><span class="sw" style="background:var(${L.color})"></span>${esc(L.full)}</h3>`
-      + (detailed ? `<p><strong>Where:</strong> ${esc(L.where)}</p><p><strong>Size:</strong> ${esc(L.size)}</p><p>${esc(L.text)}</p><p><strong>Prognosis:</strong> ${esc(L.survival)}</p>` : `<p>${esc(L.where.replace(/\.$/, ''))}.</p>`); }).join('') + srcFold(esc(LESIONS[keys[0]].source || LESION_SOURCE));
+      + (detailed ? `<p><strong>Where:</strong> ${esc(L.where)}</p><p><strong>Size:</strong> ${esc(L.size)}</p><details class="src more"><summary>More: what it is, and prognosis</summary><p>${esc(L.text)}</p><p><strong>Prognosis:</strong> ${esc(L.survival)}</p></details>` : `<p>${esc(L.where.replace(/\.$/, ''))}.</p>`); }).join('') + srcFold(esc(LESIONS[keys[0]].source || LESION_SOURCE));
   }
   // Insets beside the organ, each a live view of one lesion's architecture, joined by a line to where it arises.
   const INSETS_BY_MODE = { precursors: [{ key: 'mcn', pos: { right: 16, top: 70 } }, { key: 'panin', pos: { right: 16, bottom: 70 } }, { key: 'ipmn', pos: { left: 16, bottom: 70 } }],
@@ -1759,9 +1765,98 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
       const px = (p.x + 1) / 2 * UI.w, py = (1 - p.y) / 2 * UI.h, ex = Math.max(x, Math.min(x + w, px)), ey = Math.max(y, Math.min(y + h, py)); lines.push(`<line x1="${ex}" y1="${ey}" x2="${px}" y2="${py}"/><circle cx="${px}" cy="${py}" r="5"/>`); });
     svg.innerHTML = `<g stroke="var(--accent)" stroke-width="2" fill="var(--accent)">${lines.join('')}</g>`;
   }
+  // ---------- atlas: a gallery of the normal pancreas, pancreatitis, precursors, cancers and their look-alikes. Each entry
+  // shows one openly licensed micrograph, what to look for, and folded detail; entries can be compared and quizzed.
+  // Data: viewer/src/atlas.json (text in our own words, every entry with its sources; images in viewer/assets/atlas).
+  const ATLAS_DATA = JSON.parse($('atlas').textContent), AT = { group: 'all', entry: null, pair: null, view: 'grid', q: '', quiz: null, score: [0, 0] };
+  const AT_BY = Object.fromEntries(ATLAS_DATA.entries.map((e) => [e.id, e]));
+  const AT_FEATURES = [['architecture', 'Architecture'], ['cells', 'Cells'], ['nuclei', 'Nuclei'], ['mitoses', 'Mitoses'], ['mucin', 'Mucin'], ['stroma', 'Stroma']];
+  const AT_FACTS = [['where', 'Where'], ['size', 'Size'], ['who', 'Who'], ['gross', 'To the eye'], ['molecular', 'Markers and genes'], ['outlook', 'Outlook']];
+  const atSrc = (im) => (im.src.startsWith('histo:') ? HISTO_IMG[im.src.slice(6)] : im.src);
+  const atCredit = (im) => `${im.credit} (${im.licence})`;
+  const atImg = (e) => (e.images && e.images[0]) || null;
+  function atFold(title, body, open) { return body ? `<details class="fold"${open ? ' open' : ''}><summary>${title}</summary>${body}</details>` : ''; }
+  function atCard(e) { const im = atImg(e);
+    return `<button type="button" class="acard" data-entry="${e.id}"><div class="thumb"${im ? ` style="background-image:url(${e.thumb || atSrc(im)})"` : ''}>${im ? '' : 'No open image yet'}</div>${e.species === 'mouse' ? '<i class="tag">Mouse</i>' : ''}<b>${esc(e.name)}</b><span>${esc(e.line)}</span></button>`; }
+  function atMatches(e) { const q = AT.q.trim().toLowerCase(); return (AT.group === 'all' || e.group === AT.group) && (!q || [e.name, e.aka || '', e.line].join(' ').toLowerCase().includes(q)); }
+  function atGrid() {
+    const groups = ATLAS_DATA.groups.filter((g) => AT.group === 'all' || g.key === AT.group).map((g) => { const es = ATLAS_DATA.entries.filter((e) => e.group === g.key && atMatches(e)); if (!es.length) return '';
+      return `<div class="agroup"><h3>${esc(g.title)}</h3><p>${esc(g.blurb)}</p><div class="agrid">${es.map(atCard).join('')}</div></div>`; }).join('');
+    return groups || '<p class="empty">Nothing matches. Clear the search or choose All.</p>';
+  }
+  function atFigure(im, name) { return `<figure><img src="${atSrc(im)}" alt="${esc(name)}: ${esc(im.caption || 'micrograph')}" loading="lazy" data-zoom="${esc(atCredit(im))}"><figcaption>${im.caption ? esc(im.caption) + ' ' : ''}${im.mag ? esc(im.mag) + '. ' : ''}${esc(atCredit(im))}</figcaption></figure>`; }
+  function atRows(e, rows, key) { const src = e[key] || {}; const out = rows.filter(([k]) => src[k]).map(([k, label]) => `<dt>${label}</dt><dd>${esc(src[k])}</dd>`).join(''); return out ? `<dl>${out}</dl>` : ''; }
+  function atEntry(e) {
+    const figs = (e.images || []).map((im) => atFigure(im, e.name)).join('') || '<p class="empty">No openly licensed micrograph was found for this entry. The description stands on its sources.</p>';
+    const mim = (e.mimics || []).map((m) => `<li>${AT_BY[m.id] ? `<button type="button" class="abtn" data-pair="${m.id}">${esc(AT_BY[m.id].name)}</button>` : `<b>${esc(m.name)}</b>`} ${esc(m.tell)}</li>`).join('');
+    const see = e.see ? `<button type="button" class="abtn" data-see='${JSON.stringify(e.see)}'>${esc(e.see.label)} ›</button>` : '';
+    return `<div class="aentry"><div>${figs}</div><div><p class="aline">${esc(e.line)}</p>`
+      + `<ul class="glance">${e.glance.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>`
+      + (e.remember ? `<p class="remember"><b>Remember:</b> ${esc(e.remember)}</p>` : '')
+      + atFold('Under the microscope', atRows(e, AT_FEATURES, 'features'), true)
+      + atFold('Look-alikes, and how to tell them apart', mim ? `<ul class="mim">${mim}</ul>` : '')
+      + atFold('Where, size, who and outlook', atRows(e, AT_FACTS, 'facts'))
+      + atFold('Sources', `<p class="src">${e.sources.map(esc).join('; ')}. Text in our own words.</p>`)
+      + (see ? `<p class="chips">${see}</p>` : '') + '</div></div>';
+  }
+  function atPair(a, b) {
+    const col = (e) => { const im = atImg(e); return `<div><h3>${esc(e.name)}</h3>${im ? `<img src="${atSrc(im)}" alt="${esc(e.name)}" data-zoom="${esc(atCredit(im))}">` : ''}<p class="src">${im ? esc(atCredit(im)) : ''}</p></div>`; };
+    const tell = (a.mimics || []).find((m) => m.id === b.id) || (b.mimics || []).find((m) => m.id === a.id);
+    return `<div class="pair">${col(a)}${col(b)}</div>` + (tell ? `<p class="remember"><b>Telling them apart:</b> ${esc(tell.tell)}</p>` : '')
+      + `<div class="tablewrap"><table><thead><tr><th></th><th>${esc(a.name)}</th><th>${esc(b.name)}</th></tr></thead><tbody>`
+      + AT_FEATURES.concat(AT_FACTS).filter(([k]) => (a.features || {})[k] || (b.features || {})[k] || (a.facts || {})[k] || (b.facts || {})[k]).map(([k, label]) => `<tr><th>${label}</th><td>${esc((a.features || {})[k] || (a.facts || {})[k] || '–')}</td><td>${esc((b.features || {})[k] || (b.facts || {})[k] || '–')}</td></tr>`).join('') + '</tbody></table></div>';
+  }
+  function atMatrix() {
+    const body = ATLAS_DATA.groups.map((g) => { const es = ATLAS_DATA.entries.filter((e) => e.group === g.key && e.features); if (!es.length) return '';
+      return `<tr class="grp"><th colspan="${AT_FEATURES.length + 1}">${esc(g.title)}</th></tr>` + es.map((e) => `<tr><th><a href="#atlas=${e.id}" data-entry="${e.id}">${esc(e.name)}</a></th>${AT_FEATURES.map(([k]) => `<td>${esc(e.features[k] || '–')}</td>`).join('')}</tr>`).join(''); }).join('');
+    return `<p class="aline">Every entry by the same six features. Read down a column to see how one feature changes from normal to cancer.</p><div class="tablewrap"><table class="matrix"><thead><tr><th></th>${AT_FEATURES.map(([, l]) => `<th>${l}</th>`).join('')}</tr></thead><tbody>${body}</tbody></table></div>`;
+  }
+  function atQuizNew() {
+    const pool = ATLAS_DATA.entries.filter((e) => atImg(e) && (AT.group === 'all' || e.group === AT.group)), e = pool[Math.floor(Math.random() * pool.length)];
+    const near = (e.mimics || []).map((m) => AT_BY[m.id]).filter(Boolean), same = pool.filter((x) => x.group === e.group && x !== e), rest = ATLAS_DATA.entries.filter((x) => x !== e && x.species === e.species);
+    const opts = [e]; [near, same, rest].forEach((list) => { list.slice().sort(() => Math.random() - 0.5).forEach((x) => { if (opts.length < 4 && !opts.includes(x)) opts.push(x); }); });
+    AT.quiz = { e, opts: opts.sort(() => Math.random() - 0.5), picked: null };
+  }
+  function atQuiz() {
+    const Q = AT.quiz, im = atImg(Q.e), done = Q.picked !== null;
+    return `<div class="quiz"><p class="aline">What is this? ${AT.score[1] ? `<span class="src">Score ${AT.score[0]} of ${AT.score[1]}</span>` : ''}</p><img src="${atSrc(im)}" alt="A micrograph to identify" data-zoom="">`
+      + `<div class="opts">${Q.opts.map((o) => `<button type="button" data-answer="${o.id}"${done ? ' disabled' : ''} class="${done && o === Q.e ? 'right' : done && o.id === Q.picked ? 'wrong' : ''}">${esc(o.name)}</button>`).join('')}</div>`
+      + (done ? `<p class="remember"><b>${Q.picked === Q.e.id ? 'Yes.' : 'It is ' + esc(Q.e.name) + '.'}</b> ${esc(Q.e.remember || Q.e.line)}</p><p class="chips"><button type="button" class="abtn primary" data-atlas-view="quiz">Next</button><button type="button" class="abtn" data-entry="${Q.e.id}">Open this entry</button></p><p class="src">${esc(atCredit(im))}</p>` : '') + '</div>';
+  }
+  function renderAtlas() {
+    const box = $('atlaspanel'); box.hidden = MODE !== 'atlas'; if (box.hidden) return;
+    const e = AT.entry && AT_BY[AT.entry], pair = e && AT.pair && AT_BY[AT.pair];
+    const title = pair ? 'Side by side' : e ? e.name + (e.aka ? ` <small style="font:400 13px 'Public Sans',sans-serif;color:var(--muted)">${esc(e.aka)}</small>` : '') : AT.view === 'matrix' ? 'Features side by side' : AT.view === 'quiz' ? 'Quiz' : 'Atlas of the pancreas';
+    const back = e || AT.view !== 'grid' ? `<button type="button" class="abtn" data-atlas-back>‹ ${pair ? esc(e.name) : 'All entries'}</button>` : '';
+    const tools = e || AT.view !== 'grid' ? '' : `<input type="search" id="atlasq" placeholder="Search the atlas" aria-label="Search the atlas" value="${esc(AT.q)}"><button type="button" class="abtn" data-atlas-view="matrix">Features table</button><button type="button" class="abtn primary" data-atlas-view="quiz">Quiz me</button>`;
+    const order = ATLAS_DATA.entries.filter((x) => AT.group === 'all' || x.group === AT.group), k = e ? order.indexOf(e) : -1;
+    const nav = e && !pair && order.length > 1 && k >= 0 ? `<button type="button" class="abtn" data-entry="${order[(k + order.length - 1) % order.length].id}" aria-label="Previous entry">◀</button><button type="button" class="abtn" data-entry="${order[(k + 1) % order.length].id}" aria-label="Next entry">▶</button>` : '';
+    box.innerHTML = `<div class="abar">${back}<h2>${pair || !e ? esc(title) : title}</h2>${tools}${nav}</div>` + (pair ? atPair(e, pair) : e ? atEntry(e) : AT.view === 'matrix' ? atMatrix() : AT.view === 'quiz' ? atQuiz() : `<p class="intro">${esc(INFO.atlas)}</p><div id="atlasgrid">${atGrid()}</div>`);
+    document.querySelectorAll('#atlasnav [data-atlas-group]').forEach((b) => b.setAttribute('aria-current', String(b.dataset.atlasGroup === AT.group)));
+    box.scrollTop = 0;
+  }
+  function atlasOpen(id, pair) { AT.entry = AT_BY[id] ? id : null; AT.pair = AT.entry && AT_BY[pair] ? pair : null; if (AT.entry) AT.view = 'grid'; renderAtlas(); hashNow(); }
+  $('atlasnav').innerHTML = [{ key: 'all', title: 'All entries', blurb: `${ATLAS_DATA.entries.length} entries` }].concat(ATLAS_DATA.groups).map((g) => `<button type="button" data-atlas-group="${g.key}">${esc(g.title)}<span>${g.key === 'all' ? esc(g.blurb) : ATLAS_DATA.entries.filter((e) => e.group === g.key).length + ' entries'}</span></button>`).join('');
+  $('atlasnav').addEventListener('click', (ev) => { const b = ev.target.closest('[data-atlas-group]'); if (!b) return; AT.group = b.dataset.atlasGroup; AT.entry = AT.pair = null; AT.view = 'grid'; renderAtlas(); hashNow(); });
+  $('atlaspanel').addEventListener('click', (ev) => {
+    const t = ev.target, zoom = t.closest('img[data-zoom]'), ent = t.closest('[data-entry]'), pair = t.closest('[data-pair]'), view = t.closest('[data-atlas-view]'), ans = t.closest('[data-answer]'), see = t.closest('[data-see]');
+    if (zoom) { const lb = $('lightbox'); lb.querySelector('img').src = zoom.src; lb.querySelector('p').textContent = zoom.dataset.zoom; lb.hidden = false; return; }
+    if (ans) { AT.quiz.picked = ans.dataset.answer; AT.score[1]++; if (AT.quiz.picked === AT.quiz.e.id) AT.score[0]++; renderAtlas(); return; }
+    if (view) { AT.view = view.dataset.atlasView; AT.entry = AT.pair = null; if (AT.view === 'quiz') atQuizNew(); renderAtlas(); return; }
+    if (pair) { atlasOpen(AT.entry, pair.dataset.pair); return; }
+    if (ent) { ev.preventDefault(); atlasOpen(ent.dataset.entry); return; }
+    if (t.closest('[data-atlas-back]')) { if (AT.pair) atlasOpen(AT.entry); else { AT.entry = null; AT.view = 'grid'; renderAtlas(); hashNow(); } return; }
+    if (see) { const s = JSON.parse(see.dataset.see); if (s.lesion) enterLesion(s.lesion); else if (s.mode) setMode(s.mode); else if (s.view) { setMode('pancreas'); readHash(`#site=${site + 1}&view=${s.view}`); } }
+  });
+  $('atlaspanel').addEventListener('input', (ev) => { if (ev.target.id !== 'atlasq') return; AT.q = ev.target.value; $('atlasgrid').innerHTML = atGrid(); });
+  $('lightbox').addEventListener('click', () => { $('lightbox').hidden = true; });
+  function atlasFrame(now) {
+    if (lastLevel !== 'atlas') { lastLevel = 'atlas'; UI.levelname.textContent = 'Atlas'; setInfo(INFO.atlas); applyDataFor('atlas', 'atlas'); showMarkers(null); }
+    drawLabels(null, 0); drawInsets(now, false); renderer.setViewport(UI.x, 0, UI.w, UI.h); renderer.setScissor(UI.x, 0, UI.w, UI.h); renderer.clear();
+  }
   function lesionFrame(now, v) {   // the histology panel covers the view; nothing 3D is drawn behind it
     const V0 = LESION_VIEWS[LES.view], key = 'lesion' + V0.title.replace(/\W/g, '');
-    if (key !== lastLevel) { lastLevel = key; UI.levelname.textContent = V0.title + ': histology'; $('info').textContent = INFO[key] || ''; applyDataFor(key, key); showMarkers(null); }
+    if (key !== lastLevel) { lastLevel = key; UI.levelname.textContent = V0.title + ': histology'; setInfo(INFO[key] || ''); applyDataFor(key, key); showMarkers(null); }
     drawLabels(null, 0); drawInsets(now, false); renderer.setViewport(UI.x, 0, UI.w, UI.h); renderer.setScissor(UI.x, 0, UI.w, UI.h); renderer.clear();
   }
 
@@ -1771,11 +1866,12 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
   const viewName = (lv) => Object.keys(VIEW_KEYS).find((k) => { const [l, br, kind] = VIEW_KEYS[k]; return l === lv && (!br || br === branch) && (!kind || kind === isletKind); }) || 'organ';
   const hashNow = () => writeHash(LES.view ? 'lesion' : levelAt(camera.position.distanceTo(controls.target)));
   let hashReady = false; const START_HASH = location.hash;   // the link the page was opened with is read once the organ is built
-  function writeHash(lv) { if (!hashReady || splitOn || tour || site < 0) return; const h = MODE !== 'pancreas' ? `#mode=${MODE}${LES.view ? '&lesion=' + LES.view : ''}` : `#site=${site + 1}&view=${viewName(lv)}${stain === 'if' ? '&stain=if' : ''}${disease ? '&disease=' + disease : ''}`;
+  function writeHash(lv) { if (!hashReady || splitOn || tour || site < 0) return; const h = MODE === 'atlas' ? `#atlas${AT.entry ? '=' + AT.entry : AT.group !== 'all' ? '&group=' + AT.group : ''}` : MODE !== 'pancreas' ? `#mode=${MODE}${LES.view ? '&lesion=' + LES.view : ''}` : `#site=${site + 1}&view=${viewName(lv)}${stain === 'if' ? '&stain=if' : ''}${disease ? '&disease=' + disease : ''}`;
     if (location.hash !== h) try { history.replaceState(null, '', h); } catch (e) { /* a sandboxed page may refuse */ } }
   function readHash(h) { const q = new URLSearchParams((typeof h === 'string' ? h : location.hash).slice(1)), n = +q.get('site'), v = VIEW_KEYS[q.get('view')];
     if (n >= 1 && n <= SITE_LIST.length && n - 1 !== site) setSite(n - 1);
     if (q.get('stain') === 'if') document.querySelector('[data-stain=if]').click();
+    if (q.has('atlas')) { setMode('atlas'); if (ATLAS_DATA.groups.some((g) => g.key === q.get('group'))) AT.group = q.get('group'); atlasOpen(q.get('atlas')); return; }
     if (MODE_PARTS[q.get('mode')]) { setMode(q.get('mode')); if (LESION_VIEWS[q.get('lesion')]) enterLesion(q.get('lesion')); return; } else if (MODE !== 'pancreas') setMode('pancreas');
     if (q.get('disease')) setDisease(q.get('disease'));
     if (v && v[0] !== 'organ') { const [lvl, br, kind] = v; setIsletKind(kind); if (br) document.querySelectorAll('[data-branch]').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.branch === br))); flyTo(stopFor(lvl, br), br, MODE_OF[lvl]); } }

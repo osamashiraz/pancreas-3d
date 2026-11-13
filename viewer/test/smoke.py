@@ -36,6 +36,8 @@ STEPS = [   # name, script, expected [stage, branch or None], expected level sho
     ('chronic-view', "document.querySelector('[data-lesion=chronic]').click()", ['tissue', None], 'Chronic pancreatitis'),
     ('pda', "document.querySelector('[data-mode=pda]').click()", ['tissue', None], 'Pancreatic ductal adenocarcinoma'),
     ('pda-view', "document.querySelector('.ladder-mode[data-for-mode=pda] [data-lesion=pda]').click()", ['tissue', None], 'PDA'),
+    ('atlas', "document.querySelector('[data-mode=atlas]').click()", ['tissue', None], 'Atlas'),
+    ('atlas-entry', "document.querySelector('#atlaspanel [data-entry]').click()", ['tissue', None], 'Atlas'),
     ('pancreas-mode', "document.querySelector('[data-mode=pancreas]').click()", ['tissue', None], 'Organ'),
     ('compare', "document.getElementById('compare').click()", ['tissue', None], 'Head, body and tail compared'),
     ('compare-off', "document.getElementById('compare').click()", ['tissue', None], 'Lobules'),
@@ -70,6 +72,8 @@ async def main(page_path, chrome):
             ok = v[0] == stage and (br is None or v[1] == br) and shown.startswith(lv)
             print(('ok  ' if ok else 'FAIL'), name, v, repr(shown))
             if name.endswith('-cell') and await pg.evaluate("document.getElementById('markerbox').hidden"): ok = False; print('FAIL', name, 'marker genes not shown')
+            if name == 'atlas' and await pg.evaluate("document.querySelectorAll('#atlaspanel .acard').length") < 20: ok = False; print('FAIL', name, 'the atlas grid is missing entries')
+            if name == 'atlas-entry' and not await pg.evaluate("!!document.querySelector('#atlaspanel .aentry .glance li')"): ok = False; print('FAIL', name, 'the atlas entry did not open')
             if not ok: failures.append(name)
             try: await pg.screenshot(path=str(out / f'{name}.png'), timeout=120000)
             except Exception: print('     (screenshot skipped: the frame took too long in software rendering)')   # the checks above decide pass or fail

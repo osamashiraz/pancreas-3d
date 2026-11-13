@@ -11,7 +11,7 @@ Output:  dist/pancreas-organ-to-cell.html (about 8 MB; the published page must s
 The viewer no longer generates blocks in the browser (each site shows its region's tested block). viewer/src/generator.js, the
 TypeScript generator compiled by viewer/compile_generator.mjs, is kept for other uses but is not embedded.
 """
-import base64, json, sys
+import base64, json, shutil, sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -35,12 +35,17 @@ def main():
         '__REGION_GLB_B64__': base64.b64encode((atlas / 'pancreas-region-male.glb').read_bytes()).decode(),
         '__NEIGHBOURS_GLB_B64__': base64.b64encode((atlas / 'neighbours-male.glb').read_bytes()).decode(),
         '__HISTO_JSON__': json.dumps({p.stem: 'data:image/jpeg;base64,' + base64.b64encode(p.read_bytes()).decode() for p in sorted((HERE / 'assets' / 'histology').glob('*.jpg'))}),
+        '__ATLAS_JSON__': esc(json.dumps(json.loads((HERE / 'src' / 'atlas.json').read_text()), ensure_ascii=False, separators=(',', ':'))),
         '__MARKERS_JSON__': esc((repo / 'data' / 'human-pancreas-markers.json').read_text()),
     }
     for k, v in parts.items():
         assert t.count(k) == 1, k
         t = t.replace(k, v)
     out.parent.mkdir(parents=True, exist_ok=True); out.write_text(t)
+    # Atlas images are separate files beside the page (loaded only when the atlas is opened), not embedded.
+    dst = out.parent / 'atlas'; dst.mkdir(exist_ok=True); src = HERE / 'assets' / 'atlas'
+    for old in dst.glob('*.jpg'): old.unlink()
+    for f in sorted(src.glob('*.jpg')): shutil.copyfile(f, dst / f.name)
     print(f'{out}: {len(t) / 1e6:.2f} MB')
     if len(t) > 16e6:
         raise SystemExit('Too large to publish as a single page (16 MB limit).')

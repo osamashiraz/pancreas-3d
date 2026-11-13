@@ -32,12 +32,12 @@ body[data-stain="if"] .stage{background:radial-gradient(ellipse at 50% 38%,#2a25
 .ladder button span{display:block;font-size:11px;color:var(--muted)}
 .ladder .branch{display:flex;gap:5px;margin-left:12px}
 .ladder .branch button{min-width:0}
-.modes{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--rule);border-radius:7px;overflow:hidden;margin-bottom:4px;background:var(--panel);max-width:330px}
-.modes button{min-width:0!important;border:0!important;border-radius:0!important;border-right:1px solid var(--rule)!important;padding:5px 9px!important;font-size:12.5px!important;background:transparent!important}
+.modes{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--rule);border-radius:7px;overflow:hidden;margin-bottom:4px;background:var(--panel);max-width:346px}
+.modes button{min-width:0!important;border:0!important;border-radius:0!important;border-right:1px solid var(--rule)!important;padding:5px 8px!important;font-size:12.5px!important;background:transparent!important}
 .modes button[aria-pressed="true"]{background:var(--accent)!important;color:#fff}.modes button:disabled{color:var(--muted);cursor:not-allowed;opacity:.6}
 .ladder .group{font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin:4px 0 0 12px}
 body[data-mode]:not([data-mode="pancreas"]) .ladder-pancreas{display:none}.ladder-mode{display:none}
-body[data-mode="precursors"] .ladder-mode[data-for-mode="precursors"],body[data-mode="pancreatitis"] .ladder-mode[data-for-mode="pancreatitis"],body[data-mode="pda"] .ladder-mode[data-for-mode="pda"]{display:flex}
+body[data-mode="precursors"] .ladder-mode[data-for-mode="precursors"],body[data-mode="pancreatitis"] .ladder-mode[data-for-mode="pancreatitis"],body[data-mode="pda"] .ladder-mode[data-for-mode="pda"],body[data-mode="atlas"] .ladder-mode[data-for-mode="atlas"]{display:flex}
 .ladder-pancreas,.ladder-mode{flex-direction:column;gap:5px}.ladder-pancreas{display:flex}
 .insets{position:absolute;inset:0;pointer-events:none;z-index:4}.insets svg{position:absolute;inset:0;width:100%;height:100%}
 .inset{position:absolute;width:250px;height:178px;border:2px solid var(--accent);border-radius:8px;pointer-events:auto;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.15)}
@@ -57,6 +57,36 @@ body[data-mode="precursors"] .ladder-mode[data-for-mode="precursors"],body[data-
 .histo .src{font-size:11.5px;color:var(--muted)}
 .histo table.prog td{position:relative;min-width:74px}.histo table.prog .bar{position:absolute;left:6px;bottom:6px;height:7px;background:color-mix(in srgb,var(--accent) 30%,transparent);border-radius:3px}.histo table.prog .v{position:relative;font-variant-numeric:tabular-nums}.histo table.prog th small{display:block;font-weight:400;color:var(--muted);font-size:11px}.histo td.na{color:var(--muted)}
 @media (max-width:880px){.histo{left:0;top:190px;padding:10px}.histo .hcols{grid-template-columns:1fr}}
+.atlas .abar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:2px 0 12px}.atlas .abar h2{margin:0 auto 0 0}
+.atlas .abar input[type=search]{font:inherit;font-size:14px;color:var(--ink);background:var(--panel);border:1px solid var(--rule);border-radius:6px;padding:5px 10px;width:210px}
+.atlas .abtn{font:inherit;font-size:13px;border:1px solid var(--rule);background:var(--panel);color:var(--ink);border-radius:6px;padding:5px 11px;cursor:pointer}.atlas .abtn:hover,.atlas .abtn[aria-pressed="true"]{border-color:var(--accent)}.atlas .abtn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.atlas .agroup{margin:0 0 20px;max-width:1180px}.atlas .agroup>h3{margin:0 0 2px}.atlas .agroup>p{font-size:13px;color:var(--muted);margin:0 0 8px;max-width:860px}
+.atlas .agrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px}
+.atlas .acard{display:flex;flex-direction:column;text-align:left;font:inherit;color:var(--ink);background:var(--panel);border:1px solid var(--rule);border-radius:9px;overflow:hidden;cursor:pointer;padding:0}
+.atlas .acard:hover,.atlas .acard:focus-visible{border-color:var(--accent);box-shadow:0 2px 10px rgba(0,0,0,.12)}
+.atlas .acard .thumb{aspect-ratio:4/3;background:color-mix(in srgb,var(--rule) 60%,var(--panel)) center/cover no-repeat;display:grid;place-items:center;color:var(--muted);font-size:12px}
+.atlas .acard b{font:560 15px/1.25 "Newsreader",Georgia,serif;padding:7px 10px 0}.atlas .acard span{font-size:12.5px;color:var(--muted);padding:2px 10px 9px;line-height:1.35}
+.atlas .acard .tag{position:absolute;margin:6px;font-size:10.5px;letter-spacing:.03em;text-transform:uppercase;background:color-mix(in srgb,var(--panel) 88%,transparent);border-radius:4px;padding:1px 6px;color:var(--ink)}
+.atlas .aentry{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:22px;max-width:1180px;align-items:start}
+.atlas .aentry figure{margin:0 0 12px}.atlas .aentry figure img{display:block;width:100%;height:auto;border-radius:6px;box-shadow:0 1px 6px rgba(0,0,0,.15);cursor:zoom-in;background:var(--rule)}
+.atlas .aline{font-size:15.5px;margin:2px 0 10px;max-width:760px}.atlas .glance{margin:0 0 10px;padding-left:20px}.atlas .glance li{margin:4px 0;font-size:14.5px}
+.atlas .remember{border-left:3px solid var(--accent);background:color-mix(in srgb,var(--accent) 8%,transparent);padding:8px 12px;border-radius:0 6px 6px 0;font-size:14px;margin:0 0 12px}
+.atlas .remember b{font-weight:600}
+.atlas details.fold{border-top:1px solid var(--rule);margin:0;padding:7px 0}.atlas details.fold>summary{font-size:14px;color:var(--ink);font-weight:500}.atlas details.fold[open]>summary{margin-bottom:6px}
+.atlas dl{display:grid;grid-template-columns:110px 1fr;gap:5px 12px;margin:0;font-size:13.5px}.atlas dt{color:var(--muted)}.atlas dd{margin:0}
+.atlas .chips{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}.atlas .mim{margin:0;padding:0;list-style:none}.atlas .mim li{margin:6px 0;font-size:13.5px}
+.atlas .pair{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:1180px}.atlas .pair img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:6px;cursor:zoom-in}
+.atlas .matrix td,.atlas .matrix th{font-size:12.5px;min-width:120px}.atlas .matrix th:first-child{min-width:150px;position:sticky;left:0;background:var(--canvas)}.atlas .matrix tr.grp th{background:color-mix(in srgb,var(--accent) 10%,var(--canvas));font-family:"Newsreader",Georgia,serif;font-size:14px}
+.atlas .matrix a{color:var(--ink)}
+.atlas .quiz{max-width:860px}.atlas .quiz img{display:block;width:100%;max-height:56vh;object-fit:contain;border-radius:6px;background:#000}.atlas .quiz .opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
+.atlas .quiz .opts button{font:inherit;font-size:14.5px;text-align:left;border:1px solid var(--rule);background:var(--panel);color:var(--ink);border-radius:7px;padding:9px 12px;cursor:pointer}
+.atlas .quiz .opts button.right{border-color:#2e9d57;background:color-mix(in srgb,#2e9d57 16%,var(--panel))}.atlas .quiz .opts button.wrong{border-color:#c8333a;background:color-mix(in srgb,#c8333a 14%,var(--panel))}
+.atlas .empty{color:var(--muted);font-size:14px}
+.lightbox{position:fixed;inset:0;z-index:50;background:rgba(10,8,14,.92);display:grid;place-items:center;cursor:zoom-out;padding:14px}.lightbox[hidden]{display:none}
+.lightbox img{max-width:96vw;max-height:88vh;object-fit:contain}.lightbox p{color:#ddd;font-size:12.5px;max-width:900px;text-align:center;margin:8px 0 0}
+body[data-mode="atlas"] .app{grid-template-columns:minmax(0,1fr)}body[data-mode="atlas"] aside,body[data-mode="atlas"] .reset,body[data-mode="atlas"] .scale,body[data-mode="atlas"] .hint{display:none}
+.atlas .intro{font-size:14px;color:var(--muted);max-width:860px;margin:-4px 0 14px}
+@media (max-width:880px){.atlas .aentry,.atlas .pair,.atlas .quiz .opts{grid-template-columns:1fr}}
 .inset b{position:absolute;left:0;right:0;bottom:0;font:600 12.5px "Public Sans",system-ui,sans-serif;background:color-mix(in srgb,var(--panel) 90%,transparent);color:var(--ink);padding:3px 8px;border-radius:0 0 6px 6px}
 .inset:hover{border-color:var(--ink)}.flash{position:absolute;inset:0;background:var(--canvas);opacity:0;pointer-events:none;transition:opacity .35s;z-index:3}
 @media (max-width:880px){.inset{width:150px;height:110px}}
@@ -115,7 +145,8 @@ ol{font-size:12.5px;color:var(--muted);padding-left:18px}ol li{margin-bottom:5px
 .fold[open]>summary::before{transform:rotate(45deg)}
 .fold>summary:hover{color:var(--ink)}
 .tools .fold{border-top:0;margin:4px 0 0;padding:0}
-details.src{font-size:11.5px;color:var(--muted);margin:4px 0 0}details.src>summary{cursor:pointer;color:var(--muted)}details.src p{margin:4px 0 0}
+details.src{font-size:11.5px;color:var(--muted);margin:4px 0 0}details.src>summary{cursor:pointer;color:var(--muted)}details.src p{margin:4px 0 0}details.src.more{font-size:inherit;color:inherit;display:inline}details.src.more[open]{display:block}details.src.more>summary{display:inline;color:var(--accent);font-size:13px}details.src.more p{font-size:13.5px;margin:6px 0 0}
+.hint{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);z-index:5;font-size:13.5px;color:var(--ink);background:color-mix(in srgb,var(--panel) 92%,transparent);border:1px solid var(--rule);border-radius:18px;padding:6px 16px;pointer-events:none;transition:opacity .6s;white-space:nowrap}.hint.gone{opacity:0}@media (max-width:880px){.hint{white-space:normal;text-align:center;width:86%}}
 .note.fold{border-top:1px solid var(--rule)}.note.fold p{margin:6px 0 0}
 .toggle small{color:var(--muted);font-size:12.5px}
 .plain{font:inherit;font-size:13.5px;color:var(--ink);background:var(--panel);border:1px solid var(--rule);border-radius:6px;padding:5px 12px;cursor:pointer}.plain:hover,.plain[aria-pressed="true"]{border-color:var(--accent)}
@@ -124,8 +155,9 @@ details.src{font-size:11.5px;color:var(--muted);margin:4px 0 0}details.src>summa
 <div class="app">
  <div class="stage" id="stage">
   <div class="status" id="status">Loading the organ…</div>
+  <div class="hint" id="hint">Scroll or pinch to zoom in · drag to turn · rest the pointer on anything to name it</div>
   <nav class="ladder" aria-label="Zoom level">
-   <div class="modes" role="group" aria-label="What to show"><button type="button" data-mode="pancreas" aria-pressed="true">Pancreas</button><button type="button" data-mode="pancreatitis" aria-pressed="false">Pancreatitis</button><button type="button" data-mode="precursors" aria-pressed="false">Precursor lesions</button><button type="button" data-mode="pda" aria-pressed="false">PDA</button></div>
+   <div class="modes" role="group" aria-label="What to show"><button type="button" data-mode="pancreas" aria-pressed="true">Pancreas</button><button type="button" data-mode="pancreatitis" aria-pressed="false">Pancreatitis</button><button type="button" data-mode="precursors" aria-pressed="false">Precursors</button><button type="button" data-mode="pda" aria-pressed="false">PDA</button><button type="button" data-mode="atlas" aria-pressed="false">Atlas</button></div>
    <div class="ladder-pancreas">
    <button type="button" data-go="organ">Organ<span>15 cm</span></button>
    <button type="button" data-go="tissue">Tissue<span>exocrine and endocrine together</span></button>
@@ -145,6 +177,7 @@ details.src{font-size:11.5px;color:var(--muted);margin:4px 0 0}details.src>summa
    <button type="button" data-lesion="overview">Pancreatic cancer<span>where it arises and spreads</span></button>
    <button type="button" data-lesion="pda">Histology<span>glands, desmoplasia, nerves</span></button>
    </div>
+   <div class="ladder-mode" data-for-mode="atlas" id="atlasnav"></div>
    <div class="ladder-mode ladder-precursors" data-for-mode="precursors">
    <button type="button" data-lesion="overview">All precursors<span>where each arises</span></button>
    <button type="button" data-lesion="panin">PanIN<span>small ducts, microscopic</span></button>
@@ -155,6 +188,8 @@ details.src{font-size:11.5px;color:var(--muted);margin:4px 0 0}details.src>summa
   <div class="insets" id="insets" aria-hidden="false"></div>
   <div class="flash" id="flash"></div>
   <section class="histo" id="histopanel" hidden aria-live="polite"></section>
+  <section class="histo atlas" id="atlaspanel" hidden></section>
+  <div class="lightbox" id="lightbox" hidden role="dialog" aria-label="Enlarged image"><img alt=""><p></p></div>
   <div class="caption" id="caption" aria-live="polite"></div>
   <button class="reset" id="reset" type="button">Reset view</button>
  </div>
@@ -281,6 +316,7 @@ details.src{font-size:11.5px;color:var(--muted);margin:4px 0 0}details.src>summa
  </aside>
 </div>
 <script type="application/json" id="histo">__HISTO_JSON__</script>
+<script type="application/json" id="atlas">__ATLAS_JSON__</script>
 <script type="application/json" id="markers">__MARKERS_JSON__</script>
 <script type="application/json" id="block">__BLOCK_BODY__</script>
 <script type="application/json" id="block-head">__BLOCK_HEAD__</script>

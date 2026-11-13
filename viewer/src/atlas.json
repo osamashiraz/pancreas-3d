@@ -1,0 +1,2289 @@
+{
+ "groups": [
+  {
+   "key": "normal",
+   "title": "Normal pancreas",
+   "blurb": "The reference for everything else: lobules of acini, the ducts that drain them, and the islets scattered among them."
+  },
+  {
+   "key": "repair",
+   "title": "Injury and repair",
+   "blurb": "Benign changes of ducts and acini after injury, which matter mostly because they can be mistaken for precursor lesions."
+  },
+  {
+   "key": "pancreatitis",
+   "title": "Pancreatitis",
+   "blurb": "Inflammation of the gland, from mild oedema and fat necrosis to scarring that replaces the acini."
+  },
+  {
+   "key": "cysts",
+   "title": "Cysts that are not mucinous",
+   "blurb": "Most pancreatic cysts are not neoplastic; these two are the common ones that carry no mucinous lining."
+  },
+  {
+   "key": "precursors",
+   "title": "Precursor lesions",
+   "blurb": "Non-invasive lesions of the duct lining from which ductal adenocarcinoma can arise."
+  },
+  {
+   "key": "pda",
+   "title": "Ductal adenocarcinoma by grade",
+   "blurb": "The common pancreatic cancer, graded by how well it still forms glands, and the scar-like stroma it sits in."
+  },
+  {
+   "key": "variants",
+   "title": "Variants of ductal adenocarcinoma",
+   "blurb": "Less common patterns of the same cancer, some with a different outlook or a different list of look-alikes."
+  },
+  {
+   "key": "spread",
+   "title": "How it spreads",
+   "blurb": "The routes ductal adenocarcinoma takes out of the gland: along nerves, vessels and ducts, to nodes and to the liver."
+  },
+  {
+   "key": "other",
+   "title": "Other tumours (the differential)",
+   "blurb": "Tumours of the pancreas that are not ductal adenocarcinoma and are told from it by their cells and stroma."
+  }
+ ],
+ "entries": [
+  {
+   "id": "normal-lobule",
+   "group": "normal",
+   "name": "Lobule",
+   "line": "Most of the gland is acinar tissue, with ducts, vessels, a little matrix and scattered islets.",
+   "species": "human",
+   "images": [
+    {
+     "src": "atlas/normal-lobule-1.jpg",
+     "w": 960,
+     "h": 541,
+     "caption": "Lobules of acini between thin septa, with pale islets. The stain on this slide is bluish, with weak eosin.",
+     "credit": "Berkshire Community College Bioscience Image Library, via Wikimedia Commons",
+     "licence": "CC0",
+     "mag": "H&E, ×40"
+    }
+   ],
+   "glance": [
+    "Dark acinar tissue fills almost the whole field",
+    "Pale islets scattered among the acini",
+    "Ducts with collagen walls, thicker as they get larger"
+   ],
+   "remember": "The bulk of the gland is acinar, yet most pancreatic tumours are ductal.",
+   "features": {
+    "architecture": "Acini and acinar tubules form a joined-up tubular network, not grapes on a stalk; small islets lie among acini, larger ones along the bigger ducts.",
+    "cells": "By volume about 82% acinar cells, 4% duct cells, 4% vessels, 2% endocrine and 8% matrix (the cited measurement is probably from guinea pig).",
+    "stroma": "Stellate cells, 4–7% of parenchymal cells, lie round the bases of acini, small ducts, vessels and islets."
+   },
+   "facts": {
+    "size": "The whole gland is 14–25 cm long and about 100 g.",
+    "where": "The exocrine part is over 95% of the gland by mass."
+   },
+   "see": {
+    "view": "tissue",
+    "label": "See the tissue in 3D"
+   },
+   "sources": [
+    "Gorelick and Williams 2021, ch. 1 (Longnecker), p. 3–4, 8, 11",
+    "Beger et al. 2023, ch. 2, p. 9, 12",
+    "Beger et al. 2023, ch. 4, p. 35",
+    "Beger et al. 2023, ch. 9, p. 86",
+    "Beger et al. 2023, ch. 125, p. 957"
+   ],
+   "thumb": "atlas/t-normal-lobule-1.jpg"
+  },
+  {
+   "id": "normal-acini",
+   "group": "normal",
+   "name": "Acini",
+   "line": "Enzyme-making cells round a tiny lumen: blue at the base, pink at the apex.",
+   "species": "human",
+   "images": [
+    {
+     "src": "atlas/normal-acini-1.jpg",
+     "w": 960,
+     "h": 670,
+     "caption": "Acini: pyramidal cells with basal nuclei round small lumina. Eosin is weak on this slide, so the granules look pale.",
+     "credit": "Berkshire Community College Bioscience Image Library, via Wikimedia Commons",
+     "licence": "CC0",
+     "mag": "H&E, ×200"
+    }
+   ],
+   "glance": [
+    "Cell base stains blue; the apex facing the lumen stains pink",
+    "Round nucleus with a nucleolus in the basal half",
+    "No mucin anywhere"
+   ],
+   "remember": "Blue base, pink granular apex, basal nucleus, no mucin.",
+   "features": {
+    "architecture": "Acini and acinar tubules join into a network; classic rounded acini sit at some of its tips.",
+    "cells": "Pyramidal cells about 20 µm across; apical zymogen granules about 1 µm (0.5–1.4 µm).",
+    "nuclei": "Basal, with nucleoli; many cells have two nuclei.",
+    "mucin": "None; the apical cytoplasm holds zymogen granules."
+   },
+   "facts": {
+    "where": "Throughout every lobule; acinar cells are about 70% of all pancreatic cells, ductal cells about 18.5%."
+   },
+   "mimics": [
+    {
+     "id": "adm",
+     "tell": "In ADM the cells have lost their granules and form small tubes, usually with fibrosis and inflammation round them."
+    },
+    {
+     "id": "acinar-cell-carcinoma",
+     "tell": "The carcinoma is a bulky mass of uniform cells in acini or solid sheets, each nucleus with one prominent nucleolus."
+    }
+   ],
+   "see": {
+    "view": "acinus",
+    "label": "See an acinus in 3D"
+   },
+   "sources": [
+    "Gorelick and Williams 2021, ch. 1 (Longnecker), p. 8–10",
+    "Beger et al. 2023, ch. 4, p. 35, 38",
+    "Beger et al. 2023, ch. 2, p. 13",
+    "Beger et al. 2023, ch. 120, p. 921",
+    "Hruban et al. 2001, p. 580"
+   ],
+   "thumb": "atlas/t-normal-acini-1.jpg"
+  },
+  {
+   "id": "normal-centroacinar",
+   "group": "normal",
+   "name": "Centroacinar cells",
+   "line": "Small pale cells where the acinus meets its ductule: the first cells of the duct system.",
+   "species": "human",
+   "images": [],
+   "glance": [
+    "Pale cells at the centre of an acinus",
+    "Smaller than the acinar cells round them",
+    "No granules in their cytoplasm"
+   ],
+   "remember": "A pale, granule-free cell inside an acinus is a centroacinar cell.",
+   "features": {
+    "architecture": "They sit where an acinus or acinar tubule joins a small ductule, or scattered within an acinar tubule, and form part of the lumen wall.",
+    "cells": "Smaller than acinar cells, with paler cytoplasm, less rough endoplasmic reticulum, no secretory granules, many mitochondria and microvilli on the lumen side."
+   },
+   "see": {
+    "view": "acinus",
+    "label": "See them inside an acinus in 3D"
+   },
+   "sources": [
+    "Gorelick and Williams 2021, ch. 1 (Longnecker), p. 8–10",
+    "Kleeff et al. 2016, p. 1"
+   ]
+  },
+  {
+   "id": "normal-intralobular-duct",
+   "group": "normal",
+   "name": "Small duct (intralobular)",
+   "line": "A single layer of low cuboidal cells inside a lobule, with little or no wall: where PanIN begins.",
+   "species": "human",
+   "images": [
+    {
+     "src": "atlas/normal-intralobular-duct-1.jpg",
+     "w": 960,
+     "h": 541,
+     "caption": "A small duct cut lengthwise, one layer of cuboidal cells. Photographed by phase contrast, so the colours are not those of ordinary H&E.",
+     "credit": "Berkshire Community College Bioscience Image Library, via Wikimedia Commons",
+     "licence": "CC0",
+     "mag": "H&E by phase contrast, ×400"
+    }
+   ],
+   "glance": [
+    "One even layer of cuboidal to low-columnar cells",
+    "No mucin, no crowding of nuclei",
+    "Thin collagen wall, or none round the smallest ductules",
+    "Pink juice in the lumen"
+   ],
+   "remember": "Low, even, mucin-free lining: any mucin in a small duct is abnormal.",
+   "features": {
+    "architecture": "A continuous single-layered tube; tight junctions between duct, centroacinar and acinar cells keep the enzymes inside.",
+    "cells": "Cuboidal to low-columnar with amphophilic cytoplasm.",
+    "nuclei": "Not crowded, no atypia.",
+    "mucin": "None.",
+    "stroma": "A modest collagen wall; the terminal ductule (intercalated duct) has almost none."
+   },
+   "facts": {
+    "where": "Inside the lobules. PanIN arises in these small ducts and ductules."
+   },
+   "mimics": [
+    {
+     "id": "panin-low",
+     "tell": "PanIN cells are tall and columnar with mucin above a basal nucleus; the normal lining is low and has no mucin."
+    },
+    {
+     "id": "reactive-duct",
+     "tell": "Reactive ducts have enlarged nuclei with nucleoli and inflammatory cells in and round the lining."
+    }
+   ],
+   "see": {
+    "view": "duct",
+    "label": "See a small duct in 3D"
+   },
+   "sources": [
+    "Hruban et al. 2001, p. 580",
+    "Gorelick and Williams 2021, ch. 1 (Longnecker), p. 8, 12",
+    "Beger et al. 2023, ch. 2, p. 15",
+    "Robbins and Cotran 9th ed., ch. 19, p. 892"
+   ],
+   "thumb": "atlas/t-normal-intralobular-duct-1.jpg"
+  },
+  {
+   "id": "normal-interlobular-duct",
+   "group": "normal",
+   "name": "Large duct (interlobular)",
+   "line": "A larger duct in the septum between lobules: one layer of duct cells inside a thick collagen wall.",
+   "species": "human",
+   "images": [
+    {
+     "src": "atlas/normal-interlobular-duct-1.jpg",
+     "w": 960,
+     "h": 541,
+     "caption": "A large duct in a septum with its thick collagen wall; the lining is partly detached.",
+     "credit": "Berkshire Community College Bioscience Image Library, via Wikimedia Commons",
+     "licence": "CC0",
+     "mag": "H&E, ×100"
+    }
+   ],
+   "glance": [
+    "Single layer of duct cells round a wide lumen",
+    "Thick, dense collagen wall",
+    "Runs between lobules, not inside one",
+    "Larger islets often lie beside it"
+   ],
+   "remember": "The thick collagen wall marks a large duct; the lining is still a single mucin-free layer.",
+   "features": {
+    "architecture": "A single-layered tube whose collagen wall thins as the ducts branch and narrow.",
+    "cells": "A single layer of cuboidal duct cells.",
+    "mucin": "None.",
+    "stroma": "Conspicuous dense collagen wall, thinner than the main duct’s."
+   },
+   "facts": {
+    "size": "The main duct on endoscopic ultrasound measures about 2.4 mm in the head, 1.8 mm in the body and 1.2 mm in the tail.",
+    "where": "In the septa between lobules, leading to the main duct."
+   },
+   "mimics": [
+    {
+     "id": "ipmn",
+     "tell": "IPMN fills a main or branch duct with mucinous papillae and is large enough to see by eye or on imaging."
+    }
+   ],
+   "sources": [
+    "Gorelick and Williams 2021, ch. 1 (Longnecker), p. 8, 11",
+    "Beger et al. 2023, ch. 2, p. 15",
+    "Beger et al. 2023, p. 361",
+    "Hruban et al. 2001, p. 581"
+   ],
+   "thumb": "atlas/t-normal-interlobular-duct-1.jpg"
+  },
+  {
+   "id": "normal-islet",
+   "group": "normal",
+   "name": "Islet of Langerhans",
+   "line": "A pale, rounded island of small hormone-making cells among the darker acini.",
+   "species": "human",
+   "images": [
+    {
+     "src": "atlas/normal-islet-1.jpg",
+     "w": 960,
+     "h": 541,
+     "caption": "A pale islet among darker acini (bluish stain, weak eosin).",
+     "credit": "Berkshire Community College Bioscience Image Library, via Wikimedia Commons",
+     "licence": "CC0",
+     "mag": "H&E, ×200"
+    },
+    {
+     "src": "atlas/normal-islet-2.jpg",
+     "w": 596,
+     "h": 518,
+     "caption": "An islet in ordinary H&E colours: pale cells with round nuclei, darker acini round it. The species is not stated on the file page.",
+     "credit": "User:Polarlys, via Wikimedia Commons",
+     "licence": "CC BY 2.5",
+     "mag": "H&E"
+    }
+   ],
+   "glance": [
+    "Paler than the acini round it",
+    "Cells smaller than acinar cells",
+    "Rounded island, usually 100–150 µm across"
+   ],
+   "remember": "A pale island of small uniform cells among dark acini is an islet.",
+   "features": {
+    "architecture": "Small islets lie scattered among acini; larger ones lie along the main and interlobular ducts.",
+    "cells": "Smaller and paler than acinar cells. Beta cells 75–80%, alpha about 15%, delta about 5%; alpha and delta cells sit mainly at the edges of beta-cell groups."
+   },
+   "facts": {
+    "size": "About 70% are 50–250 µm across, averaging 100–150 µm.",
+    "where": "Half a million to a million islets, 1–2% of the gland. In the uncinate process islets are PP-rich (54–94% of islet volume)."
+   },
+   "mimics": [
+    {
+     "id": "pannet",
+     "tell": "A neuroendocrine tumour looks like a giant islet: the same cords of uniform cells along vessels, but forming a mass."
+    }
+   ],
+   "see": {
+    "view": "islet",
+    "label": "See an islet in 3D"
+   },
+   "sources": [
+    "Gorelick and Williams 2021, ch. 1 (Longnecker), p. 11–13",
+    "Robbins and Cotran 9th ed., ch. 24, p. 1121"
+   ],
+   "thumb": "atlas/t-normal-islet-1.jpg"
+  },
+  {
+   "id": "reactive-duct",
+   "group": "repair",
+   "name": "Reactive duct",
+   "line": "A duct responding to inflammation: bigger nuclei and nucleoli, but an orderly lining and no papillae.",
+   "species": "human",
+   "images": [],
+   "glance": [
+    "Enlarged nuclei with prominent nucleoli",
+    "Neutrophils in and round the lining",
+    "Lining stays flat, without papillae"
+   ],
+   "remember": "Inflammation in the epithelium plus smooth nuclei with fine chromatin means reactive, not PanIN.",
+   "features": {
+    "architecture": "Usually without the papillae or micropapillae that PanIN can show.",
+    "nuclei": "Enlarged, with prominent nucleoli, but smooth outlines and finely dispersed chromatin.",
+    "stroma": "A marked inflammatory infiltrate, especially neutrophils within the epithelium."
+   },
+   "facts": {
+    "where": "In inflamed or injured gland; in chronic pancreatitis the duct lining may be atrophic, hyperplastic or squamous."
+   },
+   "mimics": [
+    {
+     "id": "panin-low",
+     "tell": "PanIN has tall mucinous cells and may be papillary; reactive ducts have inflammation, no papillae, and smooth nuclei with fine chromatin."
+    },
+    {
+     "id": "pda-well",
+     "tell": "Cancer glands have lost the lobular layout, may be incomplete, sit beside muscular arteries, and invade nerves."
+    }
+   ],
+   "sources": [
+    "Hruban et al. 2001, p. 581",
+    "Beger et al. 2023, ch. 125, p. 958",
+    "Robbins and Cotran 9th ed., ch. 19, p. 888"
+   ]
+  },
+  {
+   "id": "adm",
+   "group": "repair",
+   "name": "Acinar-to-ductal metaplasia",
+   "aka": "ADM",
+   "line": "Acini are replaced by small duct-like tubes, usually with fibrosis and inflammation round them.",
+   "species": "human",
+   "images": [
+    {
+     "src": "atlas/adm-1.jpg",
+     "w": 744,
+     "h": 586,
+     "caption": "Obstructive pancreatitis: acini turning into small duct-like tubes with open lumina (arrows, from the source figure).",
+     "credit": "Hosomi K et al. Current Issues in Molecular Biology 2026, doi:10.3390/cimb48060585, figure 1",
+     "licence": "CC BY 4.0",
+     "mag": "H&E, ×400"
+    }
+   ],
+   "glance": [
+    "Small tubes where acini should be",
+    "Cells without zymogen granules",
+    "Fibrosis and inflammatory cells between the tubes"
+   ],
+   "remember": "It is a change of acini inside a lobule, not of a duct, and it can hold mucin like low-grade PanIN.",
+   "features": {
+    "architecture": "Progressive replacement of acini by ductular (tubular) structures within a lobule.",
+    "cells": "Cells lose acinar markers and gain ductal ones.",
+    "mucin": "May be present in the cytoplasm, which makes it resemble low-grade PanIN.",
+    "stroma": "Usually fibrosis and inflammation."
+   },
+   "facts": {
+    "where": "Inside lobules; common in specimens resected for inflammatory or neoplastic disease.",
+    "molecular": "Can carry KRAS mutations, but a PanIN may be mutated when the ADM beside it is not.",
+    "outlook": "Its meaning in humans is unclear and it need not be reported. In mice it is reversible unless mutant Kras and inflammation drive it on to PanIN."
+   },
+   "mimics": [
+    {
+     "id": "panin-low",
+     "tell": "PanIN lines a duct with tall mucinous cells; ADM is a cluster of small tubes replacing acini within a lobule."
+    },
+    {
+     "name": "Atypical flat lesion",
+     "tell": "Also small intralobular ducts under 0.5 cm, but with cytological atypia and a cellular, whorled stroma."
+    }
+   ],
+   "sources": [
+    "Basturk et al. 2015, p. 1737–1738",
+    "Gorelick and Williams 2021, ch. 1 (Longnecker), p. 8",
+    "Beger et al. 2023, ch. 120, p. 922"
+   ],
+   "thumb": "atlas/t-adm-1.jpg"
+  },
+  {
+   "id": "squamous-metaplasia",
+   "group": "repair",
+   "name": "Squamous metaplasia",
+   "aka": "transitional, epidermoid or multilayered metaplasia",
+   "line": "The single-layered duct lining is replaced by mature squamous or transitional epithelium, several layers thick, without atypia.",
+   "species": "human",
+   "images": [],
+   "glance": [
+    "Several layers of cells where one is expected",
+    "Bland, orderly cells",
+    "Stays inside the duct"
+   ],
+   "remember": "Layered but bland and confined to the duct; malignant squamous nests in the stroma are adenosquamous carcinoma.",
+   "features": {
+    "architecture": "Mature stratified squamous or pseudostratified transitional epithelium replacing the cuboidal lining.",
+    "nuclei": "No atypia."
+   },
+   "facts": {
+    "where": "Ducts, mostly in chronic pancreatitis; beside only about 4% of adenocarcinomas.",
+    "outlook": "No step from this metaplasia to squamous carcinoma has been shown."
+   },
+   "mimics": [
+    {
+     "id": "adenosquamous",
+     "tell": "The carcinoma has infiltrating squamous nests and a glandular component; metaplasia is bland, orderly and inside a duct."
+    }
+   ],
+   "sources": [
+    "Hruban et al. 2001, p. 580, 584",
+    "Kardon et al. 2001, p. 445, 449",
+    "Robbins and Cotran 9th ed., ch. 19, p. 888"
+   ]
+  },
+  {
+   "id": "acute-interstitial",
+   "group": "pancreatitis",
+   "name": "Acute interstitial pancreatitis",
+   "aka": "oedematous; the mild form",
+   "line": "Oedema, mild inflammation and small spots of fat necrosis; the lobules stay intact.",
+   "species": "human",
+   "images": [],
+   "glance": [
+    "Septa widened by oedema",
+    "Small foci of fat necrosis in the fat between lobules",
+    "Granular blue deposits where fat has turned to soap",
+    "Acini beside the necrosis still intact"
+   ],
+   "remember": "Fat necrosis comes first and sets the severity; the acini beside it are preserved.",
+   "features": {
+    "architecture": "Tiny fat necroses in the interlobular fat; lobules largely preserved.",
+    "cells": "Acinar cells next to the necrosis stay intact.",
+    "stroma": "Oedema and mild inflammation. Fatty acids freed by lipase bind calcium into insoluble salts that look granular blue."
+   },
+   "facts": {
+    "size": "Fat necroses usually under 10 mm; they resolve and leave nothing behind.",
+    "who": "90–95% of acute pancreatitis. Biliary disease and alcohol cause about 80%; 10–20 cases per 100,000 a year.",
+    "gross": "Gland swollen or of normal size, with tiny white spots on its surface and in the fat between lobules."
+   },
+   "mimics": [
+    {
+     "id": "acute-necrotizing",
+     "tell": "The necrotizing form has large confluent fat necrosis reaching beyond the gland, haemorrhage, and dead acini and ducts."
+    }
+   ],
+   "see": {
+    "lesion": "acute",
+    "label": "Open the acute pancreatitis histology"
+   },
+   "sources": [
+    "Robbins and Cotran 9th ed., ch. 19, p. 884, 887",
+    "Beger et al. 2023, ch. 17, p. 164–166"
+   ]
+  },
+  {
+   "id": "acute-necrotizing",
+   "group": "pancreatitis",
+   "name": "Acute necrotizing pancreatitis",
+   "aka": "the severe form",
+   "line": "Large confluent fat necrosis with haemorrhage; acini, ducts and islets in the affected lobules die.",
+   "species": "human",
+   "images": [
+    {
+     "src": "histo:acute",
+     "caption": "Fat necrosis (below) with a rim of inflammation and haemorrhage; viable fat above.",
+     "mag": "H&E",
+     "credit": "Patho, via Wikimedia Commons",
+     "licence": "CC BY-SA 3.0"
+    },
+    {
+     "src": "histo:acute-necrosis",
+     "caption": "Coagulative necrosis of pancreatic tissue, congested vessels and an inflammatory infiltrate.",
+     "mag": "H&E, ×200",
+     "credit": "Mihoc et al. Biomedicines 2024, doi:10.3390/biomedicines12112627, fig. 12",
+     "licence": "CC BY 4.0"
+    },
+    {
+     "src": "atlas/acute-necrotizing-3.jpg",
+     "w": 762,
+     "h": 1100,
+     "caption": "At autopsy: a dark, haemorrhagic gland with yellow-white fat necrosis.",
+     "credit": "Wickramasinghe CU et al. Journal of Medical Case Reports 2023, doi:10.1186/s13256-023-03906-0, fig. 3b",
+     "licence": "CC BY 4.0",
+     "mag": "Gross specimen"
+    }
+   ],
+   "glance": [
+    "Wide confluent fat necrosis, reaching beyond the gland",
+    "Haemorrhage where veins are damaged",
+    "Dead acini and ducts in the affected lobules"
+   ],
+   "remember": "Fat necrosis dominates; the parenchyma is usually much less necrotic than the fat round it.",
+   "features": {
+    "architecture": "Confluent fat necrosis extending into the tissue round the pancreas; parenchymal necrosis usually much less extensive.",
+    "cells": "Acinar and duct tissue necrotic; islets spared unless their lobule is largely necrotic.",
+    "stroma": "Haemorrhage through damaged and thrombosed vessels, veins first; thick-walled arteries resist longer."
+   },
+   "facts": {
+    "size": "Necrosis of 2–5 cm can resorb; over 5 cm it often walls off, with granulation tissue by 10–20 days and fibrosis from 20–30 days.",
+    "who": "5–10% of acute pancreatitis.",
+    "gross": "Red-black gland with yellow-white chalky spots; fat necrosis also in omentum, mesentery, even under the skin.",
+    "outlook": "About 5% of severe cases die in the first week; 40–60% of necrotic debris becomes infected. Repeated necrosis and scarring can lead to chronic pancreatitis."
+   },
+   "mimics": [
+    {
+     "id": "acute-interstitial",
+     "tell": "The mild form has only oedema and fat necroses under 10 mm, with lobules preserved and no haemorrhage."
+    },
+    {
+     "id": "pseudocyst",
+     "tell": "Once a fibrous wall fully surrounds old necrosis (after 20–30 days) it is walled-off necrosis."
+    },
+    {
+     "name": "Two rare patterns",
+     "tell": "Necrosis of duct lining with neutrophil plugs, or scattered acinar-cell necrosis (seen with infection), each without fat necrosis."
+    }
+   ],
+   "see": {
+    "lesion": "acute",
+    "label": "Open the acute pancreatitis histology"
+   },
+   "sources": [
+    "Robbins and Cotran 9th ed., ch. 19, p. 887",
+    "Beger et al. 2023, ch. 17, p. 165–167"
+   ]
+  },
+  {
+   "id": "chronic-pancreatitis",
+   "group": "pancreatitis",
+   "name": "Chronic pancreatitis",
+   "line": "Scar replaces the acini; ducts dilate and fill with plugs and stones; islets survive for a time in the fibrosis.",
+   "species": "human",
+   "images": [
+    {
+     "src": "histo:chronic-fibrosis",
+     "caption": "Fibrosis round a shrunken lobule.",
+     "mag": "H&E",
+     "credit": "Chekmareva et al. Int J Mol Sci 2025, doi:10.3390/ijms262010169, fig. 1A",
+     "licence": "CC BY 4.0"
+    },
+    {
+     "src": "histo:chronic-atrophy",
+     "caption": "Acini gone; fibrous tissue with vessels and a last group of cells.",
+     "mag": "H&E",
+     "credit": "Chekmareva et al. Int J Mol Sci 2025, doi:10.3390/ijms262010169, fig. 1B",
+     "licence": "CC BY 4.0"
+    },
+    {
+     "src": "histo:chronic-islet",
+     "caption": "An islet left embedded in fibrosis.",
+     "mag": "H&E, high power",
+     "credit": "Chekmareva et al. Int J Mol Sci 2025, doi:10.3390/ijms262010169, fig. 1C",
+     "licence": "CC BY 4.0"
+    },
+    {
+     "src": "histo:chronic-gross",
+     "caption": "Resected head: firm fibrotic gland, dilated duct, stones.",
+     "mag": "Gross specimen",
+     "credit": "D. Desaulniers and B. Têtu, Université Laval, via Wikimedia Commons",
+     "licence": "CC BY-SA 4.0"
+    }
+   ],
+   "glance": [
+    "Dense fibrosis where acini have dropped out",
+    "Islets left embedded in scar, sometimes fused and enlarged",
+    "Dilated ducts with protein plugs or calcified stones",
+    "Chronic inflammatory cells round lobules and ducts"
+   ],
+   "remember": "Acini are lost but the lobular outline survives, which separates it from cancer.",
+   "features": {
+    "architecture": "Fibrosis, atrophy and dropout of acini, variable duct dilation; chronic inflammation round lobules and ducts.",
+    "cells": "Duct lining atrophic, hyperplastic or squamous. Islets relatively spared, lost in advanced disease.",
+    "stroma": "Collagen laid down by stellate cells driven by TGF-beta and PDGF, the same cells active in cancer."
+   },
+   "facts": {
+    "who": "Alcohol is by far the commonest cause; mostly middle-aged men; up to 25% have a genetic basis.",
+    "gross": "Hard, shrunken gland with an irregular outline, dilated ducts and calcified concretions; duct stones in about half.",
+    "molecular": "Inherited risk through PRSS1, SPINK1, CFTR, CASR, CTRC and CPA1.",
+    "outlook": "Mortality 50% at 20–25 years; diabetes in 70%; pseudocysts in 10–40%; cancer risk about 12-fold."
+   },
+   "mimics": [
+    {
+     "id": "pda-well",
+     "tell": "Cancer has lost the lobular layout: incomplete glands, ducts beside muscular arteries, luminal necrosis, invasion of nerves and vessels."
+    },
+    {
+     "id": "autoimmune-pancreatitis",
+     "tell": "Autoimmune pancreatitis has dense lymphocytes and plasma cells round ducts, storiform fibrosis and obliterated veins, and responds to steroids."
+    }
+   ],
+   "see": {
+    "lesion": "chronic",
+    "label": "Open the chronic pancreatitis histology"
+   },
+   "sources": [
+    "Robbins and Cotran 9th ed., ch. 19, p. 886, 888–889",
+    "Gorelick and Williams 2021, ch. 1 (Longnecker), p. 11",
+    "Beger et al. 2023, ch. 52, p. 424–426",
+    "Beger et al. 2023, ch. 10, p. 99",
+    "Beger et al. 2023, ch. 61, p. 481",
+    "Beger et al. 2023, ch. 125, p. 958"
+   ]
+  },
+  {
+   "id": "autoimmune-pancreatitis",
+   "group": "pancreatitis",
+   "name": "Autoimmune pancreatitis",
+   "line": "A steroid-responsive pancreatitis that can pass for cancer: type 1 is rich in plasma cells, type 2 in neutrophils.",
+   "species": "human",
+   "images": [
+    {
+     "src": "atlas/autoimmune-pancreatitis-1.jpg",
+     "w": 750,
+     "h": 698,
+     "caption": "IgG4-related disease centred on the main duct, one figure in panels: slices with a thickened duct wall (A–C); dense lymphoplasmacytic infiltrate with storiform fibrosis, and IgG4-positive plasma cells in brown (D); a duct and a vein narrowed by inflammation (E, F; elastic and IgG4 stains at right). Small panels.",
+     "credit": "Kanamaru K et al. Clinical Journal of Gastroenterology 2026, doi:10.1007/s12328-026-02315-2, fig. 5",
+     "licence": "CC BY 4.0",
+     "mag": "Gross, H&E and special stains"
+    }
+   ],
+   "glance": [
+    "Type 1: dense lymphocytes and plasma cells cuffing ducts",
+    "Type 1: swirling (storiform) fibrosis and obliterated veins",
+    "Type 2: neutrophils in the duct lining and lumen"
+   ],
+   "remember": "It responds to steroids and can masquerade as pancreatic cancer.",
+   "features": {
+    "architecture": "Type 1: infiltrate round medium and small ducts compresses them, lining intact. Type 2: neutrophils in and round ducts and acini destroy the lining.",
+    "cells": "Type 1: lymphocytes and IgG4-positive plasma cells. Type 2: neutrophils (the granulocytic epithelial lesion).",
+    "stroma": "Type 1: storiform fibrosis, rich in macrophages and poor in fibroblasts, with obliterative phlebitis."
+   },
+   "facts": {
+    "who": "Type 1: mostly elderly men with painless jaundice, dominant in East Asia, part of IgG4-related disease. Type 2: younger, either sex; a third have inflammatory bowel disease.",
+    "gross": "On imaging, a long irregular narrowing of the main duct with only slight dilation upstream.",
+    "outlook": "Responds to steroids."
+   },
+   "mimics": [
+    {
+     "name": "Ductal adenocarcinoma",
+     "tell": "Cancer gives a short, severe stricture with marked dilation upstream; autoimmune pancreatitis a long irregular narrowing with little dilation."
+    },
+    {
+     "id": "chronic-pancreatitis",
+     "tell": "Ordinary chronic pancreatitis has duct plugs, stones and plain scarring rather than plasma-cell cuffs, storiform fibrosis and phlebitis."
+    }
+   ],
+   "sources": [
+    "Robbins and Cotran 9th ed., ch. 19, p. 888",
+    "Beger et al. 2023, ch. 69, p. 543",
+    "Beger et al. 2023, ch. 70, p. 546–548"
+   ],
+   "thumb": "atlas/t-autoimmune-pancreatitis-1.jpg"
+  },
+  {
+   "id": "pseudocyst",
+   "group": "cysts",
+   "name": "Pseudocyst and walled-off necrosis",
+   "line": "A collection of enzyme-rich fluid and debris walled in by scar, with no epithelial lining at all.",
+   "species": "human",
+   "images": [
+    {
+     "src": "atlas/pseudocyst-1.jpg",
+     "w": 415,
+     "h": 380,
+     "caption": "A resected pseudocyst at very low power: the cavity is bounded by fibrous tissue with no epithelial lining; pancreatic lobules beside it (small image; letter from the source figure).",
+     "credit": "Miyata T et al. International Journal of Surgery Case Reports 2026, doi:10.1097/RC9.0000000000000160, fig. 5B",
+     "licence": "CC BY 4.0",
+     "mag": "H&E, ×30"
+    }
+   ],
+   "glance": [
+    "Wall of fibrin, granulation tissue and fibrous tissue",
+    "No epithelium on the inner surface",
+    "Necrotic or haemorrhagic debris inside"
+   ],
+   "remember": "No epithelial lining: any lining means it is not a pseudocyst.",
+   "features": {
+    "architecture": "A cavity bounded by fibrin, granulation tissue and fibrous tissue.",
+    "cells": "No epithelial lining.",
+    "mucin": "None; the fluid is rich in amylase, usually from a ruptured duct.",
+    "stroma": "Granulation and fibrous tissue; the pancreas beside it shows pancreatitis."
+   },
+   "facts": {
+    "where": "In the gland or, more often, the lesser sac or retroperitoneum; walled-off necrosis mostly outside the gland near the head.",
+    "size": "2–30 cm, usually solitary.",
+    "who": "About 75% of pancreatic cysts. After acute pancreatitis, often on chronic alcoholic disease, or trauma; in 20–40% of chronic pancreatitis.",
+    "gross": "The wall can be necrotic and brown-black.",
+    "outlook": "About 40% resolve by 6 weeks."
+   },
+   "mimics": [
+    {
+     "id": "mcn",
+     "tell": "A mucinous cystic neoplasm has a columnar mucinous lining over ovarian-type stroma."
+    },
+    {
+     "id": "ipmn",
+     "tell": "An IPMN is lined by mucinous epithelium and connects with a duct."
+    },
+    {
+     "id": "serous-cystadenoma",
+     "tell": "A serous cystadenoma is lined by one layer of clear cuboidal cells."
+    }
+   ],
+   "sources": [
+    "Robbins and Cotran 9th ed., ch. 19, p. 889–890",
+    "Beger et al. 2023, ch. 17, p. 166",
+    "Beger et al. 2023, ch. 52, p. 426"
+   ],
+   "thumb": "atlas/t-pseudocyst-1.jpg"
+  },
+  {
+   "id": "serous-cystadenoma",
+   "group": "cysts",
+   "name": "Serous cystadenoma",
+   "aka": "serous cystic neoplasm",
+   "line": "A sponge of tiny cysts lined by one layer of clear, glycogen-rich cuboidal cells; almost always benign.",
+   "species": "human",
+   "images": [
+    {
+     "src": "atlas/serous-cystadenoma-1.jpg",
+     "w": 960,
+     "h": 640,
+     "caption": "Small cysts lined by one layer of low cuboidal cells in fibrous stroma.",
+     "credit": "Nephron, via Wikimedia Commons",
+     "licence": "CC BY-SA 3.0",
+     "mag": "H&E, high power"
+    },
+    {
+     "src": "atlas/serous-cystadenoma-2.jpg",
+     "w": 960,
+     "h": 640,
+     "caption": "The lining at very high power: cuboidal cells with pale cytoplasm and round central nuclei.",
+     "credit": "Nephron, via Wikimedia Commons",
+     "licence": "CC BY-SA 3.0",
+     "mag": "H&E, very high power"
+    },
+    {
+     "src": "atlas/serous-cystadenoma-3.jpg",
+     "w": 960,
+     "h": 640,
+     "caption": "The tumour (left) beside normal acini (right).",
+     "credit": "Nephron, via Wikimedia Commons",
+     "licence": "CC BY-SA 3.0",
+     "mag": "H&E, intermediate power"
+    }
+   ],
+   "glance": [
+    "Many small cysts, like a sponge",
+    "One layer of cuboidal cells with clear cytoplasm",
+    "Small, round, central nuclei, all alike"
+   ],
+   "remember": "Clear cuboidal cells and watery fluid: no mucin, no ovarian-type stroma.",
+   "features": {
+    "architecture": "Microcystic: innumerable millimetre cysts, often round a central scar. A macrocystic form has one or a few large cysts; a solid form exists.",
+    "cells": "A single layer of cuboidal cells with clear, glycogen-rich cytoplasm.",
+    "nuclei": "Small, uniform, round, central; no atypia.",
+    "mucin": "None; the fluid is watery and straw-coloured."
+   },
+   "facts": {
+    "where": "Usually the tail (Robbins) or body and tail (Beger); no connection with the ducts.",
+    "size": "Cysts 1–3 mm; the mass averages 4–6 cm at diagnosis and grows about 0.6 cm a year.",
+    "who": "About 25% of cystic neoplasms; two-thirds or more are women; sixth to seventh decade.",
+    "molecular": "VHL inactivation; several lesions suggest von Hippel-Lindau syndrome. No KRAS, RNF43 or TP53 mutations.",
+    "outlook": "Almost always benign; without symptoms, surgery is usually not needed."
+   },
+   "mimics": [
+    {
+     "id": "mcn",
+     "tell": "MCN has tall mucinous cells over ovarian-type stroma and thick mucin; the macrocystic serous form can look like it on imaging."
+    },
+    {
+     "id": "ipmn",
+     "tell": "IPMN is mucinous, papillary and connected with a duct."
+    },
+    {
+     "id": "pannet",
+     "tell": "The solid serous form can pass for a neuroendocrine tumour, which has nests of cells with salt-and-pepper nuclei."
+    }
+   ],
+   "sources": [
+    "Robbins and Cotran 9th ed., ch. 19, p. 890",
+    "Beger et al. 2023, ch. 81, p. 623",
+    "Beger et al. 2023, ch. 86, p. 670",
+    "Beger et al. 2023, ch. 125, p. 963"
+   ],
+   "thumb": "atlas/t-serous-cystadenoma-1.jpg"
+  },
+  {
+   "id": "panin-low",
+   "group": "precursors",
+   "name": "Low-grade PanIN",
+   "aka": "pancreatic intraepithelial neoplasia; formerly PanIN-1A, 1B and 2",
+   "line": "Tall mucin-filled cells replace the low lining of a small duct; too small to see by eye.",
+   "species": "human",
+   "images": [
+    {
+     "src": "histo:panin1a-hp",
+     "caption": "Flat lining of tall columnar cells with mucin above basal nuclei (formerly PanIN-1A).",
+     "mag": "H&E, ×20",
+     "credit": "Distler et al. Biomed Res Int 2014, doi:10.1155/2014/474905, fig. 3a",
+     "licence": "CC BY"
+    },
+    {
+     "src": "histo:panin2-hp",
+     "caption": "Papillary folds, crowded and stratified nuclei (formerly PanIN-2).",
+     "mag": "H&E, ×20",
+     "credit": "Distler et al. Biomed Res Int 2014, doi:10.1155/2014/474905, fig. 4a",
+     "licence": "CC BY"
+    },
+    {
+     "src": "atlas/panin-low-3.jpg",
+     "w": 358,
+     "h": 298,
+     "caption": "In context: one small duct with a papillary mucinous lining, among normal acini.",
+     "credit": "Hackeng WM et al. Diagn Pathol 2016, doi:10.1186/s13000-016-0497-z, fig. 2a",
+     "licence": "CC BY 4.0",
+     "mag": "H&E"
+    }
+   ],
+   "glance": [
+    "Tall columnar cells with pale mucin above the nucleus",
+    "Nuclei small and basal, or crowded and stacked in former PanIN-2",
+    "Flat, or folded into small papillae"
+   ],
+   "remember": "Mucin in a small duct means PanIN; grade it by the nuclei.",
+   "features": {
+    "architecture": "Flat (former 1A), or papillary, micropapillary or basally pseudostratified (1B and 2).",
+    "cells": "Tall columnar, gastric-foveolar in type.",
+    "nuclei": "1A and 1B: small, round to oval, basal. Former PanIN-2: some loss of polarity, crowding, enlargement, pseudostratification, darker staining.",
+    "mitoses": "None in former PanIN-1; rare, never at the lumen and never atypical, in former PanIN-2.",
+    "mucin": "Abundant above the nucleus; MUC5AC, MUC1 and MUC4 present, MUC2 usually absent."
+   },
+   "facts": {
+    "where": "Small ducts, more often in the head than the tail.",
+    "size": "Microscopic, usually under 0.5 cm; invisible on imaging.",
+    "who": "In 82% of pancreata with ductal adenocarcinoma, 60% with chronic pancreatitis and 16% of normal ones; sexes equal.",
+    "molecular": "KRAS mutated in over 90%; telomere shortening almost universal, even in PanIN-1A; CDKN2A loss follows.",
+    "outlook": "Common and of no proven clinical significance; at a resection margin it does not alter survival."
+   },
+   "mimics": [
+    {
+     "id": "reactive-duct",
+     "tell": "Reactive ducts have inflammation in the lining, no papillae and no mucin cap; nuclei enlarged but smooth, with fine chromatin."
+    },
+    {
+     "id": "adm",
+     "tell": "ADM is small tubes replacing acini within a lobule, not a lining change in a duct; it too can hold mucin."
+    },
+    {
+     "id": "ipmn",
+     "tell": "IPMN is 1 cm or more and visible by eye; between 0.5 and 1 cm, long finger-like papillae, intestinal or oncocytic cells or GNAS mutation favour IPMN."
+    },
+    {
+     "id": "panin-high",
+     "tell": "High grade has lost polarity throughout, with budding, cribriform growth or luminal necrosis."
+    }
+   ],
+   "see": {
+    "lesion": "panin",
+    "label": "Open the PanIN histology"
+   },
+   "sources": [
+    "Hruban et al. 2001, p. 579–581",
+    "Beger et al. 2023, ch. 126, p. 969–971",
+    "Basturk et al. 2015, p. 1733–1735"
+   ]
+  },
+  {
+   "id": "panin-high",
+   "group": "precursors",
+   "name": "High-grade PanIN",
+   "aka": "formerly PanIN-3; carcinoma in situ",
+   "line": "Cells that look like carcinoma but remain inside the duct: polarity lost, clusters budding into the lumen.",
+   "species": "human",
+   "images": [
+    {
+     "src": "histo:panin3-hp",
+     "caption": "Papillae with crowded nuclei that have lost their polarity; a cluster of cells buds into the lumen (formerly PanIN-3).",
+     "mag": "H&E, ×40",
+     "credit": "Distler et al. Biomed Res Int 2014, doi:10.1155/2014/474905, fig. 4b",
+     "licence": "CC BY"
+    }
+   ],
+   "glance": [
+    "Nuclei at every level of the lining, not lined up at the base",
+    "Small clusters of cells budding into the lumen",
+    "Cribriform spaces or debris in the lumen",
+    "Large nucleoli"
+   ],
+   "remember": "It looks like cancer cell by cell, but nothing has crossed the basement membrane.",
+   "features": {
+    "architecture": "Usually papillary or micropapillary, rarely flat; true cribriform growth, budding and luminal necrosis.",
+    "cells": "Dystrophic goblet cells: nucleus towards the lumen, mucin towards the basement membrane.",
+    "nuclei": "Polarity lost, irregular outlines, prominent (macro) nucleoli.",
+    "mitoses": "Present, occasionally abnormal.",
+    "mucin": "Still present, as in the dystrophic goblet cells."
+   },
+   "facts": {
+    "where": "Small ducts, almost only in glands that also hold invasive carcinoma.",
+    "size": "Microscopic.",
+    "molecular": "TP53, SMAD4 and BRCA2 inactivation are placed at this stage, though SMAD4 loss may come only after invasion.",
+    "outlook": "Found on its own, it raises suspicion of invasive cancer elsewhere in the gland."
+   },
+   "mimics": [
+    {
+     "id": "cancerization-of-ducts",
+     "tell": "Invasive cancer lies right beside the duct and the atypical lining stops abruptly against normal lining; SMAD4 or TP53 stains and step sections help."
+    },
+    {
+     "id": "vascular-invasion",
+     "tell": "Tumour cells can replace the endothelium of a vein and line it like a duct."
+    },
+    {
+     "id": "panin-low",
+     "tell": "Low grade keeps most nuclei towards the base and has no budding, cribriform growth or necrosis."
+    }
+   ],
+   "see": {
+    "lesion": "panin",
+    "label": "Open the PanIN histology"
+   },
+   "sources": [
+    "Hruban et al. 2001, p. 580",
+    "Basturk et al. 2015, p. 1732",
+    "Beger et al. 2023, ch. 126, p. 970–971",
+    "Beger et al. 2023, ch. 125, p. 959",
+    "Robbins and Cotran 9th ed., ch. 19, p. 892"
+   ]
+  },
+  {
+   "id": "ipmn",
+   "group": "precursors",
+   "name": "IPMN",
+   "aka": "intraductal papillary mucinous neoplasm",
+   "line": "Mucin-making papillae growing inside the main duct or its branches, large enough to see by eye.",
+   "species": "human",
+   "images": [
+    {
+     "src": "histo:ipmn-lowgrade",
+     "caption": "Low grade: tall, thick papillae of mucinous columnar cells with bland nuclei.",
+     "mag": "H&E, ×20",
+     "credit": "Chen et al. Diagnostics 2023, doi:10.3390/diagnostics13010065, fig. 4A",
+     "licence": "CC BY 4.0"
+    },
+    {
+     "src": "histo:ipmn-highgrade",
+     "caption": "High grade: branching papillae, stratified nuclei, less mucin.",
+     "mag": "H&E",
+     "credit": "Chen et al. Diagnostics 2023, doi:10.3390/diagnostics13010065, fig. 4B",
+     "licence": "CC BY 4.0"
+    },
+    {
+     "src": "histo:ipmn-gastric-hp",
+     "caption": "Gastric type: short papillae of foveolar cells.",
+     "mag": "H&E, ×20",
+     "credit": "Distler et al. Biomed Res Int 2014, doi:10.1155/2014/474905, fig. 5a",
+     "licence": "CC BY"
+    },
+    {
+     "src": "histo:ipmn-intestinal",
+     "caption": "Intestinal type: long finger-like papillae.",
+     "mag": "H&E, ×4",
+     "credit": "Distler et al. Biomed Res Int 2014, doi:10.1155/2014/474905, fig. 5c",
+     "licence": "CC BY"
+    },
+    {
+     "src": "histo:ipmn-pb-hp",
+     "caption": "Pancreatobiliary type: complex papillae, atypical nuclei.",
+     "mag": "H&E, ×20",
+     "credit": "Distler et al. Biomed Res Int 2014, doi:10.1155/2014/474905, fig. 5e",
+     "licence": "CC BY"
+    },
+    {
+     "src": "atlas/ipmn-6.jpg",
+     "w": 960,
+     "h": 291,
+     "caption": "Resected pancreas: dilated main duct with tumour (arrowheads) and branch-duct cysts (arrows and letter from the source figure).",
+     "credit": "Shibata H et al. Clin J Gastroenterol 2017, doi:10.1007/s12328-017-0728-1",
+     "licence": "CC BY 4.0",
+     "mag": "Gross specimen"
+    }
+   ],
+   "glance": [
+    "Papillae of mucinous columnar cells projecting into a dilated duct",
+    "Gastric type: mucin cap, small basal nuclei",
+    "Intestinal type: long fingers, cigar-shaped stacked nuclei, goblet cells",
+    "Ordinary stroma beneath, never ovarian-type"
+   ],
+   "remember": "Inside a duct, papillary, mucinous and without ovarian-type stroma.",
+   "features": {
+    "architecture": "Papillae in a dilated main duct, or a grape-like cluster of cysts on a branch duct. High grade: irregular papillae and cribriform growth.",
+    "cells": "Gastric type foveolar-like, mostly branch ducts and low grade. Intestinal type like a villous adenoma. Pancreatobiliary type mucin-poor, mostly high grade.",
+    "nuclei": "Low grade: one layer of small uniform nuclei. High grade: polarity lost, dark and pleomorphic.",
+    "mucin": "Abundant, thick and tenacious; MUC5AC in all types, MUC2 in intestinal, MUC1 in pancreatobiliary.",
+    "stroma": "No ovarian-type stroma."
+   },
+   "facts": {
+    "where": "Mostly the head and uncinate process; main duct, branch ducts or both. 10–40% are multifocal.",
+    "size": "Usually 1 cm or more. Main duct over 5 mm; branch-duct cysts over 10 mm.",
+    "who": "Usually found in the mid-60s; main-duct type more often in men.",
+    "gross": "Main duct diffusely dilated with long finger-like papillae and thick mucin; a gaping papilla may extrude mucus.",
+    "molecular": "KRAS and GNAS each mutated in 50–80%, RNF43 in 14–75%; TP53 in high grade; SMAD4 usually only with invasion.",
+    "outlook": "Invasive carcinoma in 43.6% of main-duct and 16.6% of branch-duct lesions. Five-year survival after resection 94% for high grade, 31% once invasive."
+   },
+   "mimics": [
+    {
+     "id": "mcn",
+     "tell": "MCN does not involve the ducts and has ovarian-type stroma beneath its lining; it has no GNAS mutation."
+    },
+    {
+     "id": "panin-low",
+     "tell": "PanIN is under 0.5 cm, in small ducts, and invisible by eye."
+    },
+    {
+     "id": "iopn",
+     "tell": "The oncocytic neoplasm has intensely pink cells in several layers with punched-out spaces and no KRAS or GNAS mutation."
+    },
+    {
+     "id": "cancerization-of-ducts",
+     "tell": "Invasive cancer spreading along a duct can imitate it; look for invasive carcinoma beside the duct and an abrupt edge."
+    }
+   ],
+   "see": {
+    "lesion": "ipmn",
+    "label": "Open the IPMN histology"
+   },
+   "sources": [
+    "Beger et al. 2023, ch. 126, p. 971–974",
+    "Beger et al. 2023, ch. 125, p. 961–962",
+    "Beger et al. 2023, ch. 84, p. 647",
+    "Beger et al. 2023, ch. 86, p. 666",
+    "Basturk et al. 2015, p. 1735",
+    "Robbins and Cotran 9th ed., ch. 19, p. 891"
+   ]
+  },
+  {
+   "id": "iopn",
+   "group": "precursors",
+   "name": "Intraductal oncocytic papillary neoplasm",
+   "aka": "IOPN; formerly oncocytic-type IPMN",
+   "line": "Branching papillae of intensely pink cells inside a duct, now a separate entity from IPMN.",
+   "species": "human",
+   "images": [
+    {
+     "src": "atlas/iopn-1.jpg",
+     "w": 345,
+     "h": 263,
+     "caption": "Branching papillae of pink (oncocytic) cells filling a dilated duct. Low power, small image.",
+     "credit": "Xiang Y et al. Front Med 2025, doi:10.3389/fmed.2025.1650931, fig. 4A",
+     "licence": "CC BY",
+     "mag": "H&E, ×4"
+    }
+   ],
+   "glance": [
+    "Branching papillae, the lining 1–5 cells thick",
+    "Abundant pink granular cytoplasm",
+    "Round punched-out spaces within the lining",
+    "One prominent, off-centre nucleolus"
+   ],
+   "remember": "Pink cells and punched-out spaces: it looks high grade yet seldom invades.",
+   "features": {
+    "architecture": "Arborizing papillae lined by 1–5 layers of cuboidal cells, with punched-out spaces in the epithelium.",
+    "cells": "Abundant eosinophilic cytoplasm, packed with mitochondria.",
+    "nuclei": "Large, with a single prominent eccentric nucleolus."
+   },
+   "facts": {
+    "where": "About two-thirds in the head.",
+    "size": "Mean 4.6–6 cm.",
+    "who": "Men and women equally; about half have no symptoms.",
+    "molecular": "No KRAS or GNAS mutation; PRKACA or PRKACB gene fusions; MUC5AC, MUC6 and HepPar-1 positive.",
+    "outlook": "Excellent; invasive carcinoma is uncommon, and tangential cuts can imitate invasion."
+   },
+   "mimics": [
+    {
+     "id": "ipmn",
+     "tell": "IPMN cells are mucinous rather than pink and granular, and carry KRAS or GNAS mutations."
+    }
+   ],
+   "sources": [
+    "Beger et al. 2023, ch. 126, p. 975",
+    "Beger et al. 2023, ch. 125, p. 962"
+   ],
+   "thumb": "atlas/t-iopn-1.jpg"
+  },
+  {
+   "id": "mcn",
+   "group": "precursors",
+   "name": "Mucinous cystic neoplasm",
+   "aka": "MCN",
+   "line": "A mucin-filled cyst lined by columnar cells over a dense, cellular ovarian-type stroma; no connection with the ducts.",
+   "species": "human",
+   "images": [
+    {
+     "src": "histo:mcn-hp",
+     "caption": "Columnar mucinous lining over dense ovarian-type stroma of spindle cells.",
+     "mag": "H&E, ×40",
+     "credit": "Distler et al. Biomed Res Int 2014, doi:10.1155/2014/474905, fig. 6b",
+     "licence": "CC BY"
+    },
+    {
+     "src": "histo:mcn-low",
+     "caption": "Low power: normal pancreas, fibrous capsule, stroma and cysts.",
+     "mag": "H&E, very low power",
+     "credit": "Nephron, via Wikimedia Commons",
+     "licence": "CC BY-SA 3.0"
+    }
+   ],
+   "glance": [
+    "Columnar mucinous cells lining a cyst",
+    "Densely packed spindle cells directly beneath the lining",
+    "Stretches of flat or missing lining are common"
+   ],
+   "remember": "Ovarian-type stroma defines MCN; IPMN never has it.",
+   "features": {
+    "architecture": "A well-demarcated cyst, multilocular or cyst-within-cyst, behind a fibrous pseudocapsule. Papillae or a mural nodule suggest high grade or invasion.",
+    "cells": "From flat or cuboidal with little mucin to tall columnar; low- and high-grade areas coexist; lining often denuded.",
+    "mucin": "Abundant above the nucleus in the tall cells; mucin-rich lining is more often linked with high grade or invasion.",
+    "stroma": "Ovarian-type spindle-cell stroma, required for diagnosis but sometimes focal or masked by fibrosis; oestrogen and progesterone receptors; luteinised cells inhibin-positive."
+   },
+   "facts": {
+    "where": "Over 90% in the body or tail; solitary; no, or very rare, communication with the ducts.",
+    "size": "Median 3.5–5 cm (range 0.5–20 cm; up to 35 cm in one chapter).",
+    "who": "Almost only women (10–20 to 1), mean age about 45; about ten years older when invasive.",
+    "gross": "Round, smooth inner surface, thick wall often calcified, tenacious mucin.",
+    "molecular": "KRAS (up to 100% when high grade or invasive), RNF43; TP53 and CDKN2A in about half of those; no GNAS mutation.",
+    "outlook": "Resection of a non-invasive MCN is curative. Invasive carcinoma in 6–25% (up to a third in Robbins)."
+   },
+   "mimics": [
+    {
+     "id": "ipmn",
+     "tell": "IPMN involves a duct and has no ovarian-type stroma; GNAS mutation occurs in IPMN, not MCN."
+    },
+    {
+     "id": "pseudocyst",
+     "tell": "A pseudocyst has no epithelial lining at all, only granulation and fibrous tissue."
+    },
+    {
+     "id": "serous-cystadenoma",
+     "tell": "Serous cysts are lined by clear cuboidal cells and hold watery fluid, without mucin or ovarian-type stroma."
+    },
+    {
+     "name": "Simple mucinous cyst",
+     "tell": "A flat gastric-type lining with at most minimal atypia and no ovarian-type stroma; benign."
+    }
+   ],
+   "see": {
+    "lesion": "mcn",
+    "label": "Open the MCN histology"
+   },
+   "sources": [
+    "Beger et al. 2023, ch. 125, p. 962",
+    "Beger et al. 2023, ch. 126, p. 976–978",
+    "Beger et al. 2023, ch. 81, p. 624",
+    "Hruban et al. 2001, p. 581",
+    "Basturk et al. 2015, p. 1736",
+    "Robbins and Cotran 9th ed., ch. 19, p. 891"
+   ]
+  },
+  {
+   "id": "pda-well",
+   "group": "pda",
+   "name": "Ductal adenocarcinoma, well differentiated",
+   "line": "Well-formed glands that closely resemble normal ducts, but scattered without order through scar-like stroma.",
+   "species": "human",
+   "images": [
+    {
+     "src": "atlas/pda-well-1.jpg",
+     "w": 700,
+     "h": 527,
+     "caption": "Well-formed glands with open lumina in desmoplastic stroma. The uploader does not state a grade; chosen for its well-formed glands.",
+     "credit": "KGH, via Wikimedia Commons",
+     "licence": "CC BY-SA 3.0",
+     "mag": "H&E"
+    }
+   ],
+   "glance": [
+    "Complete, well-formed glands",
+    "Fairly uniform nuclei",
+    "Glands placed haphazardly, the lobular pattern gone",
+    "A gland lying next to a muscular artery"
+   ],
+   "remember": "The cells can look bland: it is the position of the glands, not their nuclei, that gives it away.",
+   "features": {
+    "architecture": "Haphazard glands and duct-like structures; lobular layout lost; some glands incomplete; glands beside muscular arteries.",
+    "cells": "Cuboidal or columnar, often with mucin in the cytoplasm.",
+    "nuclei": "Relatively uniform; can be quite bland.",
+    "mitoses": "Fewer than in moderately differentiated tumours.",
+    "mucin": "Present: the cells form glands and secrete mucin.",
+    "stroma": "Dense desmoplastic stroma."
+   },
+   "facts": {
+    "where": "About 60% of ductal adenocarcinomas arise in the head, 15% in the body, 5% in the tail; 20% are diffuse.",
+    "who": "The exception: most ductal adenocarcinomas are moderately to poorly differentiated. About 80% of cases occur at ages 60–80.",
+    "gross": "A hard, grey-white, ill-defined mass in the soft yellow gland.",
+    "molecular": "KRAS in 90–95%, CDKN2A in about 95%, TP53 in 70–75%, SMAD4 in about 55%. Keratins 7 and 19, CEA, mesothelin and MUC1 are used as markers.",
+    "outlook": "The tumour is graded by its worst area, and grade drives prognosis."
+   },
+   "mimics": [
+    {
+     "id": "chronic-pancreatitis",
+     "tell": "Reactive glands keep the lobular arrangement; cancer shows incomplete glands, glands beside muscular arteries, luminal necrosis and invasion of nerves and vessels."
+    },
+    {
+     "id": "reactive-duct",
+     "tell": "A reactive duct sits where a duct belongs, with inflammation in its lining."
+    },
+    {
+     "name": "Large-duct pattern",
+     "tell": "Dilated, irregular mucinous glands can pass for a cystic neoplasm; they dissect through desmoplastic stroma without lobular order."
+    }
+   ],
+   "see": {
+    "lesion": "pda",
+    "label": "Open the PDA histology"
+   },
+   "sources": [
+    "Beger et al. 2023, ch. 125, p. 957–958",
+    "Robbins and Cotran 9th ed., ch. 19, p. 892–894"
+   ],
+   "thumb": "atlas/t-pda-well-1.jpg"
+  },
+  {
+   "id": "pda-moderate",
+   "group": "pda",
+   "name": "Ductal adenocarcinoma, moderately differentiated",
+   "line": "The usual picture: poorly formed glands of varied cells deep in dense stroma.",
+   "species": "human",
+   "images": [
+    {
+     "src": "atlas/pda-moderate-1.jpg",
+     "w": 700,
+     "h": 527,
+     "caption": "Irregular glands and cribriform nests of atypical cells in desmoplastic stroma. Grade not stated by the uploader.",
+     "credit": "KGH, via Wikimedia Commons",
+     "licence": "CC BY-SA 3.0",
+     "mag": "H&E"
+    },
+    {
+     "src": "histo:pda-glands",
+     "caption": "Irregular, crowded glands of atypical cells with debris in the lumen. The source does not state the grade.",
+     "mag": "H&E, high power",
+     "credit": "Singh et al. PLoS One 2016, doi:10.1371/journal.pone.0150338",
+     "licence": "CC BY 4.0"
+    }
+   ],
+   "glance": [
+    "Poorly formed or abortive glands",
+    "Cells and nuclei vary in size and shape",
+    "Much of the field is fibrous stroma"
+   ],
+   "remember": "More variation between cells and more mitoses than a well-differentiated tumour, but still making glands.",
+   "features": {
+    "architecture": "Abortive tubules or cell clusters with a deeply infiltrative pattern.",
+    "cells": "Pleomorphic cuboidal to columnar cells.",
+    "nuclei": "More variation than in well-differentiated tumours.",
+    "mitoses": "More than in well-differentiated tumours.",
+    "stroma": "Dense desmoplastic fibrosis; much of a biopsy may be non-neoplastic tissue."
+   },
+   "facts": {
+    "who": "With poorly differentiated tumours, the usual form of ductal adenocarcinoma.",
+    "molecular": "KRAS in 90–95%, CDKN2A in about 95%, TP53 in 70–75%, SMAD4 in about 55%. Keratins 7 and 19, CEA, mesothelin and MUC1 are used as markers.",
+    "outlook": "Overall five-year survival about 10% or less; 15–25% after resection; fewer than 20% are resectable at diagnosis."
+   },
+   "mimics": [
+    {
+     "id": "pda-well",
+     "tell": "Well-differentiated tumours form complete glands with fairly uniform nuclei."
+    },
+    {
+     "id": "pda-poor",
+     "tell": "Poorly differentiated tumours form few or no glands and grow as sheets or single cells."
+    }
+   ],
+   "see": {
+    "lesion": "pda",
+    "label": "Open the PDA histology"
+   },
+   "sources": [
+    "Beger et al. 2023, ch. 125, p. 958",
+    "Robbins and Cotran 9th ed., ch. 19, p. 892–894",
+    "Kleeff et al. 2016, p. 1"
+   ],
+   "thumb": "atlas/t-pda-moderate-1.jpg"
+  },
+  {
+   "id": "pda-poor",
+   "group": "pda",
+   "name": "Ductal adenocarcinoma, poorly differentiated",
+   "line": "Few or no glands: solid sheets and single cells, from small and scant to large and bizarre.",
+   "species": "human",
+   "images": [
+    {
+     "src": "atlas/pda-poor-1.jpg",
+     "w": 750,
+     "h": 565,
+     "caption": "Poorly differentiated malignant cells, with few glands, in desmoplastic stroma.",
+     "credit": "Aloraini et al. Cureus 2023, doi:10.7759/cureus.48642, fig. 6",
+     "licence": "CC BY 4.0",
+     "mag": "H&E, ×400"
+    },
+    {
+     "src": "atlas/pda-poor-2.jpg",
+     "w": 700,
+     "h": 527,
+     "caption": "Another area of a gland-forming tumour: cords and single cells with only occasional lumina. A tumour is graded by its worst area.",
+     "credit": "KGH, via Wikimedia Commons",
+     "licence": "CC BY-SA 3.0",
+     "mag": "H&E"
+    }
+   ],
+   "glance": [
+    "Solid sheets or single infiltrating cells",
+    "Glands absent or barely formed",
+    "Some large bizarre cells with abundant pink cytoplasm"
+   ],
+   "remember": "No glands, or hardly any: sheets and single cells.",
+   "features": {
+    "architecture": "No glands or only poorly formed ones; solid sheets and single cells.",
+    "cells": "From small with scant cytoplasm to large and bizarre with abundant eosinophilic cytoplasm."
+   },
+   "facts": {
+    "molecular": "KRAS in 90–95%, CDKN2A in about 95%, TP53 in 70–75%, SMAD4 in about 55%. Keratins 7 and 19, CEA, mesothelin and MUC1 are used as markers.",
+    "outlook": "Worse than well or moderately differentiated tumours."
+   },
+   "mimics": [
+    {
+     "id": "undifferentiated",
+     "tell": "Undifferentiated carcinoma is a separate category of spindled or bizarre cells with no line of differentiation at all."
+    },
+    {
+     "id": "pannec",
+     "tell": "Neuroendocrine carcinoma also grows in sheets, with geographic necrosis; a mixed tumour needs over 30% of each component."
+    },
+    {
+     "id": "pda-moderate",
+     "tell": "Moderately differentiated tumours still form recognisable, if abortive, glands."
+    }
+   ],
+   "see": {
+    "lesion": "pda",
+    "label": "Open the PDA histology"
+   },
+   "sources": [
+    "Beger et al. 2023, ch. 125, p. 958, 960",
+    "Robbins and Cotran 9th ed., ch. 19, p. 892–893",
+    "Kleeff et al. 2016, p. 11"
+   ],
+   "thumb": "atlas/t-pda-poor-1.jpg"
+  },
+  {
+   "id": "desmoplastic-stroma",
+   "group": "pda",
+   "name": "Desmoplastic stroma",
+   "line": "The dense collagen scar that surrounds the glands of ductal adenocarcinoma and makes the tumour hard.",
+   "species": "human",
+   "images": [
+    {
+     "src": "histo:pda-stroma",
+     "caption": "Loose, moderate and dense desmoplastic stroma, side by side.",
+     "mag": "H&E",
+     "credit": "Wang et al. Oncotarget 2016, doi:10.18632/oncotarget.6770",
+     "licence": "CC BY 3.0"
+    },
+    {
+     "src": "histo:pda-hp",
+     "caption": "Malignant glands in pale desmoplastic stroma.",
+     "mag": "H&E, ×400",
+     "credit": "Aloraini et al. Cureus 2023, doi:10.7759/cureus.48642, fig. 3",
+     "licence": "CC BY 4.0"
+    },
+    {
+     "src": "atlas/desmoplastic-stroma-3.jpg",
+     "w": 283,
+     "h": 234,
+     "caption": "To the eye: a firm, white, ill-defined tumour (T) in the head, beside pancreas (P) and duodenum (D). Small image.",
+     "credit": "Hackeng WM et al. Diagn Pathol 2016, doi:10.1186/s13000-016-0497-z, fig. 1a",
+     "licence": "CC BY 4.0",
+     "mag": "Gross specimen"
+    }
+   ],
+   "glance": [
+    "Broad bands of dense pink collagen",
+    "Fibroblasts (activated stellate cells) between the fibres",
+    "Glands can be sparse within it"
+   ],
+   "remember": "The stroma can so outweigh the glands that a small biopsy misses the cancer.",
+   "features": {
+    "architecture": "Abundant dense collagen round the glands, which may be few.",
+    "cells": "Activated stellate cells (cancer-associated fibroblasts) make the collagen; immune cells, vessels and nerves lie within it.",
+    "stroma": "Poorly vascularised and under high pressure, which may hinder chemotherapy."
+   },
+   "facts": {
+    "gross": "Accounts for the firm, sclerotic feel of the tumour.",
+    "outlook": "A florid stroma can hide the glands in small samples, so extensive sampling is needed before cancer is excluded."
+   },
+   "mimics": [
+    {
+     "id": "chronic-pancreatitis",
+     "tell": "Scar of chronic pancreatitis keeps the outline of lobules and holds residual islets and orderly ducts, not haphazard glands."
+    },
+    {
+     "id": "medullary",
+     "tell": "Medullary carcinoma is the contrast: scant fibrous stroma and many lymphocytes."
+    },
+    {
+     "id": "acinar-cell-carcinoma",
+     "tell": "Acinar cell carcinoma has no prominent desmoplastic stroma."
+    }
+   ],
+   "see": {
+    "lesion": "pda",
+    "label": "Open the PDA histology"
+   },
+   "sources": [
+    "Kleeff et al. 2016, p. 5, 11",
+    "Beger et al. 2023, ch. 125, p. 958, 964",
+    "Beger et al. 2023, ch. 123, p. 942–943"
+   ]
+  },
+  {
+   "id": "adenosquamous",
+   "group": "variants",
+   "name": "Adenosquamous carcinoma",
+   "line": "Two cancers in one: ordinary glands with mucin, and nests of malignant squamous cells.",
+   "species": "human",
+   "images": [
+    {
+     "src": "atlas/adenosquamous-1.jpg",
+     "w": 796,
+     "h": 593,
+     "caption": "Gland-forming and solid squamous areas in one tumour. Low contrast; the squamous part is subtle here.",
+     "credit": "Paramythiotis D et al. J Med Case Rep 2022, doi:10.1186/s13256-022-03610-5, fig. 2a",
+     "licence": "CC BY 4.0",
+     "mag": "H&E"
+    }
+   ],
+   "glance": [
+    "Glands with mucin in one area",
+    "Solid nests of polygonal cells with dense pink cytoplasm in another",
+    "Sharp cell borders and bridges between squamous cells",
+    "Keratin in some tumours"
+   ],
+   "remember": "Find both parts: glands and squamous nests. With no glands, think of a metastasis.",
+   "features": {
+    "architecture": "Biphasic: glandular and squamous areas apart or closely mixed.",
+    "cells": "Squamous: polygonal, abundant opaque eosinophilic cytoplasm, distinct borders, intercellular bridges, with or without keratin. Glandular: as ordinary ductal adenocarcinoma.",
+    "mucin": "In the glandular part only."
+   },
+   "facts": {
+    "where": "Head 17, tail 9, body 4 in a series of 25 (some in more than one part).",
+    "size": "2–12 cm, mean 6.3 cm.",
+    "who": "1–4% of exocrine pancreatic cancers; mean age 65; more men than women in that series.",
+    "gross": "Infiltrative, firm, yellow-white to grey, with softened or liquefied areas.",
+    "molecular": "KRAS codon 12 mutated in over half. CK5/6 marks the squamous part, CK7 the glands.",
+    "outlook": "Worse than ordinary ductal adenocarcinoma: mean survival under 6 months in one series. Some respond to platinum."
+   },
+   "mimics": [
+    {
+     "id": "squamous-metaplasia",
+     "tell": "Metaplasia is bland, orderly and inside a duct; the carcinoma infiltrates as nests and comes with malignant glands."
+    },
+    {
+     "name": "Metastatic squamous carcinoma",
+     "tell": "If no glandular component is found, a squamous carcinoma from another organ must be considered."
+    },
+    {
+     "name": "The 30% rule",
+     "tell": "Beger asks for at least 30% squamous; Kardon calls that arbitrary and accepts any definite malignant squamous differentiation."
+    }
+   ],
+   "sources": [
+    "Kardon et al. 2001, p. 443–450",
+    "Beger et al. 2023, ch. 125, p. 959"
+   ],
+   "thumb": "atlas/t-adenosquamous-1.jpg"
+  },
+  {
+   "id": "colloid",
+   "group": "variants",
+   "name": "Colloid carcinoma",
+   "aka": "mucinous non-cystic carcinoma",
+   "line": "Pools of mucin push through the stroma, with strips and clusters of tumour cells floating in them.",
+   "species": "human",
+   "images": [
+    {
+     "src": "atlas/colloid-1.jpg",
+     "w": 792,
+     "h": 597,
+     "caption": "Pools of pale mucin with strips of tumour cells floating in them (letter and arrow from the source figure).",
+     "credit": "Orcutt ST et al. Case Rep Pancreat Cancer 2016, doi:10.1089/crpc.2016.0006, fig. 2A",
+     "licence": "CC BY 4.0",
+     "mag": "H&E, low power"
+    }
+   ],
+   "glance": [
+    "Large lakes of pale mucin in the stroma",
+    "Tumour cells floating in the mucin or lining its edge"
+   ],
+   "remember": "The cells must be in the mucin: spilt mucin from a ruptured cyst is not colloid carcinoma.",
+   "features": {
+    "architecture": "Mucin pools dissecting the stroma; neoplastic epithelium lines the pools or floats within them.",
+    "mucin": "Abundant, outside the cells."
+   },
+   "facts": {
+    "who": "About 2% of resected pancreatic neoplasms in one large series.",
+    "molecular": "Arises from intestinal-type IPMN: MUC2 and CDX2 positive, GNAS often mutated.",
+    "outlook": "Better than ordinary ductal adenocarcinoma: median survival 107 against 20 months when arising from IPMN."
+   },
+   "mimics": [
+    {
+     "name": "Ruptured mucinous cyst",
+     "tell": "Mucin spilt into the stroma without malignant cells in it should not be called invasive."
+    },
+    {
+     "id": "ipmn",
+     "tell": "Intestinal-type IPMN is its usual source; the carcinoma is the mucin, with cells, beyond the duct."
+    },
+    {
+     "id": "signet-ring",
+     "tell": "Signet-ring cells hold their mucin inside the cell and infiltrate singly, without mucin lakes."
+    }
+   ],
+   "sources": [
+    "Beger et al. 2023, ch. 125, p. 959",
+    "Beger et al. 2023, ch. 126, p. 974",
+    "Beger et al. 2023, ch. 86, p. 669",
+    "Kleeff et al. 2016, p. 3, 11"
+   ],
+   "thumb": "atlas/t-colloid-1.jpg"
+  },
+  {
+   "id": "undifferentiated",
+   "group": "variants",
+   "name": "Undifferentiated carcinoma",
+   "aka": "anaplastic; the spindle-cell pattern some call sarcomatoid",
+   "line": "Spindled or large bizarre cells that hold together poorly and show no line of differentiation.",
+   "species": "human",
+   "images": [
+    {
+     "src": "atlas/undifferentiated-1.jpg",
+     "w": 375,
+     "h": 283,
+     "caption": "Sheets of large, bizarre tumour cells, some with several nuclei, and haemorrhage (small image; letter from the source figure).",
+     "credit": "Olayinka O et al. Cureus 2021, doi:10.7759/cureus.14988, fig. 1B",
+     "licence": "CC BY",
+     "mag": "H&E"
+    }
+   ],
+   "glance": [
+    "Loose sheets of large bizarre cells",
+    "Or bundles of spindle cells",
+    "No glands; cells falling apart from one another"
+   ],
+   "remember": "No glands, no cohesion: grade it by this part even when ordinary glands lie beside it.",
+   "features": {
+    "architecture": "Loosely cohesive sheets; often an ordinary lower-grade gland-forming component beside it.",
+    "cells": "Predominantly spindled, or large and bizarre; less cohesive than ordinary ductal adenocarcinoma (E-cadherin lost); some rhabdoid.",
+    "nuclei": "Bizarre, with prominent nucleoli; cells with several nuclei occur."
+   },
+   "facts": {
+    "outlook": "Fast growing and often widely metastatic; mean survival under one year."
+   },
+   "mimics": [
+    {
+     "id": "osteoclast-giant",
+     "tell": "There the giant cells are bland, non-neoplastic and CD68-positive; here the large bizarre cells are the tumour."
+    },
+    {
+     "id": "pda-poor",
+     "tell": "A poorly differentiated tumour still follows a ductal line, with poor glands, sheets or single cells; this has no line of differentiation."
+    },
+    {
+     "name": "“Sarcomatoid carcinoma”",
+     "tell": "The books read (Beger, Robbins, Kleeff) do not use this term for the pancreas; they describe undifferentiated carcinoma of spindled cells."
+    }
+   ],
+   "sources": [
+    "Beger et al. 2023, ch. 125, p. 960",
+    "Kardon et al. 2001, p. 446, 450",
+    "Robbins and Cotran 9th ed., ch. 19, p. 894"
+   ],
+   "thumb": "atlas/t-undifferentiated-1.jpg"
+  },
+  {
+   "id": "osteoclast-giant",
+   "group": "variants",
+   "name": "Undifferentiated carcinoma with osteoclast-like giant cells",
+   "line": "Malignant spindled or bizarre cells mixed with many large giant cells that are not themselves tumour.",
+   "species": "human",
+   "images": [
+    {
+     "src": "atlas/osteoclast-giant-1.jpg",
+     "w": 896,
+     "h": 506,
+     "caption": "Large cells with many nuclei (arrowheads, from the source figure) among smaller tumour cells.",
+     "credit": "Chan W et al. J Med Case Rep 2023, doi:10.1186/s13256-023-04213-4, fig. 4C",
+     "licence": "CC BY 4.0",
+     "mag": "H&E, ×40"
+    }
+   ],
+   "glance": [
+    "Many giant cells, each with numerous nuclei",
+    "Spindled or bizarre single-nucleus cells between them"
+   ],
+   "remember": "The giant cells are bystanders; the malignant cells are the ones in between.",
+   "features": {
+    "architecture": "Numerous multinucleated giant cells scattered through an undifferentiated carcinoma.",
+    "cells": "Giant cells: non-neoplastic, histiocytic (CD68-positive). Cells between them: malignant, spindled or bizarre, often keratin-positive."
+   },
+   "facts": {
+    "outlook": "Poor: mean survival under one year."
+   },
+   "mimics": [
+    {
+     "id": "undifferentiated",
+     "tell": "Without the osteoclast-like giant cells; its giant forms are malignant, with bizarre nuclei."
+    }
+   ],
+   "sources": [
+    "Beger et al. 2023, ch. 125, p. 960",
+    "Robbins and Cotran 9th ed., ch. 19, p. 894"
+   ],
+   "thumb": "atlas/t-osteoclast-giant-1.jpg"
+  },
+  {
+   "id": "signet-ring",
+   "group": "variants",
+   "name": "Signet-ring cell carcinoma",
+   "line": "Single cells infiltrating the stroma, each swollen with mucin that pushes its nucleus to one side.",
+   "species": "human",
+   "images": [
+    {
+     "src": "atlas/signet-ring-1.jpg",
+     "w": 493,
+     "h": 370,
+     "caption": "Single cells, each with a mucin vacuole pushing the nucleus to the edge (arrow from the source figure).",
+     "credit": "Campbell DJ et al. J Pancreat Cancer 2021, doi:10.1089/pancan.2020.0013, fig. 4",
+     "licence": "CC BY 4.0",
+     "mag": "H&E, ×400"
+    }
+   ],
+   "glance": [
+    "Single cells, not glands or sheets",
+    "A droplet of mucin filling each cell",
+    "Nucleus indented and pushed to the edge"
+   ],
+   "remember": "Before calling it pancreatic, exclude a metastasis from stomach or breast.",
+   "features": {
+    "architecture": "Single infiltrating cells rather than glands or sheets.",
+    "cells": "Mucin within the cytoplasm.",
+    "nuclei": "Indented and displaced by the mucin.",
+    "mucin": "Inside the cells."
+   },
+   "facts": {
+    "who": "Rare; the sources read give no frequency."
+   },
+   "mimics": [
+    {
+     "name": "Metastatic diffuse gastric or lobular breast carcinoma",
+     "tell": "They look the same, so a metastasis must be considered before a pancreatic primary is accepted."
+    },
+    {
+     "id": "colloid",
+     "tell": "Colloid carcinoma has mucin outside the cells, in lakes, with cells floating in it."
+    }
+   ],
+   "sources": [
+    "Beger et al. 2023, ch. 125, p. 960",
+    "Kardon et al. 2001, p. 445",
+    "Kleeff et al. 2016, p. 3"
+   ],
+   "thumb": "atlas/t-signet-ring-1.jpg"
+  },
+  {
+   "id": "medullary",
+   "group": "variants",
+   "name": "Medullary carcinoma",
+   "line": "Sheets of poorly differentiated cells with a pushing edge, many lymphocytes and little fibrous stroma.",
+   "species": "human",
+   "images": [
+    {
+     "src": "atlas/medullary-1.jpg",
+     "w": 318,
+     "h": 246,
+     "caption": "Sheets of poorly differentiated cells with a pushing edge and lymphocytes (small image; arrows from the source figure).",
+     "credit": "Ohtsubo K et al. Front Oncol 2025, doi:10.3389/fonc.2025.1551038, fig. 2B",
+     "licence": "CC BY",
+     "mag": "H&E"
+    }
+   ],
+   "glance": [
+    "Sheets of large cells with borders that run together",
+    "Many lymphocytes in and round the tumour",
+    "A pushing, rounded edge; hardly any scar"
+   ],
+   "remember": "Poorly differentiated yet with a good outlook, and often mismatch-repair deficient.",
+   "features": {
+    "architecture": "Syncytial growth with pushing, non-infiltrating borders.",
+    "cells": "Poorly differentiated epithelioid cells.",
+    "nuclei": "Large.",
+    "stroma": "Scant fibrous stroma; a brisk lymphocytic infiltrate in and round the tumour."
+   },
+   "facts": {
+    "molecular": "More often microsatellite unstable (mismatch-repair deficient); possible Lynch syndrome.",
+    "outlook": "Good despite poor differentiation; PD-1 inhibitors may work."
+   },
+   "mimics": [
+    {
+     "id": "pda-poor",
+     "tell": "Ordinary poorly differentiated carcinoma infiltrates, in dense desmoplastic stroma, without the lymphocytes or the pushing edge."
+    }
+   ],
+   "sources": [
+    "Beger et al. 2023, ch. 125, p. 959–960",
+    "Robbins and Cotran 9th ed., ch. 19, p. 894"
+   ],
+   "thumb": "atlas/t-medullary-1.jpg"
+  },
+  {
+   "id": "hepatoid",
+   "group": "variants",
+   "name": "Hepatoid carcinoma",
+   "line": "Polygonal pink cells that look like liver cancer but arise in the pancreas.",
+   "species": "human",
+   "images": [
+    {
+     "src": "atlas/hepatoid-1.jpg",
+     "w": 596,
+     "h": 498,
+     "caption": "Polygonal cells with abundant pink cytoplasm and round nuclei, like liver cells.",
+     "credit": "Tomino T et al. Surg Case Rep 2019, doi:10.1186/s40792-019-0723-5, fig. 4",
+     "licence": "CC BY 4.0",
+     "mag": "H&E"
+    }
+   ],
+   "glance": [
+    "Polygonal cells",
+    "Abundant pink cytoplasm, like liver cells"
+   ],
+   "remember": "Exclude a metastasis from the liver first.",
+   "features": {
+    "cells": "Polygonal and eosinophilic, resembling hepatocellular carcinoma."
+   },
+   "facts": {
+    "molecular": "May stain for hepatocyte antigen (Hep-Par) and alpha-fetoprotein."
+   },
+   "mimics": [
+    {
+     "name": "Metastatic hepatocellular carcinoma",
+     "tell": "It looks the same; a liver primary must be excluded before a pancreatic one is diagnosed."
+    }
+   ],
+   "sources": [
+    "Beger et al. 2023, ch. 125, p. 960",
+    "Robbins and Cotran 9th ed., ch. 19, p. 894"
+   ],
+   "thumb": "atlas/t-hepatoid-1.jpg"
+  },
+  {
+   "id": "perineural-invasion",
+   "group": "spread",
+   "name": "Perineural invasion",
+   "line": "Malignant glands growing along and round a nerve: present in practically every ductal adenocarcinoma.",
+   "species": "human",
+   "images": [
+    {
+     "src": "histo:pda-perineural",
+     "caption": "Malignant glands round a nerve.",
+     "mag": "H&E",
+     "credit": "KGH, via Wikimedia Commons",
+     "licence": "CC BY-SA 3.0"
+    }
+   ],
+   "glance": [
+    "A nerve: a pale bundle of wavy fibres",
+    "Glands wrapped round it or inside its sheath"
+   ],
+   "remember": "A gland in or round a nerve is cancer, not a reactive duct.",
+   "features": {
+    "architecture": "Tumour tracks along and round nerves, within the pancreas and beyond it."
+   },
+   "facts": {
+    "who": "Practically all ductal adenocarcinomas; 80% of adenosquamous carcinomas in one series.",
+    "outlook": "May explain the pain (about 70% of patients) and gives the tumour a path out of the gland."
+   },
+   "mimics": [
+    {
+     "id": "chronic-pancreatitis",
+     "tell": "Reactive glands of chronic pancreatitis do not invade nerves; finding a gland there settles it."
+    }
+   ],
+   "see": {
+    "lesion": "pda",
+    "label": "Open the PDA histology"
+   },
+   "sources": [
+    "Beger et al. 2023, ch. 125, p. 958",
+    "Beger et al. 2023, ch. 127, p. 983",
+    "Kardon et al. 2001, p. 449"
+   ]
+  },
+  {
+   "id": "vascular-invasion",
+   "group": "spread",
+   "name": "Vascular invasion",
+   "line": "Tumour inside a vein, often not as a plug but as a lining that makes the vein look like a duct.",
+   "species": "human",
+   "images": [
+    {
+     "src": "atlas/vascular-invasion-1.jpg",
+     "w": 800,
+     "h": 267,
+     "caption": "Round plugs of tumour cells inside dilated lymphatic vessels (labels from the source figure).",
+     "credit": "Satala CB et al. Surg J (N Y) 2021, doi:10.1055/s-0041-1728651, fig. 2A-B",
+     "licence": "CC BY",
+     "mag": "H&E, ×5 and ×10 objectives"
+    }
+   ],
+   "glance": [
+    "A vessel lined by tumour cells in place of endothelium",
+    "Cells flattened along the wall, like a duct lining",
+    "Often no tumour plug in the lumen"
+   ],
+   "remember": "In veins the cells flatten along the wall and imitate a duct or PanIN.",
+   "features": {
+    "architecture": "Cells flatten and grow along the endothelial surface rather than forming a tumour thrombus."
+   },
+   "facts": {
+    "who": "Practically all ductal adenocarcinomas; lymphatic and large-vessel invasion are common.",
+    "outlook": "Leads to widespread dissemination, especially to the liver."
+   },
+   "mimics": [
+    {
+     "id": "panin-high",
+     "tell": "PanIN lines a duct; here the same picture is tumour that has replaced the endothelium of a vein."
+    },
+    {
+     "id": "cancerization-of-ducts",
+     "tell": "Both are tumour lining a pre-existing tube: one a duct, the other a vein."
+    }
+   ],
+   "sources": [
+    "Beger et al. 2023, ch. 125, p. 958–959",
+    "Robbins and Cotran 9th ed., ch. 19, p. 894"
+   ],
+   "thumb": "atlas/t-vascular-invasion-1.jpg"
+  },
+  {
+   "id": "cancerization-of-ducts",
+   "group": "spread",
+   "name": "Cancerization of ducts",
+   "aka": "intraductal spread of invasive carcinoma",
+   "line": "Invasive carcinoma grows back along a pre-existing duct and replaces its lining, imitating high-grade PanIN.",
+   "species": "human",
+   "images": [],
+   "glance": [
+    "Highly atypical lining that stops abruptly against normal lining",
+    "Invasive glands right beside the duct"
+   ],
+   "remember": "An abrupt front inside one duct, with invasive cancer next door, means cancerization.",
+   "features": {
+    "architecture": "Carcinoma extends along ducts and ductules; an abrupt transition from highly atypical to normal epithelium within the same duct."
+   },
+   "facts": {
+    "who": "Reported in as many as 70% of resections for invasive pancreatic cancer.",
+    "molecular": "SMAD4 or TP53 immunostains may help; step sections show its link with the invasive tumour.",
+    "outlook": "At a resection margin it may change outcome, whereas PanIN of any grade there does not."
+   },
+   "mimics": [
+    {
+     "id": "panin-high",
+     "tell": "Without invasive carcinoma beside the duct or an abrupt front against normal lining, high-grade PanIN is favoured."
+    },
+    {
+     "id": "ipmn",
+     "tell": "Spread along larger ducts can imitate IPMN."
+    },
+    {
+     "id": "vascular-invasion",
+     "tell": "Tumour lining a vein gives the same picture: cells flattened along the wall of a pre-existing tube."
+    }
+   ],
+   "sources": [
+    "Basturk et al. 2015, p. 1736",
+    "Hruban et al. 2001, p. 581",
+    "Beger et al. 2023, ch. 126, p. 970–971",
+    "Beger et al. 2023, ch. 125, p. 959"
+   ]
+  },
+  {
+   "id": "lymph-node-metastasis",
+   "group": "spread",
+   "name": "Lymph node metastasis",
+   "line": "Tumour deposits in the nodes round the pancreas; at least 12 nodes are needed to stage a resection.",
+   "species": "human",
+   "images": [
+    {
+     "src": "atlas/lymph-node-metastasis-1.jpg",
+     "w": 800,
+     "h": 531,
+     "caption": "A lymph node: tumour cells and glands replace the lymphoid tissue inside the capsule (label from the source figure).",
+     "credit": "Satala CB et al. Surg J (N Y) 2021, doi:10.1055/s-0041-1728651, fig. 2C",
+     "licence": "CC BY",
+     "mag": "H&E"
+    }
+   ],
+   "glance": [
+    "Lymphoid tissue of the node",
+    "Glands or sheets of tumour cells within it"
+   ],
+   "remember": "Count the nodes: staging needs at least 12.",
+   "features": {
+    "cells": "The deposit can be less differentiated than the primary; one nodal deposit of an adenosquamous carcinoma was anaplastic."
+   },
+   "facts": {
+    "where": "Peripancreatic, gastric, mesenteric, omental and portohepatic nodes. Para-aortic nodes in 16–26% of head and 13–17% of body and tail cancers.",
+    "outlook": "In invasive MCN nodes are involved in only up to a third, one reason it does better."
+   },
+   "sources": [
+    "Robbins and Cotran 9th ed., ch. 19, p. 894",
+    "Beger et al. 2023, ch. 125, p. 958",
+    "Beger et al. 2023, ch. 135, p. 1051",
+    "Beger et al. 2023, ch. 126, p. 976",
+    "Kardon et al. 2001, p. 447"
+   ],
+   "thumb": "atlas/t-lymph-node-metastasis-1.jpg"
+  },
+  {
+   "id": "liver-metastasis",
+   "group": "spread",
+   "name": "Liver metastasis",
+   "line": "The liver is the main distant site, reached through the veins the tumour invades.",
+   "species": "human",
+   "images": [
+    {
+     "src": "atlas/liver-metastasis-1.jpg",
+     "w": 960,
+     "h": 650,
+     "caption": "Cut surface of a liver with many pale deposits from a pancreatic cancer.",
+     "credit": "Haymanj, via Wikimedia Commons",
+     "licence": "Public domain",
+     "mag": "Gross specimen"
+    }
+   ],
+   "glance": [
+    "Liver tissue",
+    "A deposit of malignant glands with its own fibrous stroma"
+   ],
+   "remember": "Distant spread goes chiefly to the liver, then the lungs.",
+   "facts": {
+    "where": "Liver and lungs are the main distant sites.",
+    "who": "40–50% of patients have metastases at diagnosis; body and tail tumours more often (69% and 84%) than head tumours (42%).",
+    "outlook": "Five-year survival 3% with distant disease, against 39% when localized."
+   },
+   "mimics": [
+    {
+     "id": "hepatoid",
+     "tell": "The reverse problem: a hepatoid tumour in the pancreas may itself be a metastasis from the liver."
+    }
+   ],
+   "sources": [
+    "Robbins and Cotran 9th ed., ch. 19, p. 894",
+    "Beger et al. 2023, ch. 125, p. 958",
+    "Beger et al. 2023, ch. 134, p. 1037",
+    "Beger et al. 2023, ch. 137, p. 1063",
+    "Beger et al. 2023, ch. 133, p. 1033",
+    "Beger et al. 2023, ch. 123, p. 942–943"
+   ],
+   "thumb": "atlas/t-liver-metastasis-1.jpg"
+  },
+  {
+   "id": "pannet",
+   "group": "other",
+   "name": "Neuroendocrine tumour",
+   "aka": "PanNET; formerly islet cell tumour",
+   "line": "Nests and ribbons of uniform cells with speckled nuclei, between fine capillaries: like a giant islet.",
+   "species": "human",
+   "images": [
+    {
+     "src": "atlas/pannet-1.jpg",
+     "w": 960,
+     "h": 676,
+     "caption": "Nests and ribbons of uniform cells with round nuclei, among thin-walled vessels.",
+     "credit": "Nephron, via Wikimedia Commons",
+     "licence": "CC BY-SA 4.0",
+     "mag": "H&E, high power"
+    },
+    {
+     "src": "atlas/pannet-2.jpg",
+     "w": 960,
+     "h": 718,
+     "caption": "Nuclei at very high power: finely speckled (“salt and pepper”) chromatin.",
+     "credit": "Mikael Häggström, M.D., via Wikimedia Commons",
+     "licence": "CC0",
+     "mag": "H&E, very high power"
+    }
+   ],
+   "glance": [
+    "Nests and ribbons of uniform cells",
+    "Round nuclei with speckled, salt-and-pepper chromatin",
+    "Thin capillaries between the nests"
+   ],
+   "remember": "Uniform cells, salt-and-pepper nuclei, a fine capillary stroma.",
+   "features": {
+    "architecture": "Solid nests and trabeculae (ribbons).",
+    "cells": "Uniform, with granular, slightly eosinophilic cytoplasm.",
+    "nuclei": "Round to oval; coarsely granular chromatin; inconspicuous nucleoli.",
+    "mitoses": "Counted, with the Ki-67 index, to set the grade (G1 to G3).",
+    "stroma": "Capillary or fibrocapillary; amyloid in many insulinomas."
+   },
+   "facts": {
+    "where": "Anywhere in the pancreas or the tissue round it.",
+    "size": "0.5–20 cm; insulinomas usually under 2 cm, non-functioning tumours larger.",
+    "who": "About 2% of pancreatic neoplasms (15–20% of one centre’s resections). Under 40% are functioning; 30–70% of MEN1 patients develop them.",
+    "gross": "Small ones well circumscribed, whitish-tan to yellow; larger ones multinodular, sometimes cystic.",
+    "molecular": "Synaptophysin and chromogranin positive. ATRX or DAXX mutated in nearly half; MEN1, PTEN and TSC2 also altered.",
+    "outlook": "About 90% of insulinomas are benign; 60–90% of the others are malignant, judged by metastasis and invasion, not by how the cells look."
+   },
+   "mimics": [
+    {
+     "id": "acinar-cell-carcinoma",
+     "tell": "Acinar cell carcinoma has one prominent nucleolus per nucleus and stains for trypsin and chymotrypsin; up to a third show patchy chromogranin."
+    },
+    {
+     "id": "solid-pseudopapillary",
+     "tell": "The solid pseudopapillary neoplasm has poorly cohesive cells with grooved nuclei and nuclear beta-catenin; LEF1 marks it, INSM1 the neuroendocrine tumour."
+    },
+    {
+     "id": "pannec",
+     "tell": "The carcinoma grows in sheets with geographic necrosis and marked pleomorphism; Ki-67 mostly over 50%."
+    },
+    {
+     "id": "normal-islet",
+     "tell": "An islet is 50–250 µm; the tumour is the same pattern as a mass."
+    }
+   ],
+   "sources": [
+    "Beger et al. 2023, ch. 99, p. 763–765",
+    "Beger et al. 2023, ch. 82, p. 634",
+    "Robbins and Cotran 9th ed., ch. 24, p. 1121",
+    "Kleeff et al. 2016, p. 3"
+   ],
+   "thumb": "atlas/t-pannet-1.jpg"
+  },
+  {
+   "id": "pannec",
+   "group": "other",
+   "name": "Neuroendocrine carcinoma",
+   "aka": "PanNEC; small-cell or large-cell",
+   "line": "A poorly differentiated neuroendocrine cancer: sheets of pleomorphic cells with wide areas of necrosis.",
+   "species": "human",
+   "images": [],
+   "glance": [
+    "Solid sheets, without nests or ribbons",
+    "Map-like areas of necrosis",
+    "Large, varied nuclei filling most of each cell"
+   ],
+   "remember": "Not a high-grade version of the tumour: a different disease, with the genetics of ductal adenocarcinoma.",
+   "features": {
+    "architecture": "Diffuse or solid sheets with geographic necrosis and unclear borders.",
+    "nuclei": "Large-cell type: marked pleomorphism, enlarged nuclei, high nucleus-to-cytoplasm ratio.",
+    "mitoses": "Numerous; mitotic count and Ki-67 both above the 20 threshold, Ki-67 mostly over 50%."
+   },
+   "facts": {
+    "molecular": "Shares the genetic background of ductal adenocarcinoma, not of neuroendocrine tumours.",
+    "outlook": "Aggressive."
+   },
+   "mimics": [
+    {
+     "id": "pannet",
+     "tell": "The tumour keeps nests and ribbons of uniform cells with salt-and-pepper nuclei and little necrosis."
+    },
+    {
+     "id": "pda-poor",
+     "tell": "Both grow in sheets. A mixed neuroendocrine and ductal tumour needs over 30% of each component."
+    }
+   ],
+   "sources": [
+    "Beger et al. 2023, ch. 99, p. 764–767",
+    "Kleeff et al. 2016, p. 3"
+   ]
+  },
+  {
+   "id": "acinar-cell-carcinoma",
+   "group": "other",
+   "name": "Acinar cell carcinoma",
+   "line": "Uniform cells with granular cytoplasm and one prominent nucleolus, in acini or solid sheets, with little stroma.",
+   "species": "human",
+   "images": [
+    {
+     "src": "atlas/acinar-cell-carcinoma-1.jpg",
+     "w": 960,
+     "h": 640,
+     "caption": "Sheets and small acini of cells with granular cytoplasm; each nucleus with one prominent nucleolus.",
+     "credit": "Nephron, via Wikimedia Commons",
+     "licence": "CC BY-SA 3.0",
+     "mag": "H&E, very high power"
+    }
+   ],
+   "glance": [
+    "Small acini or solid sheets of similar cells",
+    "Granular cytoplasm",
+    "One prominent nucleolus in each nucleus",
+    "Hardly any fibrous stroma"
+   ],
+   "remember": "One prominent nucleolus, granular cytoplasm, and no desmoplastic stroma.",
+   "features": {
+    "architecture": "Acini or solid sheets.",
+    "cells": "Monomorphic, with granular cytoplasm (zymogen granules, PAS-diastase positive).",
+    "nuclei": "Large, with a single prominent nucleolus.",
+    "stroma": "Desmoplastic stroma not prominent."
+   },
+   "facts": {
+    "who": "Under 2% of resected pancreatic neoplasms.",
+    "gross": "Well circumscribed, bulky, fleshy, often haemorrhagic.",
+    "molecular": "Trypsin, chymotrypsin and BCL-10 positive.",
+    "outlook": "Better than ductal adenocarcinoma of the same stage: 25–50% five-year survival. About 15% develop fat necrosis at distant sites from released lipase."
+   },
+   "mimics": [
+    {
+     "id": "pannet",
+     "tell": "Neuroendocrine tumours have salt-and-pepper chromatin and inconspicuous nucleoli; the two can look alike to the eye."
+    },
+    {
+     "id": "pancreatoblastoma",
+     "tell": "Pancreatoblastoma adds squamoid nests to the acinar cells and occurs mainly in children."
+    },
+    {
+     "id": "solid-pseudopapillary",
+     "tell": "The solid pseudopapillary neoplasm has poorly cohesive cells round delicate vessels, grooved nuclei and nuclear beta-catenin."
+    },
+    {
+     "id": "normal-acini",
+     "tell": "Normal acini sit in orderly lobules with ducts and islets among them; the carcinoma is a mass of acini and sheets."
+    }
+   ],
+   "sources": [
+    "Beger et al. 2023, ch. 125, p. 963–964",
+    "Robbins and Cotran 9th ed., ch. 19, p. 895",
+    "Kleeff et al. 2016, p. 3"
+   ],
+   "thumb": "atlas/t-acinar-cell-carcinoma-1.jpg"
+  },
+  {
+   "id": "pancreatoblastoma",
+   "group": "other",
+   "name": "Pancreatoblastoma",
+   "line": "A childhood tumour: cells with acinar differentiation, with squamoid nests among them.",
+   "species": "human",
+   "images": [],
+   "glance": [
+    "Cells with acinar differentiation",
+    "Squamoid nests scattered among them"
+   ],
+   "remember": "Squamoid nests are what separate it from acinar cell carcinoma.",
+   "features": {
+    "architecture": "Acinar-type cells with squamoid nests mixed among them."
+   },
+   "facts": {
+    "who": "Mainly children aged 1–15; adults rarely. About 0.5% of one centre’s resections. Some with Beckwith-Wiedemann syndrome or familial adenomatous polyposis.",
+    "gross": "Fleshy lobules, with fibrosis, necrosis and calcification.",
+    "molecular": "Trypsin, chymotrypsin and BCL-10 positive; patchy nuclear beta-catenin in some.",
+    "outlook": "Five-year survival about 65% with resection."
+   },
+   "mimics": [
+    {
+     "id": "acinar-cell-carcinoma",
+     "tell": "Acinar cell carcinoma has no squamoid nests and occurs in adults."
+    }
+   ],
+   "sources": [
+    "Beger et al. 2023, ch. 125, p. 964–965",
+    "Robbins and Cotran 9th ed., ch. 19, p. 895",
+    "Kleeff et al. 2016, p. 3"
+   ]
+  },
+  {
+   "id": "solid-pseudopapillary",
+   "group": "other",
+   "name": "Solid pseudopapillary neoplasm",
+   "aka": "SPN",
+   "line": "Uniform cells that fall away from one another, leaving sleeves of cells round delicate vessels; mostly in young women.",
+   "species": "human",
+   "images": [
+    {
+     "src": "atlas/solid-pseudopapillary-1.jpg",
+     "w": 960,
+     "h": 640,
+     "caption": "Uniform cells clinging to delicate vessels; the cells between have fallen away (pseudopapillae).",
+     "credit": "Nephron, via Wikimedia Commons",
+     "licence": "CC BY-SA 3.0",
+     "mag": "H&E, high power"
+    },
+    {
+     "src": "atlas/solid-pseudopapillary-2.jpg",
+     "w": 960,
+     "h": 718,
+     "caption": "Pink hyaline globules in and between the cells (soft focus).",
+     "credit": "Mikael Häggström, M.D., via Wikimedia Commons",
+     "licence": "CC0",
+     "mag": "H&E, very high power"
+    }
+   ],
+   "glance": [
+    "Cuffs of cells round thin vessels (pseudopapillae)",
+    "Uniform cells with clear cytoplasm, loosely held together",
+    "Oval nuclei with a lengthwise groove",
+    "Pink hyaline globules, often"
+   ],
+   "remember": "Not a variant of ductal adenocarcinoma: a young woman’s tumour, usually cured by resection.",
+   "features": {
+    "architecture": "Solid sheets and pseudopapillae round delicate branching vessels; solid and cystic areas with haemorrhage.",
+    "cells": "Monomorphic, poorly cohesive, clear cytoplasm; hyaline globules often present.",
+    "nuclei": "Round to oval, grooved."
+   },
+   "facts": {
+    "where": "Sources differ: equally in head, body and tail, or most often the tail.",
+    "size": "Often large, mean 8–10 cm.",
+    "who": "Mostly girls and young women, median age about 30; 1–2% of pancreatic tumours.",
+    "gross": "Well demarcated, solid and cystic, with haemorrhagic and necrotic debris.",
+    "molecular": "CTNNB1 mutation in 83–100%: nuclear beta-catenin; LEF1 and CD10 positive.",
+    "outlook": "Low malignant potential: most are cured by resection; 10–15% behave aggressively, spreading to liver or peritoneum."
+   },
+   "mimics": [
+    {
+     "id": "pannet",
+     "tell": "Neuroendocrine tumours are cohesive nests with salt-and-pepper nuclei; INSM1 marks them, LEF1 and nuclear beta-catenin mark this."
+    },
+    {
+     "id": "acinar-cell-carcinoma",
+     "tell": "Acinar cell carcinoma has granular cytoplasm and a prominent nucleolus, and stains for trypsin."
+    }
+   ],
+   "sources": [
+    "Beger et al. 2023, ch. 125, p. 963–964",
+    "Beger et al. 2023, ch. 81, p. 627–628",
+    "Beger et al. 2023, ch. 82, p. 634",
+    "Beger et al. 2023, ch. 85, p. 659",
+    "Beger et al. 2023, ch. 86, p. 671",
+    "Robbins and Cotran 9th ed., ch. 19, p. 891"
+   ],
+   "thumb": "atlas/t-solid-pseudopapillary-1.jpg"
+  }
+ ]
+}
