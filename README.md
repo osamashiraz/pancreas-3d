@@ -62,6 +62,9 @@ The pancreas is two organs in one, and the model shows both:
 - Three branches to follow: **acinus → acinar cells → one acinar cell**, **islet → islet cells → beta cell**, **duct → duct cells → one duct cell**.
 - **Stain**: H&E (purple nuclei, pink cytoplasm, red granules, pale islets) or **Cell types** (immunofluorescence-like colours).
 - **Cut open** a structure, **slice apart** (organ into transverse slices, tissue into serial sections), **split screen** to compare two views, **compare head, body and tail**.
+- **Beta, alpha and delta cells**, each with its own granules (beta ~350 nm with clear halos, alpha ~200 nm and dense, delta ~250 nm); the delta cell reaches its neighbours with long processes.
+- **Secretion in motion** (Motion on): zymogen granules travel to the apex and release enzymes down the duct; duct cells secrete bicarbonate through CFTR and SLC26A6; a beta cell takes up glucose and releases insulin into its capillary; alpha cells release glucagon; delta cells release somatostatin beside their neighbours. The journey narrates each.
+- **Marker genes** for the cell in view or clicked, from the HRA ASCT+B table and the Human Protein Atlas, each linking to its HPA page.
 - **Play the journey**: a 13-step narrated tour in Google's UK English female voice (Chrome; other browsers use a standard UK voice).
 - Click any cell or structure to name it, isolate it or fade it.
 - **Links to a view**: the address follows what you are looking at, e.g. [`#site=9&view=islet&stain=if`](https://osamashiraz.github.io/pancreas-3d/#site=9&view=islet&stain=if), so a view can be shared or used in teaching.
@@ -79,6 +82,8 @@ The pancreas is two organs in one, and the model shows both:
 | Tissue architecture | Kiemen et al. (CODA), *Nat Methods* 2022 | Grape-like acinar clusters, collagen along ducts |
 | Ducts and centroacinar cells | Endo et al. 2002 (rat); Beer et al. 2016 | One intercalated duct per acinus, no anastomoses |
 | Cell biology | Palade 1975; Messenger et al. 2014; Berclaz et al. 2016; Steward & Ishiguro 2009; Hegyi & Rakonczay 2015; diIorio et al. 2014 | Secretory pathway, zymogen and insulin granules, duct secretion, cilia |
+| Marker genes | **HRA ASCT+B** pancreas v1.3 (doi:10.48539/HBM336.TBNP.923); **Human Protein Atlas** v26.0 (CC BY-SA 4.0) | Marker panel per cell type (`repo/data/human-pancreas-markers.json`) |
+| Secretion and islet cells | Lee et al., *Physiol Rev* 2012; Rorsman & Ashcroft, *Physiol Rev* 2018; Brereton et al., *J Histochem Cytochem* 2015; Arrojo e Drigo et al., *Nat Commun* 2019 | Bicarbonate and insulin secretion; granule sizes; delta-cell processes |
 | Teaching text | StatPearls (NCBI Bookshelf, CC BY 4.0); Columbia and Basel histology notes; Human Protein Atlas | Narration, paraphrased in our own words with credit |
 
 Full references with DOIs: [`docs/SOURCES.md`](docs/SOURCES.md). Values still awaiting a source (for example acinar cell height, duct radii, lobule size, organelle counts) are listed in [`docs/SPEC.md`](docs/SPEC.md) §9.
@@ -118,7 +123,7 @@ Python builders need `numpy` and `scipy`; the smoke test needs `playwright`. Pus
 2. **Tumours** — show where pancreatic cancers arise by region (head, body, tail) and by cell of origin (ductal adenocarcinoma, neuroendocrine tumours, acinar cell carcinoma), and how they relate to the bile duct, vessels and lymph node stations that matter for staging and resectability.
 3. **Precursor lesions** — PanIN (pancreatic intraepithelial neoplasia) in small ducts, IPMN (intraductal papillary mucinous neoplasm) in the main or branch ducts, and mucinous cystic neoplasms, placed in the duct tree at the scale where they occur.
 4. **Pancreatitis and fibrosis** — acute pancreatitis (acinar injury, oedema, inflammation) and chronic pancreatitis (acinar loss, activated stellate cells, fibrosis, duct changes), as alternative states of the same tissue.
-5. Also planned: diabetes states (beta-cell loss), marker genes on click from the ASCT+B table, overlay of single-cell and spatial data, and secretion in motion. See [`docs/BACKLOG.md`](docs/BACKLOG.md).
+5. Also planned: diabetes states (beta-cell loss) and overlay of single-cell and spatial data. See [`docs/BACKLOG.md`](docs/BACKLOG.md).
 
 Disease content will follow the same rule as the rest of the model: each lesion's location, size and frequency will cite its source, and anything placed by rule will be labelled simulated.
 

@@ -3,8 +3,8 @@
   pip install playwright && playwright install chromium
   python3 viewer/test/smoke.py dist/pancreas-organ-to-cell.html [--chrome]
 Loads the page and walks it: the layers opened in place (organ surface, lobules, tissue core), a site picked by zooming in
-over the organ, the acinus, islet and duct branches down to their cells, the cell-type stain, the head/body/tail
-comparison and a link to a view (#site=..&view=..). Fails on any page error or if a stage is not reached. Screenshots go to
+over the organ, the acinus, islet and duct branches down to their cells, alpha and delta cells, marker genes, the
+cell-type stain, the head/body/tail comparison and a link to a view (#site=..&view=..). Fails on any page error or if a stage is not reached. Screenshots go to
 viewer/test/out/. Software WebGL (the default, as in CI) is slow: set SMOKE_WAIT (ms per step, default 6000) higher if
 needed. --chrome uses the installed Chrome with its GPU instead. three.js comes from the CDN; offline, point THREE_DIR at
 a local three@0.147.0 package and the script rewrites the URLs."""
@@ -17,12 +17,14 @@ STEPS = [   # name, script, expected [stage, branch or None], expected level sho
     ('opening', "window.__zoom.flyTo(15000, undefined, 'tissue')", ['tissue', None], 'Lobules'),
     ('lobules', "window.__zoom.flyTo(4200, undefined, 'tissue')", ['tissue', None], 'Lobules'),
     ('tissue', "window.__zoom.flyTo(800, undefined, 'tissue')", ['tissue', None], 'Tissue'),
-    ('acinus', "window.__zoom.flyTo(210, 'acinus', 'structure')", ['structure', 'acinus'], 'Acinus'),
-    ('acinar-cell', "window.__zoom.flyTo(24, 'acinus', 'cell')", ['cell', 'acinus'], 'Acinar cell'),
-    ('islet-celltypes', "document.querySelector('[data-stain=if]').click(); window.__zoom.flyTo(360, 'islet', 'structure')", ['structure', 'islet'], 'Islet'),
-    ('beta-cell', "window.__zoom.flyTo(24, 'islet', 'cell')", ['cell', 'islet'], 'Beta cell'),
-    ('duct', "document.querySelector('[data-stain=he]').click(); window.__zoom.flyTo(200, 'duct', 'structure')", ['structure', 'duct'], 'Duct'),
-    ('duct-cell', "window.__zoom.flyTo(22, 'duct', 'cell')", ['cell', 'duct'], 'Duct cell'),
+    ('acinus', "document.querySelector('[data-go=\"detail:acinus\"]').click()", ['structure', 'acinus'], 'Acinus'),
+    ('acinar-cell', "document.querySelector('[data-go=\"cell:acinus\"]').click()", ['cell', 'acinus'], 'Acinar cell'),
+    ('islet-celltypes', "document.querySelector('[data-stain=if]').click(); document.querySelector('[data-go=\"detail:islet\"]').click()", ['structure', 'islet'], 'Islet'),
+    ('beta-cell', "document.querySelector('[data-kind=beta]').click()", ['cell', 'islet'], 'Beta cell'),
+    ('alpha-cell', "document.querySelector('[data-kind=alpha]').click()", ['cell', 'islet'], 'Alpha cell'),
+    ('delta-cell', "document.querySelector('[data-kind=delta]').click()", ['cell', 'islet'], 'Delta cell'),
+    ('duct', "document.querySelector('[data-stain=he]').click(); document.querySelector('[data-go=\"detail:duct\"]').click()", ['structure', 'duct'], 'Duct'),
+    ('duct-cell', "document.querySelector('[data-go=\"cell:duct\"]').click()", ['cell', 'duct'], 'Duct cell'),
     ('organ', "window.__zoom.flyTo(2.6e5, undefined, 'tissue')", ['tissue', None], 'Organ'),
     ('compare', "document.getElementById('compare').click()", ['tissue', None], 'Head, body and tail compared'),
     ('compare-off', "document.getElementById('compare').click()", ['tissue', None], 'Lobules'),
@@ -51,6 +53,7 @@ async def main(page_path, chrome):
             v = (await pg.evaluate('window.__zoom.views()'))[0]; shown = await level()
             ok = v[0] == stage and (br is None or v[1] == br) and shown.startswith(lv)
             print(('ok  ' if ok else 'FAIL'), name, v, repr(shown))
+            if name.endswith('-cell') and await pg.evaluate("document.getElementById('markerbox').hidden"): ok = False; print('FAIL', name, 'marker genes not shown')
             if not ok: failures.append(name)
             await pg.screenshot(path=str(out / f'{name}.png'), timeout=240000)
         # A link to a view opens the page there.

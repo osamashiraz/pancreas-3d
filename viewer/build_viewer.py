@@ -5,7 +5,7 @@
 
 Inputs:  viewer/template.html, viewer/src/generator.js, viewer/src/app.js, and from the repo
          public/atlas-human/{tissue-block.json, tissue-block-head.json, tissue-block-tail.json, pancreas-region-male.glb,
-         islets-male.glb, islets.manifest.json}
+         islets-male.glb, islets.manifest.json}, and data/human-pancreas-markers.json
 Output:  dist/pancreas-organ-to-cell.html (about 8 MB; the published page must stay under 16 MB)
 
 viewer/src/generator.js is src/domain/human-pancreas-generator.ts compiled to plain JavaScript and wrapped as window.HPGen;
@@ -35,6 +35,7 @@ def main():
         '__ORGAN_JSON__': json.dumps(organ),
         '__REGION_GLB_B64__': base64.b64encode((atlas / 'pancreas-region-male.glb').read_bytes()).decode(),
         '__ISLETS_GLB_B64__': base64.b64encode((atlas / 'islets-male.glb').read_bytes()).decode(),
+        '__MARKERS_JSON__': esc((repo / 'data' / 'human-pancreas-markers.json').read_text()),
     }
     for k, v in parts.items():
         assert t.count(k) == 1, k

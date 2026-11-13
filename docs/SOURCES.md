@@ -15,6 +15,12 @@
 - Berclaz C, et al. Diabetologia 2016. doi:10.1007/s00125-015-3819-x (insulin-zinc crystals)
 - Palade G. Science 1975. doi:10.1126/science.1096303 (secretory pathway)
 - Steward MC, Ishiguro H. Curr Opin Gastroenterol 2009. doi:10.1097/MOG.0b013e32832e06ce; Ishiguro H, et al. Nagoya J Med Sci 2012, PMC4831246; Hegyi P, Rakonczay Z. Pancreatology 2015. doi:10.1016/j.pan.2015.03.010 (duct secretion)
+- Lee MG, Ohana E, Park HW, Yang D, Muallem S. Molecular mechanism of pancreatic and salivary gland fluid and HCO3 secretion. Physiol Rev 2012;92:39-74. doi:10.1152/physrev.00011.2011 (duct bicarbonate secretion through CFTR and SLC26A6; secretin and cAMP)
+- Rorsman P, Ashcroft FM. Pancreatic β-cell electrical activity and insulin secretion: of mice and men. Physiol Rev 2018;98:117-214. doi:10.1152/physrev.00008.2017 (glucose-stimulated insulin secretion)
+- Brereton MF, Vergari E, Zhang Q, Clark A. Alpha-, delta- and PP-cells: are they the architectural cornerstones of islet structure and co-ordination? J Histochem Cytochem 2015;63:575-91. doi:10.1369/0022155415583535 (glucagon release at low glucose; granule sizes: beta about 350 nm, alpha about 200 nm, human delta about 250 nm)
+- Arrojo e Drigo R, Jacob S, García-Prieto CF, et al. Structural basis for delta cell paracrine regulation in pancreatic islets. Nat Commun 2019;10:3700. doi:10.1038/s41467-019-11517-x (delta-cell processes 1-18 µm in human islets)
+- HRA ASCT+B table, Pancreas v1.3 (Campbell-Thompson, Eskaros, Saunders; 15 Dec 2023), doi:10.48539/HBM336.TBNP.923; file v2.0/asct-b/asct-b-vh-pancreas.csv, ccf-releases commit b036a91, sha256 15312b9b…62717 (marker genes)
+- Human Protein Atlas v26.0 (Ensembl 109), proteinatlas.org, CC BY-SA 4.0 (single-cell type RNA specificity and pancreas staining; marker genes)
 - diIorio P, et al. Birth Defects Res C 2014. doi:10.1002/bdrc.21064 (primary cilia)
 - StatPearls (NCBI Bookshelf, CC BY 4.0): Anatomy, Abdomen and Pelvis, Pancreas (NBK532912); endocrine pancreas (NBK459261); gastrointestinal physiology (NBK542322)
 - Columbia University histology laboratory notes, exocrine and endocrine pancreas; University of Basel histology collection, exocrine pancreas; Human Protein Atlas, normal pancreas

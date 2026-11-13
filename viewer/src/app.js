@@ -268,6 +268,7 @@
       for (let k2 = 0; k2 < 3; k2++) { const start = new THREE.Vector3(...chain[chain.length - 1].a);
         const parent = B.ducts.find((d) => !chain.includes(d) && (() => { const a = new THREE.Vector3(...d.a), b = new THREE.Vector3(...d.b), u = b.clone().sub(a), t = THREE.MathUtils.clamp(start.clone().sub(a).dot(u) / u.lengthSq(), 0, 1); return a.addScaledVector(u, t).distanceTo(start) < 0.8; })());
         if (!parent) break; chain.push(parent); if (parent.kind === 'intralobular') break; }
+      g.userData.route = [F.clone(), new THREE.Vector3(...ic.b), ...chain.map((seg) => new THREE.Vector3(...seg.a))];   // the way out, for the moving enzymes
       chain.forEach((seg) => ductCells(seg).forEach((c) => { const back = new THREE.Vector3(0, 0, -1).applyQuaternion(new THREE.Quaternion(...ac.q)).multiplyScalar(14);
         push(seg.kind, cellMatrix(c), back.clone().addScaledVector(c.rad, c.h * 1.2)); const nr = Math.min(c.h * 0.3, 1.7); push('ductNucleus', new THREE.Matrix4().makeScale(nr, nr, nr * 1.3).setPosition(c.c), back.clone().addScaledVector(c.rad, c.h * 1.2)); }));
     } else if (k === 'islet') {
@@ -287,14 +288,28 @@
       intercalated: [roundedBoxHi, '--intercalated', C], intralobular: [roundedBoxHi, '--intralobular', C], ductNucleus: [ball, '--ductnucleus', G], capillary: [rod, '--capillary', { transparent: true, opacity: 0.35, depthWrite: false, side: THREE.DoubleSide }],
       beta: [ballHi, '--beta', C], alpha: [ballHi, '--alpha', C], delta: [ballHi, '--delta', C], pp: [ballHi, '--pp', C], isletNucleus: [ball, '--isletnucleus', G], fibre: [rod, '--collagen', { roughness: 0.85, he: [0.6, 0.2] }] };
     for (const [name, L] of Object.entries(lists)) { const [geo, color, extra] = look[name], m = inst(g, geo, M(g, color, [BRANCHES[k].plane], extra), L.base, name); m.userData.base = L.base; m.userData.off = L.off; }
-    g.userData.explode = -1; return g;
+    g.userData.explode = -1;
+    // Secretion in motion at this level: enzymes leave the acinus by its ducts; fluid runs along the duct's lumen.
+    if (k === 'acinus' || k === 'duct') {
+      const N = 90, m = movers(g, g, lowball, k === 'acinus' ? '--enzyme' : '--bicarbonate', N, k === 'acinus' ? 'enzyme' : 'bicarbonate');
+      const route = k === 'acinus' ? g.userData.route : [Da, Db], len = [0]; for (let i = 1; i < route.length; i++) len.push(len[i - 1] + route[i].distanceTo(route[i - 1]));
+      const lumenR = k === 'duct' ? Math.max(0.5, Dseg.r - Math.min(V.intralobularCellHeightUm, 0.5 * Dseg.r) - 0.6) : 0.6, ax = route[route.length - 1].clone().sub(route[0]).normalize();
+      const u = new THREE.Vector3().crossVectors(ax, Math.abs(ax.y) < 0.9 ? Y : X).normalize(), w = new THREE.Vector3().crossVectors(ax, u), total = len[len.length - 1];
+      g.userData.anim = (t) => { m.visible = t !== null && g.userData.explode < 0.05; if (!m.visible) return;
+        for (let i = 0; i < N; i++) { const at = frac(t / 7 + i / N) * total; let j = 1; while (j < len.length - 1 && len[j] < at) j++;
+          V3.lerpVectors(route[j - 1], route[j], (at - len[j - 1]) / Math.max(1e-6, len[j] - len[j - 1])).addScaledVector(u, Math.cos(i * 2.4) * lumenR * ((i * 7) % 10) / 10).addScaledVector(w, Math.sin(i * 2.4) * lumenR * ((i * 7) % 10) / 10);
+          put(m, i, V3, k === 'acinus' ? 0.35 : 0.5); }
+        m.instanceMatrix.needsUpdate = true; };
+    }
+    return g;
   }
   function setExplode(g, e) { if (!g || Math.abs(g.userData.explode - e) < 0.002) return; g.userData.explode = e; const M4 = new THREE.Matrix4();
     g.traverse((o) => { if (!o.isInstancedMesh || !o.userData.base) return; o.userData.base.forEach((b, i) => { M4.copy(b); const f = o.userData.off[i]; M4.elements[12] += f.x * e; M4.elements[13] += f.y * e; M4.elements[14] += f.z * e; o.setMatrixAt(i, M4); }); o.instanceMatrix.needsUpdate = true; }); }
 
   // ---------- focal points: one acinus, one acinar cell, the islet, one beta cell, one duct, one duct cell
   const cutNormal = X.clone();   // every detail is cut by a plane facing +x; the camera looks from +x
-let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, Pd, OFF;
+let isletKind = 'beta';   // the islet cell shown at the cell level: beta, alpha or delta
+let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, Pd, OFF;
   function computeFocal() {
     makePicks(); fa = PICKS.acinus[PICK.acinus % PICKS.acinus.length]; let best;
   F = new THREE.Vector3(...B.acini[fa].centre);
@@ -304,12 +319,16 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
   I = new THREE.Vector3(...B.islet.centreUm);
   fb = 0; best = 1e9; B.islet.cells.forEach(([t, x, y, z], i) => { if (t !== 'beta') return; const p = new THREE.Vector3(x, y, z), s = Math.abs(p.x - (I.x - 3)) + 0.3 * Math.hypot(p.y - I.y, p.z - I.z); if (s < best) { best = s; fb = i; } });
   Pb = new THREE.Vector3(...B.islet.cells[fb].slice(1));
+  // The cell of the chosen kind nearest the cut through the islet's middle (a beta cell if the islet has none of that kind).
+  fk = fb; best = 1e9; B.islet.cells.forEach(([t, x, y, z], i) => { if (t !== isletKind) return; const p = new THREE.Vector3(x, y, z), s = Math.abs(p.x - (I.x - 3)) + 0.3 * Math.hypot(p.y - I.y, p.z - I.z); if (s < best) { best = s; fk = i; } });
+  if (B.islet.cells[fk][0] !== isletKind) isletKind = 'beta';   // this islet has no cell of that kind
+  Pk = new THREE.Vector3(...B.islet.cells[fk].slice(1));
   fdu = PICKS.duct[PICK.duct % PICKS.duct.length];
   Dseg = B.ducts[fdu]; Da = new THREE.Vector3(...Dseg.a); Db = new THREE.Vector3(...Dseg.b); D = Da.clone().add(Db).multiplyScalar(0.5); Dax = Db.clone().sub(Da).normalize();
   dCells = ductCells(Dseg);
   fdc = 0; best = 1e9; dCells.forEach((c, i) => { const s = Math.abs(c.c.x - D.x + 2) + 0.5 * c.c.distanceTo(D) - 3 * c.rad.y; if (s < best) { best = s; fdc = i; } });
   Pd = dCells[fdc].c.clone();
-  OFF = { acinus: faCells[fc].world.clone().multiplyScalar(0.38 * faCells[fc].reach), islet: Pb.clone().sub(I).multiplyScalar(0.4),
+  OFF = { acinus: faCells[fc].world.clone().multiplyScalar(0.38 * faCells[fc].reach), islet: Pk.clone().sub(I).multiplyScalar(0.4),
     duct: dCells[fdc].rad.clone().multiplyScalar(dCells[fdc].h * 0.9).addScaledVector(dCells[fdc].ax, dCells[fdc].c.clone().sub(D).dot(dCells[fdc].ax) * 0.25) };
   }
   computeFocal();
@@ -335,32 +354,100 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
     const gr = MP(group, '--granule', null, { roughness: 0.35 });
     for (let k = 0; k < 110; k++) { const y = 0.05 + 0.32 * ((k * 53) % 89) / 89, rad = prof(y) * 0.75 * Math.sqrt(((k * 31) % 97) / 97), th = k * 2.39996;
       const m = new THREE.Mesh(lowball, gr); m.position.set(Math.cos(th) * rad, y * h, Math.sin(th) * rad); m.scale.setScalar(V.zymogenGranuleDiameterUm / 2); g.add(m); }
+    // Secretion in motion: granules leave the Golgi, mature on the way to the apex and fuse with it; their enzymes pass into the
+    // lumen at the acinus's centre and on down its intercalated duct (along the acinus's -z axis).
+    const NZ = 30, NE = 60, zg = movers(group, g, lowball, '--granule', NZ, 'granule', { roughness: 0.35 }), en = movers(group, g, lowball, '--enzyme', NE, 'enzyme');
+    const qi = c.q.clone().invert(), centre = c.local.clone().multiplyScalar(-lumen).applyQuaternion(qi), down = new THREE.Vector3(0, 0, -1).applyQuaternion(qi);
+    const gStart = (i) => P(0.46).add(new THREE.Vector3(Math.cos(i * 2.4), 0, Math.sin(i * 2.4)).multiplyScalar(prof(0.46) * 0.45 * (((i * 31) % 7) / 7)));
+    const gApex = (i) => P(0.03).add(new THREE.Vector3(Math.cos(i * 1.7), 0, Math.sin(i * 1.7)).multiplyScalar(prof(0.03) * 0.5 * (((i * 13) % 5) / 5)));
+    const gs = V.zymogenGranuleDiameterUm / 2;
+    group.userData.anim = (t) => {
+      zg.visible = en.visible = t !== null; if (t === null) return;
+      for (let i = 0; i < NZ; i++) { const f = frac(t / 6 + i / NZ); if (f < 0.82) { const e = ease(f / 0.82); put(zg, i, V3.lerpVectors(gStart(i), gApex(i), e), gs * (0.55 + 0.45 * e)); } else put(zg, i, gApex(i), f < 0.92 ? gs * (1 - (f - 0.82) / 0.1) : 0); }
+      for (let i = 0; i < NE; i++) { const f = frac(t / 3.5 + i / NE), a = gApex(i % NZ);
+        if (f < 0.35) V3.lerpVectors(a, centre, f / 0.35); else V3.copy(centre).addScaledVector(down, (f - 0.35) / 0.65 * 14);
+        put(en, i, V3, 0.12 * (f < 0.8 ? 1 : 1 - (f - 0.8) / 0.2)); }
+      zg.instanceMatrix.needsUpdate = en.instanceMatrix.needsUpdate = true;
+    };
     // Place it where the cell really is: the acinus frame, then the cell's own direction, apex at the lumen.
     const T = new THREE.Matrix4().compose(new THREE.Vector3(...B.acini[fa].centre), new THREE.Quaternion(...B.acini[fa].q), new THREE.Vector3(1, 1, 1)).multiply(new THREE.Matrix4().compose(c.local.clone().multiplyScalar(lumen), c.q, new THREE.Vector3(1, 1, 1)));
     tag('acinusCell', g, 'Nucleus', P(0.7).add(new THREE.Vector3(prof(0.7) * 0.42, 0, 0))); tag('acinusCell', g, 'Rough ER', P(0.86).add(new THREE.Vector3(-prof(0.86) * 0.5, 0, 0)));
     tag('acinusCell', g, 'Golgi', P(0.5).add(new THREE.Vector3(1.6, 0, 0))); tag('acinusCell', g, 'Zymogen granules', P(0.2)); tag('acinusCell', g, 'Lumen', P(-0.03)); tag('acinusCell', g, 'Mitochondria', P(0.4).add(new THREE.Vector3(-prof(0.4) * 0.6, 0, 0)));
     g.applyMatrix4(T); group.add(g);
   }
-  function buildBetaCell(group) {
-    const g = new THREE.Group(), R = 5;
-    const body = new THREE.Mesh(roundedBoxHi, MP(group, '--beta', null, { transparent: true, opacity: 0.3, depthWrite: false, side: THREE.DoubleSide })); body.material.userData.isletType = 'beta'; body.scale.set(R, R * 0.92, R * 0.88); g.add(body);
+  // ---------- secretion in motion (illustrative): particles moved each frame along simple paths
+  const ease = (x) => { const t = Math.min(1, Math.max(0, x)); return t * t * (3 - 2 * t); }, frac = (x) => x - Math.floor(x);
+  function movers(group, parent, geo, color, n, name, extra) { const m = inst(parent, geo, MP(group, color, null, extra || { roughness: 0.4, he: false }), Array.from({ length: n }, () => new THREE.Matrix4().makeScale(0, 0, 0)), name); m.frustumCulled = false; return m; }
+  const M4 = new THREE.Matrix4(), V3 = new THREE.Vector3();
+  function put(m, i, p, sc) { M4.makeScale(sc, sc, sc).setPosition(p); m.setMatrixAt(i, M4); }
+  function nearestIsletCapillary(p) { let best = null;
+    B.capillaries.isletSegments.forEach(([a, b]) => { const A = new THREE.Vector3(...a), Bv = new THREE.Vector3(...b), u = Bv.clone().sub(A), t = THREE.MathUtils.clamp(p.clone().sub(A).dot(u) / u.lengthSq(), 0, 1), q = A.addScaledVector(u, t), d = q.distanceTo(p);
+      if (!best || d < best.d) best = { d, point: q, dir: u.normalize() }; });
+    return best || { d: 8, point: p.clone().add(new THREE.Vector3(8, 0, 0)), dir: Y.clone() }; }
+  // ---------- one islet cell of the chosen kind, in its place in the islet beside its capillary. Granules differ by kind:
+  // beta, about 350 nm, a dark (in humans sometimes crystalline) core in a clear halo; alpha, about 200 nm, dense, with little
+  // or a grey halo; delta, about 250 nm, homogeneous (Brereton et al. 2015). Delta cells reach neighbouring cells with long
+  // processes, 1 to 18 um in human sections (Arrojo e Drigo et al. 2019). Cell size and granule numbers are illustrative.
+  const GRANULES = {
+    beta: { core: '--insulincore', halo: '--insulinhalo', r: 0.1, h: 0.175, n: 240, label: 'Insulin granules', hormone: '--insulin', name: 'insulin' },
+    alpha: { core: '--glucagoncore', halo: '--glucagonhalo', r: 0.085, h: 0.1, n: 240, label: 'Glucagon granules', hormone: '--glucagon', name: 'glucagon' },
+    delta: { core: '--somatostatincore', halo: null, r: 0.125, h: 0, n: 200, label: 'Somatostatin granules', hormone: '--somatostatin', name: 'somatostatin' } };
+  const cellKey = (br, kind) => (br === 'islet' && kind && kind !== 'beta' ? kind + 'Cell' : br + 'Cell');
+  function buildIsletCell(group, kind) {
+    const G = GRANULES[kind] || GRANULES.beta, set = cellKey('islet', kind), g = new THREE.Group(), R = 5;
+    const body = new THREE.Mesh(roundedBoxHi, MP(group, '--' + kind, null, { transparent: true, opacity: 0.3, depthWrite: false, side: THREE.DoubleSide })); body.material.userData.isletType = kind; body.scale.set(R, R * 0.92, R * 0.88); g.add(body);
     const nuc = new THREE.Mesh(ballHi, MP(group, '--nucleus')); nuc.scale.setScalar(2.1); nuc.position.set(-0.6, 0.2, 0); g.add(nuc);
     const nl = new THREE.Mesh(ballHi, MP(group, '--nucleolus')); nl.scale.setScalar(0.5); nl.position.set(-0.1, 0.7, 0.5); g.add(nl);
     const gol = MP(group, '--golgi');
     for (let k = 0; k < 5; k++) { const t = new THREE.Mesh(new THREE.TorusGeometry(0.8 + k * 0.17, 0.07, 6, 28, Math.PI * 0.9), gol); t.position.set(1.4, 1.6 + k * 0.13, 0.2); t.rotation.set(Math.PI / 2 + 0.3, 0, 0.8); g.add(t); }
     const rer = MP(group, '--rer', null, { side: THREE.DoubleSide });
     for (let k = 0; k < 4; k++) { const t = new THREE.Mesh(new THREE.TorusGeometry(2.6 + k * 0.3, 0.06, 6, 40, Math.PI * 0.8), rer); t.position.set(-0.6, 0.2, 0); t.rotation.set(Math.PI / 2, 0, Math.PI * 0.75 + k * 0.05); g.add(t); }
-    const core = MP(group, '--insulincore', null, { roughness: 0.3 }), halo = MP(group, '--insulinhalo', null, { transparent: true, opacity: 0.35, depthWrite: false });
+    const core = MP(group, G.core, null, { roughness: 0.3 }), halo = G.halo ? MP(group, G.halo, null, { transparent: true, opacity: 0.35, depthWrite: false }) : null;
     const inside = (p) => (p.x / (R * 0.85)) ** 2 + (p.y / (R * 0.78)) ** 2 + (p.z / (R * 0.75)) ** 2 < 1 && p.distanceTo(nuc.position) > 2.6;
-    for (let k = 0, made = 0; made < 240 && k < 6000; k++) { const p = new THREE.Vector3(((k * 7919) % 1000) / 500 - 1, ((k * 104729) % 1000) / 500 - 1, ((k * 1299709) % 1000) / 500 - 1).multiplyScalar(R);
-      if (!inside(p)) continue; made++; const c = new THREE.Mesh(lowball, core); c.position.copy(p); c.scale.setScalar(0.1); g.add(c); const hh = new THREE.Mesh(ballHi, halo); hh.position.copy(p); hh.scale.setScalar(0.15); g.add(hh); }
+    const spots = [];
+    for (let k = 0; spots.length < G.n && k < 6000; k++) { const p = new THREE.Vector3(((k * 7919) % 1000) / 500 - 1, ((k * 104729) % 1000) / 500 - 1, ((k * 1299709) % 1000) / 500 - 1).multiplyScalar(R); if (inside(p)) spots.push(p); }
+    inst(g, lowball, core, spots.map((p) => new THREE.Matrix4().makeScale(G.r, G.r, G.r).setPosition(p)), 'secretoryCore');
+    if (halo) inst(g, ballHi, halo, spots.map((p) => new THREE.Matrix4().makeScale(G.h, G.h, G.h).setPosition(p)), 'secretoryHalo');
     const mito = MP(group, '--mito'), mg = new THREE.CapsuleGeometry(0.2, 0.9, 4, 8);
     for (let i = 0, n = 0; n < 12 && i < 2000; i++) { const p = new THREE.Vector3(((i * 31) % 97) / 48.5 - 1, ((i * 57) % 89) / 44.5 - 1, ((i * 73) % 83) / 41.5 - 1).multiplyScalar(R * 0.8);
       if (!inside(p)) continue; n++; const m = new THREE.Mesh(mg, mito); m.position.copy(p); m.rotation.set(i, i * 1.7, i * 0.3); g.add(m); }
     const cil = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 2.4, 8), MP(group, '--cilium')); cil.position.set(0, R * 0.95 + 1.1, 0.4); cil.rotation.z = 0.3; g.add(cil);
-    tag('isletCell', g, 'Nucleus', new THREE.Vector3(-0.6, -1.5, 0)); tag('isletCell', g, 'Insulin granules', new THREE.Vector3(3, -2, 1.5)); tag('isletCell', g, 'Golgi', new THREE.Vector3(1.6, 2.4, 0.2));
-    tag('isletCell', g, 'Primary cilium', new THREE.Vector3(0.4, R * 0.95 + 2.3, 0.4)); tag('isletCell', g, 'Mitochondria', new THREE.Vector3(-3, 1.8, 1));
-    g.position.copy(Pb); group.add(g);
+    // Its capillary, a short length of the nearest one in the islet.
+    const cap = nearestIsletCapillary(Pk), capAt = cap.point.clone().sub(Pk), rc = V.capillaryRadiusUm;
+    inst(g, rod, MP(group, '--capillary', null, { transparent: true, opacity: 0.35, depthWrite: false, side: THREE.DoubleSide, he: false }), [rodMatrix(capAt.clone().addScaledVector(cap.dir, -16), capAt.clone().addScaledVector(cap.dir, 16), rc)], 'capillary');
+    const toCap = capAt.clone().normalize(), u = new THREE.Vector3().crossVectors(toCap, Math.abs(toCap.y) < 0.9 ? Y : X).normalize(), w = new THREE.Vector3().crossVectors(toCap, u);
+    // Release sites: beta and alpha cells release toward the capillary; a delta cell at the ends of its processes, next to its neighbours.
+    let sites = [];
+    if (kind === 'delta') {
+      const others = B.islet.cells.map(([t, x, y, z], i) => [i, new THREE.Vector3(x, y, z)]).filter(([i]) => i !== fk).sort((p, q) => p[1].distanceTo(Pk) - q[1].distanceTo(Pk)).slice(0, 4);
+      const pm = MP(group, '--delta', null, { transparent: true, opacity: 0.6 });
+      others.forEach(([, q], k) => { const local = q.clone().sub(Pk), dn = local.clone().normalize(), base = dn.clone().multiplyScalar(R * 0.8), tip = local.clone().addScaledVector(dn, -R * 0.9);
+        const side = new THREE.Vector3().crossVectors(dn, k % 2 ? Y : Z).normalize().multiplyScalar(1.2), mid = base.clone().lerp(tip, 0.5).add(side);
+        g.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3([base, mid, tip]), 24, 0.32, 8, false), pm));
+        const bulb = new THREE.Mesh(ballHi, pm); bulb.position.copy(tip); bulb.scale.setScalar(0.6); g.add(bulb);
+        sites.push({ at: base, path: (t, out) => (t < 0.5 ? out.copy(base).lerp(tip, t / 0.5) : out.copy(tip).addScaledVector(dn, (t - 0.5) * 6).addScaledVector(side, Math.sin(t * 9 + k) * 0.4)) });
+        if (k === 0) tag(set, g, 'Process reaching a neighbouring cell', mid); });
+    } else {
+      for (let k = 0; k < 6; k++) { const th = k * 1.05, at = toCap.clone().multiplyScalar(R * 0.8).addScaledVector(u, Math.cos(th) * 1.6).addScaledVector(w, Math.sin(th) * 1.6);
+        const along = (k % 2 ? 1 : -1) * (4 + k);
+        sites.push({ at, path: (t, out) => (t < 0.45 ? out.copy(at).lerp(capAt, t / 0.45) : out.copy(capAt).addScaledVector(cap.dir, along * (t - 0.45) / 0.55 * 2.2)) }); }
+    }
+    // Granules travel from inside the cell to a release site and fuse there; the hormone leaves; a beta cell takes up glucose.
+    const NG = 24, NH = 48, NGl = kind === 'beta' ? 30 : 0;
+    const mg2 = movers(group, g, lowball, G.core, NG, 'secretoryCore', { roughness: 0.3 }), mh = movers(group, g, lowball, G.hormone, NH, G.name), ml = NGl ? movers(group, g, lowball, '--glucose', NGl, 'glucose') : null;
+    const from = (i) => spots[(i * 37) % spots.length];
+    group.userData.anim = (t) => {
+      if (t === null) { [mg2, mh, ml].forEach((m) => { if (m) m.visible = false; }); return; }
+      [mg2, mh, ml].forEach((m) => { if (m) m.visible = true; });
+      for (let i = 0; i < NG; i++) { const f = frac(t / 5 + i / NG), site = sites[i % sites.length];
+        if (f < 0.8) put(mg2, i, V3.lerpVectors(from(i), site.at, ease(f / 0.8)), G.r * 1.3); else put(mg2, i, site.at, f < 0.9 ? G.r * 1.3 * (1 - (f - 0.8) / 0.1) : 0); }
+      for (let i = 0; i < NH; i++) { const f = frac(t / 4 + i / NH); sites[i % sites.length].path(f, V3); put(mh, i, V3, 0.09 * (f < 0.75 ? 1 : 1 - (f - 0.75) / 0.25)); }
+      if (ml) for (let i = 0; i < NGl; i++) { const f = frac(t / 4.5 + i / NGl), start = capAt.clone().addScaledVector(cap.dir, ((i * 7) % 11 - 5) * 1.6); put(ml, i, V3.lerpVectors(start, from(i * 3), ease(f)), 0.08 * (f < 0.85 ? 1 : 1 - (f - 0.85) / 0.15)); }
+      [mg2, mh, ml].forEach((m) => { if (m) m.instanceMatrix.needsUpdate = true; });
+    };
+    tag(set, g, 'Nucleus', new THREE.Vector3(-0.6, -1.5, 0)); tag(set, g, G.label, new THREE.Vector3(3, -2, 1.5)); tag(set, g, 'Golgi', new THREE.Vector3(1.6, 2.4, 0.2));
+    tag(set, g, 'Primary cilium', new THREE.Vector3(0.4, R * 0.95 + 2.3, 0.4)); tag(set, g, 'Mitochondria', new THREE.Vector3(-3, 1.8, 1)); tag(set, g, 'Capillary', capAt.clone().addScaledVector(cap.dir, 9));
+    g.position.copy(Pk); group.add(g);
   }
   function buildDuctCell(group) {
     const c = dCells[fdc], g = new THREE.Group(), w = c.w, h = c.h, l = c.l;   // local frame: x across, y outward (basal), z along the duct; the apex faces the lumen at -y
@@ -375,8 +462,14 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
     const tj = MP(group, '--tightjunction');   // tight junctions: a belt round the apical edge
     [[0, l / 2, w, 0.12], [0, -l / 2, w, 0.12]].forEach(([x, z, sx]) => { const b = new THREE.Mesh(new THREE.BoxGeometry(sx * 0.9, 0.22, 0.14), tj); b.position.set(x, -h / 2 + 0.35, z * 0.95); g.add(b); });
     [[w / 2, 0], [-w / 2, 0]].forEach(([x]) => { const b = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.22, l * 0.9), tj); b.position.set(x * 0.95, -h / 2 + 0.35, 0); g.add(b); });
-    const cf = MP(group, '--cftr'), sl = MP(group, '--slc26');   // apical transporters, drawn as markers far larger than the molecules
-    for (let k = 0; k < 14; k++) { const m = new THREE.Mesh(lowball, k % 2 ? sl : cf); m.scale.setScalar(0.16); m.position.set((((k * 37) % 13) / 13 - 0.5) * w * 0.8, -h / 2 + 0.02, (((k * 59) % 11) / 11 - 0.5) * l * 0.8); g.add(m); }
+    const cf = MP(group, '--cftr'), sl = MP(group, '--slc26'), ports = [];   // apical transporters, drawn as markers far larger than the molecules
+    for (let k = 0; k < 14; k++) { const m = new THREE.Mesh(lowball, k % 2 ? sl : cf); m.scale.setScalar(0.16); m.position.set((((k * 37) % 13) / 13 - 0.5) * w * 0.8, -h / 2 + 0.02, (((k * 59) % 11) / 11 - 0.5) * l * 0.8); g.add(m); ports.push(m.position.clone()); }
+    // Secretion in motion: bicarbonate leaves through the transporters into the lumen, and the fluid carries it along the duct.
+    const NB = 70, hb = movers(group, g, lowball, '--bicarbonate', NB, 'bicarbonate');
+    group.userData.anim = (t) => { hb.visible = t !== null; if (t === null) return;
+      for (let i = 0; i < NB; i++) { const f = frac(t / 3 + i / NB), a = ports[i % ports.length];
+        V3.set(a.x + Math.sin(i * 2.1 + t) * 0.15 * f, a.y - 3.2 * ease(f * 1.6), a.z + Math.max(0, f - 0.3) * 6); put(hb, i, V3, 0.1 * (f < 0.8 ? 1 : 1 - (f - 0.8) / 0.2)); }
+      hb.instanceMatrix.needsUpdate = true; };
     const bm = new THREE.Mesh(new THREE.BoxGeometry(w * 1.7, 0.08, l * 1.7), MP(group, '--basement', null, { transparent: true, opacity: 0.6 })); bm.position.set(0, h / 2 + 0.08, 0); g.add(bm);
     tag('ductCell', g, 'Nucleus', new THREE.Vector3(0, h * 0.06, 0)); tag('ductCell', g, 'Microvilli', new THREE.Vector3(w * 0.3, -h / 2 - 0.3, 0)); tag('ductCell', g, 'Primary cilium', new THREE.Vector3(0.2, -h / 2 - 2.6, 0.7));
     tag('ductCell', g, 'Tight junction', new THREE.Vector3(w / 2, -h / 2 + 0.35, 0)); tag('ductCell', g, 'CFTR and SLC26A6', new THREE.Vector3(-w * 0.3, -h / 2, l * 0.2)); tag('ductCell', g, 'Basement membrane', new THREE.Vector3(0, h / 2 + 0.1, l * 0.7));
@@ -408,7 +501,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
     mv('acinusCells', 'Centroacinar cells', F.clone().add(new THREE.Vector3(0, 0, -B.acini[fa].r * 0.5).applyQuaternion(Q)), new THREE.Vector3());
     mv('acinusCells', 'Basal nucleus', new THREE.Vector3(0, 0.7, 0).applyMatrix4(c1.m), c1.world.clone().multiplyScalar(0.38 * c1.reach));
     const firstOf = (t) => B.islet.cells.map((c, i) => [c, i]).filter(([c]) => c[0] === t).map(([c]) => new THREE.Vector3(...c.slice(1))).sort((p, q) => Math.abs(p.x - I.x + 4) + 0.2 * p.distanceTo(I) - Math.abs(q.x - I.x + 4) - 0.2 * q.distanceTo(I))[0];
-    mv('isletCells', 'Beta cell', Pb, OFF.islet); ['alpha', 'delta', 'pp'].forEach((t) => { const p = firstOf(t); if (p) mv('isletCells', { alpha: 'Alpha cell', delta: 'Delta cell', pp: 'PP cell' }[t], p, p.clone().sub(I).multiplyScalar(0.4)); });
+    mv('isletCells', 'Beta cell', Pb, Pb.clone().sub(I).multiplyScalar(0.4)); ['alpha', 'delta', 'pp'].forEach((t) => { const p = firstOf(t); if (p) mv('isletCells', { alpha: 'Alpha cell', delta: 'Delta cell', pp: 'PP cell' }[t], p, p.clone().sub(I).multiplyScalar(0.4)); });
     mv('ductCells', 'Duct cell', Pd, OFF.duct); }
   }
   makeBlockLabels();
@@ -421,7 +514,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
   function makeBranches() {
     BRANCHES = {
     acinus: { name: 'Acinus', cellName: 'Acinar cell', anchor: F, cell: Pc, normal: cutNormal, keep: (p, r) => p.distanceTo(F) < B.acini[fa].r * 2 + 30 + r, build: buildAcinarCell, focal: { acinus: fa, skipCell: fc } },
-    islet: { name: 'Islet', cellName: 'Beta cell', anchor: I, cell: Pb, normal: cutNormal, keep: (p, r) => p.distanceTo(I) < B.islet.radiusUm + 16 + r * 0.3, build: buildBetaCell, focal: { skipIsletCell: fb } },
+    islet: { name: 'Islet', cellName: 'Beta cell', anchor: I, cell: Pk, normal: cutNormal, keep: (p, r) => p.distanceTo(I) < B.islet.radiusUm + 16 + r * 0.3, build: (g) => buildIsletCell(g, isletKind), focal: { skipIsletCell: fk } },
     duct: { name: 'Duct', cellName: 'Duct cell', anchor: D, cell: Pd, normal: null, keep: (p, r) => { const t = THREE.MathUtils.clamp(p.clone().sub(Da).dot(Dax), -25, Da.distanceTo(Db) + 25); return p.distanceTo(Da.clone().add(Dax.clone().multiplyScalar(t))) < Dseg.r + 34 + r; }, build: buildDuctCell, focal: { duct: fdu, skipDuctCell: fdc } },
   };
   // The duct is cut lengthwise: the plane contains its axis and faces the camera side.
@@ -437,7 +530,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
     const drop = (g) => { if (g) scene.remove(g); };
     Object.values(BRANCHES).forEach((b) => { drop(b.detail); drop(b.cellGroup); });
     labelRoots.forEach(drop); labelRoots.length = 0; explodeTags.length = 0;
-    ['tissue', 'acinus', 'islet', 'duct', 'acinusCells', 'isletCells', 'ductCells', 'acinusCell', 'isletCell', 'ductCell'].forEach((k) => { delete LABELS[k]; });
+    ['tissue', 'acinus', 'islet', 'duct', 'acinusCells', 'isletCells', 'ductCells', 'acinusCell', 'isletCell', 'alphaCell', 'deltaCell', 'ductCell'].forEach((k) => { delete LABELS[k]; });
     computeFocal(); makeBranches(); makeBlockLabels(); scaleIsletStages(); if (typeof selected !== 'undefined') { selected = null; showSelection(); } updatePickers();
   }
   function blockOf(i) { const S0 = SITE_LIST[i]; if (S0.verified) return BLOCKS[S0.region];
@@ -468,7 +561,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
   const IF_COLORS = { acinar: '#f0893c', granule: '#ffc46b', nucleus: '#4f7dff', cac: '#4fd1d9', cacNucleus: '#4f7dff', intercalated: '#2cc0c9', intralobular: '#1fa3b3', ductNucleus: '#4f7dff',
     capillary: '#ff4d5a', node: '#ff4d5a', redcell: '#c2303b', fibre: '#bfb2ff', stellate: '#ffd84a', stellateNucleus: '#4f7dff', beta: '#3fcf55', alpha: '#ff3d9a', delta: '#2fc2ff', pp: '#ffc21f', isletNucleus: '#4f7dff',
     lobule: '#d9772f', lobuleHull: '#d9772f', grossAcinus: '#f0893c', mainDuct: '#2cc0c9', intralobularDuct: '#2cc0c9', terminalDuct: '#2cc0c9', joint: '#2cc0c9', vein: '#ff4d5a', artery: '#ff4d5a',
-    septa: '#8f84c9', grossIslet: '#3fcf55', interlobularDuct: '#2cc0c9', interlobularVein: '#ff4d5a', interlobularArtery: '#ff4d5a' };
+    septa: '#8f84c9', grossIslet: '#3fcf55', enzyme: '#ffb36b', bicarbonate: '#7ff0f5', glucose: '#fff07a', insulin: '#8dff9a', glucagon: '#ff8ac4', somatostatin: '#8fdcff', secretoryCore: '#e8e8f0', interlobularDuct: '#2cc0c9', interlobularVein: '#ff4d5a', interlobularArtery: '#ff4d5a' };
   function stainGroup(g) { if (!g || g.userData.stain === stain) return; g.userData.stain = stain;
     g.traverse((o) => { if (!o.isMesh || !o.material) return; const m = o.material, key = IF_COLORS[o.name] ? o.name : m.userData.isletType; if (!key) return;
       if (!m.userData.heSaved) m.userData.heSaved = { color: m.color.clone(), vc: m.vertexColors };
@@ -767,8 +860,9 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
     const dir = camera.position.clone().sub(controls.target).normalize(); camera.position.copy(controls.target).add(dir.multiplyScalar(d));
     if (T >= 1) { if (leg.then) leg.then(); flight.legs.shift(); flight.start = null; if (!flight.legs.length) { flight = null; STAGE.locked = false; } }
   }
+  function setIsletKind(k) { if (k && k !== isletKind) { isletKind = k; refocus(); } }
   document.querySelectorAll('.ladder button').forEach((b) => b.addEventListener('click', () => {
-    const [lvl, br] = b.dataset.go.split(':'); if (br) document.querySelectorAll('[data-branch]').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.branch === br)));
+    const [lvl, br] = b.dataset.go.split(':'); setIsletKind(b.dataset.kind); if (br) document.querySelectorAll('[data-branch]').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.branch === br)));
     flyTo(stopFor(lvl, br), br, MODE_OF[lvl]); }));
   document.querySelectorAll('[data-branch]').forEach((b) => b.addEventListener('click', () => {
     document.querySelectorAll('[data-branch]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
@@ -831,13 +925,15 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
     { d: 800, m: 'tissue', say: 'At the bottom of the opening lies a small core of tissue, cut through an islet. Densely stained acini surround it, budding from small ducts, with capillaries and a little connective tissue between them. The islet has no duct of its own. Its hormones leave through its capillaries.' },
     { d: 210, m: 'structure', say: 'Each acinus is a cluster of pyramidal cells around a tiny central lumen. In an H and E stain, the base of each cell is purple, because it is packed with rough endoplasmic reticulum, and its apex is pink with zymogen granules: the stored digestive enzymes.' },
     { d: 100, m: 'cells', say: 'Pulled apart, the cells show their shape: broad at the base, narrow at the lumen, with a round nucleus near the base. The pale cells left at the centre are centroacinar cells. They are the first cells of the duct, and are found only in the pancreas.' },
-    { d: 26, m: 'cell', say: 'Inside one acinar cell, enzymes are made on the rough endoplasmic reticulum, packaged in the Golgi apparatus, and stored as zymogen granules at the apex, until a meal signals their release into the lumen.' },
+    { d: 26, m: 'cell', say: 'Inside one acinar cell, enzymes are made on the rough endoplasmic reticulum, packaged in the Golgi apparatus, and stored as zymogen granules at the apex. After a meal, the gut hormone cholecystokinin and nerve signals raise calcium inside the cell. Watch the granules travel to the apex and fuse with the membrane, emptying their enzymes into the lumen, from where they drain away down the intercalated duct.' },
     { d: 200, br: 'duct', m: 'structure', say: 'Secretions drain from intercalated ducts, which begin inside the acini, into intralobular ducts lined by pale cuboidal cells, and then into interlobular ducts in the septa. Unlike the salivary glands, the pancreas has no striated ducts, and no myoepithelial cells.' },
     { d: 90, m: 'cells', say: 'The duct wall is a single layer of these cells. Together they add the watery, bicarbonate-rich part of pancreatic juice, which neutralises the acid arriving from the stomach.' },
-    { d: 22, m: 'cell', say: 'A duct cell has microvilli and a single primary cilium on the surface facing the lumen, and tight junctions that seal it to its neighbours. Channels in that surface, such as CFTR and the exchanger SLC26A6, move chloride and bicarbonate into the duct.' },
+    { d: 22, m: 'cell', say: 'A duct cell has microvilli and a single primary cilium on the surface facing the lumen, and tight junctions that seal it to its neighbours. When acid from the stomach reaches the duodenum, the hormone secretin tells duct cells to secrete. Bicarbonate leaves through CFTR and the exchanger SLC26A6, water follows, and the stream washes the enzymes along the ducts.' },
     { d: 360, br: 'islet', m: 'structure', say: 'An islet is a compact cluster of endocrine cells in cords, threaded by a rich network of capillaries, with no capsule of its own. In H and E it looks pale, and its cell types cannot be told apart. Special stains, like the cell-type view here, reveal them.' },
     { d: 215, m: 'cells', say: 'In human islets the cell types are intermixed. Beta cells make insulin, alpha cells glucagon, delta cells somatostatin, and PP cells pancreatic polypeptide. Together they keep the level of glucose in the blood in balance.' },
-    { d: 24, m: 'cell', say: 'A beta cell takes up glucose, and as glucose rises, it releases insulin from its granules into the nearby capillary. Each granule stores insulin with zinc, in a dense crystalline core.' },
+    { d: 24, k: 'beta', m: 'cell', say: 'A beta cell senses glucose. Glucose enters from the blood and is burned for energy. As ATP rises, potassium channels in the membrane close, calcium flows in, and the insulin granules fuse with the membrane, releasing insulin into the nearby capillary. Each granule stores insulin with zinc in a dense core.' },
+    { d: 24, k: 'alpha', m: 'cell', say: 'Its neighbour, an alpha cell, makes glucagon, packed in smaller, dense granules. When blood glucose falls, alpha cells release glucagon, which tells the liver to release glucose. Insulin and glucagon pull in opposite directions.' },
+    { d: 24, k: 'delta', m: 'cell', say: 'A delta cell makes somatostatin. It reaches out with long, thin processes that touch beta and alpha cells, and releases somatostatin right beside them, damping the release of both insulin and glucagon.' },
     { d: 2.6e5, m: 'tissue', say: 'From the whole organ to a single cell, the pancreas joins digestion and metabolism in one gland.' },
   ];
 
@@ -871,9 +967,10 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
   }
   function stopTour() { if (!tour) return; if (window.speechSynthesis) speechSynthesis.cancel(); tour = null; flight = null; STAGE.locked = false; $('play').textContent = 'Play the journey'; $('caption').textContent = ''; }
   function nextTour() { if (!tour) return; if (tour.i >= TOUR.length) { stopTour(); return; } const s = TOUR[tour.i++];
-    flyTo(s.d, s.br, s.m); tour.phase = 'fly'; tour.hold = s.hold; $('caption').textContent = s.say; say(s.say);
+    setIsletKind(s.k); flyTo(s.d, s.br, s.m); tour.phase = 'fly'; tour.hold = s.hold; $('caption').textContent = s.say; say(s.say);
     if (s.br) document.querySelectorAll('[data-branch]').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.branch === s.br))); }
-  $('play').addEventListener('click', () => { if (tour) { stopTour(); return; } tour = { i: 0, view: focus }; $('play').textContent = 'Stop'; if (window.speechSynthesis) speechSynthesis.getVoices(); nextTour(); });
+  $('play').addEventListener('click', () => { if (tour) { stopTour(); return; } tour = { i: 0, view: focus }; $('play').textContent = 'Stop'; if (!motionOn) { motionOn = true; $('motion').checked = true; }   // the journey shows secretion in motion
+    if (window.speechSynthesis) speechSynthesis.getVoices(); nextTour(); });
   // The journey keeps going while you turn, zoom or click the model; only the Stop button ends it.
 
   // ---------- names
@@ -908,6 +1005,25 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
     for (let i = used; i < pool.length; i++) pool[i].style.display = 'none';
   }
 
+  // ---------- marker genes: from the HRA ASCT+B table (pancreas v1.3) and the Human Protein Atlas (v26.0), copied in
+  // repo/data/human-pancreas-markers.json with their sources. Shown for the cell or structure in view, or the one clicked.
+  const MARKERS = JSON.parse($('markers').textContent);
+  const MARKER_OF = { acinar: 'acinar', nucleus: 'acinar', granule: 'acinar', cac: 'centroacinar', cacNucleus: 'centroacinar', intercalated: 'duct', intralobular: 'duct', ductNucleus: 'duct',
+    capillary: 'endothelial', node: 'endothelial', redcell: 'rbc', stellate: 'stellate', stellateNucleus: 'stellate', beta: 'beta', alpha: 'alpha', delta: 'delta', pp: 'pp', isletNucleus: 'beta' };
+  const MARKER_VIEW = { acinus: 'acinar', acinusCells: 'acinar', acinusCell: 'acinar', islet: 'beta', isletCells: 'beta', isletCell: 'beta', alphaCell: 'alpha', deltaCell: 'delta', duct: 'duct', ductCells: 'duct', ductCell: 'duct' };
+  const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const geneLinks = (list) => '<div class="genes">' + list.map((g) => `<a href="https://www.proteinatlas.org/search/${encodeURIComponent(g.symbol || g)}" target="_blank" rel="noopener" title="${esc(g.description || g.symbol || g)}">${esc(g.symbol || g)}</a>`).join('') + '</div>';
+  let markerShown = '';
+  function showMarkers(key) {
+    const box = $('markerbox'), c = key && MARKERS.cellTypes[key]; if (key === markerShown) return; markerShown = key; if (!c) { box.hidden = true; return; } box.hidden = false;
+    const a = c.asctb, label = c.clId ? `${esc(c.label)} <small>${esc(c.clId)}</small>` : esc(c.label);
+    box.innerHTML = `<h3>Markers: ${label}</h3>`
+      + (a.genes.length ? `<p>HRA ASCT+B table${a.proteins.length ? ` (protein: ${a.proteins.map(esc).join(', ')})` : ''}</p>${geneLinks(a.genes)}` : '<p>HRA ASCT+B table: no biomarkers listed for this cell type.</p>')
+      + (a.related.length ? `<p>On related rows of the table</p>${geneLinks(a.related)}` : '')
+      + (c.hpa.length ? `<p>Human Protein Atlas (RNA)</p>${geneLinks(c.hpa)}` : '')
+      + (c.note ? `<p class="src">${esc(c.note)}</p>` : '')
+      + '<p class="src">HRA ASCT+B Pancreas v1.3 (CC BY 4.0); Human Protein Atlas v26.0 (CC BY-SA 4.0). Genes link to their HPA pages.</p>';
+  }
   // ---------- click to identify, isolate or fade a kind of cell
   const KINDS = {
     acinar: ['Acinar cell', 'Makes digestive enzymes; wedge-shaped, apex at the lumen of its acinus.'], nucleus: ['Acinar cell nucleus', 'Round and basal.'], granule: ['Zymogen granule', 'About 1 µm; holds enzymes until release into the lumen.'],
@@ -916,12 +1032,12 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
     capillary: ['Capillary', 'A looping network between acini; the islet has its own dense bed.'], node: ['Capillary', 'A junction in the capillary network.'], redcell: ['Red blood cell', 'About 7.5 µm across, in single file.'],
     fibre: ['Collagen fibre', 'Aligned along ducts and vessels (CODA); looser between acini.'], stellate: ['Stellate cell', 'Spindle-shaped, lying against acini and ducts.'], stellateNucleus: ['Stellate cell nucleus', ''],
     isletNucleus: ['Islet cell nucleus', 'Round and uniform, as islet nuclei look in section.'],
-    beta: ['Beta cell', 'Secretes insulin; about half of human islet cells.'], alpha: ['Alpha cell', 'Secretes glucagon; about a third of islet cells.'], delta: ['Delta cell', 'Secretes somatostatin.'], pp: ['PP cell', 'Secretes pancreatic polypeptide.'],
+    beta: ['Beta cell', 'Secretes insulin; about half of human islet cells.'], alpha: ['Alpha cell', 'Secretes glucagon; 33–46% of human islet cells (Cabrera 2006).'], delta: ['Delta cell', 'Secretes somatostatin, damping insulin and glucagon release; 8–12% of human islet cells (Cabrera 2006).'], pp: ['PP cell', 'Secretes pancreatic polypeptide.'],
   };
   let selected = null, isolated = false;
   const activeGroups = () => [groups.block, ...Object.values(BRANCHES).map((b) => b.detail), SLICE.block].filter(Boolean);
   function showSelection() {
-    const box = $('selection'); if (!selected) { box.hidden = true; return; } box.hidden = false;
+    const box = $('selection'); if (!selected) { box.hidden = true; showMarkers(MARKER_VIEW[lastLevel]); return; } box.hidden = false; showMarkers(MARKER_OF[selected]);
     $('selname').textContent = KINDS[selected][0]; $('seltext').textContent = KINDS[selected][1]; $('isolate').textContent = isolated ? 'Show all' : 'Isolate';
     let op = 1; activeGroups().forEach((g) => g.traverse((o) => { if (o.isInstancedMesh && o.name === selected) op = o.material.userData.base; })); $('selop').value = op; }
   function applyIsolate() { activeGroups().forEach((g) => { g.traverse((o) => { if (!o.isInstancedMesh) return; o.visible = isolated ? o.name === selected : true; }); if (!isolated) applyToggles(g); }); }
@@ -955,16 +1071,18 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
     isletOld: 'The islet cut open among its acini: beta (green), alpha (magenta), delta (cyan) and PP (amber) cells intermixed along a dense capillary bed, with no core or mantle, as in human islets (Cabrera 2006; Brissova 2005).',
     duct: 'An intralobular duct on its own, opened lengthwise: a single layer of cuboidal duct cells round the lumen. Duct cells secrete the bicarbonate-rich fluid of pancreatic juice, 2 to 3 litres a day (Ishiguro 2012; Hegyi 2015). Zoom on and its cells separate.',
     ductOld: 'An intralobular duct cut lengthwise: a single layer of cuboidal duct cells round the lumen, collagen aligned along it (CODA), intercalated ducts joining it from acini. Duct cells secrete the bicarbonate-rich fluid of pancreatic juice, 2 to 3 litres a day (Ishiguro 2012; Hegyi 2015).',
-    acinusCell: 'One acinar cell, in its place in the acinus: rough ER round the basal nucleus makes digestive enzymes, the Golgi packages them, and zymogen granules wait at the apex for release into the lumen (Palade 1975). Organelle sizes and numbers are illustrative.',
+    acinusCell: 'One acinar cell, in its place in the acinus: rough ER round the basal nucleus makes digestive enzymes, the Golgi packages them, and zymogen granules wait at the apex (Palade 1975). With Motion on, granules leave the Golgi, travel to the apex and fuse with the membrane, releasing their enzymes into the lumen and on down the intercalated duct. Cholecystokinin and acetylcholine trigger this release by raising calcium inside the cell (Messenger et al. 2014). Organelle sizes and numbers, and the speed of the motion, are illustrative.',
     acinusCells: 'The acinus pulled apart into its cells, like the segments of an orange: each wedge-shaped acinar cell slides out along its own axis, carrying its basal nucleus and its apical granules; the centroacinar cells stay at the centre, and the intercalated duct draws back. Zoom on toward one cell to see it alone; zoom out and they close up again.',
     isletCells: 'The islet’s cells drawn apart from its centre so each stands distinct: beta (green), alpha (magenta), delta (cyan) and PP (amber), intermixed as in human islets (Cabrera 2006). Its capillaries stay in place. Zoom on to one beta cell.',
     ductCells: 'The duct wall’s cells lifted off it and spread along it, so each cuboidal duct cell stands distinct. Zoom on to one cell.',
-    isletCell: 'One beta cell, in its place in the islet: a central nucleus, Golgi and rough ER that make and package insulin, mitochondria, a primary cilium (in the pancreas only islet and duct cells have one; diIorio 2014), and insulin granules as dark crystalline cores (insulin with zinc; Berclaz 2015) in pale halos. Sizes and numbers illustrative.',
-    ductCell: 'One duct cell, in its place in the duct wall: cuboidal, a central nucleus, many mitochondria, microvilli and a primary cilium on the apical surface facing the lumen, a tight-junction belt round its apex, and the basement membrane beneath. CFTR (blue) and the Cl⁻/HCO₃⁻ exchanger SLC26A6 (orange) in the apical membrane carry bicarbonate into the lumen (Steward and Ishiguro 2009); they are drawn as markers, far larger than the molecules.',
+    isletCell: 'One beta cell, in its place in the islet beside its capillary: a central nucleus, Golgi and rough ER that make and package insulin, mitochondria, a primary cilium (in the pancreas only islet and duct cells have one; diIorio 2014), and insulin granules of about 350 nm, dark cores (insulin with zinc; Berclaz 2015) in clear halos. With Motion on, glucose (yellow) enters from the blood; as it is burned, ATP rises, ATP-sensitive potassium channels close, calcium flows in and granules fuse with the membrane, releasing insulin (green) into the capillary (Rorsman and Ashcroft 2018). Sizes, numbers and speed illustrative.',
+    alphaCell: 'One alpha cell, in its place in the islet beside its capillary. It makes glucagon, stored in dense granules of about 200 nm with little or a grey halo, smaller than beta-cell granules (Brereton et al. 2015). When blood glucose falls, alpha cells release glucagon (pink) into the blood, and glucagon tells the liver to release glucose. Alpha cells are about a third to nearly half of human islet cells (33–46%; Cabrera et al. 2006). Sizes, numbers and speed illustrative.',
+    deltaCell: 'One delta cell, in its place in the islet. It makes somatostatin, in homogeneous granules of about 250 nm (Brereton et al. 2015), and reaches its neighbours with long thin processes, 1 to 18 µm long in human islets (Arrojo e Drigo et al. 2019). With Motion on, somatostatin (blue) is released at the ends of the processes, next to beta and alpha cells, where it damps the release of insulin and glucagon. Delta cells are about a tenth of human islet cells (8–12%; Cabrera et al. 2006). Sizes, numbers and speed illustrative.',
+    ductCell: 'One duct cell, in its place in the duct wall: cuboidal, a central nucleus, many mitochondria, microvilli and a primary cilium on the apical surface facing the lumen, a tight-junction belt round its apex, and the basement membrane beneath. CFTR (blue) and the Cl⁻/HCO₃⁻ exchanger SLC26A6 (orange) in the apical membrane, drawn far larger than the molecules, carry bicarbonate into the lumen. With Motion on, bicarbonate (teal) leaves through them and the fluid carries it along the duct. Secretin, acting through cAMP, is the main stimulus; the bicarbonate-rich fluid carries the enzymes away from the acini (Lee et al. 2012; Steward and Ishiguro 2009).',
   };
   let lastLevel = '';
   const LEVEL_NAMES = (key) => ({ compare: 'Head, body and tail compared', gross: 'Lobules (' + blockRegion + ')', organ: 'Organ', tissue: 'Tissue', acinus: 'Acinus', islet: 'Islet', duct: 'Duct',
-    acinusCells: 'Acinar cells, separated', isletCells: 'Islet cells, separated', ductCells: 'Duct cells, separated', acinusCell: 'Acinar cell', isletCell: 'Beta cell', ductCell: 'Duct cell' }[key] || '');
+    acinusCells: 'Acinar cells, separated', isletCells: 'Islet cells, separated', ductCells: 'Duct cells, separated', acinusCell: 'Acinar cell', isletCell: 'Beta cell', alphaCell: 'Alpha cell', deltaCell: 'Delta cell', ductCell: 'Duct cell' }[key] || '');
   function viewFrame(now, v) {
     stepFlight(now);
     stageStep(camera.position.distanceTo(controls.target), now);
@@ -1004,17 +1122,18 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
         if (w.explode > 0.4 || STAGE.mode === 'tissue') b.plane.constant = 1e6; }   // once the cells part, no cut is needed
     }
     if (motionOn) { const t = now / 1000; flow(groups.block, t); flow(BRANCHES[branch].detail, t); }
+    { const b = BRANCHES[branch], t = motionOn ? now / 1000 : null; [b.detail, b.cellGroup].forEach((gg) => { if (gg && gg.visible && gg.userData.anim) gg.userData.anim(t); }); }   // secretion in motion
     if (marker) marker.visible = false;
-    const lv = levelAt(d), key = lv === 'detail' ? branch : lv === 'cells' ? branch + 'Cells' : lv === 'cell' ? branch + 'Cell' : lv;
+    const lv = levelAt(d), key = lv === 'detail' ? branch : lv === 'cells' ? branch + 'Cells' : lv === 'cell' ? cellKey(branch, isletKind) : lv;
     if (v.i === focus && (lv === 'gross' || lv === 'compare')) { const st = (k) => GROSS[k] && GROSS[k].userData.stats, firsts = ['head', 'body', 'tail'].map((rk) => SITE_LIST.findIndex((S0) => S0.region === rk && S0.verified));
       const txt = lv === 'compare' ? firsts.filter(st).map((k) => `${st(k).key[0].toUpperCase() + st(k).key.slice(1)}: ${st(k).count.toLocaleString('en')} islets in ${Math.round(st(k).volume)} mm³ (${Math.round(st(k).density)} per mm³)`).join('; ') + '.'
         : st(site) ? `Site ${site + 1}, in the ${blockRegion}: round the line going in, ${st(site).lobules} lobules are opened to their ducts, with ${st(site).count.toLocaleString('en')} islets in ${Math.round(st(site).volume)} mm³ (${Math.round(st(site).density)} per mm³).` : '';
       $('grossstats').textContent = txt; }
     if (key !== lastLevel) { lastLevel = key; UI.levelname.textContent = LEVEL_NAMES(key);
-     if (v.i === focus) { writeHash(lv); $('info').textContent = INFO[key];
+     if (v.i === focus) { writeHash(lv); showMarkers(selected ? MARKER_OF[selected] : MARKER_VIEW[key]); $('info').textContent = INFO[key];
       document.querySelectorAll('[data-for]').forEach((el) => { el.style.display = el.dataset.for.split(' ').some((x) => x === key || x === lv) ? '' : 'none'; });
       updatePickers();
-      document.querySelectorAll('.ladder button').forEach((b) => { const [l, br] = b.dataset.go.split(':'); b.setAttribute('aria-current', String(l === lv && (!br || br === branch))); }); } }
+      document.querySelectorAll('.ladder button').forEach((b) => { const [l, br] = b.dataset.go.split(':'); b.setAttribute('aria-current', String(l === lv && (!br || br === branch) && (!b.dataset.kind || b.dataset.kind === isletKind))); }); } }
     explodeTags.forEach((o) => o.position.copy(o.userData.base).addScaledVector(o.userData.off, w.explode));
     if (lv === 'compare') drawLabels('compare', 1); else if (lv === 'gross') drawLabels('gross:' + site, w.gross);
     else drawLabels(lv === 'organ' ? 'organ' : lv === 'tissue' ? 'tissue' : key, lv === 'organ' ? w.organ : lv === 'tissue' ? w.block : lv === 'cell' ? w.cell : w.detail);
@@ -1039,8 +1158,8 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
   }
   // ---------- links to a view: #site=12&view=islet&stain=if opens the page there; the address follows the view
   const VIEW_KEYS = { organ: ['organ'], lobules: ['gross'], tissue: ['tissue'], acinus: ['detail', 'acinus'], 'acinus-cells': ['cells', 'acinus'], 'acinar-cell': ['cell', 'acinus'],
-    islet: ['detail', 'islet'], 'islet-cells': ['cells', 'islet'], 'beta-cell': ['cell', 'islet'], duct: ['detail', 'duct'], 'duct-cells': ['cells', 'duct'], 'duct-cell': ['cell', 'duct'] };
-  const viewName = (lv) => Object.keys(VIEW_KEYS).find((k) => { const [l, br] = VIEW_KEYS[k]; return l === lv && (!br || br === branch); }) || 'organ';
+    islet: ['detail', 'islet'], 'islet-cells': ['cells', 'islet'], 'beta-cell': ['cell', 'islet', 'beta'], 'alpha-cell': ['cell', 'islet', 'alpha'], 'delta-cell': ['cell', 'islet', 'delta'], duct: ['detail', 'duct'], 'duct-cells': ['cells', 'duct'], 'duct-cell': ['cell', 'duct'] };
+  const viewName = (lv) => Object.keys(VIEW_KEYS).find((k) => { const [l, br, kind] = VIEW_KEYS[k]; return l === lv && (!br || br === branch) && (!kind || kind === isletKind); }) || 'organ';
   const hashNow = () => writeHash(levelAt(camera.position.distanceTo(controls.target)));
   let hashReady = false; const START_HASH = location.hash;   // the link the page was opened with is read once the organ is built
   function writeHash(lv) { if (!hashReady || splitOn || tour || site < 0) return; const h = `#site=${site + 1}&view=${viewName(lv)}${stain === 'if' ? '&stain=if' : ''}`;
@@ -1048,7 +1167,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fdu, Dseg, Da, Db, D, Dax, dCells, fdc, P
   function readHash(h) { const q = new URLSearchParams((typeof h === 'string' ? h : location.hash).slice(1)), n = +q.get('site'), v = VIEW_KEYS[q.get('view')];
     if (n >= 1 && n <= SITE_LIST.length && n - 1 !== site) setSite(n - 1);
     if (q.get('stain') === 'if') document.querySelector('[data-stain=if]').click();
-    if (v && v[0] !== 'organ') { const [lvl, br] = v; if (br) document.querySelectorAll('[data-branch]').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.branch === br))); flyTo(stopFor(lvl, br), br, MODE_OF[lvl]); } }
+    if (v && v[0] !== 'organ') { const [lvl, br, kind] = v; setIsletKind(kind); if (br) document.querySelectorAll('[data-branch]').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.branch === br))); flyTo(stopFor(lvl, br), br, MODE_OF[lvl]); } }
   matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => location.reload());
   buildOrgan().then(() => { camera.position.set(0, 0.25, 1).normalize().multiplyScalar(STOPS.organ); controls.target.set(0, 0, 0); controls.update(); $('status').style.display = 'none'; renderer.setAnimationLoop(frame); readHash(START_HASH); hashReady = true; window.addEventListener('hashchange', () => readHash()); })
     .catch((e) => { $('status').textContent = 'The organ could not be read: ' + e; });

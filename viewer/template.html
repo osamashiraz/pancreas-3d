@@ -10,7 +10,7 @@
 --beta:#3fae49;--alpha:#d63384;--delta:#1fa6d1;--pp:#f2b21b;--rer:#6f7fd6;--golgi:#e3b13a;--mito:#4fae78;--lumen:#9ad0e6;
 --insulincore:#20402a;--insulinhalo:#dff2df;--cilium:#ffffff;--microvilli:#5d7f99;--tightjunction:#1d2b4f;--cftr:#2f6fe0;--slc26:#ef8a1a;--basement:#e7d9c2;
 --organ:#e6c49c;--parenchyma:#8d58a0;--isletgross:#dcb7d9;--organduct:#f1d36b;--artery:#c8333a;--vein:#3f5a9a;--neighbour:#b9a49c;
---isletnucleus:#5a4799;--grossduct:#f3d9e6;--grossartery:#c9485b;--grossvein:#ad5f7c;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+--isletnucleus:#5a4799;--insulin:#3a9e48;--glucagon:#c4307a;--glucagoncore:#3b1630;--glucagonhalo:#f4dfe9;--somatostatin:#1d93bd;--somatostatincore:#5f7894;--glucose:#e2b21c;--enzyme:#e46a7e;--bicarbonate:#1aa7b5;--grossduct:#f3d9e6;--grossartery:#c9485b;--grossvein:#ad5f7c;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#13141a;--panel:#1b1c24;--ink:#e8e7ee;--muted:#a1a2b2;--rule:#2d2e3a;--accent:#b49ae6;--warn:#e2b45f;--canvas:#101117}}
 :root[data-theme="dark"]{color-scheme:dark;--bg:#13141a;--panel:#1b1c24;--ink:#e8e7ee;--muted:#a1a2b2;--rule:#2d2e3a;--accent:#b49ae6;--warn:#e2b45f;--canvas:#101117}
 *,*::before,*::after{box-sizing:inherit}html{height:100%}
@@ -71,6 +71,10 @@ h2{font:560 17px/1.2 "Newsreader",Georgia,serif;margin:18px 0 6px}
 .slider input{width:100%}
 input{accent-color:var(--accent)}
 button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.markers{border:1px solid var(--rule);border-radius:8px;padding:10px 12px;margin:0 0 12px;font-size:13px}
+.markers h3{font:560 15px/1.25 "Newsreader",Georgia,serif;margin:0 0 6px}.markers h3 small{font:400 12px "Public Sans",system-ui,sans-serif;color:var(--muted)}
+.markers p{margin:0 0 6px}.markers .genes{display:flex;flex-wrap:wrap;gap:4px;margin:2px 0 8px}.markers .genes a{font:500 12px ui-monospace,Menlo,monospace;color:var(--ink);background:color-mix(in srgb,var(--accent) 12%,var(--panel));border:1px solid var(--rule);border-radius:5px;padding:1px 6px;text-decoration:none}
+.markers .genes a:hover{border-color:var(--accent)}.markers .src{font-size:11.5px;color:var(--muted);margin:0}
 .note{font-size:12.5px;color:var(--muted);border-top:1px solid var(--rule);padding-top:10px}
 ol{font-size:12.5px;color:var(--muted);padding-left:18px}ol li{margin-bottom:5px}
 .unv{color:var(--warn)}
@@ -84,7 +88,8 @@ ol{font-size:12.5px;color:var(--muted);padding-left:18px}ol li{margin-bottom:5px
    <button type="button" data-go="gross">Lobules<span>opened in place</span></button>
    <button type="button" data-go="tissue">Tissue<span>core of a lobule</span></button>
    <div class="branch"><button type="button" data-go="detail:acinus">Acinus</button><button type="button" data-go="cells:acinus">Its cells</button><button type="button" data-go="cell:acinus">One cell</button></div>
-   <div class="branch"><button type="button" data-go="detail:islet">Islet</button><button type="button" data-go="cells:islet">Its cells</button><button type="button" data-go="cell:islet">Beta cell</button></div>
+   <div class="branch"><button type="button" data-go="detail:islet">Islet</button><button type="button" data-go="cells:islet">Its cells</button><button type="button" data-go="cell:islet" data-kind="beta">Beta cell</button></div>
+   <div class="branch"><button type="button" data-go="cell:islet" data-kind="alpha">Alpha cell</button><button type="button" data-go="cell:islet" data-kind="delta">Delta cell</button></div>
    <div class="branch"><button type="button" data-go="detail:duct">Duct</button><button type="button" data-go="cells:duct">Its cells</button><button type="button" data-go="cell:duct">One cell</button></div>
   </nav>
   <div class="caption" id="caption" aria-live="polite"></div>
@@ -110,6 +115,7 @@ ol{font-size:12.5px;color:var(--muted);padding-left:18px}ol li{margin-bottom:5px
    <h3 id="selname"></h3><p id="seltext"></p>
    <div class="row"><button type="button" id="isolate">Isolate</button><label style="display:flex;gap:6px;align-items:center;font-size:13px">Opacity <input type="range" id="selop" min="0" max="1" step="0.01" value="1" style="width:110px"></label><button type="button" id="selclose" aria-label="Clear selection">Clear</button></div>
   </div>
+  <div class="markers" id="markerbox" hidden></div>
   <p class="target" id="target" data-for="organ"></p>
   <div data-for="organ gross tissue compare"><span style="font-size:14px">Region</span><br>
    <div class="seg" role="group" aria-label="Region the tissue is taken from"><button type="button" data-region="head" aria-pressed="false">Head</button><button type="button" data-region="body" aria-pressed="true">Body</button><button type="button" data-region="tail" aria-pressed="false">Tail</button></div>
@@ -148,14 +154,33 @@ ol{font-size:12.5px;color:var(--muted);padding-left:18px}ol li{margin-bottom:5px
    <li><span class="sw" style="background:var(--rer)"></span><span>Rough ER round the nucleus: makes the enzymes</span></li>
    <li><span class="sw" style="background:var(--golgi)"></span><span>Golgi above the nucleus: packages them</span></li>
    <li><span class="sw" style="background:var(--granule)"></span><span>Zymogen granules, about 1 µm, at the apex</span></li>
+   <li><span class="sw" style="background:var(--enzyme)"></span><span>Enzymes released into the lumen and down the duct (with Motion on)</span></li>
    <li><span class="sw" style="background:var(--mito)"></span><span>Mitochondria</span></li>
   </ul>
   <ul class="legend" data-for="isletCell">
-   <li><span class="sw" style="background:var(--insulincore)"></span><span>Insulin granules: dark crystalline cores of insulin with zinc, in pale halos</span></li>
+   <li><span class="sw" style="background:var(--insulincore)"></span><span>Insulin granules, about 350 nm: dark cores of insulin with zinc, in clear halos</span></li>
+   <li><span class="sw" style="background:var(--glucose)"></span><span>Glucose entering from the blood (with Motion on)</span></li>
+   <li><span class="sw" style="background:var(--insulin)"></span><span>Insulin released into the capillary (with Motion on)</span></li>
    <li><span class="sw" style="background:var(--nucleus)"></span><span>Nucleus</span></li>
    <li><span class="sw" style="background:var(--golgi)"></span><span>Golgi; rough ER in blue</span></li>
    <li><span class="sw" style="background:var(--mito)"></span><span>Mitochondria</span></li>
    <li><span class="sw" style="background:var(--cilium)"></span><span>Primary cilium</span></li>
+  </ul>
+  <ul class="legend" data-for="alphaCell">
+   <li><span class="sw" style="background:var(--glucagoncore)"></span><span>Glucagon granules, about 200 nm: dense, with little or a grey halo</span></li>
+   <li><span class="sw" style="background:var(--glucagon)"></span><span>Glucagon released into the capillary (with Motion on)</span></li>
+   <li><span class="sw" style="background:var(--nucleus)"></span><span>Nucleus</span></li>
+   <li><span class="sw" style="background:var(--golgi)"></span><span>Golgi; rough ER in blue</span></li>
+   <li><span class="sw" style="background:var(--mito)"></span><span>Mitochondria</span></li>
+   <li><span class="sw" style="background:var(--capillary)"></span><span>Its capillary</span></li>
+  </ul>
+  <ul class="legend" data-for="deltaCell">
+   <li><span class="sw" style="background:var(--somatostatincore)"></span><span>Somatostatin granules, about 250 nm, homogeneous</span></li>
+   <li><span class="sw" style="background:var(--delta)"></span><span>Processes reaching neighbouring beta and alpha cells (1–18 µm in human islets)</span></li>
+   <li><span class="sw" style="background:var(--somatostatin)"></span><span>Somatostatin released beside its neighbours (with Motion on)</span></li>
+   <li><span class="sw" style="background:var(--nucleus)"></span><span>Nucleus</span></li>
+   <li><span class="sw" style="background:var(--golgi)"></span><span>Golgi; rough ER in blue</span></li>
+   <li><span class="sw" style="background:var(--mito)"></span><span>Mitochondria</span></li>
   </ul>
   <ul class="legend" data-for="ductCell">
    <li><span class="sw" style="background:var(--ductnucleus)"></span><span>Nucleus, central</span></li>
@@ -166,6 +191,7 @@ ol{font-size:12.5px;color:var(--muted);padding-left:18px}ol li{margin-bottom:5px
    <li><span class="sw" style="background:var(--cftr)"></span><span>CFTR, apical anion channel</span></li>
    <li><span class="sw" style="background:var(--slc26)"></span><span>SLC26A6, apical Cl⁻/HCO₃⁻ exchanger</span></li>
    <li><span class="sw" style="background:var(--basement)"></span><span>Basement membrane, beneath the cell</span></li>
+  <li><span class="sw" style="background:var(--bicarbonate)"></span><span>Bicarbonate leaving into the lumen and carried along it (with Motion on)</span></li>
   </ul>
   <p class="note" data-for="tissue detail cells cell">Acinar cells reach out until they meet a neighbouring acinus, a vessel, a duct or the islet, so acini deform against one another; they fill 52% of each tested block. Sizes of acinar, centroacinar, duct and beta cells, acini, granules, capillaries and stellate cells are <span class="unv">typical values not yet sourced</span>; the duct tree and centroacinar cells are described in rat (Endo 2002). The core is cut from the 300 µm block built and tested for its region, or generated in your browser from the site’s seed by the same rules.</p>
   <h2>Sources</h2>
@@ -186,6 +212,7 @@ ol{font-size:12.5px;color:var(--muted);padding-left:18px}ol li{margin-bottom:5px
   </ol>
  </aside>
 </div>
+<script type="application/json" id="markers">__MARKERS_JSON__</script>
 <script type="application/json" id="block">__BLOCK_BODY__</script>
 <script type="application/json" id="block-head">__BLOCK_HEAD__</script>
 <script type="application/json" id="block-tail">__BLOCK_TAIL__</script>

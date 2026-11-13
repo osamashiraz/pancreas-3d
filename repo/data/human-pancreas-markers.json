@@ -1,0 +1,699 @@
+{
+ "schemaVersion": "humanbio.cell-markers.v1",
+ "module": "human-pancreas",
+ "retrievedOn": "2026-11-12",
+ "expertReviewed": false,
+ "sources": {
+  "asctb": {
+   "table": "Anatomical Structures, Cell Types and Biomarkers Table for Pancreas v1.3 (Dec 15 2023); authors Campbell-Thompson, Eskaros, Saunders; Data DOI https://doi.org/10.48539/HBM336.TBNP.923",
+   "file": "v2.0/asct-b/asct-b-vh-pancreas.csv",
+   "repo": "https://github.com/hubmapconsortium/ccf-releases",
+   "commit": "b036a91aaf7234f462b1249d4a5f4fb0e982f412",
+   "url": "https://raw.githubusercontent.com/hubmapconsortium/ccf-releases/b036a91aaf7234f462b1249d4a5f4fb0e982f412/v2.0/asct-b/asct-b-vh-pancreas.csv",
+   "sha256": "15312b9b0a7ddb251bc729712fe1a662d8a3d622806401d66bb575a61c562717",
+   "bytes": 55331,
+   "note": "Header on line 11 (1-based), 10 metadata lines before it. Gene IDs are HGNC. All REF/* columns are empty for every row, so no per-row DOIs; table-level literature is in the General Publication(s) metadata line (Walker et al. 2021 doi:10.1210/endrev/bnab010 and a list of RNAseq PMIDs).",
+   "licence": "CC BY 4.0"
+  },
+  "hpa": {
+   "version": "Human Protein Atlas 26.0, released 2026.11.11, Ensembl 109 (https://www.proteinatlas.org/about/releases)",
+   "bulkFile": "https://www.proteinatlas.org/download/proteinatlas.tsv.zip",
+   "bulkSha256": "10a737f01ee0bf87bed25a7aefa50d979ea450b4ba87275e0231621783eea064",
+   "apiDocs": "https://www.proteinatlas.org/about/help/dataaccess",
+   "exampleQueryUrls": [
+    "https://www.proteinatlas.org/api/search_download.php?search=cell_type_category_rna%3APancreatic+acinar+cells%3BCell+type+enriched&format=tsv&columns=g,gd,rnascs,rnascd,rnascss,rnascsm&compress=no",
+    "https://www.proteinatlas.org/api/search_download.php?search=cell_type_category_rna%3APancreatic+islet+cells%3BCell+type+enriched&format=tsv&columns=g,gd,rnascs,rnascd,rnascss,rnascsm&compress=no",
+    "https://www.proteinatlas.org/ENSG00000254647-INS/tissue/pancreas"
+   ],
+   "method": "Lists were computed from the bulk TSV (same data as the API). Ranking rule: by nCPM in the named cell type among genes HPA classifies as Cell type enriched / Group enriched / Cell type enhanced (single-cell lists), or by the rules stated in each basis field.",
+   "licence": "CC BY-SA 4.0"
+  }
+ },
+ "method": [
+  "ASCT+B: biomarkers are copied from the rows where the cell type is the deepest term of the chain (labels from *LABEL columns, ids HGNC). Genes on rows where it is a parent term are listed apart under asctb.related.",
+  "HPA: HPA single-cell data for pancreas has only acinar, duct and (lumped) islet cells. Each gene states the basis on which it was chosen; endothelial, stellate and red-cell lists are cross-tissue, not pancreas-specific."
+ ],
+ "cellTypes": {
+  "acinar": {
+   "label": "pancreatic acinar cell",
+   "clId": "CL:0002064",
+   "asctb": {
+    "genes": [
+     "AMY2A",
+     "PRSS1",
+     "CTRB1",
+     "CELA3A",
+     "KRT18",
+     "KRT8"
+    ],
+    "proteins": [],
+    "related": []
+   },
+   "hpa": [
+    {
+     "symbol": "PRSS2",
+     "description": "Serine protease 2",
+     "specificity": "Cell type enriched",
+     "basis": "RNA single cell type specificity (cross-tissue); ranked by nCPM in Pancreatic acinar cells"
+    },
+    {
+     "symbol": "REG1A",
+     "description": "Regenerating family member 1 alpha",
+     "specificity": "Cell type enriched",
+     "basis": "RNA single cell type specificity (cross-tissue); ranked by nCPM in Pancreatic acinar cells"
+    },
+    {
+     "symbol": "CLPS",
+     "description": "Colipase",
+     "specificity": "Cell type enriched",
+     "basis": "RNA single cell type specificity (cross-tissue); ranked by nCPM in Pancreatic acinar cells"
+    },
+    {
+     "symbol": "PRSS1",
+     "description": "Serine protease 1",
+     "specificity": "Cell type enriched",
+     "basis": "RNA single cell type specificity (cross-tissue); ranked by nCPM in Pancreatic acinar cells"
+    },
+    {
+     "symbol": "CTRB2",
+     "description": "Chymotrypsinogen B2",
+     "specificity": "Cell type enriched",
+     "basis": "RNA single cell type specificity (cross-tissue); ranked by nCPM in Pancreatic acinar cells"
+    },
+    {
+     "symbol": "CPA1",
+     "description": "Carboxypeptidase A1",
+     "specificity": "Cell type enriched",
+     "basis": "RNA single cell type specificity (cross-tissue); ranked by nCPM in Pancreatic acinar cells"
+    },
+    {
+     "symbol": "PLA2G1B",
+     "description": "Phospholipase A2 group IB",
+     "specificity": "Cell type enriched",
+     "basis": "RNA single cell type specificity (cross-tissue); ranked by nCPM in Pancreatic acinar cells"
+    },
+    {
+     "symbol": "PNLIP",
+     "description": "Pancreatic lipase",
+     "specificity": "Cell type enriched",
+     "basis": "RNA single cell type specificity (cross-tissue); ranked by nCPM in Pancreatic acinar cells"
+    }
+   ],
+   "note": "HPA cell type \"Pancreatic acinar cells\" (scRNA, cross-tissue specificity). HPA tissue-cell-type name is \"Exocrine glandular cells\" (acinar in practice)."
+  },
+  "centroacinar": {
+   "label": "pancreatic centro-acinar cell",
+   "clId": "CL:0002080",
+   "asctb": {
+    "genes": [],
+    "proteins": [],
+    "related": [
+     "CA2"
+    ]
+   },
+   "hpa": [],
+   "note": "ASCT+B lists CA2 only on a row where the chain is ductal cell > centro-acinar cell > columnar/cuboidal epithelial cell (CL:0000075), so CA2 is attached to the deepest term, not to centro-acinar itself; shown under genesOnChildOrLaterRowsInChain. HPA has no centroacinar cell type."
+  },
+  "duct": {
+   "label": "pancreatic ductal cell",
+   "clId": "CL:0002079",
+   "asctb": {
+    "genes": [
+     "AVIL",
+     "HPGDS"
+    ],
+    "proteins": [],
+    "related": [
+     "CA2",
+     "CFTR",
+     "CHGA",
+     "KRT19",
+     "KRT7",
+     "MUC2",
+     "PDX1",
+     "SYP",
+     "TPH1"
+    ]
+   },
+   "hpa": [
+    {
+     "symbol": "SLC4A4",
+     "description": "Solute carrier family 4 member 4",
+     "specificity": "Cell type enhanced",
+     "basis": "RNA single cell type specificity (cross-tissue); ranked by nCPM in Pancreatic duct cells"
+    },
+    {
+     "symbol": "CFTR",
+     "description": "CF transmembrane conductance regulator",
+     "specificity": "Cell type enhanced",
+     "basis": "RNA single cell type specificity (cross-tissue); ranked by nCPM in Pancreatic duct cells"
+    },
+    {
+     "symbol": "ANXA4",
+     "description": "Annexin A4",
+     "specificity": "Cell type enhanced",
+     "basis": "RNA single cell type specificity (cross-tissue); ranked by nCPM in Pancreatic duct cells"
+    },
+    {
+     "symbol": "HSPH1",
+     "description": "Heat shock protein family H (Hsp110) member 1",
+     "specificity": "Cell type enhanced",
+     "basis": "RNA single cell type specificity (cross-tissue); ranked by nCPM in Pancreatic duct cells"
+    },
+    {
+     "symbol": "TFPI2",
+     "description": "Tissue factor pathway inhibitor 2",
+     "specificity": "Cell type enhanced",
+     "basis": "RNA single cell type specificity (cross-tissue); ranked by nCPM in Pancreatic duct cells"
+    },
+    {
+     "symbol": "PKHD1",
+     "description": "PKHD1 ciliary IPT domain containing fibrocystin/polyductin",
+     "specificity": "Cell type enhanced",
+     "basis": "RNA single cell type specificity (cross-tissue); ranked by nCPM in Pancreatic duct cells"
+    },
+    {
+     "symbol": "VCAM1",
+     "description": "Vascular cell adhesion molecule 1",
+     "specificity": "Group enriched",
+     "basis": "RNA single cell type specificity (cross-tissue); ranked by nCPM in Pancreatic duct cells"
+    },
+    {
+     "symbol": "SCTR",
+     "description": "Secretin receptor",
+     "specificity": "Group enriched",
+     "basis": "RNA single cell type specificity (cross-tissue); ranked by nCPM in Pancreatic duct cells"
+    }
+   ],
+   "note": "Intercalated/intralobular duct. ASCT+B direct genes AVIL, HPGDS; KRT19 etc. are attached to child terms on duct rows (see genesOnChildOrLaterRowsInChain). HPA \"Pancreatic duct cells\" is a cross-tissue single-cell class with few high-confidence genes; CFTR, SLC4A4 and SCTR (secretin receptor) rank high."
+  },
+  "beta": {
+   "label": "type B pancreatic cell",
+   "clId": "CL:0000169",
+   "asctb": {
+    "genes": [
+     "INS",
+     "ENTPD3",
+     "PDX1",
+     "MAFA",
+     "CHGA",
+     "SYP",
+     "UCHL1",
+     "NKX6-1"
+    ],
+    "proteins": [
+     "INS"
+    ],
+    "related": []
+   },
+   "hpa": [
+    {
+     "symbol": "INS",
+     "description": "Insulin",
+     "specificity": "Cell type enriched",
+     "basis": "In HPA tissue-cell-type enrichment for Pancreas - Beta cells (and not Alpha cells) AND single-cell \"Pancreatic islet cells\" cell type enriched; ranked by nCPM"
+    },
+    {
+     "symbol": "IAPP",
+     "description": "Islet amyloid polypeptide",
+     "specificity": "Cell type enriched",
+     "basis": "In HPA tissue-cell-type enrichment for Pancreas - Beta cells (and not Alpha cells) AND single-cell \"Pancreatic islet cells\" cell type enriched; ranked by nCPM"
+    },
+    {
+     "symbol": "GAD2",
+     "description": "Glutamate decarboxylase 2",
+     "specificity": "Cell type enhanced",
+     "basis": "In HPA tissue-cell-type enrichment for Pancreas - Beta cells (and not Alpha cells) AND single-cell \"Pancreatic islet cells\" cell type enhanced; ranked by nCPM"
+    },
+    {
+     "symbol": "PPP1R1A",
+     "description": "Protein phosphatase 1 regulatory inhibitor subunit 1A",
+     "specificity": "Group enriched",
+     "basis": "In HPA tissue-cell-type enrichment for Pancreas - Beta cells (and not Alpha cells) AND single-cell \"Pancreatic islet cells\" group enriched; ranked by nCPM"
+    },
+    {
+     "symbol": "PCSK1",
+     "description": "Proprotein convertase subtilisin/kexin type 1",
+     "specificity": "Group enriched",
+     "basis": "In HPA tissue-cell-type enrichment for Pancreas - Beta cells (and not Alpha cells) AND single-cell \"Pancreatic islet cells\" group enriched; ranked by nCPM"
+    },
+    {
+     "symbol": "SHISAL2B",
+     "description": "Shisa like 2B",
+     "specificity": "Cell type enriched",
+     "basis": "In HPA tissue-cell-type enrichment for Pancreas - Beta cells (and not Alpha cells) AND single-cell \"Pancreatic islet cells\" cell type enriched; ranked by nCPM"
+    },
+    {
+     "symbol": "MAFA",
+     "description": "MAF bZIP transcription factor A",
+     "specificity": "Cell type enhanced",
+     "basis": "In HPA tissue-cell-type enrichment for Pancreas - Beta cells (and not Alpha cells) AND single-cell \"Pancreatic islet cells\" cell type enhanced; ranked by nCPM"
+    },
+    {
+     "symbol": "FFAR1",
+     "description": "Free fatty acid receptor 1",
+     "specificity": "Cell type enriched",
+     "basis": "In HPA tissue-cell-type enrichment for Pancreas - Beta cells (and not Alpha cells) AND single-cell \"Pancreatic islet cells\" cell type enriched; ranked by nCPM"
+    }
+   ],
+   "note": "HPA single-cell data lump islet endocrine cells as \"Pancreatic islet cells\"; list shown is the islet list, not beta-specific. Beta-specific evidence: HPA tissue-cell-type enrichment \"Pancreas - Beta cells\" (bulk-derived) and IF multiplex (INS antibody overlaps beta cells, not alpha/delta/PP/epsilon)."
+  },
+  "alpha": {
+   "label": "pancreatic A cell",
+   "clId": "CL:0000171",
+   "asctb": {
+    "genes": [
+     "GCG",
+     "ARX",
+     "IRX2",
+     "CHGA",
+     "SYP",
+     "UCHL1"
+    ],
+    "proteins": [],
+    "related": []
+   },
+   "hpa": [
+    {
+     "symbol": "GCG",
+     "description": "Glucagon",
+     "specificity": "Cell type enriched",
+     "basis": "In HPA tissue-cell-type enrichment for Pancreas - Alpha cells (and not Beta cells) AND single-cell \"Pancreatic islet cells\" cell type enriched; ranked by nCPM"
+    },
+    {
+     "symbol": "TTR",
+     "description": "Transthyretin",
+     "specificity": "Group enriched",
+     "basis": "In HPA tissue-cell-type enrichment for Pancreas - Alpha cells (and not Beta cells) AND single-cell \"Pancreatic islet cells\" group enriched; ranked by nCPM"
+    },
+    {
+     "symbol": "CHGB",
+     "description": "Chromogranin B",
+     "specificity": "Cell type enhanced",
+     "basis": "In HPA tissue-cell-type enrichment for Pancreas - Alpha cells (and not Beta cells) AND single-cell \"Pancreatic islet cells\" cell type enhanced; ranked by nCPM"
+    },
+    {
+     "symbol": "SCG2",
+     "description": "Secretogranin II",
+     "specificity": "Cell type enhanced",
+     "basis": "In HPA tissue-cell-type enrichment for Pancreas - Alpha cells (and not Beta cells) AND single-cell \"Pancreatic islet cells\" cell type enhanced; ranked by nCPM"
+    },
+    {
+     "symbol": "CRYBA2",
+     "description": "Crystallin beta A2",
+     "specificity": "Group enriched",
+     "basis": "In HPA tissue-cell-type enrichment for Pancreas - Alpha cells (and not Beta cells) AND single-cell \"Pancreatic islet cells\" group enriched; ranked by nCPM"
+    },
+    {
+     "symbol": "PCSK2",
+     "description": "Proprotein convertase subtilisin/kexin type 2",
+     "specificity": "Cell type enhanced",
+     "basis": "In HPA tissue-cell-type enrichment for Pancreas - Alpha cells (and not Beta cells) AND single-cell \"Pancreatic islet cells\" cell type enhanced; ranked by nCPM"
+    },
+    {
+     "symbol": "PAPPA2",
+     "description": "Pappalysin 2",
+     "specificity": "Cell type enhanced",
+     "basis": "In HPA tissue-cell-type enrichment for Pancreas - Alpha cells (and not Beta cells) AND single-cell \"Pancreatic islet cells\" cell type enhanced; ranked by nCPM"
+    },
+    {
+     "symbol": "GRIA3",
+     "description": "Glutamate ionotropic receptor AMPA type subunit 3",
+     "specificity": "Cell type enhanced",
+     "basis": "In HPA tissue-cell-type enrichment for Pancreas - Alpha cells (and not Beta cells) AND single-cell \"Pancreatic islet cells\" cell type enhanced; ranked by nCPM"
+    }
+   ],
+   "note": "Islet list is lumped (see beta). Alpha-specific: HPA \"Pancreas - Alpha cells\" (bulk-derived) and IF multiplex (GCG antibody overlaps alpha cells)."
+  },
+  "delta": {
+   "label": "pancreatic D cell",
+   "clId": "CL:0000173",
+   "asctb": {
+    "genes": [
+     "SST",
+     "HHEX",
+     "CHGA",
+     "SYP",
+     "UCHL1"
+    ],
+    "proteins": [],
+    "related": []
+   },
+   "hpa": [
+    {
+     "symbol": "SST",
+     "description": "Somatostatin",
+     "specificity": "Group enriched",
+     "basis": "Hormone gene of this cell type (identity from ASCT+B); HPA class is the lumped Pancreatic islet cells"
+    }
+   ],
+   "note": "HPA has no delta-cell single-cell class (lumped in \"Pancreatic islet cells\"; SST is Group enriched there). HPA tissue page lists delta cells only in IF multiplex annotation."
+  },
+  "pp": {
+   "label": "pancreatic PP cell",
+   "clId": "CL:0002275",
+   "asctb": {
+    "genes": [
+     "PPY",
+     "CHGA",
+     "SYP",
+     "UCHL1"
+    ],
+    "proteins": [],
+    "related": []
+   },
+   "hpa": [
+    {
+     "symbol": "PPY",
+     "description": "Pancreatic polypeptide",
+     "specificity": "Cell type enriched",
+     "basis": "Hormone gene of this cell type (identity from ASCT+B); HPA class is the lumped Pancreatic islet cells"
+    }
+   ],
+   "note": "HPA has no PP-cell class; PPY is \"Cell type enriched\" in Pancreatic islet cells. IF multiplex annotation lists PP cells."
+  },
+  "stellate": {
+   "label": "pancreatic stellate cell",
+   "clId": "CL:0002410",
+   "asctb": {
+    "genes": [
+     "ACTA2",
+     "LAMA2",
+     "HOXC8",
+     "HOXC9",
+     "PDGFRB"
+    ],
+    "proteins": [],
+    "related": []
+   },
+   "hpa": [
+    {
+     "symbol": "DCN",
+     "description": "Decorin",
+     "specificity": "Cell type enhanced",
+     "basis": "In HPA tissue-cell-type enrichment for Pancreas - Fibroblasts AND single-cell group \"Fibroblasts\" cell type enhanced (cross-tissue); ranked by nCPM"
+    },
+    {
+     "symbol": "APOD",
+     "description": "Apolipoprotein D",
+     "specificity": "Cell type enhanced",
+     "basis": "In HPA tissue-cell-type enrichment for Pancreas - Fibroblasts AND single-cell group \"Fibroblasts\" cell type enhanced (cross-tissue); ranked by nCPM"
+    },
+    {
+     "symbol": "CFD",
+     "description": "Complement factor D",
+     "specificity": "Group enriched",
+     "basis": "In HPA tissue-cell-type enrichment for Pancreas - Fibroblasts AND single-cell group \"Fibroblasts\" group enriched (cross-tissue); ranked by nCPM"
+    },
+    {
+     "symbol": "FBLN1",
+     "description": "Fibulin 1",
+     "specificity": "Cell type enhanced",
+     "basis": "In HPA tissue-cell-type enrichment for Pancreas - Fibroblasts AND single-cell group \"Fibroblasts\" cell type enhanced (cross-tissue); ranked by nCPM"
+    },
+    {
+     "symbol": "CXCL14",
+     "description": "C-X-C motif chemokine ligand 14",
+     "specificity": "Cell type enhanced",
+     "basis": "In HPA tissue-cell-type enrichment for Pancreas - Fibroblasts AND single-cell group \"Fibroblasts\" cell type enhanced (cross-tissue); ranked by nCPM"
+    },
+    {
+     "symbol": "C7",
+     "description": "Complement C7",
+     "specificity": "Cell type enhanced",
+     "basis": "In HPA tissue-cell-type enrichment for Pancreas - Fibroblasts AND single-cell group \"Fibroblasts\" cell type enhanced (cross-tissue); ranked by nCPM"
+    },
+    {
+     "symbol": "MFAP4",
+     "description": "Microfibril associated protein 4",
+     "specificity": "Cell type enhanced",
+     "basis": "In HPA tissue-cell-type enrichment for Pancreas - Fibroblasts AND single-cell group \"Fibroblasts\" cell type enhanced (cross-tissue); ranked by nCPM"
+    },
+    {
+     "symbol": "ABCA9",
+     "description": "ATP binding cassette subfamily A member 9",
+     "specificity": "Cell type enhanced",
+     "basis": "In HPA tissue-cell-type enrichment for Pancreas - Fibroblasts AND single-cell group \"Fibroblasts\" cell type enhanced (cross-tissue); ranked by nCPM"
+    }
+   ],
+   "note": "HPA has no pancreatic stellate cell class. Closest: \"Pancreas - Fibroblasts\" (bulk-derived enrichment). Cross-tissue HPA \"Stellate cells\" group is mainly non-pancreatic (liver) and is not used."
+  },
+  "endothelial": {
+   "label": "(no ASCT+B row; HPA: Endothelial cells)",
+   "clId": "",
+   "asctb": {
+    "genes": [],
+    "proteins": [],
+    "related": []
+   },
+   "hpa": [
+    {
+     "symbol": "PECAM1",
+     "description": "Platelet and endothelial cell adhesion molecule 1",
+     "specificity": "Cell type enhanced",
+     "basis": "In HPA tissue-cell-type enrichment for Pancreas - Endothelial cells AND single-cell group \"Endothelial cells\" cell type enhanced (cross-tissue); ranked by nCPM"
+    },
+    {
+     "symbol": "ACKR1",
+     "description": "Atypical chemokine receptor 1 (Duffy blood group)",
+     "specificity": "Cell type enriched",
+     "basis": "In HPA tissue-cell-type enrichment for Pancreas - Endothelial cells AND single-cell group \"Endothelial cells\" cell type enriched (cross-tissue); ranked by nCPM"
+    },
+    {
+     "symbol": "ADGRL4",
+     "description": "Adhesion G protein-coupled receptor L4",
+     "specificity": "Cell type enriched",
+     "basis": "In HPA tissue-cell-type enrichment for Pancreas - Endothelial cells AND single-cell group \"Endothelial cells\" cell type enriched (cross-tissue); ranked by nCPM"
+    },
+    {
+     "symbol": "RHOJ",
+     "description": "Ras homolog family member J",
+     "specificity": "Cell type enhanced",
+     "basis": "In HPA tissue-cell-type enrichment for Pancreas - Endothelial cells AND single-cell group \"Endothelial cells\" cell type enhanced (cross-tissue); ranked by nCPM"
+    },
+    {
+     "symbol": "EGFL7",
+     "description": "EGF like domain multiple 7",
+     "specificity": "Cell type enhanced",
+     "basis": "In HPA tissue-cell-type enrichment for Pancreas - Endothelial cells AND single-cell group \"Endothelial cells\" cell type enhanced (cross-tissue); ranked by nCPM"
+    },
+    {
+     "symbol": "CYYR1",
+     "description": "Cysteine and tyrosine rich 1",
+     "specificity": "Group enriched",
+     "basis": "In HPA tissue-cell-type enrichment for Pancreas - Endothelial cells AND single-cell group \"Endothelial cells\" group enriched (cross-tissue); ranked by nCPM"
+    },
+    {
+     "symbol": "ADGRF5",
+     "description": "Adhesion G protein-coupled receptor F5",
+     "specificity": "Cell type enhanced",
+     "basis": "In HPA tissue-cell-type enrichment for Pancreas - Endothelial cells AND single-cell group \"Endothelial cells\" cell type enhanced (cross-tissue); ranked by nCPM"
+    },
+    {
+     "symbol": "HYAL2",
+     "description": "Hyaluronidase 2",
+     "specificity": "Cell type enriched",
+     "basis": "In HPA tissue-cell-type enrichment for Pancreas - Endothelial cells AND single-cell group \"Endothelial cells\" cell type enriched (cross-tissue); ranked by nCPM"
+    }
+   ],
+   "note": "Absent from the ASCT+B pancreas v1.3 table (no endothelial rows). HPA list = genes in both \"Pancreas - Endothelial cells\" bulk enrichment and the cross-tissue Endothelial cells single-cell group. No CL id was copied from HPA/ASCT+B; add from the HRA crosswalk if needed."
+  },
+  "rbc": {
+   "label": "(no ASCT+B row; HPA: Erythrocytes)",
+   "clId": "",
+   "asctb": {
+    "genes": [],
+    "proteins": [],
+    "related": []
+   },
+   "hpa": [
+    {
+     "symbol": "HBB",
+     "description": "Hemoglobin subunit beta",
+     "specificity": "Cell type enriched",
+     "basis": "RNA single cell type group \"Erythrocytes\" (cross-tissue, not pancreas specific); ranked by nCPM"
+    },
+    {
+     "symbol": "HBA2",
+     "description": "Hemoglobin subunit alpha 2",
+     "specificity": "Cell type enriched",
+     "basis": "RNA single cell type group \"Erythrocytes\" (cross-tissue, not pancreas specific); ranked by nCPM"
+    },
+    {
+     "symbol": "HBA1",
+     "description": "Hemoglobin subunit alpha 1",
+     "specificity": "Cell type enriched",
+     "basis": "RNA single cell type group \"Erythrocytes\" (cross-tissue, not pancreas specific); ranked by nCPM"
+    },
+    {
+     "symbol": "CA1",
+     "description": "Carbonic anhydrase 1",
+     "specificity": "Group enriched",
+     "basis": "RNA single cell type group \"Erythrocytes\" (cross-tissue, not pancreas specific); ranked by nCPM"
+    },
+    {
+     "symbol": "H4C3",
+     "description": "H4 clustered histone 3",
+     "specificity": "Cell type enhanced",
+     "basis": "RNA single cell type group \"Erythrocytes\" (cross-tissue, not pancreas specific); ranked by nCPM"
+    },
+    {
+     "symbol": "SLC25A37",
+     "description": "Solute carrier family 25 member 37",
+     "specificity": "Group enriched",
+     "basis": "RNA single cell type group \"Erythrocytes\" (cross-tissue, not pancreas specific); ranked by nCPM"
+    },
+    {
+     "symbol": "HBD",
+     "description": "Hemoglobin subunit delta",
+     "specificity": "Cell type enriched",
+     "basis": "RNA single cell type group \"Erythrocytes\" (cross-tissue, not pancreas specific); ranked by nCPM"
+    },
+    {
+     "symbol": "ALAS2",
+     "description": "5'-aminolevulinate synthase 2",
+     "specificity": "Cell type enriched",
+     "basis": "RNA single cell type group \"Erythrocytes\" (cross-tissue, not pancreas specific); ranked by nCPM"
+    }
+   ],
+   "note": "Absent from ASCT+B pancreas table. HPA erythrocyte group is cross-tissue (not pancreas-specific), hemoglobin genes are the top hits."
+  }
+ },
+ "hpaPancreasStaining": {
+  "CELA3A": {
+   "ihc_exocrine_endocrine": [
+    [
+     "High",
+     "Not detected"
+    ]
+   ],
+   "multiplex": [],
+   "reliability": [
+    "Uncertain"
+   ]
+  },
+  "CFTR": {
+   "ihc_exocrine_endocrine": [
+    [
+     "High",
+     "Not detected"
+    ]
+   ],
+   "multiplex": [],
+   "reliability": [
+    "Uncertain"
+   ]
+  },
+  "CPA1": {
+   "ihc_exocrine_endocrine": [
+    [
+     "High",
+     "Not detected"
+    ]
+   ],
+   "multiplex": [],
+   "reliability": [
+    "Uncertain"
+   ]
+  },
+  "GCG": {
+   "ihc_exocrine_endocrine": [
+    [
+     "Not detected",
+     "High"
+    ]
+   ],
+   "multiplex": [
+    [
+     "CAB000040",
+     "Alpha cells Alpha cells Antibody overlap >75% Location Cytoplasm Delta cells No antibody overlap PP cells No antibody overlap Beta cells No antibody overlap Epsilon cells No antibody overlap"
+    ]
+   ],
+   "reliability": [
+    "Uncertain"
+   ]
+  },
+  "INS": {
+   "ihc_exocrine_endocrine": [
+    [
+     "Not detected",
+     "High"
+    ]
+   ],
+   "multiplex": [
+    [
+     "HPA004932",
+     "Beta cells Alpha cells No antibody overlap Delta cells No antibody overlap PP cells No antibody overlap Beta cells Antibody overlap >75% Location Cytoplasm Epsilon cells No antibody overlap"
+    ]
+   ],
+   "reliability": [
+    "Uncertain"
+   ]
+  },
+  "KRT19": {
+   "ihc_exocrine_endocrine": [
+    [
+     "High",
+     "Not detected"
+    ]
+   ],
+   "multiplex": [],
+   "reliability": [
+    "Uncertain"
+   ]
+  },
+  "PPY": {
+   "ihc_exocrine_endocrine": [
+    [
+     "Not detected",
+     "Medium"
+    ]
+   ],
+   "multiplex": [],
+   "reliability": [
+    "Uncertain"
+   ]
+  },
+  "PRSS1": {
+   "ihc_exocrine_endocrine": [
+    [
+     "High",
+     "Not detected"
+    ]
+   ],
+   "multiplex": [],
+   "reliability": [
+    "Uncertain"
+   ]
+  },
+  "SOX9": {
+   "ihc_exocrine_endocrine": [
+    [
+     "High",
+     "Medium"
+    ]
+   ],
+   "multiplex": [
+    [
+     "CAB068240",
+     "Epsilon cells Alpha cells No antibody overlap Delta cells No antibody overlap PP cells No antibody overlap Beta cells No antibody overlap Epsilon cells Antibody overlap >75% Location Nuclear"
+    ]
+   ],
+   "reliability": [
+    "Uncertain"
+   ]
+  },
+  "SST": {
+   "ihc_exocrine_endocrine": [
+    [
+     "Not detected",
+     "Medium"
+    ]
+   ],
+   "multiplex": [],
+   "reliability": [
+    "Uncertain"
+   ]
+  }
+ }
+}
