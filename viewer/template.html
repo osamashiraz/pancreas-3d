@@ -10,7 +10,7 @@
 --beta:#3fae49;--alpha:#d63384;--delta:#1fa6d1;--pp:#f2b21b;--rer:#6f7fd6;--golgi:#e3b13a;--mito:#4fae78;--lumen:#9ad0e6;
 --insulincore:#20402a;--insulinhalo:#dff2df;--cilium:#ffffff;--microvilli:#5d7f99;--tightjunction:#1d2b4f;--cftr:#2f6fe0;--slc26:#ef8a1a;--basement:#e7d9c2;
 --organ:#e6c49c;--parenchyma:#8d58a0;--isletgross:#dcb7d9;--organduct:#f1d36b;--artery:#c8333a;--vein:#3f5a9a;--neighbour:#b9a49c;
---isletnucleus:#5a4799;--insulin:#3a9e48;--glucagon:#c4307a;--glucagoncore:#3b1630;--glucagonhalo:#f4dfe9;--somatostatin:#1d93bd;--somatostatincore:#5f7894;--glucose:#e2b21c;--enzyme:#e46a7e;--bicarbonate:#1aa7b5;--grossduct:#f3d9e6;--grossartery:#c9485b;--grossvein:#ad5f7c;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+--isletnucleus:#5a4799;--insulin:#3a9e48;--glucagon:#c4307a;--glucagoncore:#3b1630;--glucagonhalo:#f4dfe9;--somatostatin:#1d93bd;--somatostatincore:#5f7894;--glucose:#e2b21c;--panin:#f0a830;--mcn:#4f86c6;--ipmn:#20a39a;--pda:#6b4a3a;--enzyme:#e46a7e;--bicarbonate:#1aa7b5;--grossduct:#f3d9e6;--grossartery:#c9485b;--grossvein:#ad5f7c;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#13141a;--panel:#1b1c24;--ink:#e8e7ee;--muted:#a1a2b2;--rule:#2d2e3a;--accent:#b49ae6;--warn:#e2b45f;--canvas:#101117}}
 :root[data-theme="dark"]{color-scheme:dark;--bg:#13141a;--panel:#1b1c24;--ink:#e8e7ee;--muted:#a1a2b2;--rule:#2d2e3a;--accent:#b49ae6;--warn:#e2b45f;--canvas:#101117}
 *,*::before,*::after{box-sizing:inherit}html{height:100%}
@@ -74,7 +74,8 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline
 .markers{border:1px solid var(--rule);border-radius:8px;padding:10px 12px;margin:0 0 12px;font-size:13px}
 .markers h3{font:560 15px/1.25 "Newsreader",Georgia,serif;margin:0 0 6px}.markers h3 small{font:400 12px "Public Sans",system-ui,sans-serif;color:var(--muted)}
 .markers p{margin:0 0 6px}.markers .genes{display:flex;flex-wrap:wrap;gap:4px;margin:2px 0 8px}.markers .genes a{font:500 12px ui-monospace,Menlo,monospace;color:var(--ink);background:color-mix(in srgb,var(--accent) 12%,var(--panel));border:1px solid var(--rule);border-radius:5px;padding:1px 6px;text-decoration:none}
-.markers .genes a:hover{border-color:var(--accent)}.markers .src{font-size:11.5px;color:var(--muted);margin:0}
+.markers .genes a:hover{border-color:var(--accent)}.seg.wrap{flex-wrap:wrap;display:flex}.lesions h3{display:flex;gap:8px;align-items:center}.lesions .sw{width:12px;height:12px;border-radius:3px;display:inline-block;flex:none}
+.markers .src{font-size:11.5px;color:var(--muted);margin:0}
 .note{font-size:12.5px;color:var(--muted);border-top:1px solid var(--rule);padding-top:10px}
 ol{font-size:12.5px;color:var(--muted);padding-left:18px}ol li{margin-bottom:5px}
 .unv{color:var(--warn)}
@@ -129,6 +130,9 @@ ol{font-size:12.5px;color:var(--muted);padding-left:18px}ol li{margin-bottom:5px
    <li><span class="sw" style="background:var(--isletgross)"></span><span>Islets: pale islands among the acini, sizes about the mean of 110 µm, at the region’s density</span></li>
    <li><span class="sw" style="background:var(--intralobular)"></span><span>Interlobular ducts, with an artery (red) and vein (blue), in the septa</span></li>
   </ul>
+  <div data-for="organ"><span style="font-size:14px">Precursors and cancer</span><br>
+   <div class="seg wrap" role="group" aria-label="Show precursor lesions and cancer"><button type="button" data-disease="none" aria-pressed="true">None</button><button type="button" data-disease="panin" aria-pressed="false">PanIN</button><button type="button" data-disease="mcn" aria-pressed="false">MCN</button><button type="button" data-disease="mipmn" aria-pressed="false">Main-duct IPMN</button><button type="button" data-disease="bipmn" aria-pressed="false">Branch-duct IPMN</button><button type="button" data-disease="pda" aria-pressed="false">Cancer</button><button type="button" data-disease="all" aria-pressed="false">All</button></div></div>
+  <div class="markers lesions" id="lesioncard" data-for="organ" hidden></div>
   <label class="toggle" data-for="organ"><input type="checkbox" id="islets"> Show the islets (one point per 100)</label>
   <div data-for="tissue detail cells cell"><span style="font-size:14px">Zoom into</span><br>
    <div class="seg" role="group" aria-label="What to zoom into"><button type="button" data-branch="acinus" aria-pressed="true">An acinus</button><button type="button" data-branch="islet" aria-pressed="false">The islet</button><button type="button" data-branch="duct" aria-pressed="false">A duct</button></div></div>

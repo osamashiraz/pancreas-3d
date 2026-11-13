@@ -69,6 +69,22 @@ The pancreas is two organs in one, and the model shows both:
 - Click any cell or structure to name it, isolate it or fade it.
 - **Links to a view**: the address follows what you are looking at, e.g. [`#site=9&view=islet&stain=if`](https://osamashiraz.github.io/pancreas-3d/#site=9&view=islet&stain=if), so a view can be shared or used in teaching.
 
+### Where pancreatic cancer begins
+
+**Precursors and cancer** marks, on the organ, where each route to pancreatic cancer arises, following Hingorani's review *Location, location, location* (Gastroenterology 2007) and Rodriguez et al. 2007:
+
+| Precursor | Size | Where in the gland | Where in the duct tree |
+|---|---|---|---|
+| PanIN | microscopic | head and uncinate process | periphery: terminal ductules |
+| Mucinous cystic neoplasm | cyst | body and tail | periphery |
+| Main-duct IPMN | dilated duct | head | centre: main duct |
+| Branch-duct IPMN | grape-like cysts | head or body | centre: major branches |
+| Ductal adenocarcinoma | mass | mainly the head | — |
+
+Each comes with a card on its appearance, genes, who it affects and survival after resection. The placements are simulated by rule on the reference organ, and the sizes are illustrative.
+
+![Precursors and cancer on the organ](docs/images/lesions.jpg)
+
 ## Datasets and sources
 
 | What | Source | Use in the model |
@@ -83,6 +99,7 @@ The pancreas is two organs in one, and the model shows both:
 | Ducts and centroacinar cells | Endo et al. 2002 (rat); Beer et al. 2016 | One intercalated duct per acinus, no anastomoses |
 | Cell biology | Palade 1975; Messenger et al. 2014; Berclaz et al. 2016; Steward & Ishiguro 2009; Hegyi & Rakonczay 2015; diIorio et al. 2014 | Secretory pathway, zymogen and insulin granules, duct secretion, cilia |
 | Marker genes | **HRA ASCT+B** pancreas v1.3 (doi:10.48539/HBM336.TBNP.923); **Human Protein Atlas** v26.0 (CC BY-SA 4.0) | Marker panel per cell type (`repo/data/human-pancreas-markers.json`) |
+| Precursors and cancer | Hingorani, *Gastroenterology* 2007 (doi:10.1053/j.gastro.2007.05.059); Rodriguez et al., *Gastroenterology* 2007 | Where PanIN, MCN, IPMN and cancer arise; cards |
 | Secretion and islet cells | Lee et al., *Physiol Rev* 2012; Rorsman & Ashcroft, *Physiol Rev* 2018; Brereton et al., *J Histochem Cytochem* 2015; Arrojo e Drigo et al., *Nat Commun* 2019 | Bicarbonate and insulin secretion; granule sizes; delta-cell processes |
 | Teaching text | StatPearls (NCBI Bookshelf, CC BY 4.0); Columbia and Basel histology notes; Human Protein Atlas | Narration, paraphrased in our own words with credit |
 

@@ -26,6 +26,8 @@ STEPS = [   # name, script, expected [stage, branch or None], expected level sho
     ('duct', "document.querySelector('[data-stain=he]').click(); document.querySelector('[data-go=\"detail:duct\"]').click()", ['structure', 'duct'], 'Duct'),
     ('duct-cell', "document.querySelector('[data-go=\"cell:duct\"]').click()", ['cell', 'duct'], 'Duct cell'),
     ('organ', "window.__zoom.flyTo(2.6e5, undefined, 'tissue')", ['tissue', None], 'Organ'),
+    ('lesions', "document.querySelector('[data-disease=all]').click()", ['tissue', None], 'Organ'),
+    ('lesions-off', "document.querySelector('[data-disease=none]').click()", ['tissue', None], 'Organ'),
     ('compare', "document.getElementById('compare').click()", ['tissue', None], 'Head, body and tail compared'),
     ('compare-off', "document.getElementById('compare').click()", ['tissue', None], 'Lobules'),
 ]

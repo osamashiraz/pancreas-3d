@@ -881,7 +881,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
   const shown = Object.fromEntries(Object.keys(TOGGLES).map((k) => [k, true]));
   function applyToggles(g) { if (!g) return; g.traverse((o) => { if (!o.isInstancedMesh) return; for (const [k, list] of Object.entries(TOGGLES)) if (list.includes(o.name)) o.visible = shown[k]; }); }
   document.querySelectorAll('[data-toggle]').forEach((el) => el.addEventListener('change', () => { shown[el.dataset.toggle] = el.checked; applyToggles(groups.block); Object.values(BRANCHES).forEach((b) => applyToggles(b.detail)); }));
-  $('islets').addEventListener('change', (e) => { if (islets) islets.visible = e.target.checked; pancreasMeshes.forEach((m) => { m.material.userData.base = e.target.checked ? 0.3 : 0.92; }); });
+  $('islets').addEventListener('change', (e) => { if (islets) islets.visible = e.target.checked; pancreasMeshes.forEach((m) => { m.material.userData.base = disease ? 0.28 : e.target.checked ? 0.3 : 0.92; }); });
   let cutOpen = false;   // whole structures by default; tick Cut open to see inside
   $('cutopen').addEventListener('change', (e) => { cutOpen = e.target.checked; });
   // The cutaway always faces the viewer: it passes through the point being zoomed into and removes what lies in front.
@@ -987,6 +987,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
       if (!(r < R.y + Math.max(0, q.z - S.x) * S.y && q.z > F.x)) return true; }
     return false;
   }
+  function drawDiseaseLabels(w) { const keys = disease === 'all' ? Object.keys(LESIONS) : [disease]; LABELS.__disease = keys.flatMap((k) => LABELS['disease:' + k] || []); drawLabels('__disease', w); }
   function drawLabels(set, w) {
     let used = 0; const W = UI.w, H = UI.h, placed = [];
     if (namesOn && set && w > 0.5) for (const o of LABELS[set] || []) {
@@ -1097,7 +1098,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
     // Anything much nearer than the point zoomed into is not drawn while the layers are open, so the view looks down the opening.
     camera.near = !COMPARE.on && STAGE.mode === 'tissue' && d < 30000 ? d * 0.5 : Math.max(0.05, d / 60); camera.far = Math.max(d * 300, 2e3); camera.updateProjectionMatrix();
     setLayers(d); const w = weights(d);
-    fade(groups.organ, w.organ);
+    fade(groups.organ, w.organ); if (lesionGroup) fade(lesionGroup, disease ? w.organ : 0);   // lesions are part of the organ view
     const firsts = ['head', 'body', 'tail'].map((rk) => SITE_LIST.findIndex((S0) => S0.region === rk && S0.verified));
     Object.keys(GROSS).map(Number).concat(firsts, [site]).filter((k, n, a) => a.indexOf(k) === n).forEach((k) => { const ci = firsts.indexOf(k), show = COMPARE.on ? ci >= 0 : (k === site && w.gross > 0.01); if (show) buildGross(k); const g = GROSS[k]; if (!g) return;
       if (COMPARE.on) g.position.copy(COMPARE.right).multiplyScalar((ci - 1) * 5600); else g.position.set(0, 0, 0); g.quaternion.copy(COMPARE.on ? COMPARE.q : g.userData.q); g.updateMatrixWorld(true); g.userData.toL.value.copy(g.matrixWorld).invert();
@@ -1136,6 +1137,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
       document.querySelectorAll('.ladder button').forEach((b) => { const [l, br] = b.dataset.go.split(':'); b.setAttribute('aria-current', String(l === lv && (!br || br === branch) && (!b.dataset.kind || b.dataset.kind === isletKind))); }); } }
     explodeTags.forEach((o) => o.position.copy(o.userData.base).addScaledVector(o.userData.off, w.explode));
     if (lv === 'compare') drawLabels('compare', 1); else if (lv === 'gross') drawLabels('gross:' + site, w.gross);
+    else if (lv === 'organ' && disease) drawDiseaseLabels(w.organ);
     else drawLabels(lv === 'organ' ? 'organ' : lv === 'tissue' ? 'tissue' : key, lv === 'organ' ? w.organ : lv === 'tissue' ? w.block : lv === 'cell' ? w.cell : w.detail);
     // Scale bar
     const wpp = 2 * d * Math.tan(camera.fov * Math.PI / 360) / UI.h, target = wpp * 110, p10 = Math.pow(10, Math.floor(Math.log10(target)));
@@ -1156,17 +1158,103 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
     for (let k = 0; k < n; k++) { const v = VIEWS[k]; activate(v); viewFrame(now, v); save(v); }
     activate(VIEWS[focus]);
   }
+  // ---------- precursors and cancer, on the organ. Where each kind arises follows Hingorani 2007 (Gastroenterology
+  // 133:345-50, Table 1 and Figure 1) and, for branch-duct IPMN, Rodriguez et al. 2007 (133:72-9). The placement is a
+  // written rule on the HRA organ; sizes are illustrative (PanIN markers far larger than the microscopic lesions).
+  const LESIONS = {
+    panin: { name: 'PanIN', full: 'Pancreatic intraepithelial neoplasia (PanIN)', color: '--panin',
+      where: 'Head and uncinate process; periphery of the gland, in the terminal ductules', size: 'Microscopic (the markers are drawn far larger)',
+      text: 'The commonest precursor of ductal adenocarcinoma: microscopic lesions of the smallest ducts that cause no symptoms. They progress to invasive cancer most readily in the head and uncinate process. Atypia increases from PanIN-1 to PanIN-2 to PanIN-3 (carcinoma in situ), in step with mutations in KRAS, CDKN2A/INK4A, TP53 and SMAD4/DPC4.',
+      survival: 'Invasive cancer from PanIN, after resection: 15–20% alive at 5 years, under 2% at 10 years.' },
+    mcn: { name: 'MCN', full: 'Mucinous cystic neoplasm (MCN)', color: '--mcn',
+      where: 'Body and tail; periphery of the gland', size: 'Macroscopic cyst (drawn about 3 cm; size not sourced)',
+      text: 'A cyst lined by mucin-making epithelium over a dense “ovarian” stroma whose cells carry progesterone and oestrogen receptors. Usually no connection with the ducts. Found mostly in women (10–20 : 1), in their forties. Once invasive, SMAD4/DPC4 mutations are almost universal.',
+      survival: 'With invasive cancer, after resection: 40–60% alive at 5 years.' },
+    mipmn: { name: 'Main-duct IPMN', full: 'Intraductal papillary mucinous neoplasm of the main duct', color: '--ipmn',
+      where: 'Head; centre of the gland, in the main pancreatic duct', size: 'Macroscopic: a dilated main duct filled by papillary growth (drawn about 7 mm across)',
+      text: 'Mucin-making papillary growth along the inside of the main duct, which dilates. Papillae can block the duct and cause acute pancreatitis. Found in the seventh and eighth decades, slightly more in men (1.5 : 1). More aggressive than branch-duct IPMN: in the authors’ series 42% were invasive, against 11%, so resection is recommended (Sendai consensus). Often “intestinal” (MUC2, MUC5AC, CDX2).',
+      survival: 'With invasive cancer, after resection: about 60% at 5 years and at least 40% at 10 years, against under 2% at 10 years for PanIN-derived cancer.' },
+    bipmn: { name: 'Branch-duct IPMN', full: 'Intraductal papillary mucinous neoplasm of a branch duct', color: '--ipmn',
+      where: 'Head or body; a major branch of the main duct (most of 145 resected were in the head or uncinate process)', size: 'Macroscopic, grape-like cysts (drawn about 2.5 cm, under the 3 cm threshold)',
+      text: 'Cystic dilation of a major side branch of the main duct. Less aggressive than main-duct IPMN: in Rodriguez et al. 2007, 11% were invasive and 11% carcinoma in situ. Cysts under 3 cm, without mural nodules or a dilated main duct, may be watched; size over 3 cm, nodules or a thick wall (over 3 mm) predicted invasive cancer. Often “gastric-foveolar” (MUC2 without MUC5AC or CDX2).',
+      survival: 'With invasive cancer, after resection: about 63% at 5 years.' },
+    pda: { name: 'Ductal adenocarcinoma', full: 'Invasive pancreatic ductal adenocarcinoma (PDA)', color: '--pda',
+      where: 'Mainly the head of the gland, in people and in mouse models', size: 'Drawn about 3 cm, beside the common bile duct (size not sourced)',
+      text: 'The cancer usually meant by “pancreatic cancer”, most often arising from PanIN. It spreads microscopically very early, which is why it is rarely cured even when caught small. Its location may reflect origin: the head and uncinate process come from both the ventral and dorsal buds of the embryo, the body and tail from the dorsal bud alone.',
+      survival: 'Overall under 5% alive at 5 years; median survival 4–6 months in advanced disease; 15–20% at 5 years after a Whipple operation.' },
+  };
+  const LESION_SOURCE = 'Hingorani SR. Location, location, location: precursors and prognoses for pancreatic cancer. Gastroenterology 2007;133:345-50, doi:10.1053/j.gastro.2007.05.059; branch-duct IPMN also Rodriguez JR et al. Gastroenterology 2007;133:72-9, doi:10.1053/j.gastro.2007.05.010. Placement on the HRA organ is simulated, by rule.';
+  let disease = null, lesionGroup = null;
+  function buildLesions() {
+    if (lesionGroup) return lesionGroup;
+    const inner = groups.organ.userData.inner, g = new THREE.Group(), R = rng(17631154); g.userData.mats = []; lesionGroup = g; inner.add(g);
+    const vertsOf = (names) => { const out = []; names.forEach((n) => { const m = inner.getObjectByName(n); if (!m) return; const p = m.geometry.getAttribute('position'); for (let i = 0; i < p.count; i += 3) out.push(new THREE.Vector3().fromBufferAttribute(p, i)); }); return out; };
+    const C = (r) => SITES[r], whole = ['head', 'uncinate process', 'neck', 'body', 'tail'].map(C).filter(Boolean).reduce((a, b) => a.add(b), new THREE.Vector3()).divideScalar(5);
+    const nearest = (p, names) => names.reduce((b, n) => (C(n) && C(n).distanceTo(p) < C(b).distanceTo(p) ? n : b), names[0]);
+    const mat = (color, extra) => M(g, color, null, Object.assign({ roughness: 0.6, he: false }, extra || {}));
+    const ball = (parent, p, r, m) => { const o = new THREE.Mesh(ballHi, m); o.position.copy(p); o.scale.setScalar(r); parent.add(o); return o; };
+    const part = (key) => { const q = new THREE.Group(); q.name = key; g.add(q); return q; };
+    // PanIN: points of the head and uncinate surface moved a little inward (the periphery), as enlarged markers.
+    { const q = part('panin'), headV = vertsOf(['head_of_pancreas', 'uncinate_process_of_the_pancreas', 'ucinate_process1']), m = mat('--panin', { emissive: new THREE.Color('#5a3200') });
+      for (let k = 0; k < 22; k++) { const v = headV[Math.floor(R() * headV.length)], c = C(nearest(v, ['head', 'uncinate process'])); ball(q, v.clone().lerp(c, 0.12), 1400, m); }
+      q.userData.at = C('head'); tag('disease:panin', q, 'PanIN (microscopic; markers enlarged)', headV[0].clone().lerp(C('head'), 0.12)); }
+    // MCN: a multilocular cyst at the periphery of the tail.
+    { const q = part('mcn'), tailV = vertsOf(['tail_of_pancreas']), far = tailV.reduce((b, v) => (v.distanceTo(C('neck')) > b.distanceTo(C('neck')) ? v : b)), at = far.clone().lerp(C('tail'), 0.35);
+      const shell = mat('--mcn', { transparent: true, opacity: 0.55, depthWrite: false }), loc = mat('--mcn', { transparent: true, opacity: 0.35, depthWrite: false });
+      ball(q, at, 15000, shell); for (let k = 0; k < 6; k++) ball(q, at.clone().add(new THREE.Vector3(R() - 0.5, R() - 0.5, R() - 0.5).multiplyScalar(14000)), 4000 + 3000 * R(), loc);
+      q.userData.at = at; tag('disease:mcn', q, 'Mucinous cystic neoplasm', at); }
+    // The main duct through the head: duct vertices nearer the head than the neck, binned along their main direction.
+    const ductV = vertsOf(['ventral_pancreatic_duct', 'dorsal_pancreatic_duct']), inHead = ductV.filter((v) => C('head').distanceTo(v) < C('neck').distanceTo(v));
+    const axis = C('neck').clone().sub(C('head')).normalize(), along = (v) => v.clone().sub(C('head')).dot(axis), bins = new Map();
+    inHead.forEach((v) => { const k = Math.round(along(v) / 2500); const b = bins.get(k) || []; b.push(v); bins.set(k, b); });
+    const path = [...bins.keys()].sort((a, b) => a - b).map((k) => bins.get(k).reduce((a, b) => a.add(b), new THREE.Vector3()).divideScalar(bins.get(k).length));
+    // Main-duct IPMN: the duct through the head dilated, with papillae inside.
+    { const q = part('mipmn'), m = mat('--ipmn', { transparent: true, opacity: 0.5, depthWrite: false }), pap = mat('--ipmn');
+      if (path.length > 1) { const curve = new THREE.CatmullRomCurve3(path); q.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 48, 3500, 16, false), m));
+        for (let k = 0; k < 40; k++) { const t = R(), p = curve.getPoint(t), d = new THREE.Vector3(R() - 0.5, R() - 0.5, R() - 0.5).normalize(); ball(q, p.addScaledVector(d, 2400), 700 + 500 * R(), pap); }
+        q.userData.at = curve.getPoint(0.5); tag('disease:mipmn', q, 'Main-duct IPMN', curve.getPoint(0.5)); } }
+    // Branch-duct IPMN: grape-like cysts on a side branch from the main duct, toward the neck.
+    { const q = part('bipmn'), m = mat('--ipmn', { transparent: true, opacity: 0.55, depthWrite: false }), root = path.length ? path[path.length - 1].clone() : C('neck').clone();
+      const out = root.clone().sub(whole).normalize().cross(axis).normalize(), tip = root.clone().addScaledVector(out, 9000);
+      q.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.LineCurve3(root, tip), 4, 1200, 10, false), m));
+      for (let k = 0; k < 8; k++) ball(q, tip.clone().add(new THREE.Vector3(R() - 0.5, R() - 0.5, R() - 0.5).multiplyScalar(11000)), 3500 + 2500 * R(), m);
+      q.userData.at = tip; tag('disease:bipmn', q, 'Branch-duct IPMN', tip); }
+    // Ductal adenocarcinoma: an irregular solid mass in the head, toward the common bile duct.
+    { const q = part('pda'), cbd = vertsOf(['common_bile_duct']), nearCbd = cbd.reduce((b, v) => (v.distanceTo(C('head')) < b.distanceTo(C('head')) ? v : b), cbd[0] || C('head')), at = C('head').clone().lerp(nearCbd, 0.55);
+      const geo = new THREE.IcosahedronGeometry(1, 4), p = geo.getAttribute('position');
+      for (let i = 0; i < p.count; i++) { const v = new THREE.Vector3().fromBufferAttribute(p, i), n = 1 + 0.22 * Math.sin(v.x * 5.1 + 1.3) * Math.cos(v.y * 4.3) + 0.12 * Math.sin(v.z * 9.7 + v.x * 3); p.setXYZ(i, v.x * n, v.y * n, v.z * n); }
+      geo.computeVertexNormals(); const o = new THREE.Mesh(geo, mat('--pda', { roughness: 0.85 })); o.position.copy(at); o.scale.setScalar(14000); q.add(o);
+      q.userData.at = at; tag('disease:pda', q, 'Ductal adenocarcinoma', at); }
+    return g;
+  }
+  function setDisease(key) {
+    disease = key && (key === 'all' || LESIONS[key]) ? key : null;
+    document.querySelectorAll('[data-disease]').forEach((b) => b.setAttribute('aria-pressed', String((b.dataset.disease || null) === (disease || null) || (!disease && b.dataset.disease === 'none'))));
+    if (disease) buildLesions();
+    if (lesionGroup) { lesionGroup.visible = !!disease; lesionGroup.children.forEach((q) => { q.visible = disease === 'all' || q.name === disease; }); }
+    pancreasMeshes.forEach((m) => { m.material.userData.base = disease ? 0.28 : ($('islets').checked ? 0.3 : 0.92); });
+    const card = $('lesioncard'), list = disease === 'all' ? Object.keys(LESIONS) : disease ? [disease] : [];
+    card.hidden = !list.length;
+    card.innerHTML = list.map((k) => { const L = LESIONS[k]; return `<h3><span class="sw" style="background:var(${L.color})"></span>${esc(L.full)}</h3>`
+      + (list.length === 1 ? `<p><strong>Where:</strong> ${esc(L.where)}</p><p><strong>Size:</strong> ${esc(L.size)}</p><p>${esc(L.text)}</p><p><strong>Prognosis:</strong> ${esc(L.survival)}</p>` : `<p>${esc(L.where)}.</p>`); }).join('')
+      + `<p class="src">${esc(LESION_SOURCE)}</p>`;
+    if (disease && disease !== 'all') { const at = lesionGroup.getObjectByName(disease).userData.at; if (at) { let bi = 0, bd = Infinity; SITE_LIST.forEach((S0, k) => { const dd = S0.local.distanceTo(at); if (dd < bd) { bd = dd; bi = k; } }); if (bi !== site) setSite(bi); } }
+    if (disease && STAGE.mode === 'tissue' && camera.position.distanceTo(controls.target) < 60000) flyTo(STOPS.organ, undefined, 'tissue');
+    hashNow();
+  }
+  document.querySelectorAll('[data-disease]').forEach((b) => b.addEventListener('click', () => setDisease(b.dataset.disease === 'none' ? null : b.dataset.disease)));
   // ---------- links to a view: #site=12&view=islet&stain=if opens the page there; the address follows the view
   const VIEW_KEYS = { organ: ['organ'], lobules: ['gross'], tissue: ['tissue'], acinus: ['detail', 'acinus'], 'acinus-cells': ['cells', 'acinus'], 'acinar-cell': ['cell', 'acinus'],
     islet: ['detail', 'islet'], 'islet-cells': ['cells', 'islet'], 'beta-cell': ['cell', 'islet', 'beta'], 'alpha-cell': ['cell', 'islet', 'alpha'], 'delta-cell': ['cell', 'islet', 'delta'], duct: ['detail', 'duct'], 'duct-cells': ['cells', 'duct'], 'duct-cell': ['cell', 'duct'] };
   const viewName = (lv) => Object.keys(VIEW_KEYS).find((k) => { const [l, br, kind] = VIEW_KEYS[k]; return l === lv && (!br || br === branch) && (!kind || kind === isletKind); }) || 'organ';
   const hashNow = () => writeHash(levelAt(camera.position.distanceTo(controls.target)));
   let hashReady = false; const START_HASH = location.hash;   // the link the page was opened with is read once the organ is built
-  function writeHash(lv) { if (!hashReady || splitOn || tour || site < 0) return; const h = `#site=${site + 1}&view=${viewName(lv)}${stain === 'if' ? '&stain=if' : ''}`;
+  function writeHash(lv) { if (!hashReady || splitOn || tour || site < 0) return; const h = `#site=${site + 1}&view=${viewName(lv)}${stain === 'if' ? '&stain=if' : ''}${disease ? '&disease=' + disease : ''}`;
     if (location.hash !== h) try { history.replaceState(null, '', h); } catch (e) { /* a sandboxed page may refuse */ } }
   function readHash(h) { const q = new URLSearchParams((typeof h === 'string' ? h : location.hash).slice(1)), n = +q.get('site'), v = VIEW_KEYS[q.get('view')];
     if (n >= 1 && n <= SITE_LIST.length && n - 1 !== site) setSite(n - 1);
     if (q.get('stain') === 'if') document.querySelector('[data-stain=if]').click();
+    if (q.get('disease')) setDisease(q.get('disease'));
     if (v && v[0] !== 'organ') { const [lvl, br, kind] = v; setIsletKind(kind); if (br) document.querySelectorAll('[data-branch]').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.branch === br))); flyTo(stopFor(lvl, br), br, MODE_OF[lvl]); } }
   matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => location.reload());
   buildOrgan().then(() => { camera.position.set(0, 0.25, 1).normalize().multiplyScalar(STOPS.organ); controls.target.set(0, 0, 0); controls.update(); $('status').style.display = 'none'; renderer.setAnimationLoop(frame); readHash(START_HASH); hashReady = true; window.addEventListener('hashchange', () => readHash()); })

@@ -6,3 +6,6 @@ _site/
 # Local copies (identical to dist/ and viewer/src/)
 /The human pancreas, from organ to cell.html
 /pancreas-zoom-viewer.js
+
+# Papers kept locally for reference (copyrighted; not published)
+literature/
