@@ -128,7 +128,7 @@ Full references with DOIs: [`docs/SOURCES.md`](docs/SOURCES.md). Values still aw
 |---|---|
 | `dist/pancreas-organ-to-cell.html` | The built viewer (published to GitHub Pages) |
 | `viewer/` | Viewer sources (`template.html`, `src/app.js`, `src/generator.js`), build script, smoke test, earlier versions in `legacy/` |
-| `repo/` | Module for [MouseBio_3D](https://github.com/Qasim-Hussain-Code/MouseBio_3D): inventory, generators, loader, tests, Python builders, model data |
+| `repo/` | Model data and the code that builds and tests it: inventory, generators, loader, tests, Python builders |
 | `docs/` | Specification, backlog, change history, sources, README images |
 | `scripts/install_into_mousebio.sh` | Copies `repo/` into a MouseBio_3D checkout and runs its checks |
 | `CLAUDE.md` | Working rules for continuing the project with Claude Code |
@@ -161,7 +161,7 @@ This is a teaching and communication model, not a patient-specific or diagnostic
 
 ## Licence and credit
 
-- Code: MIT (see [`LICENSE`](LICENSE)), as MouseBio_3D.
+- Code: MIT (see [`LICENSE`](LICENSE)).
 - Model data derived from the HRA 3D Reference Object Library: CC BY 4.0 — see [`repo/public/atlas-human/NOTICE.md`](repo/public/atlas-human/NOTICE.md). Cite: Börner K, et al. *Nat Methods* 2025;22:845–860. doi:10.1038/s41592-024-02563-5.
 - Visible Human Project, U.S. National Library of Medicine.
 - Narration and page text are our own wording, paraphrased from open sources (StatPearls CC BY 4.0, university histology notes, Human Protein Atlas) with credit.

@@ -2,7 +2,7 @@
 
 ## 1. Purpose
 
-A source-grounded, explorable 3D model of the human pancreas for teaching and research communication, built as a module of MouseBio_3D and as a standalone zoom viewer. A user can move continuously from the whole organ (about 15 cm) to a 4 mm piece of tissue, a 300 µm block, a single acinus, islet or duct, their separated cells, and one cell with its organelles, at true scale, in H&E or cell-type colours, with narration. Every element states what it rests on: drawn from the Visible Human (via HRA), or simulated by a written rule from published measurements.
+A source-grounded, explorable 3D model of the human pancreas for teaching and research communication, built as a standalone zoom viewer, with its data builders and tests in `repo/`. A user can move continuously from the whole organ (about 15 cm) to a 4 mm piece of tissue, a 300 µm block, a single acinus, islet or duct, their separated cells, and one cell with its organelles, at true scale, in H&E or cell-type colours, with narration. Every element states what it rests on: drawn from the Visible Human (via HRA), or simulated by a written rule from published measurements.
 
 ## 2. Architecture
 
