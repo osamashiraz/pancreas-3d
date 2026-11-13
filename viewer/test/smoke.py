@@ -5,8 +5,8 @@
 Loads the page and walks it: the layers opened in place (organ surface, lobules, tissue core), a site picked by zooming in
 over the organ, the acinus, islet and duct branches down to their cells, alpha and delta cells, marker genes, the
 cell-type stain, the head/body/tail comparison and a link to a view (#site=..&view=..). Fails on any page error or if a stage is not reached. Screenshots go to
-viewer/test/out/. Software WebGL (the default, as in CI) is slow: set SMOKE_WAIT (ms per step, default 6000) higher if
-needed. --chrome uses the installed Chrome with its GPU instead. three.js comes from the CDN; offline, point THREE_DIR at
+viewer/test/out/. Software WebGL (the default, as in CI) is slow: each step waits up to 12 x SMOKE_WAIT (ms, default 6000)
+for its stage. --chrome uses the installed Chrome with its GPU instead. three.js comes from the CDN; offline, point THREE_DIR at
 a local three@0.147.0 package and the script rewrites the URLs."""
 import asyncio, os, re, sys, tempfile
 from pathlib import Path
@@ -49,7 +49,12 @@ async def main(page_path, chrome):
         for _ in range(12): await pg.mouse.wheel(0, -120); await pg.wait_for_timeout(100)
         await pg.wait_for_timeout(WAIT); print('zoom in over the organ:', before, '->', await site())
         for name, js, (stage, br), lv in STEPS:
-            await pg.evaluate(js); await pg.wait_for_timeout(WAIT)
+            await pg.evaluate(js)
+            # Wait for the stage to be reached (software rendering can take many seconds per flight), then let it settle.
+            cond = "(() => { const v = window.__zoom.views()[0]; return v[0] === %r && (%s || v[1] === %r) && document.querySelector('.levelname').textContent.startsWith(%r); })()" % (stage, 'true' if br is None else 'false', br or '', lv)
+            try: await pg.wait_for_function(cond, timeout=WAIT * 12, polling=500)
+            except Exception: pass
+            await pg.wait_for_timeout(WAIT // 2)
             v = (await pg.evaluate('window.__zoom.views()'))[0]; shown = await level()
             ok = v[0] == stage and (br is None or v[1] == br) and shown.startswith(lv)
             print(('ok  ' if ok else 'FAIL'), name, v, repr(shown))
@@ -57,7 +62,9 @@ async def main(page_path, chrome):
             if not ok: failures.append(name)
             await pg.screenshot(path=str(out / f'{name}.png'), timeout=240000)
         # A link to a view opens the page there.
-        await pg.goto('about:blank'); await pg.goto(tmp.as_uri() + '#site=9&view=islet', wait_until='commit'); await pg.wait_for_function('window.__zoom', timeout=240000); await pg.wait_for_timeout(WAIT * 2)
+        await pg.goto('about:blank'); await pg.goto(tmp.as_uri() + '#site=9&view=islet', wait_until='commit'); await pg.wait_for_function('window.__zoom', timeout=240000)
+        try: await pg.wait_for_function("window.__zoom.views()[0][0] === 'structure' && window.__zoom.views()[0][1] === 'islet'", timeout=WAIT * 12, polling=500)
+        except Exception: pass
         v = (await pg.evaluate('window.__zoom.views()'))[0]; s = await site(); ok = v[0] == 'structure' and v[1] == 'islet' and s.startswith('Site 9 ')
         print(('ok  ' if ok else 'FAIL'), 'link #site=9&view=islet', v, s, await pg.evaluate('location.hash'))
         if not ok: failures.append('link')
