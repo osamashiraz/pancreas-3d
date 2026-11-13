@@ -5,7 +5,7 @@
 2. The 4 mm piece in Cell types colours was not visually checked (same code path as the acinus, which was).
 3. Narration offers Google UK English Female (default) and Male, which exist only in Chrome; other browsers fall back to standard UK narrators (Microsoft Sonia/Libby/Ryan, Apple Daniel/Serena/Kate). Audio was never testable in headless runs.
 4. Islet | Acinus split preset: in software rendering, the islet half was still in flight when checked; Beta cell | Acinar cell was confirmed.
-5. Organ slices show hollow shells (HRA meshes have no interior); capping not done.
+5. Organ slices: cut faces are filled by shading back faces (a capping trick), not by true section geometry; seen edge-on the fill can look flat.
 6. Verify two citations against the books: Gray's Anatomy 42nd ed. (vessel anatomy), Japan Pancreas Society classification (lymph node stations).
 7. Report the HRA crosswalk error (male superior mesenteric vein mapped to UBERON:0001182, the artery).
 

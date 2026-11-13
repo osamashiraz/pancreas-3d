@@ -377,7 +377,7 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
   }
   // ---------- secretion in motion (illustrative): particles moved each frame along simple paths
   const ease = (x) => { const t = Math.min(1, Math.max(0, x)); return t * t * (3 - 2 * t); }, frac = (x) => x - Math.floor(x);
-  function movers(group, parent, geo, color, n, name, extra) { const m = inst(parent, geo, MP(group, color, null, extra || { roughness: 0.4, he: false }), Array.from({ length: n }, () => new THREE.Matrix4().makeScale(0, 0, 0)), name); m.frustumCulled = false; return m; }
+  function movers(group, parent, geo, color, n, name, extra) { const m = inst(parent, geo, MP(group, color, null, extra || { roughness: 0.4, he: false }), Array.from({ length: n }, () => new THREE.Matrix4().makeScale(0, 0, 0)), name); m.frustumCulled = false; m.userData.mover = true; return m; }
   const M4 = new THREE.Matrix4(), V3 = new THREE.Vector3();
   function put(m, i, p, sc) { M4.makeScale(sc, sc, sc).setPosition(p); m.setMatrixAt(i, M4); }
   function nearestIsletCapillary(p) { let best = null;
@@ -902,29 +902,49 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
   }
 
   // ---------- slice apart: cut the organ or the block into parallel slabs and spread them, like serial sections
-  const SLICE = { value: 0, organ: null, block: null };
-  function sliceSet(src, n, lo, hi, axis, skip, margin = 0) {
+  const SLICE = { value: 0, organ: null, block: null, part: null };
+  // The surfaces are hollow, so a cut would show an empty shell: each slab's material keeps the original's shading and draws
+  // the inside of a cut surface as flat, solid tissue (back faces in a darker shade), and organ slabs are made opaque.
+  const CAP = (sh) => { sh.fragmentShader = sh.fragmentShader.replace('#include <tonemapping_fragment>', 'if (!gl_FrontFacing) { gl_FragColor.rgb = diffuseColor.rgb * 0.82; gl_FragColor.a = 1.0; }\n#include <tonemapping_fragment>'); };
+  function slabMaterial(orig, planes, solid, toL) {   // toL: this slab's own layer frame, which moves with it
+    const m = orig.clone(), prev = orig.onBeforeCompile, key = orig.customProgramCacheKey;
+    m.onBeforeCompile = (sh, r) => { prev.call(orig, sh, r); if (toL && sh.uniforms.uToL) sh.uniforms.uToL = toL; CAP(sh); }; m.customProgramCacheKey = () => key.call(orig) + '|slab'; m.clippingPlanes = planes; m.side = THREE.DoubleSide;
+    m.userData = Object.assign({}, orig.userData); if (solid) { m.transparent = false; m.opacity = 1; m.depthWrite = true; m.userData.base = 1; }
+    return m;
+  }
+  // The extent of a group along an axis, counting each instance of instanced meshes (whose bounding box covers one only).
+  function rangeAlong(src, axis) { let lo = Infinity, hi = -Infinity; const tmp = new THREE.Matrix4(), v = new THREE.Vector3(); src.updateMatrixWorld(true);
+    src.traverse((o) => { if (!o.isMesh || o.visible === false) return;
+      if (o.isInstancedMesh) { for (let i = 0; i < o.count; i++) { o.getMatrixAt(i, tmp); tmp.premultiply(o.matrixWorld); const c = v.setFromMatrixPosition(tmp).dot(axis); lo = Math.min(lo, c); hi = Math.max(hi, c); } return; }
+      if (!o.geometry.boundingBox) o.geometry.computeBoundingBox(); const b = o.geometry.boundingBox;
+      for (let k = 0; k < 8; k++) { const c = v.set(k & 1 ? b.max.x : b.min.x, k & 2 ? b.max.y : b.min.y, k & 4 ? b.max.z : b.min.z).applyMatrix4(o.matrixWorld).dot(axis); lo = Math.min(lo, c); hi = Math.max(hi, c); } });
+    return [lo, hi]; }
+  function sliceSet(src, n, lo, hi, axis, skip, margin = 0, solid = false, layerFrame = null) {
     const set = new THREE.Group(); set.userData.mats = []; set.userData.slabs = []; src.updateMatrixWorld(true);
     const th = (hi - lo) / n;
     for (let k = 0; k < n; k++) {
-      const slab = new THREE.Group(), pA = new THREE.Plane(axis.clone(), 0), pB = new THREE.Plane(axis.clone().negate(), 0);
-      src.traverse((o) => { if (!o.isMesh || skip.includes(o.name) || o.visible === false) return;
-        const mat = o.material.clone(); mat.clippingPlanes = [pA, pB]; mat.userData = Object.assign({}, o.material.userData); set.userData.mats.push(mat);
+      const slab = new THREE.Group(), pA = new THREE.Plane(axis.clone(), 0), pB = new THREE.Plane(axis.clone().negate(), 0), toL = layerFrame ? { value: layerFrame.value.clone() } : null;
+      src.traverse((o) => { if (!o.isMesh || skip.includes(o.name) || o.visible === false || o.userData.mover) return;   // moving particles are left out
+        const mat = slabMaterial(o.material, [pA, pB], solid, toL); set.userData.mats.push(mat);
         let m;
         if (o.isInstancedMesh) {   // each slab draws only the instances near it, so slicing costs about one block, not six
           const keep = [], tmp = new THREE.Matrix4(), ax = axis, lo_ = lo + k * th - margin, hi_ = lo + (k + 1) * th + margin;
-          for (let i = 0; i < o.count; i++) { o.getMatrixAt(i, tmp); const c = ax.x * tmp.elements[12] + ax.y * tmp.elements[13] + ax.z * tmp.elements[14]; if (c >= lo_ && c <= hi_) keep.push(tmp.clone()); }
+          for (let i = 0; i < o.count; i++) { o.getMatrixAt(i, tmp); tmp.premultiply(o.matrixWorld); const c = ax.x * tmp.elements[12] + ax.y * tmp.elements[13] + ax.z * tmp.elements[14]; if (c >= lo_ && c <= hi_) keep.push(tmp.clone()); }
           if (!keep.length) return;
-          m = new THREE.InstancedMesh(o.geometry, mat, keep.length); keep.forEach((x, i) => m.setMatrixAt(i, x)); m.instanceMatrix.needsUpdate = true;
+          m = new THREE.InstancedMesh(o.geometry, mat, keep.length); keep.forEach((x, i) => m.setMatrixAt(i, x)); m.instanceMatrix.needsUpdate = true; m.frustumCulled = false;
+          if (o.instanceColor) { m.instanceColor = o.instanceColor; }
         } else m = new THREE.Mesh(o.geometry, mat);
-        m.matrixAutoUpdate = false; m.matrix.copy(o.matrixWorld); m.name = o.name; slab.add(m); });
-      set.userData.slabs.push({ slab, pA, pB, lo: lo + k * th, hi: lo + (k + 1) * th, k }); set.add(slab);
+        m.matrixAutoUpdate = false; if (!o.isInstancedMesh) m.matrix.copy(o.matrixWorld); m.name = o.name; slab.add(m); });
+      set.userData.slabs.push({ slab, pA, pB, toL, lo: lo + k * th, hi: lo + (k + 1) * th, k }); set.add(slab);
     }
-    Object.assign(set.userData, { n, axis, th }); scene.add(set); return set;
+    Object.assign(set.userData, { n, axis, th, layerFrame }); scene.add(set); return set;
   }
   function layoutSlices(set, spacing) { const { n, axis } = set.userData;
-    for (const s of set.userData.slabs) { const off = (s.k - (n - 1) / 2) * spacing; s.slab.position.copy(axis).multiplyScalar(off); s.pA.constant = -(s.lo + off); s.pB.constant = s.hi + off; } }
-  $('slice').addEventListener('input', (e) => { SLICE.value = +e.target.value; $('slicelabel').textContent = SLICE.value > 0 ? `Slice apart: ${Math.round(SLICE.value * 100)}%` : 'Slice apart'; });
+    for (const s of set.userData.slabs) { const off = (s.k - (n - 1) / 2) * spacing; s.slab.position.copy(axis).multiplyScalar(off); s.pA.constant = -(s.lo + off); s.pB.constant = s.hi + off;
+      if (s.toL) s.toL.value.copy(set.userData.layerFrame.value).multiply(new THREE.Matrix4().makeTranslation(-axis.x * off, -axis.y * off, -axis.z * off)); } }
+  // Back at zero, the slices are dropped, so the next slicing follows the view of that moment.
+  function dropSlices(keys) { keys.forEach((k) => { const st = SLICE[k] && (SLICE[k].set || SLICE[k]); if (st) scene.remove(st); SLICE[k] = null; }); }
+  $('slice').addEventListener('input', (e) => { SLICE.value = +e.target.value; if (SLICE.value <= 0.001) dropSlices(['block', 'part']); $('slicelabel').textContent = SLICE.value > 0 ? `Slice apart: ${Math.round(SLICE.value * 100)}%` : 'Slice apart'; });
 
   // ---------- play the journey
   const TOUR = [
@@ -1123,11 +1143,12 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
     // Slice apart: the organ while it is in view, otherwise the block.
     const slicing = SLICE.value > 0.001, inner = groups.organ.userData.inner;
     if (inner) { const on = slicing && w.organ > 0.01;
-      if (on && !SLICE.organ) { const bb = new THREE.Box3(); pancreasMeshes.forEach((m) => bb.expandByObject(m)); bb.expandByScalar(4000); SLICE.organ = sliceSet(inner, 8, bb.min.x, bb.max.x, X.clone(), []); }
+      if (on && !SLICE.organ) { const bb = new THREE.Box3(); pancreasMeshes.forEach((m) => bb.expandByObject(m)); bb.expandByScalar(4000); SLICE.organ = sliceSet(inner, 8, bb.min.x, bb.max.x, X.clone(), [], 0, true); }
       inner.visible = !on; if (SLICE.organ) { fade(SLICE.organ, on ? w.organ : 0); if (on) layoutSlices(SLICE.organ, SLICE.value * SLICE.organ.userData.th * 1.4); } }
+    // Slicing the core: the slabs run across the view, and the lobules round the core fade so the slices stand clear.
     if (groups.block) { const on = slicing && w.block > 0.01 && w.organ < 0.5;
-      if (on && !SLICE.block) { SLICE.block = sliceSet(groups.block, 6, -150, 150, X.clone(), ['nucleus', 'granule', 'node', 'stellateNucleus', 'ductNucleus', 'cacNucleus'], 45); applyToggles(SLICE.block); }
-      if (on) groups.block.visible = false; if (SLICE.block) { fade(SLICE.block, on ? w.block : 0); if (on) layoutSlices(SLICE.block, SLICE.value * 50 * 1.6); } }
+      if (on && !SLICE.block) { const ax = X.clone().applyQuaternion(camera.quaternion); SLICE.block = sliceSet(groups.block, 6, -150, 150, ax, [], 45, false, ORG_TOL); applyToggles(SLICE.block); }
+      if (on) { groups.block.visible = false; if (GROSS[site]) fade(GROSS[site], 0.15); } if (SLICE.block) { fade(SLICE.block, on ? w.block : 0); if (on) layoutSlices(SLICE.block, SLICE.value * 50 * 1.6); } }
     for (const [k, b] of Object.entries(BRANCHES)) {
       const on = k === branch; if (on && (w.detail > 0.01 || w.cell > 0.01)) ensureBranch(k);
       if (on) updateCut(b);
@@ -1136,6 +1157,11 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
       if (on) { setExplode(b.detail, w.explode); if (b.cellGroup) b.cellGroup.position.copy(OFF[k]).multiplyScalar(w.explode);
         if (w.explode > 0.4 || STAGE.mode === 'tissue') b.plane.constant = 1e6; }   // once the cells part, no cut is needed
     }
+    // Slice apart a structure or a cell: five slabs across the view.
+    { const b = BRANCHES[branch], tgt = STAGE.mode === 'cell' ? b.cellGroup : STAGE.mode === 'structure' ? b.detail : null, on = slicing && tgt && tgt.visible;
+      if (on && (!SLICE.part || SLICE.part.src !== tgt)) { dropSlices(['part']); const ax = X.clone().applyQuaternion(camera.quaternion), [lo, hi] = rangeAlong(tgt, ax);
+        SLICE.part = { src: tgt, set: sliceSet(tgt, 5, lo - 0.5, hi + 0.5, ax, [], (hi - lo) / 10) }; stainGroup(SLICE.part.set); }
+      if (SLICE.part) { const w0 = on ? (STAGE.mode === 'cell' ? w.cell : w.detail) : 0; fade(SLICE.part.set, w0); if (on) { tgt.visible = false; layoutSlices(SLICE.part.set, SLICE.value * SLICE.part.set.userData.th * 1.4); } } }
     if (motionOn) { const t = now / 1000; flow(groups.block, t); flow(BRANCHES[branch].detail, t); }
     { const b = BRANCHES[branch], t = motionOn ? now / 1000 : null; [b.detail, b.cellGroup].forEach((gg) => { if (gg && gg.visible && gg.userData.anim) gg.userData.anim(t); }); }   // secretion in motion
     if (marker) marker.visible = false;
@@ -1283,9 +1309,15 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
     panin: { title: 'Pancreatic intraepithelial neoplasia (PanIN)', lead: 'A microscopic change in the lining of small ducts. As the grade rises, the cells go from low cuboidal to tall columnar with mucin, the lining folds into papillae, and the nuclei crowd, enlarge and lose their place at the base.',
       figures: [{ img: 'panin', w: 974, h: 344, credit: 'Hackeng WM, Hruban RH, Offerhaus GJ, Brosens LA. Diagn Pathol 2016;11:47, doi:10.1186/s13000-016-0497-z (CC BY 4.0); arranged by M. Häggström, via Wikimedia Commons.',
         marks: [[0.105, 0.50, 'Normal duct: low cuboidal cells', 1], [0.215, 0.62, 'Tall columnar cells', -1], [0.395, 0.34, 'Pale apical mucin', 1], [0.46, 0.63, 'Micropapillary folds', 1], [0.6, 0.47, 'Papillae; crowded, stratified nuclei', 1], [0.88, 0.16, 'Budding, loss of polarity, marked atypia', -1], [0.33, 0.88, 'KRAS and telomere shortening first', 1]] }],
-      key: ['Normal duct: a single layer of low cuboidal cells with little mucin.', 'PanIN-1A (low grade): flat, tall columnar cells with small, round nuclei at the base.', 'Abundant pale mucin fills the top of each cell (gastric-foveolar type).', 'PanIN-1B (low grade): the lining folds into micropapillae; nuclei still basal.', 'PanIN-2 (now low grade): papillae, crowded and stratified nuclei, mild to moderate atypia.', 'PanIN-3 (high grade): marked atypia, loss of polarity, cells budding into the lumen; found almost only beside invasive cancer.', 'Genetic progression: telomere shortening and KRAS in over 90% from the start; CDKN2A (p16) loss, then TP53 and SMAD4 late.'],
+      key: ['Normal duct: a single layer of low cuboidal cells with little mucin.', 'PanIN-1A (low grade): flat, tall columnar cells with small, round nuclei at the base.', 'Abundant pale mucin fills the top of each cell (gastric-foveolar type).', 'PanIN-1B (low grade): the lining folds into micropapillae; nuclei still basal.', 'PanIN-2 (now low grade): more complex papillae; nuclei crowded, enlarged, darker and stratified, beginning to lose polarity; mitoses rare.', 'PanIN-3 (high grade, carcinoma in situ): widespread loss of polarity, marked atypia, frequent mitoses, cells budding into the lumen, yet still within the basement membrane; found almost only beside invasive cancer.', 'Genetic progression: telomere shortening and KRAS in over 90% from the start; CDKN2A (p16) loss, then TP53 and SMAD4 late.'],
       unique: ['Microscopic: under 0.5 cm, invisible to the eye and to imaging, unlike IPMN and MCN.', 'In small peripheral ducts, not the main duct; no cyst.', 'No ovarian-type stroma; ordinary periductal stroma.', 'The commonest route to ductal adenocarcinoma (PanIN → PDA).'],
-      sources: 'Beger HG et al., The Pancreas, 4th ed., 2023, ch. 126; Robbins and Cotran, 9th ed., ch. 19; Hingorani 2007.' },
+      chart: { title: 'Progression in numbers', cols: ['Normal duct', 'PanIN-1A', 'PanIN-1B', 'PanIN-2', 'PanIN-3', 'Invasive cancer'],
+        rows: [{ label: 'Dividing cells (Ki-67 index)', unit: '%', vals: [0.41, 0.69, 2.33, 14.08, 22.01, 36.99], src: 'Klein et al. 2002 (76 PanINs, 41 patients)' },
+          { label: 'KRAS mutation (PanIN beside cancer)', unit: '%', vals: [null, 36, 44, 87, 87, null], src: 'as reviewed in Koorstra et al. 2008 (PanIN-2 and -3 together)' },
+          { label: 'MUC1 expression', unit: '%', vals: [null, 6, 5, 43, 85, null], src: 'as reviewed in Koorstra et al. 2008' },
+          { label: 'Cyclin D1, nuclear', unit: '%', vals: [0, 0, 0, 29, 57, null], src: 'as reviewed in Koorstra et al. 2008' }],
+        note: 'Proliferation rises steeply from PanIN-2 on. Older assays found KRAS in 36–87% of PanINs by grade; newer sequencing finds it in over 90%, even at low grade (Beger 4th ed., ch. 126). PanINs in chronic pancreatitis carry KRAS less often (about 10%).' },
+      sources: 'Beger HG et al., The Pancreas, 4th ed., 2023, ch. 126; Robbins and Cotran, 9th ed., ch. 19; Hingorani 2007; Klein WM, Hruban RH, Klein-Szanto AJP, Wilentz RE. Mod Pathol 2002;15:441-7, doi:10.1038/modpathol.3880544; Koorstra JBM, Feldmann G, Habbe N, Maitra A. Langenbecks Arch Surg 2008;393:561-70, doi:10.1007/s00423-008-0282-x.' },
     ipmn: { title: 'Intraductal papillary mucinous neoplasm (IPMN)', lead: 'A mucin-making tumour that grows inside the duct system, either the main duct (which dilates) or its branches (which swell into grape-like cysts). Unlike PanIN it is visible to the eye; unlike MCN it connects with the ducts and has no ovarian-type stroma.',
       figures: [{ img: 'ipmn', w: 1400, h: 1268, credit: 'Shibata H, Ohike N, Norose T, et al. Clin J Gastroenterol 2017;10:274-8, doi:10.1007/s12328-017-0728-1 (CC BY 4.0), via Wikimedia Commons. a, b, d, e: H&E; c: resected pancreas.',
         marks: [[0.2, 0.395, 'Main duct, dilated, with tumour (arrowheads)', 1], [0.525, 0.505, 'Branch-duct cyst opening off the duct', 1], [0.115, 0.49, 'Mucin in the cyst', 1], [0.62, 0.15, 'Tall papillae of mucinous cells', 1], [0.13, 0.17, 'Pancreatobiliary type: complex papillae, atypical nuclei', 1], [0.66, 0.655, 'Flat mucinous lining', 1], [0.7, 0.705, 'No ovarian stroma', 1]] }],
@@ -1314,6 +1346,9 @@ let fa, F, faCells, fc, Pc, I, fb, Pb, fk, Pk, fdu, Dseg, Da, Db, D, Dax, dCells
     const col = { panin: 1, ipmn: 2, mcn: 3 }[key];
     box.innerHTML = `<div class="hhead"><h2>${esc(Hd.title)}</h2><button type="button" class="hclose" data-lesion="overview">‹ All precursors</button></div><p class="lead">${esc(Hd.lead)}</p>${figs}`
       + `<div class="hcols"><div><h3>Marked features</h3><ol>${Hd.key.map((t) => `<li>${esc(t)}</li>`).join('')}</ol></div><div class="apart"><h3>What sets it apart</h3><ul>${Hd.unique.map((t) => `<li>${esc(t)}</li>`).join('')}</ul></div></div>`
+      + (Hd.chart ? `<h3>${esc(Hd.chart.title)}</h3><div class="tablewrap"><table class="prog"><thead><tr><th></th>${Hd.chart.cols.map((c) => `<th>${esc(c)}</th>`).join('')}</tr></thead><tbody>`
+        + Hd.chart.rows.map((r) => { const mx = Math.max(...r.vals.filter((v) => v !== null)); return `<tr><th>${esc(r.label)}<small>${esc(r.src)}</small></th>${r.vals.map((v) => v === null ? '<td class="na">–</td>' : `<td><span class="bar" style="width:${Math.max(3, 100 * v / mx)}%"></span><span class="v">${v}${r.unit}</span></td>`).join('')}</tr>`; }).join('')
+        + `</tbody></table></div><p class="src">${esc(Hd.chart.note)}</p>` : '')
       + `<h3>PanIN, IPMN and MCN compared</h3><div class="tablewrap"><table><thead><tr><th></th><th${col === 1 ? ' class="on"' : ''}>PanIN</th><th${col === 2 ? ' class="on"' : ''}>IPMN</th><th${col === 3 ? ' class="on"' : ''}>MCN</th></tr></thead><tbody>`
       + COMPARE_ROWS.map((r) => `<tr><th>${esc(r[0])}</th>${r.slice(1).map((c, i) => `<td${i + 1 === col ? ' class="on"' : ''}>${esc(c)}</td>`).join('')}</tr>`).join('') + '</tbody></table></div>'
       + `<p class="src">Sources: ${esc(Hd.sources)} Comparison: Beger 4th ed. ch. 81, 86, 126; Hingorani 2007. Text in our own words. Images keep their own licences.</p>`;
